@@ -21,6 +21,11 @@
 [ ] Put all environment variables (absolute paths & keys) in an .env file.
  
 
+### Setup
+1. Receive access to and download the cleaned [data](https://liuonline-my.sharepoint.com/:f:/r/personal/erila018_student_liu_se/Documents/SQL_DESCRIPTION_GENERATION?csf=1&web=1&e=aarwSi). Put the data in the root directory of the repository.
+2. Create the .env file with all of the required variables.
+3. Run `conda env create -f environment.yaml` and `conda activate sqldesc` to create and start the conda environment. 
+
 ### Data cleaning 
 
 1. Firstly we remove the non "utf-8" tokens 
