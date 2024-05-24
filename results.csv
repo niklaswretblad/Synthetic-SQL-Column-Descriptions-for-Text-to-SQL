@@ -1,17 +1,17 @@
 ,database_name,table_name,original_column_name,column_name,column_description,data_format,value_description,type,llm_column_description
-32,financial,district,district_id,location of branch,location of branch,integer ,,P,"The `district_id` column in the `district` table serves as the primary key, uniquely identifying each district."
-33,financial,district,A2,district_name,district_name,text,,,The A2 column in the district table primarily stores the name of the district.
-34,financial,district,A3,region,region,text,,,The A3 column in the district table primarily represents the name of the city or region within the district.
-35,financial,district,A4,number of inhabitants ,,text,,,The A4 column in the district table primarily represents the population of the district.
-36,financial,district,A5,no. of municipalities with inhabitants < 499,municipality < district < region,text,,,"The A5 column in the district table represents a specific attribute of the district, stored as a TEXT value."
-37,financial,district,A6,no. of municipalities with inhabitants 500-1999,municipality < district < region,text,,,"The A6 column in the district table represents a specific attribute of the district, stored as text."
-38,financial,district,A7,no. of municipalities with inhabitants 2000-9999,municipality < district < region,text,,,"The A7 column in the district table represents a specific attribute of the district, likely a categorical or numerical value related to the district's characteristics."
-39,financial,district,A8,no. of municipalities with inhabitants > 10000,municipality < district < region,integer,,,"The A8 column in the district table primarily represents a numerical attribute related to the district, likely serving as a quantitative measure or identifier."
-40,financial,district,A9,,,integer,not useful,,The A9 column in the district table represents an integer value that is not null.
-41,financial,district,A10,ratio of urban inhabitants,ratio of urban inhabitants,real,,,The A10 column in the district table represents a real number value that is not null.
-42,financial,district,A11,average salary,average salary,integer,,,The A11 column in the district table represents the average salary in the district.
-43,financial,district,A12,unemployment rate 1995,unemployment rate 1995,real,,,The A12 column in the district table represents a real number that is nullable.
-44,financial,district,A13,unemployment rate 1996,unemployment rate 1996,real,,,The A13 column in the district table represents a real number value that is not null.
-45,financial,district,A14,no. of entrepreneurs per 1000 inhabitants,no. of entrepreneurs per 1000 inhabitants,integer,,,"The A14 column in the district table represents an integer value that is not null, indicating a required numerical attribute specific to each district."
-46,financial,district,A15,no. of committed crimes 1995,no. of committed crimes 1995,integer,,,The A15 column in the district table stores an integer value that is nullable.
-47,financial,district,A16,no. of committed crimes 1996,no. of committed crimes 1996,integer,,,"The A16 column in the district table represents an integer value that is not null, serving as a required numerical attribute for each district."
+32,financial,district,district_id,location of branch,location of branch,integer ,,P,The district_id column in the district table serves as the primary key for identifying different districts.
+33,financial,district,A2,district_name,district_name,text,,,The A2 column in the district table represents the name of the district.
+34,financial,district,A3,region,region,text,,,The A3 column in the district table represents the name of the district.
+35,financial,district,A4,number of inhabitants ,,text,,,The A4 column in the district table represents the name of the district.
+36,financial,district,A5,no. of municipalities with inhabitants < 499,municipality < district < region,text,,,The A5 column in the district table represents the name of the district.
+37,financial,district,A6,no. of municipalities with inhabitants 500-1999,municipality < district < region,text,,,The A6 column in the district table represents the name of a specific district.
+38,financial,district,A7,no. of municipalities with inhabitants 2000-9999,municipality < district < region,text,,,The A7 column in the district table represents the number of municipalities in the district.
+39,financial,district,A8,no. of municipalities with inhabitants > 10000,municipality < district < region,integer,,,The A8 column in the district table represents the number of municipalities in the district.
+40,financial,district,A9,,,integer,not useful,,The A9 column in the district table represents the number of inhabitants in the district.
+41,financial,district,A10,ratio of urban inhabitants,ratio of urban inhabitants,real,,,The A10 column in the district table represents the average salary in the district.
+42,financial,district,A11,average salary,average salary,integer,,,The A11 column in the district table represents the number of municipalities in the district.
+43,financial,district,A12,unemployment rate 1995,unemployment rate 1995,real,,,The A12 column in the district table represents the percentage of urban population in the district.
+44,financial,district,A13,unemployment rate 1996,unemployment rate 1996,real,,,The A13 column in the district table represents the average salary in the district.
+45,financial,district,A14,no. of entrepreneurs per 1000 inhabitants,no. of entrepreneurs per 1000 inhabitants,integer,,,The A14 column in the district table represents the population count in the respective district.
+46,financial,district,A15,no. of committed crimes 1995,no. of committed crimes 1995,integer,,,The A15 column in the district table represents the number of inhabitants aged 15-64.
+47,financial,district,A16,no. of committed crimes 1996,no. of committed crimes 1996,integer,,,The A16 column in the district table represents the number of inhabitants in the district.

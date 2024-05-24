@@ -25,26 +25,25 @@ DO NOT return anything else except the generated column description.
 """
 
 GEN_COLUMN_DESCRIPTION_PROMPT_2 = """
-### Context - Generate Column Description
+### Context - Generate Column Description for Database, to give users an easier time understanding what data is present in the column.
 
 Database Schema Details:
 ""
 {database_schema}
 ""
 
-
 ### Task
 Generate a precise description for the {column} column in the {table} table. Your description should include:
-- Primary purpose of the column.
- Your description could also include:
-- Additional useful information (if apparent from the schema), formatted as a new sentance, but never more than one. If no useful information is avaliable, do not include the extra sentance. 
+- Primary purpose of the column. If no useful information is available or if the details in the schema do not suffice to ascertain what the data is, return: "Not enough information to make a valid prediction."
+Optionally, your description could also include:
+- Additional useful information (if apparent from the schema), formatted as a new sentence, but never more than one. If no useful information is available or if the details in the schema do not suffice to ascertain useful details, return: "Not enough information to make a valid prediction."
 
 ### Requirements
 - Focus solely on confirmed details from the provided schema.
 - Keep the description concise and factual.
 - Exclude any speculative or additional commentary.
 
-DO NOT return anything else except the generated column description.
+DO NOT return anything else except the generated column description. This is very important. The answer should be only the generated text aimed at describing the column.
 """
 
 
@@ -91,7 +90,7 @@ class desc_gen_llm:
 
 if __name__ == "__main__":
     # Initiate llm
-    LLM_NAME = "gpt-4o"
+    LLM_NAME = "gpt-3.5-turbo"
 
     # Load OpenAI API Key
     load_dotenv()
