@@ -36,7 +36,8 @@ Database Schema Details:
 ### Task
 Generate a precise description for the {column} column in the {table} table. Your description should include:
 - Primary purpose of the column.
-- Additional useful information (if apparent from the schema), formatted with asterisks (***information***). If none is avaliable, do not include the asterisks. 
+ Your description could also include:
+- Additional useful information (if apparent from the schema), formatted as a new sentance, but never more than one. If no useful information is avaliable, do not include the extra sentance. 
 
 ### Requirements
 - Focus solely on confirmed details from the provided schema.
@@ -90,7 +91,7 @@ class desc_gen_llm:
 
 if __name__ == "__main__":
     # Initiate llm
-    LLM_NAME = "gpt-3.5-turbo"
+    LLM_NAME = "gpt-4o"
 
     # Load OpenAI API Key
     load_dotenv()
@@ -125,7 +126,7 @@ if __name__ == "__main__":
 
     # Only us a subset of the data in the beginning, TODO: Improve this functionality and create a function where we just input lists of databases and tables
     database_df = database_df.loc[(database_df["database_name"] == "financial") & (
-        database_df["table_name"] == "loan")]
+        database_df["table_name"] == "district")]
 
     # Create a new column 'llm_column_description' if it doesn't exist
     if 'llm_column_description' not in database_df.columns:
