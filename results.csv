@@ -1,17 +1,22 @@
 ,database_name,table_name,original_column_name,column_name,column_description,data_format,value_description,type,llm_column_description
-32,financial,district,district_id,location of branch,location of branch,integer ,,P,The district_id column in the district table serves as the primary key for identifying different districts.
-33,financial,district,A2,district_name,district_name,text,,,The A2 column in the district table represents the name of the district.
-34,financial,district,A3,region,region,text,,,The A3 column in the district table represents the name of the district.
-35,financial,district,A4,number of inhabitants ,,text,,,The A4 column in the district table represents the name of the district.
-36,financial,district,A5,no. of municipalities with inhabitants < 499,municipality < district < region,text,,,The A5 column in the district table represents the name of the district.
-37,financial,district,A6,no. of municipalities with inhabitants 500-1999,municipality < district < region,text,,,The A6 column in the district table represents the name of a specific district.
-38,financial,district,A7,no. of municipalities with inhabitants 2000-9999,municipality < district < region,text,,,The A7 column in the district table represents the number of municipalities in the district.
-39,financial,district,A8,no. of municipalities with inhabitants > 10000,municipality < district < region,integer,,,The A8 column in the district table represents the number of municipalities in the district.
-40,financial,district,A9,,,integer,not useful,,The A9 column in the district table represents the number of inhabitants in the district.
-41,financial,district,A10,ratio of urban inhabitants,ratio of urban inhabitants,real,,,The A10 column in the district table represents the average salary in the district.
-42,financial,district,A11,average salary,average salary,integer,,,The A11 column in the district table represents the number of municipalities in the district.
-43,financial,district,A12,unemployment rate 1995,unemployment rate 1995,real,,,The A12 column in the district table represents the percentage of urban population in the district.
-44,financial,district,A13,unemployment rate 1996,unemployment rate 1996,real,,,The A13 column in the district table represents the average salary in the district.
-45,financial,district,A14,no. of entrepreneurs per 1000 inhabitants,no. of entrepreneurs per 1000 inhabitants,integer,,,The A14 column in the district table represents the population count in the respective district.
-46,financial,district,A15,no. of committed crimes 1995,no. of committed crimes 1995,integer,,,The A15 column in the district table represents the number of inhabitants aged 15-64.
-47,financial,district,A16,no. of committed crimes 1996,no. of committed crimes 1996,integer,,,The A16 column in the district table represents the number of inhabitants in the district.
+48,financial,trans,trans_id,transaction id,transaction id,integer,,P,The trans_id column in the trans table serves as the primary key for identifying individual transactions.
+49,financial,trans,account_id,,,integer,,F,The account_id column in the trans table serves as a unique identifier for each account associated with a transaction.
+50,financial,trans,date,date of transaction,date of transaction,date,,,The date column in the trans table stores the date of the transaction.
+51,financial,trans,type,+/- transaction,+/- transaction,text,"""PRIJEM"" stands for credit
+""VYDAJ"" stands for withdrawal",,"The type column in the trans table indicates the type of transaction (e.g., PRIJEM for income, VYDAJ for expenditure)."
+52,financial,trans,operation,mode of transaction,mode of transaction,text,"""VYBER KARTOU"": credit card withdrawal
+""VKLAD"": credit in cash
+""PREVOD Z UCTU"" :collection from another bank
+""VYBER"": withdrawal in cash
+""PREVOD NA UCET"": remittance to another bank",,"The operation column in the trans table indicates the type of financial operation, such as deposit or withdrawal."
+53,financial,trans,amount,amount of money,amount of money,integer,Unit：USD,,The amount column in the trans table represents the monetary value involved in the transaction.
+54,financial,trans,balance,balance after transaction,balance after transaction,integer,Unit：USD,,The balance column in the trans table represents the current balance of the account after each transaction.
+55,financial,trans,k_symbol,characterization of the transaction,,text,"""POJISTNE"": stands for insurrance payment
+""SLUZBY"": stands for payment for statement
+""UROK"": stands for interest credited
+""SANKC. UROK"": sanction interest if negative balance
+""SIPO"": stands for household
+""DUCHOD"": stands for old-age pension
+""UVER"": stands for loan payment",,The k_symbol column in the trans table indicates the specific symbol associated with a transaction.
+56,financial,trans,bank,bank of the partner,,text,each bank has unique two-letter code,,The bank column in the trans table indicates the bank involved in the transaction.
+57,financial,trans,account,account of the partner,,integer,,,The account column in the trans table represents the account_id associated with each transaction.

@@ -180,6 +180,7 @@ class Database:
 
         Parameters:
            db_name (str): The name of the database to get schema and data.
+           num_examples (int): The number of examples to get.
 
         Returns:
            str: A formatted string containing schema and sample data.
@@ -225,6 +226,45 @@ class Database:
             self.current_database_schema = schema_and_sample_data
 
         return self.current_database_schema
+
+    def get_sample_data(self, db_name, table, num_examples):
+        """
+        Retrieve and return sample data from a database table.
+
+        Parameters:
+           db_name (str): The name of the database to get the data from.
+           table (str): The name of the table to get the data from.
+           num_examples (int): The number of examples to get.
+
+        Returns:
+           str: A formatted string containing schema and sample data.
+        """
+
+        sample_data = ""
+
+        if self.current_db != db_name:
+            self.load_db(db_name)
+
+        self.cursor.execute(
+            f"SELECT * FROM \"{table}\" LIMIT {num_examples};")
+        rows = self.cursor.fetchall()
+
+        self.cursor.execute(f"PRAGMA table_info(\"{table}\");")
+        columns = self.cursor.fetchall()
+        column_names = [column[1] for column in columns]
+        column_names_line = "\t".join(column_names)
+
+        sample_data += f"{num_examples} rows from {table} table:\n"
+        sample_data += f"{column_names_line}\n"
+
+        for row in rows:
+            row_line = "\t".join([str(value) for value in row])
+            sample_data += f"{row_line}\n"
+            sample_data += "\n"
+
+        sample_data += "\n"
+
+        return sample_data
 
     def load_db(self, db_name):
         """
