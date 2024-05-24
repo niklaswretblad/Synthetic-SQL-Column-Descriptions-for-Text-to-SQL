@@ -32,7 +32,7 @@ for folder in dev_databases:
 
         temp_file_path = os.path.join(folder_path, f"temp_{file}")
 
-        # Read, decode, and write to a temporary file using 'ISO-8859-1' encoding
+        # Read, decode, and write to a temporary file using 'utf-8' encoding
         with open(file_path, 'rb') as reader, open(temp_file_path, 'w', encoding='utf-8') as writer:
             for utf8_bytes in reader:
                 line = utf8_bytes.decode('utf-8', 'ignore')

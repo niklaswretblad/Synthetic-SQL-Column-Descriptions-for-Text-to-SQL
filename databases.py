@@ -174,7 +174,7 @@ class Database:
 
         return self.current_database_schema
 
-    def get_schema_and_sample_data(self, db_name):
+    def get_schema_and_sample_data(self, db_name, num_examples=3):
         """
         Retrieve, store, and return the schema and sample data from a database.
 
@@ -202,7 +202,8 @@ class Database:
 
                 schema_and_sample_data += f"{create_statement};\n\n"
 
-                self.cursor.execute(f"SELECT * FROM \"{table}\" LIMIT 3;")
+                self.cursor.execute(
+                    f"SELECT * FROM \"{table}\" LIMIT {num_examples};")
                 rows = self.cursor.fetchall()
 
                 self.cursor.execute(f"PRAGMA table_info(\"{table}\");")
@@ -210,7 +211,7 @@ class Database:
                 column_names = [column[1] for column in columns]
                 column_names_line = "\t".join(column_names)
 
-                schema_and_sample_data += f"Three rows from {table} table:\n"
+                schema_and_sample_data += f"{num_examples} rows from {table} table:\n"
                 schema_and_sample_data += f"{column_names_line}\n"
 
                 for row in rows:
