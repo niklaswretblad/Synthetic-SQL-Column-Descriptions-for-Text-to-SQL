@@ -24,6 +24,28 @@ Please ensure that your description is informative and concise, providing insigh
 DO NOT return anything else except the generated column description.
 """
 
+GEN_COLUMN_DESCRIPTION_PROMPT_2 = """
+### Context - Generate Column Description
+
+Database Schema Details:
+""
+{database_schema}
+""
+
+
+### Task
+Generate a precise description for the {column} column in the {table} table. Your description should include:
+- Primary purpose of the column.
+- Additional useful information (if apparent from the schema), formatted with asterisks (***information***). If none is avaliable, do not include the asterisks. 
+
+### Requirements
+- Focus solely on confirmed details from the provided schema.
+- Keep the description concise and factual.
+- Exclude any speculative or additional commentary.
+
+DO NOT return anything else except the generated column description.
+"""
+
 
 class desc_gen_llm:
     total_tokens = 0
@@ -39,7 +61,7 @@ class desc_gen_llm:
         prompt = PromptTemplate(
             # TODO: Add other input variables
             input_variables=["database_schema", "column", "table"],
-            template=GEN_COLUMN_DESCRIPTION_PROMPT,
+            template=GEN_COLUMN_DESCRIPTION_PROMPT_2,
         )
 
         self.gen_column_desc_chain = prompt | llm
