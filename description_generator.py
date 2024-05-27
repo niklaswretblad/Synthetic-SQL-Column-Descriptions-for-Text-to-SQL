@@ -39,19 +39,32 @@ Here is example data from the table {table}: ""
 
 ""
 
+If the column is a Foreign key additional data about that table is given in the following table: 
+
+""
+
+{example_data_associated}
+
+
+""
+
 ### Task
 Generate a precise description for the {column} column in the {table} table. Your description should include:
-- Primary purpose of the column. If the details in the schema do not suffice to ascertain what the data is, return: "Not enough information to make a valid prediction."
+- The exakt purpose of the column. 
 Optionally, your description could also include:
 - Additional useful information (if apparent from the schema), formatted as a new sentence, but never more than one. If no useful information is available or if the details in the schema do not suffice to ascertain useful details, return nothing.
+- If the {example_data_associated} is not empty: provide a little information about this table. In one sentance. 
 
 ### Requirements
 - Focus solely on confirmed details from the provided schema.
 - Keep the description concise and factual.
 - Exclude any speculative or additional commentary.
+- DO NOT return the phrase "in the {table} table" in your description. This very important. 
 
 DO NOT return anything else except the generated column description. This is very important. The answer should be only the generated text aimed at describing the column.
 """
+
+# If the details in the schema do not suffice to ascertain what the data is, return: "Not enough information to make a valid prediction."
 
 
 class desc_gen_llm:
@@ -73,14 +86,16 @@ class desc_gen_llm:
 
         self.gen_column_desc_chain = prompt | llm
 
-    def gen_column_desc(self, database_schema, column_name, table_name, example_data):
+    def gen_column_desc(self, database_schema, column_name, table_name, example_data, example_data_associated):
         with get_openai_callback() as cb:
             with Timer() as t:
                 response = self.gen_column_desc_chain.invoke({
                     'database_schema': database_schema,
                     "column": column_name,
                     "table": table_name,
-                    "example_data": example_data
+                    "example_data": example_data,
+                    "example_data_associated": example_data_associated
+
                 })
 
             logger.info(
@@ -99,9 +114,9 @@ class desc_gen_llm:
 if __name__ == "__main__":
     # Initiate llm
     LLM_NAME = "gpt-3.5-turbo"
-    NUM_EXAMPLES_ALL = 0
-    NUM_EXAMPLES_CURRENT = 100
-    NUM_EXAMPLES_ASSOCIATED = 0  # TODO
+    NUM_EXAMPLES_ALL = 5
+    NUM_EXAMPLES_CURRENT = 0
+    NUM_EXAMPLES_ASSOCIATED = 0
 
     # Load OpenAI API Key
     load_dotenv()
@@ -134,9 +149,13 @@ if __name__ == "__main__":
     # TODO: Make this into a dataset class to enable shuffling?
     database_df = pd.read_csv('dataset.csv', index_col=0)
 
+    financial_database = database_df.loc[(
+        database_df["database_name"] == "financial")]
+    financial_database.to_csv('financial_data.csv', index=False)
+
     # Only us a subset of the data in the beginning, TODO: Improve this functionality and create a function where we just input lists of databases and tables
     database_df = database_df.loc[(database_df["database_name"] == "financial") & (
-        database_df["table_name"] == "trans")]
+        database_df["table_name"] == "loan")]
 
     # Create a new column 'llm_column_description' if it doesn't exist
     if 'llm_column_description' not in database_df.columns:
@@ -159,8 +178,17 @@ if __name__ == "__main__":
             example_data = sql_database.get_sample_data(
                 col["database_name"], col["table_name"], num_examples=NUM_EXAMPLES_CURRENT)
 
+        if col['type'] == 'xxx':  # ensures this is always False, insert "F" to use this function
+            # This removes the "_id" from the name, works for financial, but is a hard coded test, TODO: fix this
+            referenced_table = col['original_column_name'][:-3]
+            example_data_associated = sql_database.get_sample_data(
+                col["database_name"], referenced_table, num_examples=NUM_EXAMPLES_ASSOCIATED)
+        else:
+
+            example_data_associated = ""
+
         column_desc = model.gen_column_desc(
-            database_schema, col["original_column_name"], col["table_name"], example_data)
+            database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated)
         database_df.loc[col_idx, 'llm_column_description'] = column_desc
 
     # Save column descriptions to database.csv

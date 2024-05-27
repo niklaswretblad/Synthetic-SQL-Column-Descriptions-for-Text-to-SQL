@@ -1,0 +1,80 @@
+database_name,table_name,original_column_name,column_name,column_description,data_format,value_description,type
+financial,loan,loan_id,,Unique identifier (primary key) for the loan id,integer,,P
+financial,loan,account_id,,Unique identifier (primary key) for the account id,integer,,F
+financial,loan,date,,The date when the loan was recorded,date,,
+financial,loan,amount,,Monetary amount in (US dollar),integer,unit：US dollar,
+financial,loan,duration,,"Time period, specified in (month)",integer,unit：month,
+financial,loan,payments,monthly payments,This column provides information on details about monthly payments,real,unit：month,
+financial,loan,status,,This column provides information on details about status,text,"'A' stands for contract finished, no problems;
+'B' stands for contract finished, loan not paid;
+'C' stands for running contract, OK so far;
+'D' stands for running contract, client in debt",
+financial,client,client_id,,Unique identifier (primary key) for the client id,integer,,P
+financial,client,gender,,This column provides information on details about gender,text,"F：female 
+M：male ",
+financial,client,birth_date,,The date when the client was recorded,date,,
+financial,client,district_id,location of branch,This column provides information on details about location of branch,integer,,F
+financial,district,district_id,location of branch,This column provides information on details about location of branch,integer ,,P
+financial,district,A2,district_name,This column provides information on details about district name,text,,
+financial,district,A3,region,This column provides information on details about region,text,,
+financial,district,A4,number of inhabitants ,This column provides information on details about number of inhabitants ,text,,
+financial,district,A5,no. of municipalities with inhabitants < 499,This column provides information on details about no. of municipalities with inhabitants < 499,text,,
+financial,district,A6,no. of municipalities with inhabitants 500-1999,This column provides information on details about no. of municipalities with inhabitants 500-1999,text,,
+financial,district,A7,no. of municipalities with inhabitants 2000-9999,This column provides information on details about no. of municipalities with inhabitants 2000-9999,text,,
+financial,district,A8,no. of municipalities with inhabitants > 10000,This column provides information on details about no. of municipalities with inhabitants > 10000,integer,,
+financial,district,A9,,This column provides information on details about a9,integer,not useful,
+financial,district,A10,ratio of urban inhabitants,This column provides information on details about ratio of urban inhabitants,real,,
+financial,district,A11,average salary,This column provides information on details about average salary,integer,,
+financial,district,A12,unemployment rate 1995,This column provides information on details about unemployment rate 1995,real,,
+financial,district,A13,unemployment rate 1996,This column provides information on details about unemployment rate 1996,real,,
+financial,district,A14,no. of entrepreneurs per 1000 inhabitants,This column provides information on details about no. of entrepreneurs per 1000 inhabitants,integer,,
+financial,district,A15,no. of committed crimes 1995,This column provides information on details about no. of committed crimes 1995,integer,,
+financial,district,A16,no. of committed crimes 1996,This column provides information on details about no. of committed crimes 1996,integer,,
+financial,trans,trans_id,transaction id,Unique identifier (primary key) for the transaction id,integer,,P
+financial,trans,account_id,,Unique identifier (primary key) for the account id,integer,,F
+financial,trans,date,date of transaction,The date when the trans was recorded,date,,
+financial,trans,type,+/- transaction,This column provides information on details about +/- transaction,text,"""PRIJEM"" stands for credit
+""VYDAJ"" stands for withdrawal",
+financial,trans,operation,mode of transaction,This column provides information on details about mode of transaction,text,"""VYBER KARTOU"": credit card withdrawal
+""VKLAD"": credit in cash
+""PREVOD Z UCTU"" :collection from another bank
+""VYBER"": withdrawal in cash
+""PREVOD NA UCET"": remittance to another bank",
+financial,trans,amount,amount of money,Monetary amount in (Unit：USD),integer,Unit：USD,
+financial,trans,balance,balance after transaction,This column provides information on details about balance after transaction,integer,Unit：USD,
+financial,trans,k_symbol,characterization of the transaction,This column provides information on details about characterization of the transaction,text,"""POJISTNE"": stands for insurrance payment
+""SLUZBY"": stands for payment for statement
+""UROK"": stands for interest credited
+""SANKC. UROK"": sanction interest if negative balance
+""SIPO"": stands for household
+""DUCHOD"": stands for old-age pension
+""UVER"": stands for loan payment",
+financial,trans,bank,bank of the partner,This column provides information on details about bank of the partner,text,each bank has unique two-letter code,
+financial,trans,account,account of the partner,This column provides information on details about account of the partner,integer,,
+financial,account,account_id,account id,Unique identifier (primary key) for the account id,integer,,P
+financial,account,district_id,location of branch,This column provides information on details about location of branch,integer ,,F
+financial,account,frequency,frequency,This column provides information on details about frequency,text,"""POPLATEK MESICNE"" stands for monthly issuance
+""POPLATEK TYDNE"" stands for weekly issuance
+""POPLATEK PO OBRATU"" stands for issuance after transaction",
+financial,account,date,date,The date when the account was recorded,date,in the form YYMMDD,
+financial,card,card_id,credit card id,Unique identifier (primary key) for the credit card id,integer,,P
+financial,card,disp_id,disposition id,Unique identifier (primary key) for the disposition id,integer,,F
+financial,card,type,,This column provides information on details about type,text,"""junior"": junior class of credit card; 
+""classic"": standard class of credit card; 
+""gold"": high-level credit card",
+financial,card,issued,,This column provides information on details about issued,date,in the form YYMMDD,
+financial,order,order_id,,Unique identifier (primary key) for the order id,integer,,P
+financial,order,account_id,,Unique identifier (primary key) for the account id,integer,,F
+financial,order,bank_to,bank of the recipient,This column provides information on details about bank of the recipient,text,,
+financial,order,account_to,account of the recipient,This column provides information on details about account of the recipient,integer,each bank has unique two-letter code,
+financial,order,amount,debited amount,This column provides information on amount of order,real,,
+financial,order,k_symbol,characterization of the payment,This column provides information on details about characterization of the payment,text,"""POJISTNE"" stands for insurance payment
+""SIPO"" stands for household payment
+""LEASING"" stands for leasing
+""UVER"" stands for loan payment",
+financial,disp,disp_id,disposition id,Unique identifier (primary key) for the disposition id,integer,,P
+financial,disp,client_id,,Unique identifier (primary key) for the client id,integer,,F
+financial,disp,account_id,,Unique identifier (primary key) for the account id,integer,,F
+financial,disp,type,,This column provides information on details about type,text,"""OWNER"" : ""USER"" : ""DISPONENT""
+commonsense evidence:
+the account can only have the right to issue permanent orders or apply for loans",
