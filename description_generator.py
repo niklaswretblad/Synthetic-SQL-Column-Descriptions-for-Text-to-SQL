@@ -10,59 +10,86 @@ import logging
 import pandas as pd
 from dotenv import load_dotenv
 
-GEN_COLUMN_DESCRIPTION_PROMPT = """
-Context - Generate Column Description
-
-You are provided with a database schema represented in the form of CREATE TABLE statements, along with sample values from each table:
-
-{database_schema}
-
-Your task is to generate a description for the {column} column in the {table} table.
-
-Please ensure that your description is informative and concise, providing insights into the purpose, constraints, and any other relevant details about the column.
-
-DO NOT return anything else except the generated column description.
-"""
-
 GEN_COLUMN_DESCRIPTION_PROMPT_2 = """
 ### Context - Generate Column Description for Database, to give users an easier time understanding what data is present in the column.
 
 Database Schema Details:
 ""
 {database_schema}
-
 ""
 
 Here is example data from the table {table}: ""
 
 {example_data}
 
-""
+Here is up to 10 possible unique values for the column {column} from the table {table}:
 
-If the column is a Foreign key additional data about that table is given in the following table: 
-
-""
-
-{example_data_associated}
-
+{unique_data}
 
 ""
 
 ### Task
 Generate a precise description for the {column} column in the {table} table. Your description should include:
-- The exakt purpose of the column. 
+- Primary purpose of the column. If the details in the schema do not suffice to ascertain what the data is, return: "Not enough information to make a valid prediction."
 Optionally, your description could also include:
 - Additional useful information (if apparent from the schema), formatted as a new sentence, but never more than one. If no useful information is available or if the details in the schema do not suffice to ascertain useful details, return nothing.
-- If the {example_data_associated} is not empty: provide a little information about this table. In one sentance. 
 
 ### Requirements
 - Focus solely on confirmed details from the provided schema.
 - Keep the description concise and factual.
 - Exclude any speculative or additional commentary.
-- DO NOT return the phrase "in the {table} table" in your description. This very important. 
+- DO NOT return the phrase "in the {table} table" in your description. This very important.
 
 DO NOT return anything else except the generated column description. This is very important. The answer should be only the generated text aimed at describing the column.
 """
+
+GEN_COLUMN_DESCRIPTION_PROMPT_GOLD = """
+
+### TASK:
+Context - Generate Column Description for Database, to give users an easier time understanding what data is present in the column.
+
+Database Schema Details:
+""
+{database_schema}
+""
+
+Here is example data from the table {table}: ""
+
+{example_data}
+
+Here is up to 10 possible unique values for the column {column} from the table {table}:
+
+{unique_data}
+
+""
+
+The column name for {column} is {column_name}. This is the name of the column, it can contain important information about the column, and should be used to write the description.
+The previous column description is {column_description}. This is the old description of the column, this is sometimes lacking and should be read and rewritten.
+
+### Task
+Generate a precise description for the {column} column in the {table} table. Your description should include:
+- Primary purpose of the column. If the details in the schema do not suffice to ascertain what the data is, return: "Not enough information to make a valid prediction."
+Optionally, your description could also include:
+- Additional useful information (if apparent from the schema), formatted as a new sentence, but never more than one. If no useful information is available or if the details in the schema do not suffice to ascertain useful details, return nothing.
+
+### Requirements
+- Focus solely on confirmed details from the provided schema.
+- Keep the description concise and factual.
+- Exclude any speculative or additional commentary.
+- DO NOT return the phrase "in the {table} table" in your description. This very important.
+
+**Examples:**
+- For a column named "no. of municipalities with inhabitants < 499," the description should be: "This is the number of municipalities with fewer than 499 inhabitants."
+- For a column it is better to described as short as possible: So, "Details about the ratio of urban inhabitants."is preferred over "This column provides information on details about ratio of urban inhabitants,".
+- If the name is "Frequency", the description should be: " The frequency of transactions on the account" since this comes from the account table.
+- If the name is "amount of money" the descriptions should be: " The amount of money in the order" since this comes from the order table.
+
+### Please skip the "data_format" and focus solely on updating the "column_description".
+
+DO NOT return anything else except the generated column description. This is very important. The answer should be only the generated text aimed at describing the column.
+
+"""
+
 
 # If the details in the schema do not suffice to ascertain what the data is, return: "Not enough information to make a valid prediction."
 
@@ -81,20 +108,23 @@ class desc_gen_llm:
         prompt = PromptTemplate(
             # TODO: Add other input variables
             input_variables=["database_schema", "column", "table"],
-            template=GEN_COLUMN_DESCRIPTION_PROMPT_2,
+            template=GEN_COLUMN_DESCRIPTION_PROMPT_GOLD,
         )
 
         self.gen_column_desc_chain = prompt | llm
 
-    def gen_column_desc(self, database_schema, column_name, table_name, example_data, example_data_associated):
+    def gen_column_desc(self, database_schema, column, table_name, example_data, example_data_associated, column_name="", column_description="", unique_data=""):
         with get_openai_callback() as cb:
             with Timer() as t:
                 response = self.gen_column_desc_chain.invoke({
                     'database_schema': database_schema,
-                    "column": column_name,
+                    "column": column,
                     "table": table_name,
                     "example_data": example_data,
-                    "example_data_associated": example_data_associated
+                    "example_data_associated": example_data_associated,
+                    "column_name": column_name,
+                    "column_description": column_description,
+                    "unique_data": unique_data
 
                 })
 
@@ -113,10 +143,12 @@ class desc_gen_llm:
 
 if __name__ == "__main__":
     # Initiate llm
-    LLM_NAME = "gpt-3.5-turbo"
-    NUM_EXAMPLES_ALL = 5
-    NUM_EXAMPLES_CURRENT = 0
+    LLM_NAME = "gpt-4o"
+    NUM_EXAMPLES_ALL = 3
+    NUM_EXAMPLES_CURRENT = 50
     NUM_EXAMPLES_ASSOCIATED = 0
+    GOLD = True
+    OUTPUT_FILENAME = "GOLD_DEV_desc_" + LLM_NAME
 
     # Load OpenAI API Key
     load_dotenv()
@@ -149,13 +181,14 @@ if __name__ == "__main__":
     # TODO: Make this into a dataset class to enable shuffling?
     database_df = pd.read_csv('dataset.csv', index_col=0)
 
-    financial_database = database_df.loc[(
-        database_df["database_name"] == "financial")]
-    financial_database.to_csv('financial_data.csv', index=False)
+    # financial_database = database_df.loc[(
+    #     database_df["database_name"] == "financial")]
+    # # this is to create smaller dataset that can be used to test on, and to generate golden descriptions using GPT.
+    # financial_database.to_csv('financial_data.csv', index=True)
 
     # Only us a subset of the data in the beginning, TODO: Improve this functionality and create a function where we just input lists of databases and tables
-    database_df = database_df.loc[(database_df["database_name"] == "financial") & (
-        database_df["table_name"] == "loan")]
+    # database_df = database_df.loc[(database_df["database_name"] == "financial") & (
+    #     database_df["table_name"] == "loan")]
 
     # Create a new column 'llm_column_description' if it doesn't exist
     if 'llm_column_description' not in database_df.columns:
@@ -163,7 +196,8 @@ if __name__ == "__main__":
 
     # Generate column descriptions
     for col_idx, col in database_df.iterrows():
-
+        print(f"Generating description for database {col["database_name"]}, table {col["table_name"]}, and column {col["original_column_name"]}")
+        unique_data = ""
         # Get the database schema and example values
         if NUM_EXAMPLES_ALL == 0:
             database_schema = sql_database.get_create_statements(
@@ -177,6 +211,8 @@ if __name__ == "__main__":
         else:
             example_data = sql_database.get_sample_data(
                 col["database_name"], col["table_name"], num_examples=NUM_EXAMPLES_CURRENT)
+            unique_data = sql_database.get_sample_data(
+                col["database_name"], col["table_name"], num_examples=20, unique=True, original_column_name=col["original_column_name"])
 
         if col['type'] == 'xxx':  # ensures this is always False, insert "F" to use this function
             # This removes the "_id" from the name, works for financial, but is a hard coded test, TODO: fix this
@@ -187,9 +223,13 @@ if __name__ == "__main__":
 
             example_data_associated = ""
 
-        column_desc = model.gen_column_desc(
-            database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated)
+        if GOLD:
+            column_desc = model.gen_column_desc(
+                database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated, col["column_name"], col["column_description"], unique_data)
+        else:
+            column_desc = model.gen_column_desc(
+                database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated, unique_data=unique_data)
         database_df.loc[col_idx, 'llm_column_description'] = column_desc
 
     # Save column descriptions to database.csv
-    database_df.to_csv('results.csv', index=True)
+    database_df.to_csv(OUTPUT_FILENAME+'.csv', index=True)

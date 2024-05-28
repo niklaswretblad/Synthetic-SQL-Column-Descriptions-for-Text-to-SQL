@@ -227,7 +227,7 @@ class Database:
 
         return self.current_database_schema
 
-    def get_sample_data(self, db_name, table, num_examples):
+    def get_sample_data(self, db_name, table, num_examples, unique=False, original_column_name=""):
         """
         Retrieve and return sample data from a database table.
 
@@ -244,9 +244,17 @@ class Database:
 
         if self.current_db != db_name:
             self.load_db(db_name)
-
-        self.cursor.execute(
-            f"SELECT * FROM \"{table}\" LIMIT {num_examples};")
+        if unique:
+            try:
+                self.cursor.execute(
+                    f'SELECT * FROM \"{table}\" GROUP BY "{original_column_name}" LIMIT {num_examples};')
+            except:
+                print(
+                    f'SELECT * FROM \"{table}\" GROUP BY "{original_column_name}" LIMIT {num_examples};')
+                raise Exception("Invalid SQL")
+        else:
+            self.cursor.execute(
+                f"SELECT * FROM \"{table}\" LIMIT {num_examples};")
         rows = self.cursor.fetchall()
 
         self.cursor.execute(f"PRAGMA table_info(\"{table}\");")

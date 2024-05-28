@@ -143,7 +143,6 @@ Location coordinates: (lat, lng)",
 114,formula_1,constructors,nationality ,,nationality of the constructor ,text,,
 115,formula_1,constructors,url ,,the introduction website of the constructor ,text,"commonsense evidence: 
 How to find out the detailed introduction of the constructor: through its url",
-116,formula_1,constructors,wins ,,wins ,integer ,,
 117,formula_1,constructorResults,constructorResultsId,constructor Results Id,constructor Results Id,integer,,P
 118,formula_1,constructorResults,raceId,race Id,race id,integer,,F
 119,formula_1,constructorResults,constructorId,constructor Id,constructor id,integer,,F

@@ -12,13 +12,15 @@
 
 [x] Build class for doing calls to the OpenAI API (start with GPT 3.5, later we do GPT-4) (copy from Niklas)
 
-[ ] Experiment to find a suitable prompt template.
+[x] Experiment to find a suitable prompt template.
+
+[ ] Generate gold descriptions in a determined format with GPT-4.
 
 [ ] Start trying to generate descriptions for columns and start filling the dataframe constructed earlier with generated column descriptions
 
 [x] Upload cleaned dataset to oneDrive
 
-[ ] Put all environment variables (absolute paths & keys) in an .env file.
+[x] Put all environment variables (absolute paths & keys) in an .env file.
  
 
 ### Setup
@@ -36,6 +38,7 @@
 5. Changed "set_transactions.csv" to "set_translations.csv" to match the database 
 6. Removed all .DS_STORE files from the data directory 
 7. Changed the names of the csv files in student_club to match the original table name, fixed upper case to lower case on first letter on all, and code in Zip_Code. 
+8. Removed column "wins" from constructors.csv as the column does not exist in the formula_1 database.
 
  
 
