@@ -1,0 +1,1154 @@
+,database_name,table_name,original_column_name,column_name,column_description,data_format,value_description,type,gold_prompt_chars,gold_prompt_words,gold_prompt_tokens,pred_prompt_chars,pred_prompt_words,pred_prompt_tokens
+0,debit_card_specializing,yearmonth,CustomerID,Customer ID,Customer ID,integer,,F,935.25,412.5,820,658.0,275.25,593
+1,debit_card_specializing,yearmonth,Date,,Date,text,,P,927.0,411.0,815,655.0,275.25,591
+2,debit_card_specializing,yearmonth,Consumption,,consumption,real,,,934.0,411.0,815,658.5,275.25,591
+3,debit_card_specializing,transactions_1k,TransactionID,Transaction ID,Transaction ID,integer,,P,1045.75,462.0,1066,766.25,324.75,839
+4,debit_card_specializing,transactions_1k,Date,,Date,date,,,1033.75,460.5,1061,761.75,324.75,837
+5,debit_card_specializing,transactions_1k,Time,,Time,text,,,1033.75,460.5,1061,761.75,324.75,837
+6,debit_card_specializing,transactions_1k,CustomerID,Customer ID,Customer ID,integer,,,1042.0,462.0,1066,764.75,324.75,839
+7,debit_card_specializing,transactions_1k,CardID,Card ID,Card ID,integer,,,1037.0,462.0,1066,762.75,324.75,839
+8,debit_card_specializing,transactions_1k,GasStationID,Gas Station ID,Gas Station ID,integer,,,1045.0,463.5,1071,765.75,324.75,841
+9,debit_card_specializing,transactions_1k,ProductID,Product ID,Product ID,integer,,,1040.75,462.0,1066,764.25,324.75,839
+10,debit_card_specializing,transactions_1k,Amount,,Amount,integer,,,1035.75,460.5,1061,762.75,324.75,837
+11,debit_card_specializing,transactions_1k,Price,,Price,real,"commonsense evidence:
+
+total price = Amount x Price",,1034.75,460.5,1061,762.25,324.75,837
+12,debit_card_specializing,customers,CustomerID,,identification of the customer,integer,,P,924.5,413.25,783,644.5,275.25,555
+13,debit_card_specializing,customers,Segment,client segment,client segment,text,,,921.0,412.5,779,643.0,275.25,553
+14,debit_card_specializing,customers,Currency,,Currency,text,,,917.5,411.0,777,643.5,275.25,553
+15,debit_card_specializing,gasstations,GasStationID,Gas Station ID,Gas Station ID,integer,,P,949.25,425.25,818,670.0,286.5,588
+16,debit_card_specializing,gasstations,ChainID,Chain ID,Chain ID,integer,,,942.5,423.75,813,667.5,286.5,586
+17,debit_card_specializing,gasstations,Country,,,text,,,940.0,422.25,808,667.5,286.5,584
+18,debit_card_specializing,gasstations,Segment,chain segment,chain segment,text,,,945.0,423.75,810,667.5,286.5,584
+19,debit_card_specializing,products,ProductID,Product ID,Product ID,integer,,P,918.75,406.5,773,642.25,269.25,546
+20,debit_card_specializing,products,Description,,Description,text,,,918.75,405.0,768,643.25,269.25,544
+21,financial,loan,loan_id,,the id number identifying the loan data,integer,,P,1465.5,615.0,1392,1184.0,474.75,1161
+22,financial,loan,account_id,,the id number identifying the account,integer,,F,1467.25,614.25,1391,1185.5,474.75,1161
+23,financial,loan,date,,the date when the loan is approved,date,,,1462.0,615.0,1389,1182.5,474.75,1159
+24,financial,loan,amount,,approved amount,integer,unit：US dollar,,1458.75,611.25,1384,1183.5,474.75,1159
+25,financial,loan,duration,,loan duration,integer,unit：month,,1459.75,611.25,1384,1184.5,474.75,1159
+26,financial,loan,payments,monthly payments,monthly payments,real,unit：month,,1463.75,612.0,1385,1184.5,474.75,1159
+27,financial,loan,status,,repayment status,text,"'A' stands for contract finished, no problems;
+'B' stands for contract finished, loan not paid;
+'C' stands for running contract, OK so far;
+'D' stands for running contract, client in debt",,1459.0,611.25,1384,1183.5,474.75,1159
+28,financial,client,client_id,,the unique number,integer,,P,1409.5,587.25,1276,1133.0,450.0,1049
+29,financial,client,gender,,,text,"F：female 
+M：male ",,1403.75,585.75,1271,1131.5,450.0,1047
+30,financial,client,birth_date,,birth date,date,,,1408.5,586.5,1275,1133.5,450.0,1049
+31,financial,client,district_id,location of branch,location of branch,integer,,F,1415.0,588.75,1278,1134.0,450.0,1049
+32,financial,district,district_id,location of branch,location of branch,integer ,,P,1575.75,698.25,1642,1294.75,559.5,1413
+33,financial,district,A2,district_name,district_name,text,,,1566.5,695.25,1640,1290.25,559.5,1413
+34,financial,district,A3,region,region,text,,,1563.0,695.25,1638,1290.25,559.5,1413
+35,financial,district,A4,number of inhabitants ,,text,,,1566.25,697.5,1640,1290.25,559.5,1413
+36,financial,district,A5,no. of municipalities with inhabitants < 499,municipality < district < region,text,,,1579.0,702.75,1650,1290.25,559.5,1413
+37,financial,district,A6,no. of municipalities with inhabitants 500-1999,municipality < district < region,text,,,1579.75,702.0,1652,1290.25,559.5,1413
+38,financial,district,A7,no. of municipalities with inhabitants 2000-9999,municipality < district < region,text,,,1580.0,702.0,1653,1290.25,559.5,1413
+39,financial,district,A8,no. of municipalities with inhabitants > 10000,municipality < district < region,integer,,,1579.5,702.75,1651,1290.25,559.5,1413
+40,financial,district,A9,,,integer,not useful,,1561.5,695.25,1638,1290.25,559.5,1413
+41,financial,district,A10,ratio of urban inhabitants,ratio of urban inhabitants,real,,,1573.75,699.75,1644,1290.75,559.5,1413
+42,financial,district,A11,average salary,average salary,integer,,,1567.75,696.75,1640,1290.75,559.5,1413
+43,financial,district,A12,unemployment rate 1995,unemployment rate 1995,real,,,1571.75,698.25,1646,1290.75,559.5,1413
+44,financial,district,A13,unemployment rate 1996,unemployment rate 1996,real,,,1571.75,698.25,1646,1290.75,559.5,1413
+45,financial,district,A14,no. of entrepreneurs per 1000 inhabitants,no. of entrepreneurs per 1000 inhabitants,integer,,,1581.25,702.75,1654,1290.75,559.5,1413
+46,financial,district,A15,no. of committed crimes 1995,no. of committed crimes 1995,integer,,,1574.75,701.25,1652,1290.75,559.5,1413
+47,financial,district,A16,no. of committed crimes 1996,no. of committed crimes 1996,integer,,,1574.75,701.25,1652,1290.75,559.5,1413
+48,financial,trans,trans_id,transaction id,transaction id,integer,,P,1532.5,650.25,1505,1254.25,513.0,1278
+49,financial,trans,account_id,,,integer,,F,1528.5,648.75,1503,1255.25,513.0,1278
+50,financial,trans,date,date of transaction,date of transaction,date,,,1532.0,651.75,1504,1252.25,513.0,1276
+51,financial,trans,type,+/- transaction,+/- transaction,text,"""PRIJEM"" stands for credit
+""VYDAJ"" stands for withdrawal",,1530.0,650.25,1502,1252.25,513.0,1276
+52,financial,trans,operation,mode of transaction,mode of transaction,text,"""VYBER KARTOU"": credit card withdrawal
+""VKLAD"": credit in cash
+""PREVOD Z UCTU"" :collection from another bank
+""VYBER"": withdrawal in cash
+""PREVOD NA UCET"": remittance to another bank",,1535.75,651.75,1504,1254.75,513.0,1276
+53,financial,trans,amount,amount of money,amount of money,integer,Unit：USD,,1531.5,651.75,1504,1253.25,513.0,1276
+54,financial,trans,balance,balance after transaction,balance after transaction,integer,Unit：USD,,1537.25,651.75,1504,1253.75,513.0,1276
+55,financial,trans,k_symbol,characterization of the transaction,,text,"""POJISTNE"": stands for insurrance payment
+""SLUZBY"": stands for payment for statement
+""UROK"": stands for interest credited
+""SANKC. UROK"": sanction interest if negative balance
+""SIPO"": stands for household
+""DUCHOD"": stands for old-age pension
+""UVER"": stands for loan payment",,1535.0,651.0,1506,1254.25,513.0,1278
+56,financial,trans,bank,bank of the partner,,text,each bank has unique two-letter code,,1528.0,651.0,1503,1252.25,513.0,1276
+57,financial,trans,account,account of the partner,,integer,,,1531.0,651.0,1503,1253.75,513.0,1276
+58,financial,account,account_id,account id,the id of the account,integer,,P,1451.75,597.0,1347,1172.25,457.5,1117
+59,financial,account,district_id,location of branch,location of branch,integer ,,F,1453.75,596.25,1346,1172.75,457.5,1117
+60,financial,account,frequency,frequency,frequency of the acount,text,"""POPLATEK MESICNE"" stands for monthly issuance
+""POPLATEK TYDNE"" stands for weekly issuance
+""POPLATEK PO OBRATU"" stands for issuance after transaction",,1451.25,595.5,1343,1171.75,457.5,1115
+61,financial,account,date,date,the creation date of the account,date,in the form YYMMDD,,1448.5,597.0,1344,1169.25,457.5,1115
+62,financial,card,card_id,credit card id,id number of credit card,integer,,P,1420.25,590.25,1290,1139.75,450.0,1059
+63,financial,card,disp_id,disposition id,disposition id,integer,,F,1417.75,587.25,1286,1139.75,450.0,1059
+64,financial,card,type,,type of credit card,text,"""junior"": junior class of credit card; 
+""classic"": standard class of credit card; 
+""gold"": high-level credit card",,1414.0,588.0,1284,1138.25,450.0,1057
+65,financial,card,issued,,the date when the credit card issued ,date,in the form YYMMDD,,1420.0,591.0,1287,1139.25,450.0,1057
+66,financial,order,order_id,,identifying the unique order,integer,,P,1449.25,603.75,1346,1170.25,465.75,1118
+67,financial,order,account_id,,id number of account,integer,,F,1448.75,603.75,1346,1171.25,465.75,1118
+68,financial,order,bank_to,bank of the recipient,bank of the recipient,text,,,1451.25,606.0,1349,1169.75,465.75,1118
+69,financial,order,account_to,account of the recipient,account of the recipient,integer,each bank has unique two-letter code,,1455.0,606.0,1349,1171.25,465.75,1118
+70,financial,order,amount,debited amount,debited amount,real,,,1447.0,603.0,1344,1169.25,465.75,1116
+71,financial,order,k_symbol,characterization of the payment,purpose of the payment,text,"""POJISTNE"" stands for insurance payment
+""SIPO"" stands for household payment
+""LEASING"" stands for leasing
+""UVER"" stands for loan payment",,1454.75,606.0,1349,1170.25,465.75,1118
+72,financial,disp,disp_id,disposition id,unique number of identifying this row of record,integer,,P,1402.5,591.75,1241,1116.25,450.0,1008
+73,financial,disp,client_id,,id number of client,integer,,F,1394.25,588.0,1236,1117.25,450.0,1008
+74,financial,disp,account_id,,id number of account,integer,,F,1395.25,588.0,1236,1117.75,450.0,1008
+75,financial,disp,type,,type of disposition,text,"""OWNER"" : ""USER"" : ""DISPONENT""
+commonsense evidence:
+the account can only have the right to issue permanent orders or apply for loans",,1390.5,587.25,1232,1114.75,450.0,1006
+76,formula_1,circuits,circuitId,circuit Id ,unique identification number of the circuit ,integer ,,P,2312.0,830.25,2084,2026.75,688.5,1853
+77,formula_1,circuits,circuitRef,circuit reference name ,circuit reference name ,text,,,2310.5,828.75,2082,2027.25,688.5,1853
+78,formula_1,circuits,name ,,full name of circuit ,text,,,2301.25,827.25,2081,2024.75,688.5,1853
+79,formula_1,circuits,location  ,,location of circuit ,text,,,2304.75,826.5,2080,2027.25,688.5,1853
+80,formula_1,circuits,country ,,country of circuit ,text,,,2303.0,826.5,2080,2026.25,688.5,1853
+81,formula_1,circuits,lat ,latitude  ,latitude of location of circuit ,real,,,2305.0,828.75,2083,2024.25,688.5,1853
+82,formula_1,circuits,lng ,longitude  ,longitude of location of circuit ,real,"commonsense evidence: 
+Location coordinates: (lat, lng)",,2305.5,828.75,2083,2024.25,688.5,1853
+83,formula_1,circuits,alt ,,,integer ,not useful ,,2296.0,824.25,2078,2024.25,688.5,1853
+84,formula_1,circuits,url ,,url ,text,,,2296.25,825.0,2078,2024.25,688.5,1853
+85,formula_1,status,statusId ,status ID,the unique identification number identifying status,integer,,,2018.75,758.25,1727,1732.25,618.0,1495
+86,formula_1,status,status ,,full name of status ,text,,,2008.0,756.75,1721,1731.25,618.0,1493
+87,formula_1,drivers,driverId ,driver ID ,the unique identification number identifying each driver,integer,,,2249.5,817.5,2066,1961.5,675.75,1833
+88,formula_1,drivers,driverRef ,driver reference name ,driver reference name ,text,,,2244.75,816.0,2063,1962.0,675.75,1833
+89,formula_1,drivers,number ,,number ,integer,,,2234.0,812.25,2056,1960.5,675.75,1831
+90,formula_1,drivers,code ,,abbreviated code for drivers ,text,"if ""null"" or empty, it means it doesn't have code ",,2238.0,814.5,2059,1959.5,675.75,1831
+91,formula_1,drivers,forename ,,forename ,text,,,2236.0,812.25,2060,1961.5,675.75,1833
+92,formula_1,drivers,surname ,,surname ,text,,,2235.0,812.25,2056,1961.0,675.75,1831
+93,formula_1,drivers,dob ,date of birth ,date of birth ,date,,,2236.25,816.0,2060,1959.0,675.75,1831
+94,formula_1,drivers,nationality ,,nationality of drivers ,text,,,2241.75,813.75,2058,1963.0,675.75,1831
+95,formula_1,drivers,url ,,the introduction website of the drivers ,text,,,2240.0,816.0,2061,1959.0,675.75,1831
+96,formula_1,driverStandings,driverStandingsId ,driver Standings Id ,the unique identification number identifying driver standing records ,integer,,,2070.75,803.25,1872,1774.75,659.25,1634
+97,formula_1,driverStandings,raceId ,constructor Reference name ,id number identifying which races ,integer,,,2055.5,801.0,1862,1769.25,659.25,1630
+98,formula_1,driverStandings,driverId ,,id number identifying which drivers ,integer,,,2051.5,798.75,1860,1770.25,659.25,1630
+99,formula_1,driverStandings,points ,,how many points acquired in each race ,real,,,2050.5,800.25,1859,1769.25,659.25,1628
+100,formula_1,driverStandings,position ,,position or track of circuits ,integer,,,2050.0,798.75,1857,1770.25,659.25,1628
+101,formula_1,driverStandings,positionText ,position text ,,text,"same with position, not quite useful ",,2049.0,796.5,1857,1772.25,659.25,1630
+102,formula_1,driverStandings,wins ,,wins ,integer,,,2040.75,795.75,1853,1768.25,659.25,1628
+103,formula_1,races,raceId ,race ID ,the unique identification number identifying the race ,integer ,,,2255.75,825.0,2115,1969.25,682.5,1882
+104,formula_1,races,year ,,year ,integer ,,,2240.75,819.0,2105,1968.25,682.5,1880
+105,formula_1,races,round ,,round ,integer ,,,2241.75,819.0,2105,1968.75,682.5,1880
+106,formula_1,races,circuitId ,Circuit Id ,circuit Id ,integer ,,,2248.0,821.25,2110,1970.75,682.5,1882
+107,formula_1,races,name ,,name of the race ,text,,,2243.75,821.25,2108,1968.25,682.5,1880
+108,formula_1,races,date ,,duration time ,date,,,2243.0,819.75,2106,1968.25,682.5,1880
+109,formula_1,races,time ,,time of the location ,text,,,2244.75,821.25,2108,1968.25,682.5,1880
+110,formula_1,races,url ,,introduction of races ,text,,,2244.25,820.5,2107,1967.75,682.5,1880
+111,formula_1,constructors,constructorId ,constructor Id ,the unique identification number identifying constructors ,integer ,,,2196.25,788.25,1915,1905.25,646.5,1683
+112,formula_1,constructors,constructorRef ,Constructor Reference name ,Constructor Reference name ,text,,,2192.25,786.75,1913,1905.75,646.5,1683
+113,formula_1,constructors,name ,,full name of the constructor ,text,,,2179.25,786.0,1910,1900.75,646.5,1681
+114,formula_1,constructors,nationality ,,nationality of the constructor ,text,,,2185.0,785.25,1909,1904.25,646.5,1681
+115,formula_1,constructors,url ,,the introduction website of the constructor ,text,"commonsense evidence: 
+How to find out the detailed introduction of the constructor: through its url",,2182.25,786.75,1911,1900.25,646.5,1681
+117,formula_1,constructorResults,constructorResultsId,constructor Results Id,constructor Results Id,integer,,P,2059.0,781.5,1800,1773.75,642.75,1570
+118,formula_1,constructorResults,raceId,race Id,race id,integer,,F,2041.0,780.0,1795,1766.75,642.75,1568
+119,formula_1,constructorResults,constructorId,constructor Id,constructor id,integer,,F,2049.75,780.0,1795,1770.25,642.75,1568
+120,formula_1,constructorResults,points,,points,real,,,2039.75,778.5,1790,1766.75,642.75,1566
+121,formula_1,constructorResults,status,,status,text,,,2039.75,778.5,1790,1766.75,642.75,1566
+122,formula_1,lapTimes,raceId ,race ID ,the identification number identifying race,integer ,,,2054.5,791.25,1861,1771.0,651.0,1630
+123,formula_1,lapTimes,driverId ,driver ID ,the identification number identifying each driver ,integer ,,,2058.5,792.75,1862,1772.0,651.0,1630
+124,formula_1,lapTimes,lap ,,lap number ,integer ,,,2043.25,788.25,1854,1769.5,651.0,1628
+125,formula_1,lapTimes,position ,,position or track of circuits  ,integer ,,,2052.0,790.5,1858,1772.0,651.0,1628
+126,formula_1,lapTimes,time ,,lap time  ,text,in minutes / seconds / ... ,,2043.75,788.25,1855,1770.0,651.0,1628
+127,formula_1,lapTimes,milliseconds ,,milliseconds ,integer ,,,2050.5,787.5,1853,1774.0,651.0,1628
+128,formula_1,qualifying,qualifyId ,qualify Id ,the unique identification number identifying qualifying ,integer ,"How does F1 Sprint qualifying work? Sprint qualifying is essentially a short-form Grand Prix � a race that is one-third the number of laps of the main event on Sunday. However, the drivers are battling for positions on the grid for the start of Sunday's race. ",,2110.75,817.5,1990,1822.25,675.75,1758
+129,formula_1,qualifying,raceId ,race Id ,the identification number identifying each race ,integer ,,,2105.75,817.5,1990,1820.75,675.75,1758
+130,formula_1,qualifying,driverId ,driver Id,the identification number identifying each driver ,integer ,,,2108.0,816.75,1990,1821.75,675.75,1758
+131,formula_1,qualifying,constructorId ,constructor id ,constructor Id ,integer ,,,2104.5,814.5,1986,1824.25,675.75,1758
+132,formula_1,qualifying,number ,,number ,integer ,,,2094.25,812.25,1981,1820.75,675.75,1756
+133,formula_1,qualifying,position ,,position or track of circuit ,integer ,,,2101.25,815.25,1985,1821.75,675.75,1756
+134,formula_1,qualifying,q1 ,qualifying 1 ,time in qualifying 1 ,text,"in minutes / seconds / ... 
+commonsense evidence: 
+Q1 lap times determine pole position and the order of the front 10 positions on the grid. The slowest driver in Q1 starts 10th, the next starts ninth and so on. 
+All 20 F1 drivers participate in the first period, called Q1, with each trying to set the fastest time possible. Those in the top 15 move on to the next period of qualifying, called Q2. The five slowest drivers are eliminated and will start the race in the last five positions on the grid. ",,2097.25,816.0,1990,1818.75,675.75,1758
+135,formula_1,qualifying,q2 ,qualifying 2 ,time in qualifying 2 ,text,"in minutes / seconds / ... 
+commonsense evidence: 
+only top 15 in the q1 has the record of q2 
+Q2 is slightly shorter but follows the same format. Drivers try to put down their best times to move on to Q1 as one of the 10 fastest cars. The five outside of the top 10 are eliminated and start the race from 11th to 15th based on their best lap time. ",,2097.25,816.0,1990,1818.75,675.75,1758
+136,formula_1,qualifying,q3 ,qualifying 3 ,time in qualifying 3 ,text,"in minutes / seconds / ... 
+commonsense evidence: 
+only top 10 in the q2 has the record of q3 ",,2097.25,816.0,1990,1818.75,675.75,1758
+137,formula_1,pitStops,raceId ,race ID ,the identification number identifying race ,integer ,,,2079.5,800.25,1907,1795.75,659.25,1676
+138,formula_1,pitStops,driverId ,driver ID ,the identification number identifying each driver ,integer ,,,2083.25,801.0,1908,1796.75,659.25,1676
+139,formula_1,pitStops,stop ,,stop number ,integer ,,,2069.0,796.5,1900,1794.75,659.25,1674
+140,formula_1,pitStops,lap ,,lap number ,integer ,,,2068.0,796.5,1900,1794.25,659.25,1674
+141,formula_1,pitStops,time ,,time ,text,exact time  ,,2067.25,795.75,1899,1794.75,659.25,1674
+142,formula_1,pitStops,duration ,,duration time ,text,seconds/ ,,2072.5,796.5,1900,1796.75,659.25,1674
+143,formula_1,pitStops,milliseconds ,,milliseconds ,integer ,,,2075.25,795.75,1899,1798.75,659.25,1674
+144,formula_1,seasons,year ,race ID ,the unique identification number identifying the race,integer,,,2130.75,759.75,1837,1845.0,618.0,1605
+145,formula_1,seasons,url ,,website link of season race introduction ,text,,,2125.75,758.25,1835,1844.5,618.0,1605
+146,formula_1,constructorStandings,constructorStandingsId ,constructor Standings Id ,unique identification of the constructor standing records ,integer ,,,2081.75,802.5,1871,1786.0,659.25,1634
+147,formula_1,constructorStandings,raceId ,race id ,id number identifying which races ,integer ,,,2059.5,800.25,1861,1778.0,659.25,1630
+148,formula_1,constructorStandings,constructorId ,constructor id ,id number identifying which id ,integer ,,,2065.75,800.25,1861,1781.5,659.25,1630
+149,formula_1,constructorStandings,points,,how many points acquired in each race ,,,,2058.5,800.25,1856,1777.5,659.25,1626
+150,formula_1,constructorStandings,position ,,position or track of circuits ,integer ,,,2058.75,798.75,1857,1779.0,659.25,1628
+151,formula_1,constructorStandings,positionText ,position text ,,text,"same with position, not quite useful ",,2057.75,796.5,1857,1781.0,659.25,1630
+152,formula_1,constructorStandings,wins ,,wins ,integer ,,,2049.5,795.75,1853,1777.0,659.25,1628
+153,formula_1,results,resultId,Result ID ,the unique identification number identifying race result ,integer,,P,2194.25,892.5,2172,1906.25,750.0,1940
+154,formula_1,results,raceId,race ID ,the identification number identifying the race ,integer ,,F,2189.75,891.75,2171,1905.25,750.0,1940
+155,formula_1,results,driverId ,driver ID,the identification number identifying the driver ,integer ,,,2192.75,891.0,2174,1906.75,750.0,1942
+156,formula_1,results,constructorId ,constructor Id ,the identification number identifying which constructors ,integer ,,,2200.0,891.75,2174,1909.25,750.0,1942
+157,formula_1,results,number ,,number  ,integer ,,,2179.5,886.5,2166,1905.75,750.0,1940
+158,formula_1,results,grid ,,the number identifying the area where cars are set into a grid formation in order to start the race. ,integer ,,,2201.25,900.0,2184,1904.75,750.0,1940
+159,formula_1,results,position ,,The finishing position or track of circuits ,integer ,,,2190.0,891.0,2171,1906.75,750.0,1940
+160,formula_1,results,positionText ,position text ,,text,not quite useful ,,2185.5,887.25,2169,1908.75,750.0,1942
+161,formula_1,results,positionOrder ,position order ,the finishing order of positions ,integer ,,,2194.0,891.0,2173,1909.25,750.0,1942
+162,formula_1,results,points ,,points ,real,,,2179.25,886.5,2165,1905.75,750.0,1940
+163,formula_1,results,laps ,,lap number ,integer ,,,2178.75,887.25,2166,1904.75,750.0,1940
+164,formula_1,results,time  ,,finish time ,text,"commonsense evidence: 
+1. if the value exists, it means the driver finished the race. 
+2. Only the time of the champion shows in the format of ""minutes: seconds.millionsecond"", the time of the other drivers shows as ""seconds.millionsecond"" , which means their actual time is the time of the champion adding the value in this cell.",,2179.75,887.25,2166,1905.25,750.0,1940
+165,formula_1,results,milliseconds ,,the actual finishing time of drivers in milliseconds  ,integer ,the actual finishing time of drivers  ,,2195.5,891.75,2173,1908.75,750.0,1940
+166,formula_1,results,fastestLap ,fastest lap ,fastest lap number ,integer ,,,2187.5,889.5,2174,1907.75,750.0,1944
+167,formula_1,results,rank ,,starting rank positioned by fastest lap speed,integer ,,,2187.25,890.25,2171,1904.75,750.0,1940
+168,formula_1,results,fastestLapTime ,fastest Lap Time,fastest Lap Time,text,"faster (smaller in the value) ""fastestLapTime"" leads to higher rank (smaller is higher rank) ",,2190.75,888.75,2178,1909.75,750.0,1946
+169,formula_1,results,fastestLapSpeed ,fastest Lap Speed ,fastest Lap Speed ,text, (km / h) ,,2192.5,890.25,2178,1910.25,750.0,1946
+170,formula_1,results,statusId ,status Id ,status ID ,integer,its category description appear in the table status ,,2183.25,888.75,2170,1906.75,750.0,1942
+171,california_schools,schools,CDSCode,CDSCode,CDSCode,text,,P,2984.25,1173.75,3352,2709.75,1038.0,3122
+172,california_schools,schools,NCESDist,National Center for Educational Statistics school district identification number,"This field represents the 7-digit National Center for Educational Statistics (NCES) school district identification number. The first 2 digits identify the state and the last 5 digits identify the school district. Combined, they make a unique 7-digit ID for each school district.",text,,,3071.0,1210.5,3409,2710.25,1038.0,3122
+173,california_schools,schools,NCESSchool,National Center for Educational Statistics school identification number,This field represents the 5-digit NCES school identification number. The NCESSchool combined with the NCESDist form a unique 12-digit ID for each school.,text,,,3039.0,1195.5,3387,2711.25,1038.0,3122
+174,california_schools,schools,StatusType,,This field identifies the status of the district. ,text,"Definitions of the valid status types are listed below:
+·       Active: The district is in operation and providing instructional services.
+·       Closed: The district is not in operation and no longer providing instructional services.
+·       Merged: The district has combined with another district or districts.
+·       Pending: The district has not opened for operation and instructional services yet, but plans to open within the next 9–12 months.",,2996.25,1179.75,3353,2711.25,1038.0,3120
+175,california_schools,schools,County,,County name,text,,,2983.5,1174.5,3343,2709.25,1038.0,3118
+176,california_schools,schools,District,,District,text,,,2984.25,1173.75,3342,2710.25,1038.0,3118
+177,california_schools,schools,School,,School,text,,,2982.25,1173.75,3342,2709.25,1038.0,3118
+178,california_schools,schools,Street,,Street,text,,,2982.25,1173.75,3342,2709.25,1038.0,3118
+179,california_schools,schools,StreetAbr,street address ,"The abbreviated street address of the school, district, or administrative authority’s physical location.",text,"The abbreviated street address of the school, district, or administrative authority’s physical location. Note: Some records (primarily records of closed or retired schools) may not have data in this field.",,3012.0,1184.25,3361,2710.75,1038.0,3120
+180,california_schools,schools,City,,City,text,,,2980.25,1173.75,3342,2708.25,1038.0,3118
+181,california_schools,schools,Zip,,Zip,text,,,2979.25,1173.75,3342,2707.75,1038.0,3118
+182,california_schools,schools,State,,State,text,,,2981.25,1173.75,3342,2708.75,1038.0,3118
+183,california_schools,schools,MailStreet,,MailStreet,text,"The unabbreviated mailing address of the school, district, or administrative authority. Note: 1) Some entities (primarily closed or retired schools) may not have data in this field; 2) Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStreet cells with Street data.",,2986.25,1173.75,3346,2711.25,1038.0,3120
+184,california_schools,schools,MailStrAbr,mailing street address ,,text,"the abbreviated mailing street address of the school, district, or administrative authority.Note: Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStrAbr cells with StreetAbr data.",,2989.5,1176.0,3350,2711.25,1038.0,3122
+185,california_schools,schools,MailCity,mailing city,,text,"The city associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address city. For your convenience we have filled the unpopulated MailCity cells with City data.",,2985.25,1174.5,3346,2710.25,1038.0,3120
+186,california_schools,schools,MailZip,mailing zip ,,text,"The zip code associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address zip code. For your convenience we have filled the unpopulated MailZip cells with Zip data.",,2984.5,1175.25,3346,2709.75,1038.0,3120
+187,california_schools,schools,MailState,mailing state,,text,The state within the mailing address. For your convenience we have filled the unpopulated MailState cells with State data.,,2986.25,1174.5,3346,2710.75,1038.0,3120
+188,california_schools,schools,Phone,,Phone,text,,,2981.25,1173.75,3342,2708.75,1038.0,3118
+189,california_schools,schools,Ext,extension,"The phone number extension of the school, district, or administrative authority.",text,"The phone number extension of the school, district, or administrative authority.",,3000.0,1181.25,3354,2707.75,1038.0,3118
+190,california_schools,schools,Website,,"The website address of the school, district, or administrative authority.",text,"The website address of the school, district, or administrative authority.",,2999.75,1180.5,3353,2709.75,1038.0,3118
+191,california_schools,schools,OpenDate,,The date the school opened.,date,,,2989.0,1176.75,3349,2710.25,1038.0,3120
+192,california_schools,schools,ClosedDate,,The date the school closed.,date,,,2990.5,1176.75,3349,2711.25,1038.0,3120
+193,california_schools,schools,Charter,,This field identifies a charter school. ,integer,"The field is coded as follows:
+
+·       1 = The school is a charter
+
+·       0 = The school is not a charter",,2991.5,1178.25,3348,2709.75,1038.0,3118
+194,california_schools,schools,CharterNum,,"The charter school number,",text,4-digit number assigned to a charter school.,,2990.25,1176.0,3348,2711.25,1038.0,3120
+195,california_schools,schools,FundingType,,Indicates the charter school funding type,text,"Values are as follows:
+
+·       Not in CS (California School) funding model
+
+·       Locally funded
+
+·       Directly funded",,2994.75,1177.5,3350,2711.75,1038.0,3120
+196,california_schools,schools,DOC,District Ownership Code,District Ownership Code,text,"The District Ownership Code (DOC) is the numeric code used to identify the category of the Administrative Authority.
+•       00 - County Office of Education
+•       02 – State Board of Education
+•       03 – Statewide Benefit Charter
+•       31 – State Special Schools
+•       34 – Non-school Location*
+•       52 – Elementary School District
+•       54 – Unified School District
+•       56 – High School District
+•       98 – Regional Occupational Center/Program (ROC/P)
+commonsense evidence:
+*Only the California Education Authority has been included in the non-school location category.",,2989.25,1176.75,3346,2707.75,1038.0,3118
+197,california_schools,schools,DOCType,The District Ownership Code Type,The District Ownership Code Type is the text description of the DOC category.,text,(See text values in DOC field description above),,3008.0,1185.75,3361,2709.75,1038.0,3120
+198,california_schools,schools,SOC,School Ownership Code,The School Ownership Code is a numeric code used to identify the type of school.,text,"•      08 - Preschool      
+•       09 – Special Education Schools (Public)
+•      11 – Youth Authority Facilities (CEA)
+•       13 – Opportunity Schools
+•       14 – Juvenile Court Schools
+•       15 – Other County or District Programs
+•       31 – State Special Schools
+•       60 – Elementary School (Public)
+•       61 – Elementary School in 1 School District (Public)
+•       62 – Intermediate/Middle Schools (Public)
+•       63 – Alternative Schools of Choice
+•       64 – Junior High Schools (Public)
+•       65 – K-12 Schools (Public)
+•       66 – High Schools (Public)
+•       67 – High Schools in 1 School District (Public)
+•       68 – Continuation High Schools
+•       69 – District Community Day Schools
+•       70 – Adult Education Centers
+•       98 – Regional Occupational Center/Program (ROC/P)",,3003.0,1185.75,3358,2707.75,1038.0,3118
+199,california_schools,schools,SOCType,School Ownership Code Type,The School Ownership Code Type is the text description of the type of school.,text,The School Ownership Code Type is the text description of the type of school.,,3006.5,1185.75,3361,2709.75,1038.0,3120
+200,california_schools,schools,EdOpsCode,Education Option Code,The Education Option Code is a short text description of the type of education offered.,text,"
+•      ALTSOC – Alternative School of Choice
+•      COMM – County Community School
+•       COMMDAY – Community Day School
+•       CON – Continuation School
+•       JUV – Juvenile Court School
+•       OPP – Opportunity School
+•       YTH – Youth Authority School
+•       SSS – State Special School
+•       SPEC – Special Education School
+•       TRAD – Traditional
+•       ROP – Regional Occupational Program
+•       HOMHOS – Home and Hospital
+•       SPECON – District Consortia Special Education School",,3009.25,1185.75,3364,2710.75,1038.0,3122
+201,california_schools,schools,EdOpsName,Educational Option Name,Educational Option Name,text,The Educational Option Name is the long text description of the type of education being offered.,,2993.75,1176.75,3352,2710.75,1038.0,3122
+202,california_schools,schools,EILCode,Educational Instruction Level Code,The Educational Instruction Level Code is a short text description of the institution's type relative to the grade range served.,text,"•       A – Adult
+•       ELEM – Elementary
+•       ELEMHIGH – Elementary-High Combination
+•       HS – High School
+•       INTMIDJR – Intermediate/Middle/Junior High
+•       PS – Preschool
+•       UG – Ungraded",,3021.25,1190.25,3371,2709.75,1038.0,3122
+203,california_schools,schools,EILName,Educational Instruction Level Name ,The Educational Instruction Level Name is the long text description of the institution’s type relative to the grade range served.,text,The Educational Instruction Level Name is the long text description of the institution’s type relative to the grade range served.,,3021.75,1191.0,3371,2709.75,1038.0,3122
+204,california_schools,schools,GSoffered,grade span offered,"The grade span offered is the lowest grade and the highest grade offered or supported by the school, district, or administrative authority. This field might differ from the grade span served as reported in the most recent certified California Longitudinal Pupil Achievement (CALPADS) Fall 1 data collection.",text,"For example XYZ School might display the following data:
+
+GSoffered = P–Adult
+
+GSserved = K–12",,3063.5,1209.75,3407,2710.75,1038.0,3122
+205,california_schools,schools,GSserved,grade span served.,It is the lowest grade and the highest grade of student enrollment as reported in the most recent certified CALPADS Fall 1 data collection. Only K–12 enrollment is reported through CALPADS. This field may differ from the grade span offered.,text,"commonsense evidence:
+
+1.     Only K–12 enrollment is reported through CALPADS
+
+2.     Note: Special programs at independent study, alternative education, and special education schools will often exceed the typical grade span for schools of that type",,3046.0,1204.5,3398,2710.25,1038.0,3122
+206,california_schools,schools,Virtual,,"This field identifies the type of virtual instruction offered by the school. Virtual instruction is instruction in which students and teachers are separated by time and/or location, and interaction occurs via computers and/or telecommunications technologies. ",text,"The field is coded as follows:
+
+·       F = Exclusively Virtual – The school has no physical building where students meet with each other or with teachers, all instruction is virtual.
+
+·       V = Primarily Virtual – The school focuses on a systematic program of virtual instruction but includes some physical meetings among students or with teachers.
+
+·       C = Primarily Classroom – The school offers virtual courses but virtual instruction is not the primary means of instruction.
+
+·       N = Not Virtual – The school does not offer any virtual instruction.
+
+·       P = Partial Virtual – The school offers some, but not all, instruction through virtual instruction. Note: This value was retired and replaced with the Primarily Virtual and Primarily Classroom values beginning with the 2016–17 school year.",,3046.25,1200.0,3381,2709.75,1038.0,3118
+207,california_schools,schools,Magnet,,This field identifies whether a school is a magnet school and/or provides a magnet program. ,text,"The field is coded as follows:
+
+·       Y = Magnet - The school is a magnet school and/or offers a magnet program.
+
+·       N = Not Magnet - The school is not a magnet school and/or does not offer a magnet program.
+
+commonsense evidence:
+
+Note: Preschools and adult education centers do not contain a magnet school indicator.",,3003.75,1185.0,3358,2709.25,1038.0,3118
+208,california_schools,schools,Latitude,,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the equator measured north to south.",real,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the equator measured north to south.",,3021.75,1190.25,3370,2710.25,1038.0,3118
+209,california_schools,schools,Longitude,,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the prime meridian (Greenwich, England) measured from west to east.",real,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the prime meridian (Greenwich, England) measured from west to east.",,3030.25,1193.25,3378,2710.75,1038.0,3118
+210,california_schools,schools,AdmFName1,administrator's first name,administrator's first name,text,"The superintendent’s or principal’s first name.
+
+commonsense evidence:
+
+Only active and pending districts and schools will display administrator information, if applicable.",,2995.25,1176.75,3360,2710.75,1038.0,3126
+211,california_schools,schools,AdmLName1,administrator's last name,administrator's last name,text,"The superintendent’s or principal’s last name.
+
+commonsense evidence:
+Only active and pending districts and schools will display administrator information, if applicable.",,2994.75,1176.75,3360,2710.75,1038.0,3126
+212,california_schools,schools,AdmEmail1,administrator's email address,administrator's email address,text,"The superintendent’s or principal’s email address.
+
+commonsense evidence:
+
+Only active and pending districts and schools will display administrator information, if applicable.",,2996.75,1176.75,3357,2710.75,1038.0,3124
+213,california_schools,schools,AdmFName2,,,text,SAME as 1,,2983.75,1173.75,3354,2710.75,1038.0,3126
+214,california_schools,schools,AdmLName2,,,text,,,2983.75,1173.75,3354,2710.75,1038.0,3126
+215,california_schools,schools,AdmEmail2,,,text,,,2983.75,1173.75,3351,2710.75,1038.0,3124
+216,california_schools,schools,AdmFName3,,,text,not useful,,2983.75,1173.75,3354,2710.75,1038.0,3126
+217,california_schools,schools,AdmLName3,,,text,not useful,,2983.75,1173.75,3354,2710.75,1038.0,3126
+218,california_schools,schools,AdmEmail3,,,text,not useful,,2983.75,1173.75,3351,2710.75,1038.0,3124
+219,california_schools,schools,LastUpdate,,,date,when is this record updated last time,,2984.5,1173.75,3345,2711.25,1038.0,3120
+220,california_schools,satscores,cds,,California Department Schools,text,,F,1868.25,710.25,1776,1590.25,573.0,1550
+221,california_schools,satscores,rtype,,rtype,text,unuseful,,1863.75,708.75,1778,1591.25,573.0,1552
+222,california_schools,satscores,sname,school name,school name,text,,,1867.25,710.25,1779,1591.25,573.0,1552
+223,california_schools,satscores,dname,district name,district segment,text,,,1869.0,710.25,1779,1591.25,573.0,1552
+224,california_schools,satscores,cname,county name,county name,text,,,1867.25,710.25,1776,1591.25,573.0,1550
+225,california_schools,satscores,enroll12,enrollment (1st-12nd grade),enrollment (1st-12nd grade),integer,,,1877.5,711.75,1791,1592.75,573.0,1552
+226,california_schools,satscores,NumTstTakr,Number of Test Takers,Number of Test Takers in this school,integer,number of test takers in each school,,1879.75,715.5,1800,1593.75,573.0,1560
+227,california_schools,satscores,AvgScrRead,average scores in Reading,average scores in Reading,integer,average scores in Reading,,1878.0,713.25,1786,1593.75,573.0,1554
+228,california_schools,satscores,AvgScrMath,average scores in Math,average scores in Math,integer,average scores in Math,,1876.5,713.25,1786,1593.75,573.0,1554
+229,california_schools,satscores,AvgScrWrite,average scores in writing,average scores in writing,integer,average scores in writing,,1878.75,713.25,1786,1594.25,573.0,1554
+230,california_schools,satscores,NumGE1500,Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500,Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500,integer,"Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500
+
+commonsense evidence:
+
+Excellence Rate = NumGE1500 / NumTstTakr",,1901.25,728.25,1817,1593.25,573.0,1556
+231,california_schools,frpm,CDSCode,,CDSCode,integer,,F,2558.75,972.75,2889,2285.25,837.0,2661
+232,california_schools,frpm,Academic Year,,Academic Year,integer ,,,2564.75,975.75,2885,2288.25,838.5,2659
+233,california_schools,frpm,County Code,,County Code,integer,,,2562.75,975.75,2885,2287.25,838.5,2659
+234,california_schools,frpm,District Code,,District Code,integer,,,2564.75,975.75,2885,2288.25,838.5,2659
+235,california_schools,frpm,School Code ,,School Code,integer,,,2563.5,975.75,2888,2287.75,838.5,2661
+236,california_schools,frpm,County Name,,County Code ,text,,,2563.0,976.5,2885,2287.25,838.5,2659
+237,california_schools,frpm,District Name ,,District Name ,text,,,2565.75,976.5,2888,2288.75,838.5,2661
+238,california_schools,frpm,School Name,,School Name ,text,,,2563.0,976.5,2885,2287.25,838.5,2659
+239,california_schools,frpm,District Type,,District Type,text,,,2564.75,975.75,2885,2288.25,838.5,2659
+240,california_schools,frpm,School Type ,,School Type ,text,,,2563.75,976.5,2888,2287.75,838.5,2661
+241,california_schools,frpm,Educational Option Type,,Educational Option Type,text,,,2574.75,978.75,2889,2293.25,840.0,2661
+242,california_schools,frpm,NSLP Provision Status,,NSLP Provision Status,text,,,2572.75,978.75,2893,2292.25,840.0,2663
+243,california_schools,frpm,Charter School (Y/N),,Charter School (Y/N),integer,"0: N;
+1: Y",,2571.75,978.75,2900,2291.75,840.0,2667
+244,california_schools,frpm,Charter School Number,,Charter School Number,text,,,2572.75,978.75,2889,2292.25,840.0,2661
+245,california_schools,frpm,Charter Funding Type,,Charter Funding Type,text,,,2571.75,978.75,2889,2291.75,840.0,2661
+246,california_schools,frpm,IRC,,,integer,Not useful,,2554.75,972.75,2881,2283.25,837.0,2657
+247,california_schools,frpm,Low Grade,,Low Grade,text,,,2560.75,975.75,2885,2286.25,838.5,2659
+248,california_schools,frpm,High Grade,,High Grade,text,,,2561.75,975.75,2885,2286.75,838.5,2659
+249,california_schools,frpm,Enrollment (K-12),,Enrollment (K-12),real,"commonsense evidence:
+
+K-12: 1st grade - 12nd grade ",,2568.75,975.75,2900,2290.25,838.5,2667
+250,california_schools,frpm,Free Meal Count (K-12),,Free Meal Count (K-12),real,"commonsense evidence:
+
+eligible free rate = Free Meal Count / Enrollment",,2573.75,981.75,2908,2292.75,841.5,2671
+251,california_schools,frpm,Percent (%) Eligible Free (K-12),,,real,,,2576.5,981.75,2908,2297.75,843.0,2675
+252,california_schools,frpm,FRPM Count (K-12),,Free or Reduced Price Meal Count (K-12),real,"commonsense evidence:
+
+eligible FRPM rate = FRPM / Enrollment",,2574.25,981.75,2911,2290.25,840.0,2671
+253,california_schools,frpm,Percent (%) Eligible FRPM (K-12),,,real,,,2576.5,981.75,2911,2297.75,843.0,2677
+254,california_schools,frpm,Enrollment (Ages 5-17),,Enrollment (Ages 5-17),real,,,2573.75,978.75,2912,2292.75,840.0,2673
+255,california_schools,frpm,Free Meal Count (Ages 5-17),,Free Meal Count (Ages 5-17),real,"commonsense evidence:
+
+eligible free rate = Free Meal Count / Enrollment",,2578.75,984.75,2920,2295.25,843.0,2677
+256,california_schools,frpm, Percent (%) Eligible Free (Ages 5-17),,,real,,,2581.0,984.0,2920,2300.75,844.5,2683
+257,california_schools,frpm,FRPM Count (Ages 5-17),,,real,,,2569.0,979.5,2911,2292.75,841.5,2677
+258,california_schools,frpm,Percent (%) Eligible FRPM (Ages 5-17),,,real,,,2580.25,984.0,2920,2300.25,844.5,2683
+259,california_schools,frpm,2013-14 CALPADS Fall 1 Certification Status,,2013-14 CALPADS Fall 1 Certification Status,integer,,,2594.75,987.75,2929,2303.25,844.5,2681
+260,card_games,legalities,id,,unique id identifying this legality,integer,,P,1960.0,645.0,1805,1680.75,506.25,1577
+261,card_games,legalities,format,,format of play,text,each value refers to different rules to play,,1957.75,643.5,1803,1682.75,506.25,1577
+262,card_games,legalities,status,,,text,"• legal
+• banned
+• restricted",,1955.0,642.0,1801,1682.75,506.25,1577
+263,card_games,legalities,uuid,,,text,,F,1953.5,642.0,1801,1681.75,506.25,1577
+264,card_games,cards,id,unique id number identifying the cards,,integer,,P,4695.75,1646.25,6052,4415.75,1506.75,5823
+265,card_games,cards,artist,,The name of the artist that illustrated the card art.,text,,,4702.5,1649.25,6056,4417.75,1506.75,5823
+266,card_games,cards,asciiName,ascii Name,The ASCII(opens new window) (Basic/128) code formatted card name with no special unicode characters.,text,,,4718.25,1653.0,6071,4419.25,1506.75,5825
+267,card_games,cards,availability,,A list of the card's available printing types.,text,"""arena"", ""dreamcast"", ""mtgo"", ""paper"", ""shandalar""",,4705.25,1647.75,6055,4420.75,1506.75,5823
+268,card_games,cards,borderColor,border Color,The color of the card border.,text,"""black"", ""borderless"", ""gold"", ""silver"", ""white""",,4702.5,1647.0,6053,4420.25,1506.75,5823
+269,card_games,cards,cardKingdomFoilId,card Kingdom Foil Id,card Kingdom Foil Id,text,"commonsense evidence:
+cardKingdomFoilId, when paired with cardKingdomId that is not Null, is incredibly powerful. ",,4706.75,1647.0,6070,4423.25,1506.75,5833
+270,card_games,cards,cardKingdomId,card Kingdom Id,card Kingdom Id,text,A list of all the colors in the color indicator,,4701.25,1645.5,6060,4421.25,1506.75,5829
+271,card_games,cards,colorIdentity,color Identity,"A list of all the colors found in manaCost, colorIndicator, and text",text,,,4714.25,1651.5,6066,4421.25,1506.75,5825
+272,card_games,cards,colorIndicator,color Indicator,A list of all the colors in the color indicator (The symbol prefixed to a card's types).,text,,,4720.25,1655.25,6069,4421.75,1506.75,5825
+273,card_games,cards,colors,,A list of all the colors in manaCost and colorIndicator. ,text,"Some cards may not have values, such as cards with ""Devoid"" in its text.",,4703.5,1650.0,6059,4417.75,1506.75,5823
+274,card_games,cards,convertedManaCost,converted Mana Cost,The converted mana cost of the card. Use the manaValue property.,real,"if value is higher, it means that this card cost more converted mana ",,4717.5,1651.5,6067,4423.25,1506.75,5827
+275,card_games,cards,duelDeck,duel Deck,The indicator for which duel deck the card is in.,text,,,4704.5,1650.0,6060,4418.75,1506.75,5825
+276,card_games,cards,edhrecRank,rec Rank in edh,The card rank on EDHRec,integer,,,4701.0,1647.75,6066,4419.75,1506.75,5829
+277,card_games,cards,faceConvertedManaCost,face Converted Mana Cost,The converted mana cost or mana value for the face for either half or part of the card. ,real,"if value is higher, it means that this card cost more converted mana for the face",,4727.75,1658.25,6077,4425.25,1506.75,5829
+278,card_games,cards,faceName,face Name,The name on the face of the card.,text,,,4700.5,1648.5,6058,4418.75,1506.75,5825
+279,card_games,cards,flavorName,flavor Name,The promotional card name printed above the true card name on special cards that has no game function.,text,The promotional card name printed above the true card name on special cards that has no game function.,,4719.75,1656.0,6068,4419.75,1506.75,5825
+280,card_games,cards,flavorText,flavor Text,The italicized text found below the rules text that has no game function.,text,The italicized text found below the rules text that has no game function.,,4712.5,1652.25,6064,4419.75,1506.75,5825
+281,card_games,cards,frameEffects,frame Effects,The visual frame effects.,text,"""colorshifted"", ""companion"", ""compasslanddfc"", ""devoid"", ""draft"", ""etched"", ""extendedart"", ""fullart"", ""inverted"", ""legendary"", ""lesson"", ""miracle"", ""mooneldrazidfc"", ""nyxtouched"", ""originpwdfc"", ""showcase"", ""snow"", ""sunmoondfc"", ""textless"", ""tombstone"", ""waxingandwaningmoondfc""",,4702.5,1645.5,6054,4420.75,1506.75,5825
+282,card_games,cards,frameVersion,frame Version,The version of the card frame style.,text,"""1993"", ""1997"", ""2003"", ""2015"", ""future""",,4705.25,1647.75,6057,4420.75,1506.75,5825
+283,card_games,cards,hand,,The starting maximum hand size total modifier. ,text,"A + or - character precedes an integer. 
+commonsense evidence:
+positive maximum hand size: +1, +2, ....
+negative maximum hand size: -1, ....
+neural maximum hand size: 0....",,4699.5,1647.75,6054,4416.75,1506.75,5823
+284,card_games,cards,hasAlternativeDeckLimit,has Alternative Deck Limit,If the card allows a value other than 4 copies in a deck.,integer,0: disallow 1: allow,,4722.0,1653.75,6072,4426.25,1506.75,5829
+285,card_games,cards,hasContentWarning,has Content Warning,If the card marked by Wizards of the Coast (opens new window) for having sensitive content. See this official article (opens new window) for more information.,integer,"0: doesn't have 1: has sensitve content or Wizards of the Coast
+commonsense evidence:
+Cards with this property may have missing or degraded properties and values. ",,4741.0,1662.75,6085,4423.25,1506.75,5827
+286,card_games,cards,hasFoil,has Foil,If the card can be found in foil,integer,0: cannot be found 1: can be found,,4699.25,1648.5,6062,4418.25,1506.75,5827
+287,card_games,cards,hasNonFoil,has Non Foil,If the card can be found in non-foil,integer,0: cannot be found 1: can be found,,4703.5,1649.25,6068,4419.75,1506.75,5829
+288,card_games,cards,isAlternative,is Alternative,If the card is an alternate variation to an original printing,integer,0: is not 1: is,,4712.5,1650.75,6061,4421.25,1506.75,5825
+289,card_games,cards,isFullArt,is Full Art,If the card has full artwork.,integer,"0: doesn't have, 1: has full artwork",,4700.75,1647.75,6060,4419.25,1506.75,5827
+290,card_games,cards,isOnlineOnly,is Online Only,If the card is only available in online game variations.,integer,0: is not 1: is,,4710.5,1650.75,6064,4420.75,1506.75,5827
+291,card_games,cards,isOversized,is Oversized,If the card is oversized.,integer,0: is not 1: is,,4701.5,1646.25,6062,4420.25,1506.75,5829
+292,card_games,cards,isPromo,is Promotion,If the card is a promotional printing.,integer,0: is not 1: is,,4701.75,1647.75,6060,4418.25,1506.75,5827
+293,card_games,cards,isReprint,is Reprint,If the card has been reprinted.,integer,0: has not 1: has not been,,4701.0,1647.0,6061,4419.25,1506.75,5827
+294,card_games,cards,isReserved,is Reserved,If the card is on the Magic: The Gathering Reserved List (opens new window),integer,"If the card is on the Magic, it will appear in The Gathering Reserved List",,4713.0,1653.0,6066,4419.75,1506.75,5825
+295,card_games,cards,isStarter,is Starter,If the card is found in a starter deck such as Planeswalker/Brawl decks.,integer,0: is not 1: is,,4711.25,1652.25,6070,4419.25,1506.75,5827
+296,card_games,cards,isStorySpotlight,is Story Spotlight,If the card is a Story Spotlight card.,integer,0: is not 1: is,,4710.0,1649.25,6065,4422.75,1506.75,5829
+297,card_games,cards,isTextless,is Text less,If the card does not have a text box.,integer,"commonsense evidence:
+0: has a text box;
+1: doesn't have a text box;",,4703.75,1650.0,6063,4419.75,1506.75,5827
+298,card_games,cards,isTimeshifted,is Time shifted,If the card is time shifted,integer,"commonsense evidence:
+If the card is ""timeshifted"", a feature of certain sets where a card will have a different frameVersion.",,4704.25,1647.75,6063,4421.25,1506.75,5829
+299,card_games,cards,keywords,,A list of keywords found on the card.,text,,,4700.0,1647.75,6054,4418.75,1506.75,5823
+300,card_games,cards,layout,,"The type of card layout. For a token card, this will be ""token""",text,,,4705.0,1651.5,6062,4417.75,1506.75,5823
+301,card_games,cards,leadershipSkills,leadership Skills,A list of formats the card is legal to be a commander in,text,,,4714.25,1652.25,6063,4422.75,1506.75,5825
+302,card_games,cards,life,,The starting life total modifier. A plus or minus character precedes an integer.,text,,,4707.75,1651.5,6061,4416.75,1506.75,5823
+303,card_games,cards,loyalty,,The starting loyalty value of the card.,text,"Used only on cards with ""Planeswalker"" in its types. empty means unkown",,4699.75,1647.0,6053,4418.25,1506.75,5823
+304,card_games,cards,manaCost,mana Cost ,The mana cost of the card wrapped in brackets for each value.,text,"commonsense evidence:
+manaCost is unconverted mana cost",,4707.75,1652.25,6062,4418.75,1506.75,5825
+305,card_games,cards,mcmId,,,text,NOT USEFUL,,4689.25,1642.5,6053,4417.25,1506.75,5827
+306,card_games,cards,mcmMetaId,,,text,NOT USEFUL,,4692.25,1642.5,6056,4419.25,1506.75,5829
+307,card_games,cards,mtgArenaId,,,text,NOT USEFUL,,4693.0,1642.5,6056,4419.75,1506.75,5829
+308,card_games,cards,mtgjsonV4Id,,,text,NOT USEFUL,,4693.75,1642.5,6062,4420.25,1506.75,5833
+309,card_games,cards,mtgoFoilId,,,text,NOT USEFUL,,4693.0,1642.5,6059,4419.75,1506.75,5831
+310,card_games,cards,mtgoId,,,text,NOT USEFUL,,4690.0,1642.5,6053,4417.75,1506.75,5827
+311,card_games,cards,multiverseId,,,text,NOT USEFUL,,4694.5,1642.5,6053,4420.75,1506.75,5827
+312,card_games,cards,name,,The name of the card.,text,"Cards with multiple faces, like ""Split"" and ""Meld"" cards are given a delimiter.",,4693.0,1645.5,6051,4416.75,1506.75,5823
+313,card_games,cards,number,,The number of the card,text,,,4694.75,1645.5,6051,4417.75,1506.75,5823
+314,card_games,cards,originalReleaseDate,,original Release Date,text,"The original release date in ISO 8601(opens new window) format for a promotional card printed outside of a cycle window, such as Secret Lair Drop promotions.",,4704.25,1644.0,6055,4424.25,1506.75,5827
+315,card_games,cards,originalText,,original Text,text,The text on the card as originally printed.,,4697.0,1643.25,6051,4420.75,1506.75,5825
+316,card_games,cards,originalType,,original Type,text,The type of the card as originally printed. Includes any supertypes and subtypes.,,4697.0,1643.25,6051,4420.75,1506.75,5825
+317,card_games,cards,otherFaceIds,,other Face Ids,text,"A list of card UUID's to this card's counterparts, such as transformed or melded faces.",,4697.25,1644.0,6056,4420.75,1506.75,5827
+318,card_games,cards,power,,The power of the card.,text,"commonsense evidence:
+∞ means infinite power
+null or * refers to unknown power",,4694.0,1645.5,6051,4417.25,1506.75,5823
+319,card_games,cards,printings,,"A list of set printing codes the card was printed in, formatted in uppercase.",text,,,4710.75,1652.25,6064,4419.25,1506.75,5825
+320,card_games,cards,promoTypes,promo Types,A list of promotional types for a card.,text,"""arenaleague"", ""boosterfun"", ""boxtopper"", ""brawldeck"", ""bundle"", ""buyabox"", ""convention"", ""datestamped"", ""draculaseries"", ""draftweekend"", ""duels"", ""event"", ""fnm"", ""gameday"", ""gateway"", ""giftbox"", ""gilded"", ""godzillaseries"", ""instore"", ""intropack"", ""jpwalker"", ""judgegift"", ""league"", ""mediainsert"", ""neonink"", ""openhouse"", ""planeswalkerstamped"", ""playerrewards"", ""playpromo"", ""premiereshop"", ""prerelease"", ""promopack"", ""release"", ""setpromo"", ""stamped"", ""textured"", ""themepack"", ""thick"", ""tourney"", ""wizardsplaynetwork""",,4704.0,1648.5,6058,4419.75,1506.75,5825
+321,card_games,cards,purchaseUrls,purchase Urls,Links that navigate to websites where the card can be purchased.,text,,,4712.25,1650.75,6062,4420.75,1506.75,5825
+322,card_games,cards,rarity,,The card printing rarity.,text,,,4695.5,1644.75,6050,4417.75,1506.75,5823
+323,card_games,cards,scryfallId,,,text,NOT USEFUL,,4693.0,1642.5,6053,4419.75,1506.75,5827
+324,card_games,cards,scryfallIllustrationId,,,text,NOT USEFUL,,4702.0,1642.5,6059,4425.75,1506.75,5831
+325,card_games,cards,scryfallOracleId,,,text,NOT USEFUL,,4697.5,1642.5,6056,4422.75,1506.75,5829
+326,card_games,cards,setCode,Set Code,The set printing code that the card is from.,text,,,4702.25,1649.25,6059,4418.25,1506.75,5825
+327,card_games,cards,side,,The identifier of the card side. ,text,"Used on cards with multiple faces on the same card.
+commonsense evidence:
+if this value is empty, then it means this card doesn't have multiple faces on the same card.",,4696.0,1647.0,6053,4416.75,1506.75,5823
+328,card_games,cards,subtypes,,A list of card subtypes found after em-dash.,text,,,4701.75,1647.75,6060,4418.75,1506.75,5825
+329,card_games,cards,supertypes,super types,A list of card supertypes found before em-dash.,text,"commonsense evidence:
+list of all types should be the union of subtypes and supertypes",,4706.0,1648.5,6065,4419.75,1506.75,5827
+330,card_games,cards,tcgplayerProductId,tcg player ProductId,,text,,,4703.25,1644.0,6060,4423.75,1506.75,5829
+331,card_games,cards,text,,The rules text of the card.,text,,,4694.5,1646.25,6052,4416.75,1506.75,5823
+332,card_games,cards,toughness,,The toughness of the card.,text,,,4698.0,1645.5,6051,4419.25,1506.75,5823
+333,card_games,cards,type,,"The type of the card as visible, including any supertypes and subtypes.",text,"""Artifact"", ""Card"", ""Conspiracy"", ""Creature"", ""Dragon"", ""Dungeon"", ""Eaturecray"", ""Elemental"", ""Elite"", ""Emblem"", ""Enchantment"", ""Ever"", ""Goblin"", ""Hero"", ""Instant"", ""Jaguar"", ""Knights"", ""Land"", ""Phenomenon"", ""Plane"", ""Planeswalker"", ""Scariest"", ""Scheme"", ""See"", ""Sorcery"", ""Sticker"", ""Summon"", ""Token"", ""Tribal"", ""Vanguard"", ""Wolf"", ""You’ll"", ""instant""",,4705.5,1650.75,6062,4416.75,1506.75,5823
+334,card_games,cards,types,,"A list of all card types of the card, including Un‑sets and gameplay variants.",text,,,4708.0,1652.25,6063,4417.25,1506.75,5823
+335,card_games,cards,uuid,,The universal unique identifier (v5) generated by MTGJSON. Each entry is unique.,text,NOT USEFUL,,4707.75,1650.75,6064,4416.75,1506.75,5823
+336,card_games,cards,variations,,,text,,,4693.0,1642.5,6047,4419.75,1506.75,5823
+337,card_games,cards,watermark,,The name of the watermark on the card.,text,,,4701.0,1647.75,6054,4419.25,1506.75,5823
+338,card_games,sets,id,,unique id identifying this set,integer,,P,2701.75,963.75,2977,2423.75,825.0,2749
+339,card_games,sets,baseSetSize,base Set Size,The number of cards in the set.,integer,,,2711.25,966.75,2987,2428.25,825.0,2753
+340,card_games,sets,block,,The block name the set was in.,text,,,2704.0,965.25,2979,2425.25,825.0,2749
+341,card_games,sets,booster,,A breakdown of possibilities and weights of cards in a booster pack.,text,,,2715.0,969.0,2984,2426.25,825.0,2749
+342,card_games,sets,code,,The set code for the set.,text,,,2702.0,964.5,2978,2424.75,825.0,2749
+343,card_games,sets,isFoilOnly,is Foil Only,If the set is only available in foil.,integer,,,2711.75,967.5,2992,2427.75,825.0,2755
+344,card_games,sets,isForeignOnly,is Foreign Only,If the set is available only outside the United States of America.,integer,,,2722.0,970.5,2992,2429.25,825.0,2753
+345,card_games,sets,isNonFoilOnly,is Non Foil Only,If the set is only available in non-foil.,integer,,,2716.0,968.25,2998,2429.25,825.0,2757
+346,card_games,sets,isOnlineOnly,is Online Only,If the set is only available in online game variations.,integer,,,2718.25,969.0,2990,2428.75,825.0,2753
+347,card_games,sets,isPartialPreview,is Partial Preview,If the set is still in preview (spoiled). Preview sets do not have complete data.,integer,,,2728.75,972.75,2998,2430.75,825.0,2753
+348,card_games,sets,keyruneCode,keyrune Code,The matching Keyrune code for set image icons.,text,,,2714.75,966.75,2994,2428.25,825.0,2755
+349,card_games,sets,mcmId,magic card market id,The Magic Card Marketset identifier.,integer,,,2709.75,966.0,2987,2425.25,825.0,2753
+350,card_games,sets,mcmIdExtras,magic card market ID Extras,The split Magic Card Market set identifier if a set is printed in two sets. This identifier represents the second set's identifier.,integer,,,2739.75,979.5,3009,2428.25,825.0,2755
+351,card_games,sets,mcmName,magic card market name ,,text,,,2703.75,963.75,2982,2426.25,825.0,2753
+352,card_games,sets,mtgoCode,magic the gathering online code,The set code for the set as it appears on Magic: The Gathering Online,text,"commonsense evidence:
+if the value is null or empty, then it doesn't appear on Magic: The Gathering Online",,2723.0,973.5,2997,2426.75,825.0,2753
+353,card_games,sets,name,,The name of the set.,text,,,2700.75,963.75,2977,2424.75,825.0,2749
+354,card_games,sets,parentCode,parent Code,"The parent set code for set variations like promotions, guild kits, etc.",text,,,2720.25,969.75,2990,2427.75,825.0,2751
+355,card_games,sets,releaseDate,release Date,The release date in ISO 8601 format for the set.,date,,,2715.25,968.25,2988,2428.25,825.0,2751
+356,card_games,sets,tcgplayerGroupId,tcg player Group Id,The group identifier of the set on TCGplayer,integer,,,2719.75,968.25,2995,2430.75,825.0,2755
+357,card_games,sets,totalSetSize,total Set Size,"The total number of cards in the set, including promotional and related supplemental products but excluding Alchemy modifications - however those cards are included in the set itself.",integer,,,2750.25,982.5,3010,2428.75,825.0,2753
+358,card_games,sets,type,,The expansion type of the set.,text,"""alchemy"", ""archenemy"", ""arsenal"", ""box"", ""commander"", ""core"", ""draft_innovation"", ""duel_deck"", ""expansion"", ""from_the_vault"", ""funny"", ""masterpiece"", ""masters"", ""memorabilia"", ""planechase"", ""premium_deck"", ""promo"", ""spellbook"", ""starter"", ""token"", ""treasure_chest"", ""vanguard""",,2703.25,964.5,2978,2424.75,825.0,2749
+359,card_games,foreign_data,id,,unique id number identifying this row of data,integer,,P,2617.25,936.0,2844,2335.5,795.0,2613
+360,card_games,foreign_data,flavorText,flavor Text,The foreign flavor text of the card.,text,,,2623.0,936.0,2847,2339.5,795.0,2615
+361,card_games,foreign_data,language,,The foreign language of card.,text,,,2617.75,933.75,2841,2338.5,795.0,2613
+362,card_games,foreign_data,multiverseid,,The foreign multiverse identifier of the card.,integer,,,2625.0,935.25,2850,2340.5,795.0,2617
+363,card_games,foreign_data,name,,The foreign name of the card.,text,,,2614.75,934.5,2842,2336.5,795.0,2613
+364,card_games,foreign_data,text,,The foreign text ruling of the card.,text,,,2616.5,935.25,2843,2336.5,795.0,2613
+365,card_games,foreign_data,type,,The foreign type of the card. Includes any supertypes and subtypes.,text,,,2624.25,938.25,2851,2336.5,795.0,2613
+366,card_games,foreign_data,uuid,,,text,,F,2608.25,930.75,2837,2336.5,795.0,2613
+367,card_games,rulings,id,,unique id identifying this ruling,integer,,P,2374.25,867.0,2167,2095.5,728.25,1939
+368,card_games,rulings,date,,date ,date,,,2368.75,864.75,2163,2096.5,728.25,1939
+369,card_games,rulings,text,,description about this ruling,text,,,2374.75,866.25,2166,2096.5,728.25,1939
+370,card_games,rulings,uuid,,,text,,F,2368.25,864.0,2163,2096.5,728.25,1939
+371,card_games,set_translations,id,,unique id identifying this set,integer,,P,1928.5,660.0,1650,1650.5,521.25,1422
+372,card_games,set_translations,language,,language of this card,text,,,1930.75,659.25,1649,1653.5,521.25,1422
+373,card_games,set_translations,setCode,set code,the set code for this set,text,,F,1932.25,661.5,1655,1653.0,521.25,1424
+374,card_games,set_translations,translation,,translation of this card,text,,,1933.75,659.25,1649,1655.0,521.25,1422
+375,european_football_2,Player,id,,the unique id for players,integer,,P,2609.5,797.25,2793,2332.75,658.5,2565
+376,european_football_2,Player,player_api_id,player api id,the id of the player api,integer,,,2620.0,799.5,2802,2338.25,658.5,2569
+377,european_football_2,Player,player_name,player name,player name,text,,,2614.75,795.75,2794,2337.25,658.5,2567
+378,european_football_2,Player,player_fifa_api_id,player federation international football association api id,the id of the player fifa api,integer,,,2636.5,803.25,2814,2340.75,658.5,2573
+379,european_football_2,Player,birthday,,the player's birthday,text,"e.g. 1992-02-29 00:00:00 
+commonsense reasoning: 
+Player A is older than player B means that A's birthday is earlier than B's",,2613.0,795.75,2792,2335.75,658.5,2565
+380,european_football_2,Player,height,,the player's height,integer,,,2611.0,795.75,2792,2334.75,658.5,2565
+381,european_football_2,Player,weight,,the player's weight,integer,,,2611.0,795.75,2792,2334.75,658.5,2565
+382,european_football_2,Match,id,,the unique id for matches,integer,,P,4168.5,1680.75,5159,3891.75,1542.0,4931
+383,european_football_2,Match,country_id,country id,country id,integer,,F,4172.5,1679.25,5160,3895.75,1542.0,4933
+384,european_football_2,Match,league_id,league id,league id,integer,,F,4171.25,1679.25,5160,3895.25,1542.0,4933
+385,european_football_2,Match,season,,the season of the match,text,,,4171.0,1680.75,5159,3893.75,1542.0,4931
+386,european_football_2,Match,stage,,the stage of the match,integer,,,4170.0,1680.75,5159,3893.25,1542.0,4931
+387,european_football_2,Match,date,,the date of the match,text,e.g. 2008-08-17 00:00:00,,4169.0,1680.75,5159,3892.75,1542.0,4931
+388,european_football_2,Match,match_api_id,match api id,the id of the match api,integer,,,4177.75,1683.0,5168,3896.75,1542.0,4935
+389,european_football_2,Match,home_team_api_id,home team api id,the id of the home team api,integer,,F,4182.75,1684.5,5173,3898.75,1542.0,4937
+390,european_football_2,Match,away_team_api_id,away team api id,the id of the away team api,integer,,F,4182.75,1684.5,5173,3898.75,1542.0,4937
+391,european_football_2,Match,home_team_goal,home team goal,the goal of the home team,integer,,,4180.25,1683.0,5168,3897.75,1542.0,4935
+392,european_football_2,Match,away_team_goal,away team goal,the goal of the away team,integer,,,4180.25,1683.0,5168,3897.75,1542.0,4935
+393,european_football_2,Match,home_player_X1,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+394,european_football_2,Match,home_player_X2,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+395,european_football_2,Match,home_player_X3,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+396,european_football_2,Match,home_player_X4,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+397,european_football_2,Match,home_player_X5,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+398,european_football_2,Match,home_player_X6,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+399,european_football_2,Match,home_player_X7,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+400,european_football_2,Match,home_player_X8,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+401,european_football_2,Match,home_player_X9,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+402,european_football_2,Match,home_player_X10,,,,,,4172.75,1677.75,5164,3898.25,1542.0,4937
+403,european_football_2,Match,home_player_X11,,,,,,4172.75,1677.75,5164,3898.25,1542.0,4937
+404,european_football_2,Match,away_player_X1,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+405,european_football_2,Match,away_player_X2,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+406,european_football_2,Match,away_player_X3,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+407,european_football_2,Match,away_player_X4,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+408,european_football_2,Match,away_player_X5,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+409,european_football_2,Match,away_player_X6,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+410,european_football_2,Match,away_player_X7,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+411,european_football_2,Match,away_player_X8,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+412,european_football_2,Match,away_player_X9,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+413,european_football_2,Match,away_player_X10,,,,,,4172.75,1677.75,5164,3898.25,1542.0,4937
+414,european_football_2,Match,away_player_X11,,,,,,4172.75,1677.75,5164,3898.25,1542.0,4937
+415,european_football_2,Match,home_player_Y1,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+416,european_football_2,Match,home_player_Y2,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+417,european_football_2,Match,home_player_Y3,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+418,european_football_2,Match,home_player_Y4,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+419,european_football_2,Match,home_player_Y5,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+420,european_football_2,Match,home_player_Y6,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+421,european_football_2,Match,home_player_Y7,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+422,european_football_2,Match,home_player_Y8,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+423,european_football_2,Match,home_player_Y9,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+424,european_football_2,Match,home_player_Y10,,,,,,4172.75,1677.75,5164,3898.25,1542.0,4937
+425,european_football_2,Match,home_player_Y11,,,,,,4172.75,1677.75,5164,3898.25,1542.0,4937
+426,european_football_2,Match,away_player_Y1,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+427,european_football_2,Match,away_player_Y2,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+428,european_football_2,Match,away_player_Y3,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+429,european_football_2,Match,away_player_Y4,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+430,european_football_2,Match,away_player_Y5,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+431,european_football_2,Match,away_player_Y6,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+432,european_football_2,Match,away_player_Y7,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+433,european_football_2,Match,away_player_Y8,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+434,european_football_2,Match,away_player_Y9,,,,,,4172.0,1677.75,5164,3897.75,1542.0,4937
+435,european_football_2,Match,away_player_Y10,,,,,,4172.75,1677.75,5164,3898.25,1542.0,4937
+436,european_football_2,Match,away_player_Y11,,,,,,4172.75,1677.75,5164,3898.25,1542.0,4937
+437,european_football_2,Match,home_player_1,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+438,european_football_2,Match,home_player_2,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+439,european_football_2,Match,home_player_3,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+440,european_football_2,Match,home_player_4,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+441,european_football_2,Match,home_player_5,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+442,european_football_2,Match,home_player_6,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+443,european_football_2,Match,home_player_7,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+444,european_football_2,Match,home_player_8,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+445,european_football_2,Match,home_player_9,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+446,european_football_2,Match,home_player_10,,,,,F,4172.0,1677.75,5164,3897.75,1542.0,4937
+447,european_football_2,Match,home_player_11,,,,,F,4172.0,1677.75,5164,3897.75,1542.0,4937
+448,european_football_2,Match,away_player_1,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+449,european_football_2,Match,away_player_2,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+450,european_football_2,Match,away_player_3,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+451,european_football_2,Match,away_player_4,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+452,european_football_2,Match,away_player_5,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+453,european_football_2,Match,away_player_6,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+454,european_football_2,Match,away_player_7,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+455,european_football_2,Match,away_player_8,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+456,european_football_2,Match,away_player_9,,,,,F,4171.25,1677.75,5164,3897.25,1542.0,4937
+457,european_football_2,Match,away_player_10,,,,,F,4172.0,1677.75,5164,3897.75,1542.0,4937
+458,european_football_2,Match,away_player_11,,,,,F,4172.0,1677.75,5164,3897.75,1542.0,4937
+459,european_football_2,Match,goal,,the goal of the match,text,,,4169.0,1680.75,5159,3892.75,1542.0,4931
+460,european_football_2,Match,shoton,shot on,the shot on goal of the match,text,"commonsense reasoning: 
+A shot on goal is a shot that enters the goal or would have entered the goal if it had not been blocked by the goalkeeper or another defensive player.
+",,4173.5,1683.0,5165,3893.75,1542.0,4933
+461,european_football_2,Match,shotoff,shot off,"the shot off goal of the match, which is the opposite of shot on",text,,,4183.25,1688.25,5173,3894.25,1542.0,4933
+462,european_football_2,Match,foulcommit,foul commit,the fouls occurred in the match,text,,,4178.0,1682.25,5165,3895.75,1542.0,4933
+463,european_football_2,Match,card,,the cards given in the match,text,,,4170.75,1681.5,5160,3892.75,1542.0,4931
+464,european_football_2,Match,cross,,Balls sent into the opposition team's area from a wide position in the match,text,,,4183.5,1687.5,5169,3893.25,1542.0,4931
+465,european_football_2,Match,corner,,Ball goes out of play for a corner kick in the match,text,,,4178.25,1686.0,5166,3893.75,1542.0,4931
+466,european_football_2,Match,possession,,The duration from a player taking over the ball in the match,text,,,4183.25,1686.0,5166,3895.75,1542.0,4931
+467,european_football_2,Match,B365H,,,,,,4165.25,1677.75,5161,3893.25,1542.0,4935
+468,european_football_2,Match,B365D,,,,,,4165.25,1677.75,5161,3893.25,1542.0,4935
+469,european_football_2,Match,B365A,,,,,,4165.25,1677.75,5161,3893.25,1542.0,4935
+470,european_football_2,Match,BWH,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+471,european_football_2,Match,BWD,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+472,european_football_2,Match,BWA,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+473,european_football_2,Match,IWH,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+474,european_football_2,Match,IWD,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+475,european_football_2,Match,IWA,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+476,european_football_2,Match,LBH,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+477,european_football_2,Match,LBD,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+478,european_football_2,Match,LBA,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+479,european_football_2,Match,PSH,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+480,european_football_2,Match,PSD,,,,,,4163.75,1677.75,5155,3892.25,1542.0,4931
+481,european_football_2,Match,PSA,,,,,,4163.75,1677.75,5155,3892.25,1542.0,4931
+482,european_football_2,Match,WHH,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+483,european_football_2,Match,WHD,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+484,european_football_2,Match,WHA,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+485,european_football_2,Match,SJH,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+486,european_football_2,Match,SJD,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+487,european_football_2,Match,SJA,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+488,european_football_2,Match,VCH,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+489,european_football_2,Match,VCD,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+490,european_football_2,Match,VCA,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+491,european_football_2,Match,GBH,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+492,european_football_2,Match,GBD,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+493,european_football_2,Match,GBA,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+494,european_football_2,Match,BSH,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+495,european_football_2,Match,BSD,,,,,,4163.75,1677.75,5155,3892.25,1542.0,4931
+496,european_football_2,Match,BSA,,,,,,4163.75,1677.75,5158,3892.25,1542.0,4933
+497,european_football_2,League,id,,the unique id for leagues,integer,,P,2524.0,763.5,2587,2247.25,624.75,2359
+498,european_football_2,League,country_id,country id,the unique id for countries,integer,,F,2532.25,764.25,2591,2251.25,624.75,2361
+499,european_football_2,League,name,,league name,text,,,2522.0,761.25,2584,2248.25,624.75,2359
+500,european_football_2,Country,id,,the unique id for countries,integer,,P,2478.75,741.0,2518,2201.5,602.25,2290
+501,european_football_2,Country,name,,country name,text,,,2476.5,738.75,2515,2202.5,602.25,2290
+502,european_football_2,Player_Attributes,id,,the unique id for players,integer,,P,2969.5,1078.5,3560,2692.75,939.75,3332
+503,european_football_2,Player_Attributes,player_fifa_api_id,player federation international football association api id,the id of the player fifa api,integer,,F,2996.5,1084.5,3581,2700.75,939.75,3340
+504,european_football_2,Player_Attributes,player_api_id,player api id,the id of the player api,integer,,F,2980.0,1080.75,3569,2698.25,939.75,3336
+505,european_football_2,Player_Attributes,date,,date,text,e.g. 2016-02-18 00:00:00,,2965.75,1075.5,3556,2693.75,939.75,3332
+506,european_football_2,Player_Attributes,overall_rating,,the overall rating of the player,integer,"commonsense reasoning: 
+The rating is between 0-100 which is calculated by FIFA.
+ Higher overall rating means the player has a stronger overall strength.",,2980.25,1079.25,3564,2698.75,939.75,3334
+507,european_football_2,Player_Attributes,potential,,potential of the player,integer,"commonsense reasoning: 
+The potential score is between 0-100 which is calculated by FIFA.
+ Higher potential score means that the player has more potential",,2974.25,1077.75,3559,2696.25,939.75,3332
+508,european_football_2,Player_Attributes,preferred_foot,preferred foot,the player's preferred foot when attacking,text,right/ left,,2985.5,1080.0,3566,2698.75,939.75,3334
+509,european_football_2,Player_Attributes,attacking_work_rate,attacking work rate,the player's attacking work rate,text,"commonsense reasoning: 
+ high: implies that the player is going to be in all of your attack moves
+ medium: implies that the player will select the attack actions he will join in
+ low: remain in his position while the team attacks ",,2988.0,1080.0,3569,2701.25,939.75,3336
+510,european_football_2,Player_Attributes,defensive_work_rate,,the player's defensive work rate,text,"commonsense reasoning: 
+ high: remain in his position and defense while the team attacks 
+ medium: implies that the player will select the defensive actions he will join in
+ low: implies that the player is going to be in all of your attack moves instead of defensing",,2984.0,1078.5,3567,2701.25,939.75,3336
+511,european_football_2,Player_Attributes,crossing,,the player's crossing score ,integer,"commonsense reasoning: 
+Cross is a long pass into the opponent's goal towards the header of sixth-yard teammate.
+ The crossing score is between 0-100 which measures the tendency/frequency of crosses in the box.
+ Higher potential score means that the player performs better in crossing actions. ",,2974.75,1078.5,3560,2695.75,939.75,3332
+512,european_football_2,Player_Attributes,finishing,,the player's finishing rate,integer,0-100 which is calculated by FIFA,,2975.25,1077.75,3560,2696.25,939.75,3332
+513,european_football_2,Player_Attributes,heading_accuracy,heading accuracy,the player's heading accuracy,integer,0-100 which is calculated by FIFA,,2984.25,1078.5,3564,2699.75,939.75,3334
+514,european_football_2,Player_Attributes,short_passing,short passing,the player's short passing score,integer,0-100 which is calculated by FIFA,,2982.0,1079.25,3568,2698.25,939.75,3336
+515,european_football_2,Player_Attributes,volleys,,the player's volley score,integer,0-100 which is calculated by FIFA,,2973.25,1077.75,3563,2695.25,939.75,3334
+516,european_football_2,Player_Attributes,dribbling,,the player's dribbling score,integer,0-100 which is calculated by FIFA,,2975.5,1077.75,3564,2696.25,939.75,3334
+517,european_football_2,Player_Attributes,curve,,the player's curve score,integer,0-100 which is calculated by FIFA,,2971.5,1077.75,3560,2694.25,939.75,3332
+518,european_football_2,Player_Attributes,free_kick_accuracy,free kick accuracy,the player's free kick accuracy,integer,0-100 which is calculated by FIFA,,2986.75,1080.0,3572,2700.75,939.75,3338
+519,european_football_2,Player_Attributes,long_passing,long passing,the player's long passing score,integer,0-100 which is calculated by FIFA,,2980.75,1079.25,3568,2697.75,939.75,3336
+520,european_football_2,Player_Attributes,ball_control,ball control,the player's ball control score,integer,0-100 which is calculated by FIFA,,2980.75,1079.25,3565,2697.75,939.75,3334
+521,european_football_2,Player_Attributes,acceleration,,the player's acceleration score,integer,0-100 which is calculated by FIFA,,2978.5,1077.75,3560,2697.75,939.75,3332
+522,european_football_2,Player_Attributes,sprint_speed,sprint speed,"the player's sprint speed
+",integer,0-100 which is calculated by FIFA,,2979.5,1079.25,3565,2697.75,939.75,3334
+523,european_football_2,Player_Attributes,agility,,the player's agility,integer,0-100 which is calculated by FIFA,,2972.0,1077.0,3559,2695.25,939.75,3332
+524,european_football_2,Player_Attributes,reactions,,the player's reactions score,integer,0-100 which is calculated by FIFA,,2975.5,1077.75,3560,2696.25,939.75,3332
+525,european_football_2,Player_Attributes,balance,,the player's balance score,integer,0-100 which is calculated by FIFA,,2973.5,1077.75,3560,2695.25,939.75,3332
+526,european_football_2,Player_Attributes,shot_power,shot power,the player's shot power,integer,0-100 which is calculated by FIFA,,2976.75,1078.5,3564,2696.75,939.75,3334
+527,european_football_2,Player_Attributes,jumping,,the player's jumping score,integer,0-100 which is calculated by FIFA,,2973.5,1077.75,3560,2695.25,939.75,3332
+528,european_football_2,Player_Attributes,stamina,,the player's stamina score,integer,0-100 which is calculated by FIFA,,2973.5,1077.75,3560,2695.25,939.75,3332
+529,european_football_2,Player_Attributes,strength,,the player's strength score,integer,0-100 which is calculated by FIFA,,2974.5,1077.75,3560,2695.75,939.75,3332
+530,european_football_2,Player_Attributes,long_shots,long shots,the player's long shots score,integer,0-100 which is calculated by FIFA,,2978.25,1079.25,3568,2696.75,939.75,3336
+531,european_football_2,Player_Attributes,aggression,,the player's aggression score,integer,0-100 which is calculated by FIFA,,2976.5,1077.75,3560,2696.75,939.75,3332
+532,european_football_2,Player_Attributes,interceptions,,the player's interceptions score,integer,0-100 which is calculated by FIFA,,2979.5,1077.75,3560,2698.25,939.75,3332
+533,european_football_2,Player_Attributes,positioning,,"the player's 
+positioning score
+",integer,0-100 which is calculated by FIFA,,2978.0,1078.5,3563,2697.25,939.75,3332
+534,european_football_2,Player_Attributes,vision,,"the player's vision score
+",integer,0-100 which is calculated by FIFA,,2972.75,1078.5,3561,2694.75,939.75,3332
+535,european_football_2,Player_Attributes,penalties,,"the player's penalties score
+",integer,0-100 which is calculated by FIFA,,2975.75,1078.5,3561,2696.25,939.75,3332
+536,european_football_2,Player_Attributes,marking,,the player's markingscore,integer,0-100 which is calculated by FIFA,,2973.25,1077.0,3560,2695.25,939.75,3332
+537,european_football_2,Player_Attributes,standing_tackle,standing tackle,the player's standing tackle score,integer,0-100 which is calculated by FIFA,,2984.5,1079.25,3568,2699.25,939.75,3336
+538,european_football_2,Player_Attributes,sliding_tackle,sliding tackle,the player's sliding tackle score,integer,0-100 which is calculated by FIFA,,2983.25,1079.25,3568,2698.75,939.75,3336
+539,european_football_2,Player_Attributes,gk_diving,goalkeep diving,the player's goalkeep diving score,integer,0-100 which is calculated by FIFA,,2980.0,1079.25,3573,2696.25,939.75,3338
+540,european_football_2,Player_Attributes,gk_handling,goalkeep handling,the player's goalkeep diving score,integer,0-100 which is calculated by FIFA,,2982.0,1079.25,3570,2697.25,939.75,3336
+541,european_football_2,Player_Attributes,gk_kicking,goalkeep kicking,the player's goalkeep kicking score,integer,0-100 which is calculated by FIFA,,2981.25,1079.25,3573,2696.75,939.75,3338
+542,european_football_2,Player_Attributes,gk_positioning,goalkeep positioning,the player's goalkeep positioning score,integer,0-100 which is calculated by FIFA,,2986.25,1079.25,3573,2698.75,939.75,3338
+543,european_football_2,Player_Attributes,gk_reflexes,goalkeep reflexes,the player's goalkeep reflexes score,integer,0-100 which is calculated by FIFA,,2982.5,1079.25,3578,2697.25,939.75,3340
+544,european_football_2,Team,id,,the unique id for teams,integer,,P,2529.0,775.5,2634,2252.75,636.75,2406
+545,european_football_2,Team,team_api_id,team api id,the id of the team api,integer,,,2537.5,777.75,2643,2257.25,636.75,2410
+546,european_football_2,Team,team_fifa_api_id,team federation international football association api id,the id of the team fifa api,integer,,,2554.0,781.5,2655,2259.75,636.75,2414
+547,european_football_2,Team,team_long_name,team long name,the team's long name,text,,,2540.0,776.25,2642,2258.75,636.75,2410
+548,european_football_2,Team,team_short_name,team short name,the team's short name,text,,,2541.25,776.25,2642,2259.25,636.75,2410
+549,european_football_2,Team_Attributes,id,,the unique id for teams,integer,,P,2948.5,939.75,3238,2672.25,801.0,3010
+550,european_football_2,Team_Attributes,team_fifa_api_id,team federation international football association api id,the id of the team fifa api,integer,,F,2973.5,945.75,3259,2679.25,801.0,3018
+551,european_football_2,Team_Attributes,team_api_id,team api id,the id of the team api,integer,,F,2957.0,942.0,3247,2676.75,801.0,3014
+552,european_football_2,Team_Attributes,date,,Date,text,e.g. 2010-02-22 00:00:00,,2945.25,936.75,3234,2673.25,801.0,3010
+553,european_football_2,Team_Attributes,buildUpPlaySpeed,build Up Play Speed,the speed in which attacks are put together ,integer,the score which is between 1-00 to measure the team's attack speed,,2968.25,945.0,3253,2679.25,801.0,3016
+554,european_football_2,Team_Attributes,buildUpPlaySpeedClass,build Up Play Speed Class,the speed class,text,"commonsense reasoning: 
+ Slow: 1-33
+ Balanced: 34-66
+ Fast: 66-100",,2966.25,941.25,3252,2681.75,801.0,3018
+555,european_football_2,Team_Attributes,buildUpPlayDribbling,build Up Play Dribbling,the tendency/ frequency of dribbling,integer,,,2970.25,942.0,3260,2681.25,801.0,3020
+556,european_football_2,Team_Attributes,buildUpPlayDribblingClass,build Up Play Dribbling Class,the dribbling class,text,"commonsense reasoning: 
+ Little: 1-33
+ Normal: 34-66
+ Lots: 66-100",,2971.25,941.25,3261,2683.75,801.0,3022
+557,european_football_2,Team_Attributes,buildUpPlayPassing,build Up Play Passing,affects passing distance and support from teammates,integer,,,2972.0,943.5,3255,2680.25,801.0,3018
+558,european_football_2,Team_Attributes,buildUpPlayPassingClass,build Up Play Passing Class,the passing class,text,"commonsense reasoning: 
+ Short: 1-33
+ Mixed: 34-66
+ Long: 66-100",,2968.75,941.25,3255,2682.75,801.0,3020
+559,european_football_2,Team_Attributes,buildUpPlayPositioningClass,build Up Play Positioning Class,A team's freedom of movement in the 1st two thirds of the pitch,text,Organised / Free Form,,2984.25,948.75,3269,2684.75,801.0,3020
+560,european_football_2,Team_Attributes,chanceCreationPassing,chance Creation Passing,Amount of risk in pass decision and run support,integer,,,2973.75,944.25,3253,2681.75,801.0,3016
+561,european_football_2,Team_Attributes,chanceCreationPassingClass,chance Creation Passing Class,the chance creation passing class,text,"commonsense reasoning: 
+ Safe: 1-33
+ Normal: 34-66
+ Risky: 66-100",,2975.5,942.0,3253,2684.25,801.0,3018
+562,european_football_2,Team_Attributes,chanceCreationCrossing,chance Creation Crossing,The tendency / frequency of crosses into the box,integer,,,2975.0,944.25,3253,2682.25,801.0,3016
+563,european_football_2,Team_Attributes,chanceCreationCrossingClass,chance Creation Crossing Class,the chance creation crossing class,text,"commonsense reasoning: 
+ Little: 1-33
+ Normal: 34-66
+ Lots: 66-100",,2976.75,942.0,3253,2684.75,801.0,3018
+564,european_football_2,Team_Attributes,chanceCreationShooting,chance Creation Shooting,The tendency / frequency of shots taken,integer,,,2972.75,942.75,3251,2682.25,801.0,3016
+565,european_football_2,Team_Attributes,chanceCreationShootingClass,chance Creation Shooting Class,the chance creation shooting class,text,"commonsense reasoning: 
+ Little: 1-33
+ Normal: 34-66
+ Lots: 66-100",,2976.75,942.0,3253,2684.75,801.0,3018
+566,european_football_2,Team_Attributes,chanceCreationPositioningClass,chance Creation Positioning Class,A teams freedom of movement in the final third of the pitch,text,Organised / Free Form,,2986.0,947.25,3261,2686.25,801.0,3018
+567,european_football_2,Team_Attributes,defencePressure,defence Pressure,Affects how high up the pitch the team will start pressuring,integer,,,2970.75,945.0,3250,2678.75,801.0,3012
+568,european_football_2,Team_Attributes,defencePressureClass,defence Pressure Class,the defence pressure class,text,"commonsense reasoning: 
+ Deep: 1-33
+ Medium: 34-66
+ High: 66-100",,2967.5,940.5,3245,2681.25,801.0,3014
+569,european_football_2,Team_Attributes,defenceAggression,defence Aggression,Affect the teams approach to tackling the ball possessor,integer,,,2971.75,943.5,3252,2679.75,801.0,3014
+570,european_football_2,Team_Attributes,defenceAggressionClass,defence Aggression Class,the defence aggression class,text,"commonsense reasoning: 
+ Contain: 1-33
+ Press: 34-66
+ Double: 66-100",,2970.0,940.5,3249,2682.25,801.0,3016
+571,european_football_2,Team_Attributes,defenceTeamWidth,defence Team Width,Affects how much the team will shift to the ball side,integer,,,2970.25,945.75,3253,2679.25,801.0,3014
+572,european_football_2,Team_Attributes,defenceTeamWidthClass,defence Team Width Class,the defence team width class,text,"commonsense reasoning: 
+ Narrow: 1-33
+ Normal: 34-66
+ Wide: 66-100",,2969.25,942.0,3250,2681.75,801.0,3016
+573,european_football_2,Team_Attributes,defenceDefenderLineClass,defence Defender Line Class,Affects the shape and strategy of the defence,text,Cover/ Offside Trap,,2976.5,944.25,3257,2683.25,801.0,3018
+574,thrombosis_prediction,Examination,ID,,identification of the patient,integer,,F,1553.0,609.0,1477,1275.25,471.0,1250
+575,thrombosis_prediction,Examination,Examination Date,,Examination Date,date ,,,1560.25,609.75,1478,1282.25,472.5,1252
+576,thrombosis_prediction,Examination,aCL IgG,anti-Cardiolipin antibody (IgG) ,anti-Cardiolipin antibody (IgG) concentration,real,,,1568.0,613.5,1506,1277.75,472.5,1256
+577,thrombosis_prediction,Examination,aCL IgM,anti-Cardiolipin antibody (IgM) ,anti-Cardiolipin antibody (IgM) concentration,real,,,1568.0,613.5,1506,1277.75,472.5,1256
+578,thrombosis_prediction,Examination,ANA,anti-nucleus antibody ,anti-nucleus antibody concentration,integer,,,1560.0,609.75,1486,1275.75,471.0,1252
+579,thrombosis_prediction,Examination,ANA Pattern,pattern observed in the sheet of ANA examination,pattern observed in the sheet of ANA examination,text,,,1575.75,619.5,1496,1279.75,472.5,1254
+580,thrombosis_prediction,Examination,aCL IgA,anti-Cardiolipin antibody (IgA) concentration,anti-Cardiolipin antibody (IgA) concentration,integer,,,1571.25,613.5,1507,1277.75,472.5,1256
+581,thrombosis_prediction,Examination,Diagnosis,,disease names,text,,,1554.25,607.5,1475,1278.75,471.0,1250
+582,thrombosis_prediction,Examination,KCT,measure of degree of coagulation,measure of degree of coagulation,text,"+: positive
+
+-: negative",,1561.75,612.75,1489,1275.75,471.0,1252
+583,thrombosis_prediction,Examination,RVVT,measure of degree of coagulation,measure of degree of coagulation,text,"+: positive
+
+-: negative",,1562.5,612.75,1489,1276.25,471.0,1252
+584,thrombosis_prediction,Examination,LAC,measure of degree of coagulation,measure of degree of coagulation,text,"+: positive
+
+-: negative",,1561.75,612.75,1489,1275.75,471.0,1252
+585,thrombosis_prediction,Examination,Symptoms,,other symptoms observed,text,,,1556.0,608.25,1476,1278.25,471.0,1250
+586,thrombosis_prediction,Examination,Thrombosis,,degree of thrombosis,integer,"0: negative (no thrombosis)
+1: positive (the most severe one)
+2: positive (severe)3: positive (mild)",,1556.75,608.25,1487,1279.25,471.0,1256
+587,thrombosis_prediction,Laboratory,ID,,identification of the patient,integer,,F,1938.25,856.5,2062,1660.5,718.5,1835
+588,thrombosis_prediction,Laboratory,Date,,Date of the laboratory tests (YYMMDD),date,,P,1941.75,858.0,2067,1661.5,718.5,1835
+589,thrombosis_prediction,Laboratory,GOT,AST glutamic oxaloacetic transaminase,AST glutamic oxaloacetic transaminase,integer,"Commonsense evidence:
+
+Normal range: N < 60",,1949.5,858.75,2077,1661.0,718.5,1835
+590,thrombosis_prediction,Laboratory,GPT,ALT glutamic pyruvic transaminase,ALT glutamic pyruvic transaminase,integer,"Commonsense evidence:
+
+Normal range: N < 60",,1947.5,858.75,2078,1661.0,718.5,1837
+591,thrombosis_prediction,Laboratory,LDH,lactate dehydrogenase,lactate dehydrogenase,integer,"Commonsense evidence:
+
+Normal range: N < 500",,1941.5,855.75,2072,1661.0,718.5,1837
+592,thrombosis_prediction,Laboratory,ALP,alkaliphophatase,alkaliphophatase,integer,"Commonsense evidence:
+
+Normal range: N < 300",,1939.0,854.25,2070,1661.0,718.5,1837
+593,thrombosis_prediction,Laboratory,TP,total protein,total protein,real,"Commonsense evidence:
+
+Normal range: 6.0 < N < 8.5",,1936.75,855.75,2061,1660.5,718.5,1835
+594,thrombosis_prediction,Laboratory,ALB,albumin,albumin,real,"Commonsense evidence:
+
+Normal range: 3.5 < N < 5.5",,1934.5,854.25,2064,1661.0,718.5,1837
+595,thrombosis_prediction,Laboratory,UA,uric acid,uric acid,real,"Commonsense evidence:
+
+Normal range: N > 8.0 (Male)N > 6.5 (Female)",,1934.75,855.75,2063,1660.5,718.5,1835
+596,thrombosis_prediction,Laboratory,UN,urea nitrogen,urea nitrogen,integer,"Commonsense evidence:
+
+Normal range: N < 30",,1936.75,855.75,2063,1660.5,718.5,1835
+597,thrombosis_prediction,Laboratory,CRE,creatinine,creatinine,real,"Commonsense evidence:
+
+Normal range: N < 1.5",,1936.0,854.25,2061,1661.0,718.5,1835
+598,thrombosis_prediction,Laboratory,T-BIL,total bilirubin,total bilirubin,real,"Commonsense evidence:
+
+Normal range: N < 2.0",,1940.0,855.75,2073,1662.0,718.5,1839
+599,thrombosis_prediction,Laboratory,T-CHO,total cholesterol,total cholesterol,integer,"Commonsense evidence:
+Normal range: N < 250",,1941.0,855.75,2067,1662.0,718.5,1839
+600,thrombosis_prediction,Laboratory,TG,triglyceride,triglyceride,integer,"Commonsense evidence:
+
+Normal range: N < 200",,1936.25,854.25,2063,1660.5,718.5,1835
+601,thrombosis_prediction,Laboratory,CPK,creatinine phosphokinase,creatinine phosphokinase,integer,"Commonsense evidence:
+Normal range: N < 250",,1943.0,855.75,2070,1661.0,718.5,1837
+602,thrombosis_prediction,Laboratory,GLU,blood glucose,blood glucose,integer,"Commonsense evidence:
+Normal range: N < 180",,1937.5,855.75,2064,1661.0,718.5,1837
+603,thrombosis_prediction,Laboratory,WBC,White blood cell,White blood cell,real,"Commonsense evidence:
+Normal range: 3.5 < N < 9.0",,1939.0,857.25,2066,1661.0,718.5,1837
+604,thrombosis_prediction,Laboratory,RBC,Red blood cell,Red blood cell,real,"Commonsense evidence:
+
+Normal range: 3.5 < N < 6.0",,1938.0,857.25,2066,1661.0,718.5,1837
+605,thrombosis_prediction,Laboratory,HGB,Hemoglobin,Hemoglobin,real,"Commonsense evidence:
+
+Normal range: 10 < N < 17",,1936.0,854.25,2064,1661.0,718.5,1837
+606,thrombosis_prediction,Laboratory,HCT,Hematoclit,Hematoclit,real,"Commonsense evidence:
+Normal range: 29 < N < 52",,1936.0,854.25,2068,1661.0,718.5,1837
+607,thrombosis_prediction,Laboratory,PLT,platelet,platelet,integer,"Commonsense evidence:
+
+Normal range: 100 < N < 400",,1935.0,854.25,2064,1661.0,718.5,1837
+608,thrombosis_prediction,Laboratory,PT,prothrombin time,prothrombin time,real,"Commonsense evidence:
+
+Normal range: N < 14",,1938.25,855.75,2067,1660.5,718.5,1835
+609,thrombosis_prediction,Laboratory,APTT,activated partial prothrombin time,activated partial prothrombin time,integer,"Commonsense evidence:
+
+Normal range: N < 45",,1948.75,858.75,2077,1661.5,718.5,1839
+610,thrombosis_prediction,Laboratory,FG,fibrinogen,fibrinogen,real,"Commonsense evidence:
+
+Normal range: 150 < N < 450",,1935.25,854.25,2063,1660.5,718.5,1835
+611,thrombosis_prediction,Laboratory,PIC,,,,,,1932.5,854.25,2059,1661.0,718.5,1835
+612,thrombosis_prediction,Laboratory,TAT,,,,,,1932.5,854.25,2062,1661.0,718.5,1837
+613,thrombosis_prediction,Laboratory,TAT2,,,,,,1933.25,854.25,2065,1661.5,718.5,1839
+614,thrombosis_prediction,Laboratory,U-PRO,proteinuria,proteinuria,text,"Commonsense evidence:
+
+Normal range: 0 < N < 30",,1938.0,854.25,2067,1662.0,718.5,1839
+615,thrombosis_prediction,Laboratory,IGG,Ig G,Ig G,integer,"Commonsense evidence:
+
+Normal range: 900 < N < 2000",,1933.0,855.75,2064,1661.0,718.5,1837
+616,thrombosis_prediction,Laboratory,IGA,Ig A,Ig A,integer,"Commonsense evidence:
+
+Normal range: 80 < N < 500",,1933.0,855.75,2064,1661.0,718.5,1837
+617,thrombosis_prediction,Laboratory,IGM,Ig M,Ig M,integer,"Commonsense evidence:
+
+Normal range: 40 < N < 400",,1933.0,855.75,2064,1661.0,718.5,1837
+618,thrombosis_prediction,Laboratory,CRP,C-reactive protein,C-reactive protein,text,"Commonsense evidence:
+
+Normal range: N= -, +-, or N < 1.0",,1940.0,855.75,2068,1661.0,718.5,1837
+619,thrombosis_prediction,Laboratory,RA,Rhuematoid Factor,Rhuematoid Factor,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,1938.75,855.75,2067,1660.5,718.5,1835
+620,thrombosis_prediction,Laboratory,RF,RAHA,RAHA,text,"Commonsense evidence:
+
+Normal range: N < 20",,1932.25,854.25,2061,1660.5,718.5,1835
+621,thrombosis_prediction,Laboratory,C3,complement 3,complement 3,integer,"Commonsense evidence:
+
+Normal range: N > 35",,1936.25,855.75,2066,1660.5,718.5,1837
+622,thrombosis_prediction,Laboratory,C4,complement 4,complement 4,integer,"Commonsense evidence:
+
+Normal range: N > 10",,1936.25,855.75,2066,1660.5,718.5,1837
+623,thrombosis_prediction,Laboratory,RNP,anti-ribonuclear protein,anti-ribonuclear protein,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,1943.0,855.75,2072,1661.0,718.5,1837
+624,thrombosis_prediction,Laboratory,SM,anti-SM,anti-SM,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,1933.75,854.25,2063,1660.5,718.5,1835
+625,thrombosis_prediction,Laboratory,SC170,anti-scl70,anti-scl70,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,1937.5,854.25,2068,1662.0,718.5,1837
+626,thrombosis_prediction,Laboratory,SSA,anti-SSA,anti-SSA,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,1935.0,854.25,2065,1661.0,718.5,1835
+627,thrombosis_prediction,Laboratory,SSB,anti-SSB,anti-SSB,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,1935.0,854.25,2068,1661.0,718.5,1837
+628,thrombosis_prediction,Laboratory,CENTROMEA,anti-centromere,anti-centromere,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,1943.0,854.25,2071,1664.0,718.5,1839
+629,thrombosis_prediction,Laboratory,DNA,anti-DNA,anti-DNA,text,"Commonsense evidence:
+
+Normal range: N < 8",,1935.0,854.25,2063,1661.0,718.5,1835
+630,thrombosis_prediction,Laboratory,DNA-II,anti-DNA,anti-DNA,integer,"Commonsense evidence:
+
+Normal range: N < 8",,1937.25,854.25,2066,1662.5,718.5,1837
+631,thrombosis_prediction,Patient,ID,,identification of the patient,integer,,P,1501.5,555.75,1365,1223.75,417.75,1138
+632,thrombosis_prediction,Patient,SEX,,Sex,text,F: female; M: male,,1495.75,553.5,1362,1224.25,417.75,1138
+633,thrombosis_prediction,Patient,Birthday,,Birthday,date,,,1500.75,553.5,1362,1226.75,417.75,1138
+634,thrombosis_prediction,Patient,Description,,the first date when a patient data was recorded,date,null or empty: not recorded,,1512.75,559.5,1370,1228.25,417.75,1138
+635,thrombosis_prediction,Patient,First Date,,the date when a patient came to the hospital,date,,,1511.25,561.75,1373,1227.75,419.25,1140
+636,thrombosis_prediction,Patient,Admission,,patient was admitted to the hospital (+) or followed at the outpatient clinic (-),text,patient was admitted to the hospital (+) or followed at the outpatient clinic (-),,1519.75,563.25,1376,1227.25,417.75,1138
+637,thrombosis_prediction,Patient,Diagnosis,,disease names,text,,,1502.75,554.25,1363,1227.25,417.75,1138
+638,toxicology,bond,bond_id,,unique id representing bonds,text,"TRxxx_A1_A2:
+TRXXX refers to which molecule
+A1 and A2 refers to which atom",P,916.25,422.25,866,637.5,284.25,638
+639,toxicology,bond,molecule_id,,identifying the molecule in which the bond appears,text,,F,924.75,425.25,870,639.5,284.25,638
+640,toxicology,bond,bond_type,,type of the bond,text,"commonsense evidence:
+-: single bond
+'=': double bond
+'#': triple bond",,914.75,422.25,866,638.5,284.25,638
+641,toxicology,molecule,molecule_id,molecule id,unique id of molecule,text,"""+"" --> this molecule / compound is carcinogenic
+'-' this molecule is not / compound carcinogenic",P,895.5,414.75,803,615.5,276.0,574
+642,toxicology,molecule,label,,whether this molecule is carcinogenic or not,text,,,894.75,416.25,803,612.5,276.0,572
+643,toxicology,atom,atom_id,atom id,the unique id of atoms,text,,P,911.5,423.75,845,633.25,284.25,615
+644,toxicology,atom,molecule_id,molecule id,identifying the molecule to which the atom belongs,text,"commonsense evidence:
+TRXXX_i represents ith atom of molecule TRXXX",F,922.5,426.0,848,635.25,284.25,615
+645,toxicology,atom,element,,the element of the toxicology ,text," cl: chlorine
+ c: carbon
+ h: hydrogen
+ o: oxygen
+ s: sulfur
+ n: nitrogen
+ p: phosphorus
+ na: sodium
+ br: bromine
+ f: fluorine
+ i: iodine
+ sn: Tin
+ pb: lead
+ te: tellurium
+ ca: Calcium",,912.5,423.75,842,633.25,284.25,613
+646,toxicology,connected,atom_id,atom id,id of the first atom,text,,F,941.25,423.75,918,663.5,284.25,688
+647,toxicology,connected,atom_id2,atom id 2,id of the second atom,text,,F,942.75,424.5,923,664.0,284.25,690
+648,toxicology,connected,bond_id,bond id,bond id representing bond between two atoms,text,,F,947.0,425.25,920,663.5,284.25,688
+649,student_club,income,income_id,income id,A unique identifier for each record of income,text,,P,1356.75,516.0,1356,1071.75,374.25,1123
+650,student_club,income,date_received,date received,the date that the fund received,text,,,1357.25,514.5,1354,1073.75,374.25,1123
+651,student_club,income,amount,,amount of funds,integer,the unit is dollar,,1345.5,511.5,1347,1070.25,374.25,1121
+652,student_club,income,source,,"A value indicating where the funds come from such as dues, or the annual university allocation",text,,,1365.25,521.25,1361,1070.25,374.25,1121
+653,student_club,income,notes,,A free-text value giving any needed details about the receipt of funds,text,,,1358.5,518.25,1357,1069.75,374.25,1121
+654,student_club,income,link_to_member,link to member,link to member,text,,F,1354.0,513.0,1355,1074.25,374.25,1125
+655,student_club,budget,budget_id,budget id,A unique identifier for the budget entry,text,,P,1365.75,519.75,1372,1082.0,378.75,1140
+656,student_club,budget,category,,"The area for which the amount is budgeted, such as, advertisement, food, parking",text,,,1373.5,523.5,1379,1081.5,378.75,1138
+657,student_club,budget,spent,,The total amount spent in the budgeted category for an event.,real,the unit is dollar. This is summarized from the Expense table,,1366.5,522.0,1373,1080.0,378.75,1138
+658,student_club,budget,remaining,,A value calculated as the amount budgeted minus the amount spent,real,"the unit is dollar 
+commonsense evidence: If the remaining < 0, it means that the cost has exceeded the budget.",,1370.25,522.0,1373,1082.0,378.75,1138
+659,student_club,budget,amount,,The amount budgeted for the specified category and event,integer,"the unit is dollar 
+commonsense evidence:
+some computation like: amount = spent + remaining ",,1366.0,520.5,1371,1080.5,378.75,1138
+660,student_club,budget,event_status,event status,the status of the event,text,"Closed / Open/ Planning 
+commonsense evidence: 
+ Closed: It means that the event is closed. The spent and the remaining won't change anymore.
+ Open: It means that the event is already opened. The spent and the remaining will change with new expenses.
+ Planning: The event is not started yet but is planning. The spent and the remaining won't change at this stage. ",,1364.5,518.25,1370,1083.5,378.75,1140
+661,student_club,budget,link_to_event,link to event,The unique identifier of the event to which the budget line applies.,text,References the Event table,F,1376.75,524.25,1381,1084.0,378.75,1142
+662,student_club,attendance,link_to_event,link to event,The unique identifier of the event which was attended,text,References the Event table,F,1290.5,479.25,1222,1001.5,336.0,986
+663,student_club,attendance,link_to_member,link to member,The unique identifier of the member who attended the event,text,References the Member table,F,1292.75,480.0,1223,1002.0,336.0,986
+664,student_club,event,event_id,event id,A unique identifier for the event,text,,P,1453.0,558.75,1416,1171.5,418.5,1185
+665,student_club,event,event_name,event name,event name,text,,,1449.25,555.75,1412,1172.5,418.5,1185
+666,student_club,event,event_date,event date,The date the event took place or is scheduled to take place,text,e.g. 2020-03-10T12:00:00,,1461.5,563.25,1422,1172.5,418.5,1185
+667,student_club,event,type,,"The kind of event, such as game, social, election",text,,,1452.75,560.25,1418,1169.5,418.5,1183
+668,student_club,event,notes,,A free text field for any notes about the event,text,,,1453.0,561.0,1416,1170.0,418.5,1183
+669,student_club,event,location,,Address where the event was held or is to be held or the name of such a location,text,,,1463.5,567.0,1424,1171.5,418.5,1183
+670,student_club,event,status,,"One of three values indicating if the event is in planning, is opened, or is closed",text,Open/ Closed/ Planning,,1462.75,565.5,1424,1170.5,418.5,1183
+671,student_club,expense,expense_id,expense id,unique id of income,text,,P,1414.0,519.0,1493,1135.0,380.25,1264
+672,student_club,expense,expense_description,expense description,A textual description of what the money was spend for,text,,,1431.5,523.5,1499,1139.5,380.25,1264
+673,student_club,expense,expense_date,expense date,The date the expense was incurred,text,e.g. YYYY-MM-DD,,1419.5,520.5,1495,1136.0,380.25,1264
+674,student_club,expense,cost,,The dollar amount of the expense,real,the unit is dollar,,1411.0,519.75,1491,1132.0,380.25,1262
+675,student_club,expense,approved,,A true or false value indicating if the expense was approved,text,true/ false,,1421.0,523.5,1496,1134.0,380.25,1262
+676,student_club,expense,link_to_member,link to member,The member who incurred the expense,text,,F,1422.0,521.25,1499,1137.0,380.25,1266
+677,student_club,expense,link_to_budget,link to budget,The unique identifier of the record in the Budget table that indicates the expected total expenditure for a given category and event. ,text,References the Budget table,F,1446.75,534.0,1516,1137.0,380.25,1266
+678,student_club,major,major_id,major id,A unique identifier for each major,text,,P,1468.0,556.5,1270,1186.25,416.25,1039
+679,student_club,major,major_name,major name,major name,text,,,1464.0,553.5,1266,1187.25,416.25,1039
+680,student_club,major,department,,The name of the department that offers the major,text,,,1471.75,558.0,1269,1187.25,416.25,1037
+681,student_club,major,college,,The name college that houses the department that offers the major,text,,,1473.75,559.5,1271,1185.75,416.25,1037
+682,student_club,member,member_id,member id,unique id of member,text,,P,1460.0,534.75,1527,1181.5,396.0,1298
+683,student_club,member,first_name,first name,member's first name,text,,,1461.0,534.0,1527,1182.0,396.0,1298
+684,student_club,member,last_name,last name,member's last name,text,"commonsense evidence: 
+full name is first_name + last_name. e.g. A member's first name is Angela and last name is Sanders. Thus, his/her full name is Angela Sanders.",,1459.75,534.0,1527,1181.5,396.0,1298
+685,student_club,member,email,,member's email,text,,,1454.25,532.5,1522,1179.5,396.0,1296
+686,student_club,member,position,,The position the member holds in the club,text,,,1463.25,537.0,1527,1181.0,396.0,1296
+687,student_club,member,t_shirt_size,,The size of tee shirt that member wants when shirts are ordered,text,commonsense evidence: usually the student ordered t-shirt with lager size has bigger body shape ,,1471.75,540.0,1540,1183.0,396.0,1302
+688,student_club,member,phone,,The best telephone at which to contact the member,text,,,1463.0,537.75,1528,1179.5,396.0,1296
+689,student_club,member,zip,,the zip code of the member's hometown,integer,,F,1458.5,536.25,1527,1178.5,396.0,1296
+690,student_club,member,link_to_major,link to major,The unique identifier of the major of the member. References the Major table,text,,F,1478.25,542.25,1541,1183.5,396.0,1300
+691,student_club,zip_code,zip_code,zip code,The ZIP code itself. A five-digit number identifying a US post office.,integer,,P,1323.75,528.75,1180,1033.0,384.0,941
+692,student_club,zip_code,type,,The kind of ZIP code,text,"commonsense evidence: 
+� Standard: the normal codes with which most people are familiar 
+� PO Box: zip codes have post office boxes 
+� Unique: zip codes that are assigned to individual organizations.",,1307.0,522.75,1167,1031.0,384.0,939
+693,student_club,zip_code,city,,The city to which the ZIP pertains,text,,,1310.5,524.25,1170,1031.0,384.0,939
+694,student_club,zip_code,county,,The county to which the ZIP pertains,text,,,1312.5,524.25,1170,1032.0,384.0,939
+695,student_club,zip_code,state,,The name of the state to which the ZIP pertains,text,,,1314.5,526.5,1173,1031.5,384.0,939
+696,student_club,zip_code,short_state,short state,The abbreviation of the state to which the ZIP pertains,text,,,1323.0,527.25,1177,1034.5,384.0,941
+697,superhero,gender,id,,the unique identifier of the gender,integer,,P,1189.5,495.75,962,910.25,356.25,733
+698,superhero,gender,gender,,the gender of the superhero,text,,,1190.5,495.0,961,912.25,356.25,733
+699,superhero,superpower,id,,the unique identifier of the superpower,integer,,P,1233.5,511.5,1011,953.25,372.0,781
+700,superhero,superpower,power_name,power name,the superpower name,text,,,1236.25,510.0,1012,957.25,372.0,783
+701,superhero,publisher,id,,the unique identifier of the publisher,integer,,P,1228.0,511.5,1002,948.0,372.0,773
+702,superhero,publisher,publisher_name,,the name of the publisher,text,,,1233.75,510.75,1004,954.0,372.0,775
+703,superhero,superhero,id,,the unique identifier of the superhero,integer,,P,1337.0,599.25,1258,1057.0,459.75,1029
+704,superhero,superhero,superhero_name,superhero name,the name of the superhero,text,,,1345.5,599.25,1261,1063.0,459.75,1031
+705,superhero,superhero,full_name,full name,the full name of the superhero,text,"commonsense evidence:
+The full name of a person typically consists of their given name, also known as their first name or personal name, and their surname, also known as their last name or family name. For example, if someone's given name is ""John"" and their surname is ""Smith,"" their full name would be ""John Smith.""",,1341.75,600.0,1262,1060.5,459.75,1031
+706,superhero,superhero,gender_id,gender id,the id of the superhero's gender,integer,,F,1342.25,600.0,1263,1060.5,459.75,1031
+707,superhero,superhero,eye_colour_id,eye colour id,the id of the superhero's eye color,integer,,F,1347.0,601.5,1268,1062.5,459.75,1033
+708,superhero,superhero,hair_colour_id,hair colour id,the id of the superhero's hair color,integer,,F,1348.25,601.5,1268,1063.0,459.75,1033
+709,superhero,superhero,skin_colour_id,skin colour id,the id of the superhero's skin color,integer,,F,1348.25,601.5,1268,1063.0,459.75,1033
+710,superhero,superhero,race_id,race id,the id of the superhero's race,integer,,F,1339.75,600.0,1263,1059.5,459.75,1031
+711,superhero,superhero,publisher_id,publisher id,the id of the publisher,integer,,F,1343.0,599.25,1261,1062.0,459.75,1031
+712,superhero,superhero,alignment_id,alignment id,the id of the superhero's alignment,integer,,F,1346.0,600.0,1263,1062.0,459.75,1031
+713,superhero,superhero,height_cm,height cm,the height of the superhero,integer,"commonsense evidence:
+The unit of height is centimeter. If the height_cm is NULL or 0, it means the height of the superhero is missing. ",,1341.0,599.25,1261,1060.5,459.75,1031
+714,superhero,superhero,weight_kg,weight kg,the weight of the superhero,integer,"commonsense evidence:
+The unit of weight is kilogram. If the weight_kg is NULL or 0, it means the weight of the superhero is missing.",,1341.0,599.25,1264,1060.5,459.75,1033
+715,superhero,colour,id,,the unique identifier of the color,integer,,P,1210.75,507.0,1000,931.75,367.5,771
+716,superhero,colour,colour,,the color of the superhero's skin/eye/hair/etc,text,,,1216.75,507.0,1006,933.75,367.5,771
+717,superhero,attribute,id,,the unique identifier of the attribute,integer,,P,1207.25,500.25,976,927.25,360.75,747
+718,superhero,attribute,attribute_name,attribute name,the attribute,text,"commonsense evidence:
+A superhero's attribute is a characteristic or quality that defines who they are and what they are capable of. This could be a physical trait, such as superhuman strength or the ability to fly, or a personal trait, such as extraordinary intelligence or exceptional bravery. ",,1212.75,498.0,976,933.25,360.75,749
+719,superhero,hero_power,hero_id,hero id,"the id of the hero
+Maps to superhero(id)",integer,,F,1210.25,508.5,1005,927.5,366.75,770
+720,superhero,hero_power,power_id,power id,"the id of the power
+Maps to superpower(id)",integer,"commonsense evidence:
+In general, a superhero's attributes provide the foundation for their abilities and help to define who they are, while their powers are the specific abilities that they use to fight crime and protect others.",F,1211.75,508.5,1006,928.0,366.75,770
+721,superhero,race,id,,the unique identifier of the race,integer,,P,1206.25,506.25,998,927.5,366.75,769
+722,superhero,race,race,,the race of the superhero,text,"commonsense evidence:
+In the context of superheroes, a superhero's race would refer to the particular group of people that the superhero belongs to base on these physical characteristics",,1205.75,505.5,997,928.5,366.75,769
+723,superhero,alignment,id,,the unique identifier of the alignment,integer,,P,1196.75,497.25,966,916.75,357.75,737
+724,superhero,alignment,alignment,,the alignment of the superhero,text,"commonsense evidence:
+Alignment refers to a character's moral and ethical stance and can be used to describe the overall attitude or behavior of a superhero. Some common alignments for superheroes include:
+Good: These superheroes are typically kind, selfless, and dedicated to protecting others and upholding justice. Examples of good alignments include Superman, Wonder Woman, and Spider-Man.
+Neutral: These superheroes may not always prioritize the greater good, but they are not necessarily evil either. They may act in their own self-interest or make decisions based on their own moral code. Examples of neutral alignments include the Hulk and Deadpool.
+	Bad: These superheroes are typically selfish, manipulative, and willing to harm others in pursuit of their own goals. Examples of evil alignments include Lex Luthor and the Joker.",,1200.0,496.5,965,920.25,357.75,737
+725,superhero,hero_attribute,hero_id,hero id,"the id of the hero
+Maps to superhero(id)",,,F,1226.75,516.75,1028,944.0,375.0,793
+726,superhero,hero_attribute,attribute_id,attribute id,"the id of the attribute
+Maps to attribute(id)",,,F,1233.0,516.75,1028,946.5,375.0,793
+727,superhero,hero_attribute,attribute_value,attribute value,the attribute value,,"commonsense evidence:
+If a superhero has a higher attribute value on a particular attribute, it means that they are more skilled or powerful in that area compared to other superheroes. For example, if a superhero has a higher attribute value for strength, they may be able to lift heavier objects or deliver more powerful punches than other superheroes.",,1229.5,513.0,1021,948.0,375.0,793
+728,codebase_community,postLinks,Id,,the post link id,integer,,P,1853.5,680.25,1631,1579.0,542.25,1404
+729,codebase_community,postLinks,CreationDate,Creation Date,the creation date of the post link,datetime,,,1868.0,683.25,1638,1584.0,542.25,1406
+730,codebase_community,postLinks,PostId,Post Id,the post id,integer,,F,1856.25,680.25,1634,1581.0,542.25,1406
+731,codebase_community,postLinks,RelatedPostId,Related Post Id,the id of the related post,integer,,F,1867.25,683.25,1641,1584.5,542.25,1408
+732,codebase_community,postLinks,LinkTypeId,Link Type Id,the id of the link type,integer,,,1863.5,683.25,1638,1583.0,542.25,1406
+733,codebase_community,postHistory,Id,,the post history id,integer,,P,2078.5,743.25,1982,1803.25,605.25,1755
+734,codebase_community,postHistory,PostHistoryTypeId,Post History Type Id,the id of the post history type,integer,,,2097.0,747.75,1994,1810.75,605.25,1759
+735,codebase_community,postHistory,PostId,Post Id,the unique id of the post,integer,,F,2084.0,745.5,1988,1805.25,605.25,1757
+736,codebase_community,postHistory,RevisionGUID,Revision GUID,the revision globally unique id of the post,integer,,,2094.5,747.0,1990,1808.25,605.25,1757
+737,codebase_community,postHistory,CreationDate,Creation Date,the creation date of the post,datetime,,,2091.0,745.5,1988,1808.25,605.25,1757
+738,codebase_community,postHistory,UserId,User Id,the user who post the post,integer,,F,2084.25,745.5,1985,1805.25,605.25,1755
+739,codebase_community,postHistory,Text,,the detailed content of the post,text,,,2083.25,744.75,1984,1804.25,605.25,1755
+740,codebase_community,postHistory,Comment,,comments of the post,text,,,2082.5,743.25,1982,1805.75,605.25,1755
+741,codebase_community,postHistory,UserDisplayName,User Display Name,user's display name,text,,,2091.75,744.0,1987,1809.75,605.25,1757
+742,codebase_community,badges,Id,,the badge id,integer,,P,1839.75,671.25,1596,1566.25,534.0,1370
+743,codebase_community,badges,UserId,User Id,the unique id of the user,integer,,F,1847.0,674.25,1600,1568.25,534.0,1370
+744,codebase_community,badges,Name,,the badge name the user obtained,text,,,1846.25,673.5,1599,1567.25,534.0,1370
+745,codebase_community,badges,Date,,the date that the user obtained the badge,datetime,,,1848.5,675.0,1601,1567.25,534.0,1370
+746,codebase_community,posts,Id,,the post id,integer,,P,3363.5,1287.0,3364,3090.25,1149.75,3138
+747,codebase_community,posts,PostTypeId,Post Type Id,the id of the post type,integer,,,3374.75,1290.75,3372,3094.25,1149.75,3140
+748,codebase_community,posts,AcceptedAnswerId,Accepted Answer Id,the accepted answer id of the post ,integer,,,3383.75,1292.25,3376,3097.25,1149.75,3142
+749,codebase_community,posts,CreaionDate,Creation Date,the creation date of the post,datetime,,,3377.25,1290.0,3377,3094.75,1149.75,3144
+750,codebase_community,posts,Score,,the score of the post,integer,,,3368.25,1288.5,3366,3091.75,1149.75,3138
+751,codebase_community,posts,ViewCount,View Count,the view count of the post,integer,"commonsense evidence:
+Higher view count means the post has higher popularity",,3374.25,1290.0,3371,3093.75,1149.75,3140
+752,codebase_community,posts,Body,,the body of the post,text,,,3367.25,1288.5,3366,3091.25,1149.75,3138
+753,codebase_community,posts,OwnerUserId,Owner User Id,the id of the owner user,integer,,F,3376.0,1290.75,3372,3094.75,1149.75,3140
+754,codebase_community,posts,LasActivityDate,Last Activity Date,the last activity date,datetime,,,3379.75,1289.25,3373,3096.75,1149.75,3142
+755,codebase_community,posts,Title,,the title of the post,text,,,3368.25,1288.5,3366,3091.75,1149.75,3138
+756,codebase_community,posts,Tags,,the tag of the post,text,,,3367.0,1288.5,3366,3091.25,1149.75,3138
+757,codebase_community,posts,AnswerCount,Answer Count,the total number of answers of the post,integer,,,3379.5,1291.5,3373,3094.75,1149.75,3140
+758,codebase_community,posts,CommentCount,Comment Count,the total number of comments of the post,integer,,,3380.75,1291.5,3373,3095.25,1149.75,3140
+759,codebase_community,posts,FavoriteCount,Favorite Count,the total number of favorites of the post,integer,"commonsense evidence:
+more favorite count refers to more valuable posts. ",,3382.0,1291.5,3373,3095.75,1149.75,3140
+760,codebase_community,posts,LastEditorUserId,Last Editor User Id,the id of the last editor,integer,,F,3381.5,1291.5,3376,3097.25,1149.75,3142
+761,codebase_community,posts,LastEditDate,Last Edit Date,the last edit date,datetime,,,3375.5,1289.25,3373,3095.25,1149.75,3142
+762,codebase_community,posts,CommunityOwnedDate,Community Owned Date,the community owned date,datetime,,,3383.0,1289.25,3373,3098.25,1149.75,3142
+763,codebase_community,posts,ParentId,ParentId,the id of the parent post,integer,"commonsense evidence:
+If the parent id is null, the post is the root post. Otherwise, the post is the child post of other post. ",F,3372.75,1289.25,3371,3093.25,1149.75,3140
+764,codebase_community,posts,ClosedDate,Closed Date,the closed date of the post,data_format,"commonsense evidence:
+if ClosedDate is null or empty, it means this post is not well-finished
+if CloseDate is not null or empty, it means this post has well-finished.",,3375.5,1290.0,3371,3094.25,1149.75,3140
+765,codebase_community,posts,OwnerDisplayName,Owner Display Name,the display name of the post owner,text,,,3383.5,1291.5,3373,3097.25,1149.75,3140
+766,codebase_community,posts,LastEditorDisplayName,Last Editor Display Name,the display name of the last editor,text,,,3389.0,1292.25,3377,3099.75,1149.75,3142
+767,codebase_community,users,Id,,the user id,integer,,P,2971.25,1015.5,3008,2698.0,878.25,2782
+768,codebase_community,users,Reputation,,the user's reputation,integer,"commonsense evidence:
+The user with higher reputation has more influence. ",,2979.75,1015.5,3009,2702.0,878.25,2782
+769,codebase_community,users,CreationDate,Creation Date,the creation date of the user account,datetime,,,2987.75,1019.25,3016,2703.0,878.25,2784
+770,codebase_community,users,DisplayName,Display Name,the user's display name,text,,,2983.25,1017.0,3011,2702.5,878.25,2782
+771,codebase_community,users,LastAccessDate,Last Access Date,the last access date of the user account,datetime,,,2990.75,1020.75,3021,2704.0,878.25,2786
+772,codebase_community,users,WebsiteUrl,Website Url,the website url of the user account,text,,,2985.25,1019.25,3016,2702.0,878.25,2784
+773,codebase_community,users,Location,,user's location,text,,,2976.75,1014.75,3008,2701.0,878.25,2782
+774,codebase_community,users,AboutMe,About Me,the self introduction of the user,text,,,2981.75,1018.5,3015,2700.5,878.25,2784
+775,codebase_community,users,Views,,the number of views ,integer,,,2975.75,1017.0,3009,2699.5,878.25,2782
+776,codebase_community,users,UpVotes,,the number of upvotes,integer,,,2977.5,1016.25,3013,2700.5,878.25,2784
+777,codebase_community,users,DownVotes,,the number of downvotes,integer,,,2979.5,1016.25,3013,2701.5,878.25,2784
+778,codebase_community,users,AccountId,Account Id,the unique id of the account,integer,,,2982.5,1018.5,3015,2701.5,878.25,2784
+779,codebase_community,users,Age,,user's age,integer," teenager: 13-18
+ adult: 19-65
+ elder: > 65",,2971.75,1014.75,3008,2698.5,878.25,2782
+780,codebase_community,users,ProfileImageUrl,Profile Image Url,the profile image url,text,,,2987.0,1017.75,3014,2704.5,878.25,2784
+781,codebase_community,tags,Id,,the tag id,integer,,P,1826.0,672.0,1514,1553.0,534.75,1288
+782,codebase_community,tags,TagName,Tag Name,the name of the tag,text,,,1833.25,674.25,1520,1555.5,534.75,1290
+783,codebase_community,tags,Count,,the count of posts that contain this tag,integer,more counts --> this tag is more popular,,1835.75,675.75,1519,1554.5,534.75,1288
+784,codebase_community,tags,ExcerptPostId,Excerpt Post Id,the excerpt post id of the tag,integer,,F,1842.25,676.5,1530,1558.5,534.75,1294
+785,codebase_community,tags,WikiPostId,Wiki Post Id,the wiki post id of the tag,text,,,1838.5,676.5,1526,1557.0,534.75,1292
+786,codebase_community,votes,Id,,the vote id,integer,,P,1828.5,680.25,1546,1555.25,543.0,1320
+787,codebase_community,votes,PostId,Post Id,the id of the post that is voted,integer,,F,1837.75,684.75,1555,1557.25,543.0,1322
+788,codebase_community,votes,VoteTypeId,Vote Type Id,the id of the vote type,integer,,,1839.75,684.0,1554,1559.25,543.0,1322
+789,codebase_community,votes,CreationDate,Creation Date,the creation date of the vote,datetime,,,1843.0,683.25,1553,1560.25,543.0,1322
+790,codebase_community,votes,UserId,User Id,the id of the voter,integer,,F,1834.5,682.5,1549,1557.25,543.0,1320
+791,codebase_community,votes,BountyAmount,Bounty Amount,the amount of bounty,integer,,,1840.75,681.75,1551,1560.25,543.0,1322
+792,codebase_community,comments,Id,,the comment Id,integer,,P,2060.75,787.5,1826,1786.75,650.25,1600
+793,codebase_community,comments,PostId,Post Id,the unique id of the post,integer,,F,2067.5,790.5,1833,1788.75,650.25,1602
+794,codebase_community,comments,Score,,rating score,integer,"commonsense evidence:
+The score is from 0 to 100. The score more than 60 refers that the comment is a positive comment. The score less than 60 refers that the comment is a negative comment. ",,2062.5,786.75,1825,1788.25,650.25,1600
+795,codebase_community,comments,Text,,the detailed content of the comment,text,,,2067.5,789.75,1829,1787.75,650.25,1600
+796,codebase_community,comments,CreationDate,Creation Date,the creation date of the comment,datetime,,,2075.25,790.5,1833,1791.75,650.25,1602
+797,codebase_community,comments,UserId,User Id,the id of the user who post the comment,integer,,F,2071.0,792.75,1833,1788.75,650.25,1600
+798,codebase_community,comments,UserDisplayName,User Display Name,user's display name,text,,,2075.25,789.0,1832,1793.25,650.25,1602
