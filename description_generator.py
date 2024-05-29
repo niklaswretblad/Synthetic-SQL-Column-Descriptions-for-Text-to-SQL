@@ -9,6 +9,8 @@ from src.timer import Timer
 import logging
 import pandas as pd
 from dotenv import load_dotenv
+import tiktoken
+from tqdm import tqdm
 
 GEN_COLUMN_DESCRIPTION_PROMPT_2 = """
 ### Context - Generate Column Description for Database, to give users an easier time understanding what data is present in the column.
@@ -107,7 +109,7 @@ class desc_gen_llm:
 
         prompt = PromptTemplate(
             # TODO: Add other input variables
-            input_variables=["database_schema", "column", "table"],
+            input_variables=["database_schema", "column", "table"], # Are we getting all of the information that we send in?
             template=GEN_COLUMN_DESCRIPTION_PROMPT_GOLD,
         )
 
@@ -143,12 +145,20 @@ class desc_gen_llm:
 
 if __name__ == "__main__":
     # Initiate llm
+<<<<<<< HEAD
     LLM_NAME = "gpt-4o"
     NUM_EXAMPLES_ALL = 0
+=======
+    LLM_NAME = "gpt-3.5-turbo"
+    NUM_EXAMPLES_ALL = 3
+>>>>>>> 91f1913106d4ed30ecb2b3c128d2cd854a9a7c77
     NUM_EXAMPLES_CURRENT = 10
     NUM_EXAMPLES_ASSOCIATED = 0
+    UNIQUE_EXAMPLES = False
     GOLD = True
-    OUTPUT_FILENAME = "GOLD_DEV_desc_" + LLM_NAME
+    # OUTPUT_FILENAME = "GOLD_DEV_desc_" + LLM_NAME
+    OUTPUT_FILENAME = "3_10ex_tokens_count_" + LLM_NAME
+    COUNT_TOKENS_ONLY = True
 
     # Load OpenAI API Key
     load_dotenv()
@@ -191,12 +201,26 @@ if __name__ == "__main__":
     #     database_df["table_name"] == "loan")]
 
     # Create a new column 'llm_column_description' if it doesn't exist
-    if 'llm_column_description' not in database_df.columns:
-        database_df['llm_column_description'] = ""
+    if COUNT_TOKENS_ONLY:
+        encoding = tiktoken.encoding_for_model(LLM_NAME)
+        if 'gold_prompt_char' not in database_df.columns:
+                database_df['gold_prompt_chars'] = ""
+        if 'gold_prompt_words' not in database_df.columns:
+            database_df['gold_prompt_words'] = ""
+        if 'gold_prompt_tokens' not in database_df.columns:
+            database_df['gold_prompt_tokens'] = ""
+        if 'pred_prompt_char' not in database_df.columns:
+            database_df['pred_prompt_chars'] = ""
+        if 'pred__prompt_words' not in database_df.columns:
+            database_df['pred_prompt_words'] = ""
+        if 'pred__prompt_tokens' not in database_df.columns:
+            database_df['pred_prompt_tokens'] = ""
+    else: 
+        if 'llm_column_description' not in database_df.columns:
+            database_df['llm_column_description'] = ""
 
     # Generate column descriptions
-    for col_idx, col in database_df.iterrows():
-        print(f"Generating description for database {col["database_name"]}, table {col["table_name"]}, and column {col["original_column_name"]}")
+    for col_idx, col in tqdm(database_df.iterrows(), total=database_df.shape[0]):
         unique_data = ""
         # Get the database schema and example values
         if NUM_EXAMPLES_ALL == 0:
@@ -211,9 +235,17 @@ if __name__ == "__main__":
         else:
             example_data = sql_database.get_sample_data(
                 col["database_name"], col["table_name"], num_examples=NUM_EXAMPLES_CURRENT)
+<<<<<<< HEAD
             unique_data = sql_database.get_sample_data(
                 col["database_name"], col["table_name"], num_examples=0, unique=True, original_column_name=col["original_column_name"])
 
+=======
+            if UNIQUE_EXAMPLES:
+                unique_data = sql_database.get_sample_data(
+                    col["database_name"], col["table_name"], num_examples=20, unique=True, original_column_name=col["original_column_name"])
+            else:
+                unique_data = ""
+>>>>>>> 91f1913106d4ed30ecb2b3c128d2cd854a9a7c77
         if col['type'] == 'xxx':  # ensures this is always False, insert "F" to use this function
             # This removes the "_id" from the name, works for financial, but is a hard coded test, TODO: fix this
             referenced_table = col['original_column_name'][:-3]
@@ -222,15 +254,51 @@ if __name__ == "__main__":
         else:
 
             example_data_associated = ""
+        if COUNT_TOKENS_ONLY:
+            # Construct the prompt
+            gold_formatted_prompt = GEN_COLUMN_DESCRIPTION_PROMPT_GOLD.format(
+                database_schema=database_schema,
+                table=col["table_name"],
+                example_data=example_data,
+                column=col["original_column_name"],
+                unique_data=unique_data,
+                column_name=col["column_name"],
+                column_description=col["column_description"]
+            )
+        
+            pred_formatted_prompt = GEN_COLUMN_DESCRIPTION_PROMPT_2.format(
+                database_schema=database_schema,
+                table=col["table_name"],
+                example_data=example_data,
+                column=col["original_column_name"],
+                unique_data=unique_data
+            )
 
-        if GOLD:
-            column_desc = model.gen_column_desc(
-                database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated, col["column_name"], col["column_description"], unique_data)
+            # Count the number of characters in the prompt
+            # Using guidlines from https://platform.openai.com/tokenizer to count tokens (4 characters per token)
+            database_df.loc[col_idx, 'gold_prompt_chars'] = len(gold_formatted_prompt) / 4
+            database_df.loc[col_idx, 'pred_prompt_chars'] = len(pred_formatted_prompt) / 4
+
+            # Count the number of words in the prompt
+            # Using guidlines from https://platform.openai.com/tokenizer to count tokens (3/4 characters per word)
+            database_df.loc[col_idx, 'gold_prompt_words'] = len(
+                gold_formatted_prompt.split()) * 0.75
+            database_df.loc[col_idx, 'pred_prompt_words'] = len(
+                pred_formatted_prompt.split()) * 0.75
+            # Count the number of tokens in the prompt
+            database_df.loc[col_idx, 'gold_prompt_tokens'] = len(encoding.encode(gold_formatted_prompt))
+            database_df.loc[col_idx, 'pred_prompt_tokens'] = len(encoding.encode(pred_formatted_prompt))
         else:
-            column_desc = model.gen_column_desc(
-                database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated, unique_data=unique_data)
-        database_df.loc[col_idx, 'llm_column_description'] = column_desc
+            print(f'Generating description for database {col["database_name"]}, table {col["table_name"]}, and column {col["original_column_name"]}')
+            if GOLD:
+                column_desc = model.gen_column_desc(
+                    database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated, col["column_name"], col["column_description"], unique_data)
+            else:
+                column_desc = model.gen_column_desc(
+                    database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated, unique_data=unique_data)
+            database_df.loc[col_idx, 'llm_column_description'] = column_desc
 
+<<<<<<< HEAD
         # Save every ten columns
         if col_idx % 10 == 0 and col_idx != 0:
             database_df.to_csv(OUTPUT_FILENAME+'.csv', index=True)
@@ -238,3 +306,7 @@ if __name__ == "__main__":
 
     # Save column descriptions to database.csv
     database_df.to_csv(OUTPUT_FILENAME+'.csv', index=True)
+=======
+        # Save column descriptions to database.csv
+        database_df.to_csv(OUTPUT_FILENAME+'.csv', index=True)
+>>>>>>> 91f1913106d4ed30ecb2b3c128d2cd854a9a7c77
