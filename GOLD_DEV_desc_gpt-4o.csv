@@ -1,0 +1,1154 @@
+,database_name,table_name,original_column_name,column_name,column_description,data_format,value_description,type,llm_column_description
+0,debit_card_specializing,yearmonth,CustomerID,Customer ID,Customer ID,integer,,F,The unique identifier for a customer.
+1,debit_card_specializing,yearmonth,Date,,Date,text,,P,The year and month of the transaction.
+2,debit_card_specializing,yearmonth,Consumption,,consumption,real,,,The consumption value for a customer in a specific year and month.
+3,debit_card_specializing,transactions_1k,TransactionID,Transaction ID,Transaction ID,integer,,P,Unique identifier for each transaction.
+4,debit_card_specializing,transactions_1k,Date,,Date,date,,,The date of the transaction.
+5,debit_card_specializing,transactions_1k,Time,,Time,text,,,The time of the transaction.
+6,debit_card_specializing,transactions_1k,CustomerID,Customer ID,Customer ID,integer,,,The unique identifier for the customer associated with the transaction.
+7,debit_card_specializing,transactions_1k,CardID,Card ID,Card ID,integer,,,The unique identifier for the card used in the transaction.
+8,debit_card_specializing,transactions_1k,GasStationID,Gas Station ID,Gas Station ID,integer,,,The unique identifier for the gas station where the transaction occurred.
+9,debit_card_specializing,transactions_1k,ProductID,Product ID,Product ID,integer,,,The unique identifier for the product involved in the transaction.
+10,debit_card_specializing,transactions_1k,Amount,,Amount,integer,,,The quantity of the product involved in the transaction.
+11,debit_card_specializing,transactions_1k,Price,,Price,real,"commonsense evidence:
+
+total price = Amount x Price",,The price of the transaction.
+12,debit_card_specializing,customers,CustomerID,,identification of the customer,integer,,P,Unique identifier for each customer.
+13,debit_card_specializing,customers,Segment,client segment,client segment,text,,,Client segment classification.
+14,debit_card_specializing,customers,Currency,,Currency,text,,,The currency used by the customer.
+15,debit_card_specializing,gasstations,GasStationID,Gas Station ID,Gas Station ID,integer,,P,Unique identifier for each gas station.
+16,debit_card_specializing,gasstations,ChainID,Chain ID,Chain ID,integer,,,Identifier for the chain to which the gas station belongs.
+17,debit_card_specializing,gasstations,Country,,,text,,,The country where the gas station is located.
+18,debit_card_specializing,gasstations,Segment,chain segment,chain segment,text,,,The chain segment.
+19,debit_card_specializing,products,ProductID,Product ID,Product ID,integer,,P,The unique identifier for each product.
+20,debit_card_specializing,products,Description,,Description,text,,,The description of the product.
+21,financial,loan,loan_id,,the id number identifying the loan data,integer,,P,Unique identifier for each loan.
+22,financial,loan,account_id,,the id number identifying the account,integer,,F,This is the ID number identifying the account associated with the loan.
+23,financial,loan,date,,the date when the loan is approved,date,,,The date when the loan was approved.
+24,financial,loan,amount,,approved amount,integer,unit：US dollar,,The approved loan amount.
+25,financial,loan,duration,,loan duration,integer,unit：month,,The duration of the loan in months.
+26,financial,loan,payments,monthly payments,monthly payments,real,unit：month,,The monthly payment amount for the loan.
+27,financial,loan,status,,repayment status,text,"'A' stands for contract finished, no problems;
+'B' stands for contract finished, loan not paid;
+'C' stands for running contract, OK so far;
+'D' stands for running contract, client in debt",,The repayment status of the loan.
+28,financial,client,client_id,,the unique number,integer,,P,A unique identifier for each client.
+29,financial,client,gender,,,text,"F：female 
+M：male ",,The gender of the client.
+30,financial,client,birth_date,,birth date,date,,,The birth date of the client.
+31,financial,client,district_id,location of branch,location of branch,integer,,F,Identifier for the district where the client is located.
+32,financial,district,district_id,location of branch,location of branch,integer ,,P,Unique identifier for each district.
+33,financial,district,A2,district_name,district_name,text,,,The name of the district.
+34,financial,district,A3,region,region,text,,,The region where the district is located.
+35,financial,district,A4,number of inhabitants ,,text,,,The number of inhabitants in the district.
+36,financial,district,A5,no. of municipalities with inhabitants < 499,municipality < district < region,text,,,This is the number of municipalities with fewer than 499 inhabitants.
+37,financial,district,A6,no. of municipalities with inhabitants 500-1999,municipality < district < region,text,,,This is the number of municipalities with inhabitants between 500 and 1999.
+38,financial,district,A7,no. of municipalities with inhabitants 2000-9999,municipality < district < region,text,,,This is the number of municipalities with 2000-9999 inhabitants.
+39,financial,district,A8,no. of municipalities with inhabitants > 10000,municipality < district < region,integer,,,"This is the number of municipalities with more than 10,000 inhabitants."
+40,financial,district,A9,,,integer,not useful,,Not enough information to make a valid prediction.
+41,financial,district,A10,ratio of urban inhabitants,ratio of urban inhabitants,real,,,The ratio of urban inhabitants.
+42,financial,district,A11,average salary,average salary,integer,,,The average salary in the district.
+43,financial,district,A12,unemployment rate 1995,unemployment rate 1995,real,,,The unemployment rate in 1995.
+44,financial,district,A13,unemployment rate 1996,unemployment rate 1996,real,,,The unemployment rate in 1996.
+45,financial,district,A14,no. of entrepreneurs per 1000 inhabitants,no. of entrepreneurs per 1000 inhabitants,integer,,,The number of entrepreneurs per 1000 inhabitants.
+46,financial,district,A15,no. of committed crimes 1995,no. of committed crimes 1995,integer,,,The number of committed crimes in 1995.
+47,financial,district,A16,no. of committed crimes 1996,no. of committed crimes 1996,integer,,,The number of committed crimes in 1996.
+48,financial,trans,trans_id,transaction id,transaction id,integer,,P,Unique identifier for each transaction.
+49,financial,trans,account_id,,,integer,,F,The unique identifier for the account associated with the transaction.
+50,financial,trans,date,date of transaction,date of transaction,date,,,The date of the transaction.
+51,financial,trans,type,+/- transaction,+/- transaction,text,"""PRIJEM"" stands for credit
+""VYDAJ"" stands for withdrawal",,The type of transaction.
+52,financial,trans,operation,mode of transaction,mode of transaction,text,"""VYBER KARTOU"": credit card withdrawal
+""VKLAD"": credit in cash
+""PREVOD Z UCTU"" :collection from another bank
+""VYBER"": withdrawal in cash
+""PREVOD NA UCET"": remittance to another bank",,The type of transaction operation.
+53,financial,trans,amount,amount of money,amount of money,integer,Unit：USD,,The amount of money involved in the transaction.
+54,financial,trans,balance,balance after transaction,balance after transaction,integer,Unit：USD,,The balance after the transaction.
+55,financial,trans,k_symbol,characterization of the transaction,,text,"""POJISTNE"": stands for insurrance payment
+""SLUZBY"": stands for payment for statement
+""UROK"": stands for interest credited
+""SANKC. UROK"": sanction interest if negative balance
+""SIPO"": stands for household
+""DUCHOD"": stands for old-age pension
+""UVER"": stands for loan payment",,Characterization of the transaction.
+56,financial,trans,bank,bank of the partner,,text,each bank has unique two-letter code,,The bank of the partner.
+57,financial,trans,account,account of the partner,,integer,,,The account number of the partner involved in the transaction.
+58,financial,account,account_id,account id,the id of the account,integer,,P,This is the unique identifier for the account.
+59,financial,account,district_id,location of branch,location of branch,integer ,,F,The identifier for the district where the account is located.
+60,financial,account,frequency,frequency,frequency of the acount,text,"""POPLATEK MESICNE"" stands for monthly issuance
+""POPLATEK TYDNE"" stands for weekly issuance
+""POPLATEK PO OBRATU"" stands for issuance after transaction",,The frequency of transactions on the account.
+61,financial,account,date,date,the creation date of the account,date,in the form YYMMDD,,The creation date of the account.
+62,financial,card,card_id,credit card id,id number of credit card,integer,,P,Unique identifier for each credit card.
+63,financial,card,disp_id,disposition id,disposition id,integer,,F,The identifier for the disposition associated with the card.
+64,financial,card,type,,type of credit card,text,"""junior"": junior class of credit card; 
+""classic"": standard class of credit card; 
+""gold"": high-level credit card",,The type of credit card issued.
+65,financial,card,issued,,the date when the credit card issued ,date,in the form YYMMDD,,The date when the credit card was issued.
+66,financial,order,order_id,,identifying the unique order,integer,,P,This is the unique identifier for each order.
+67,financial,order,account_id,,id number of account,integer,,F,The unique identifier for the account associated with the order.
+68,financial,order,bank_to,bank of the recipient,bank of the recipient,text,,,The bank of the recipient.
+69,financial,order,account_to,account of the recipient,account of the recipient,integer,each bank has unique two-letter code,,The account number of the recipient.
+70,financial,order,amount,debited amount,debited amount,real,,,The amount of money in the order.
+71,financial,order,k_symbol,characterization of the payment,purpose of the payment,text,"""POJISTNE"" stands for insurance payment
+""SIPO"" stands for household payment
+""LEASING"" stands for leasing
+""UVER"" stands for loan payment",,Characterization of the payment.
+72,financial,disp,disp_id,disposition id,unique number of identifying this row of record,integer,,P,Unique identifier for each disposition record.
+73,financial,disp,client_id,,id number of client,integer,,F,The unique identifier for the client.
+74,financial,disp,account_id,,id number of account,integer,,F,The unique identifier for the associated account.
+75,financial,disp,type,,type of disposition,text,"""OWNER"" : ""USER"" : ""DISPONENT""
+commonsense evidence:
+the account can only have the right to issue permanent orders or apply for loans",,The type of disposition.
+76,formula_1,circuits,circuitId,circuit Id ,unique identification number of the circuit ,integer ,,P,Unique identification number for each circuit.
+77,formula_1,circuits,circuitRef,circuit reference name ,circuit reference name ,text,,,The unique reference name for the circuit.
+78,formula_1,circuits,name ,,full name of circuit ,text,,,The name of the circuit.
+79,formula_1,circuits,location  ,,location of circuit ,text,,,The city or locality where the circuit is situated.
+80,formula_1,circuits,country ,,country of circuit ,text,,,The country where the circuit is located.
+81,formula_1,circuits,lat ,latitude  ,latitude of location of circuit ,real,,,Latitude of the circuit location.
+82,formula_1,circuits,lng ,longitude  ,longitude of location of circuit ,real,"commonsense evidence: 
+Location coordinates: (lat, lng)",,The longitude of the circuit's location.
+83,formula_1,circuits,alt ,,,integer ,not useful ,,The altitude of the circuit location.
+84,formula_1,circuits,url ,,url ,text,,,The URL of the circuit's Wikipedia page.
+85,formula_1,status,statusId ,status ID,the unique identification number identifying status,integer,,,The unique identification number for each status.
+86,formula_1,status,status ,,full name of status ,text,,,The status of the race or event.
+87,formula_1,drivers,driverId ,driver ID ,the unique identification number identifying each driver,integer,,,The unique identification number assigned to each driver.
+88,formula_1,drivers,driverRef ,driver reference name ,driver reference name ,text,,,The unique reference identifier for each driver.
+89,formula_1,drivers,number ,,number ,integer,,,The racing number assigned to the driver.
+90,formula_1,drivers,code ,,abbreviated code for drivers ,text,"if ""null"" or empty, it means it doesn't have code ",,Abbreviated code for drivers.
+91,formula_1,drivers,forename ,,forename ,text,,,The first name of the driver.
+92,formula_1,drivers,surname ,,surname ,text,,,The surname of the driver.
+93,formula_1,drivers,dob ,date of birth ,date of birth ,date,,,The date of birth of the driver.
+94,formula_1,drivers,nationality ,,nationality of drivers ,text,,,The nationality of the driver.
+95,formula_1,drivers,url ,,the introduction website of the drivers ,text,,,The URL of the driver's Wikipedia page.
+96,formula_1,driverStandings,driverStandingsId ,driver Standings Id ,the unique identification number identifying driver standing records ,integer,,,The unique identification number for driver standing records.
+97,formula_1,driverStandings,raceId ,constructor Reference name ,id number identifying which races ,integer,,,Identifier for the race associated with the driver's standings.
+98,formula_1,driverStandings,driverId ,,id number identifying which drivers ,integer,,,Unique identifier for the driver.
+99,formula_1,driverStandings,points ,,how many points acquired in each race ,real,,,The number of points a driver has accumulated in a race.
+100,formula_1,driverStandings,position ,,position or track of circuits ,integer,,,The position of the driver in the race standings.
+101,formula_1,driverStandings,positionText ,position text ,,text,"same with position, not quite useful ",,The position of the driver as a text value.
+102,formula_1,driverStandings,wins ,,wins ,integer,,,The number of wins achieved by the driver.
+103,formula_1,races,raceId ,race ID ,the unique identification number identifying the race ,integer ,,,The unique identification number for each race.
+104,formula_1,races,year ,,year ,integer ,,,The year the race took place.
+105,formula_1,races,round ,,round ,integer ,,,The round number of the race within the season.
+106,formula_1,races,circuitId ,Circuit Id ,circuit Id ,integer ,,,The unique identifier for the circuit where the race took place.
+107,formula_1,races,name ,,name of the race ,text,,,The name of the race.
+108,formula_1,races,date ,,duration time ,date,,,The date of the race.
+109,formula_1,races,time ,,time of the location ,text,,,The scheduled start time of the race.
+110,formula_1,races,url ,,introduction of races ,text,,,The URL of the Wikipedia page for the race.
+111,formula_1,constructors,constructorId ,constructor Id ,the unique identification number identifying constructors ,integer ,,,This is the unique identifier for each constructor.
+112,formula_1,constructors,constructorRef ,Constructor Reference name ,Constructor Reference name ,text,,,This is the unique reference name for each constructor.
+113,formula_1,constructors,name ,,full name of the constructor ,text,,,The full name of the constructor.
+114,formula_1,constructors,nationality ,,nationality of the constructor ,text,,,The nationality of the constructor.
+115,formula_1,constructors,url ,,the introduction website of the constructor ,text,"commonsense evidence: 
+How to find out the detailed introduction of the constructor: through its url",,The URL of the constructor's official webpage.
+117,formula_1,constructorResults,constructorResultsId,constructor Results Id,constructor Results Id,integer,,P,Unique identifier for each constructor result.
+118,formula_1,constructorResults,raceId,race Id,race id,integer,,F,The unique identifier for the race associated with the constructor's results.
+119,formula_1,constructorResults,constructorId,constructor Id,constructor id,integer,,F,The unique identifier for the constructor.
+120,formula_1,constructorResults,points,,points,real,,,Points scored by the constructor in the race.
+121,formula_1,constructorResults,status,,status,text,,,Not enough information to make a valid prediction.
+122,formula_1,lapTimes,raceId ,race ID ,the identification number identifying race,integer ,,,The identification number of the race.
+123,formula_1,lapTimes,driverId ,driver ID ,the identification number identifying each driver ,integer ,,,The identification number for each driver.
+124,formula_1,lapTimes,lap ,,lap number ,integer ,,,The lap number.
+125,formula_1,lapTimes,position ,,position or track of circuits  ,integer ,,,The position of the driver during a specific lap.
+126,formula_1,lapTimes,time ,,lap time  ,text,in minutes / seconds / ... ,,The lap time recorded for each lap.
+127,formula_1,lapTimes,milliseconds ,,milliseconds ,integer ,,,The time in milliseconds for a lap.
+128,formula_1,qualifying,qualifyId ,qualify Id ,the unique identification number identifying qualifying ,integer ,"How does F1 Sprint qualifying work? Sprint qualifying is essentially a short-form Grand Prix � a race that is one-third the number of laps of the main event on Sunday. However, the drivers are battling for positions on the grid for the start of Sunday's race. ",,The unique identifier for each qualifying session.
+129,formula_1,qualifying,raceId ,race Id ,the identification number identifying each race ,integer ,,,This is the identification number for each race.
+130,formula_1,qualifying,driverId ,driver Id,the identification number identifying each driver ,integer ,,,The identification number for each driver.
+131,formula_1,qualifying,constructorId ,constructor id ,constructor Id ,integer ,,,This is the unique identifier for the constructor.
+132,formula_1,qualifying,number ,,number ,integer ,,,The car number assigned to the driver.
+133,formula_1,qualifying,position ,,position or track of circuit ,integer ,,,The position of the driver in the qualifying session.
+134,formula_1,qualifying,q1 ,qualifying 1 ,time in qualifying 1 ,text,"in minutes / seconds / ... 
+commonsense evidence: 
+Q1 lap times determine pole position and the order of the front 10 positions on the grid. The slowest driver in Q1 starts 10th, the next starts ninth and so on. 
+All 20 F1 drivers participate in the first period, called Q1, with each trying to set the fastest time possible. Those in the top 15 move on to the next period of qualifying, called Q2. The five slowest drivers are eliminated and will start the race in the last five positions on the grid. ",,The time recorded in the first qualifying session.
+135,formula_1,qualifying,q2 ,qualifying 2 ,time in qualifying 2 ,text,"in minutes / seconds / ... 
+commonsense evidence: 
+only top 15 in the q1 has the record of q2 
+Q2 is slightly shorter but follows the same format. Drivers try to put down their best times to move on to Q1 as one of the 10 fastest cars. The five outside of the top 10 are eliminated and start the race from 11th to 15th based on their best lap time. ",,The time recorded in the second qualifying session.
+136,formula_1,qualifying,q3 ,qualifying 3 ,time in qualifying 3 ,text,"in minutes / seconds / ... 
+commonsense evidence: 
+only top 10 in the q2 has the record of q3 ",,The time recorded in the third qualifying session.
+137,formula_1,pitStops,raceId ,race ID ,the identification number identifying race ,integer ,,,The identification number for the race.
+138,formula_1,pitStops,driverId ,driver ID ,the identification number identifying each driver ,integer ,,,The identification number for each driver.
+139,formula_1,pitStops,stop ,,stop number ,integer ,,,The stop number during a race.
+140,formula_1,pitStops,lap ,,lap number ,integer ,,,The lap number during which the pit stop occurred.
+141,formula_1,pitStops,time ,,time ,text,exact time  ,,The timestamp of when the pit stop occurred.
+142,formula_1,pitStops,duration ,,duration time ,text,seconds/ ,,The duration of the pit stop in text format.
+143,formula_1,pitStops,milliseconds ,,milliseconds ,integer ,,,The duration of the pit stop in milliseconds.
+144,formula_1,seasons,year ,race ID ,the unique identification number identifying the race,integer,,,The year the Formula One season took place.
+145,formula_1,seasons,url ,,website link of season race introduction ,text,,,The URL linking to the Wikipedia page for the specific Formula One season.
+146,formula_1,constructorStandings,constructorStandingsId ,constructor Standings Id ,unique identification of the constructor standing records ,integer ,,,Unique identifier for each constructor standing record.
+147,formula_1,constructorStandings,raceId ,race id ,id number identifying which races ,integer ,,,Identifier for the race associated with the constructor's standings.
+148,formula_1,constructorStandings,constructorId ,constructor id ,id number identifying which id ,integer ,,,Identifier for the constructor associated with the standings.
+149,formula_1,constructorStandings,points,,how many points acquired in each race ,,,,The number of points acquired by a constructor in each race.
+150,formula_1,constructorStandings,position ,,position or track of circuits ,integer ,,,The finishing position of the constructor in the race.
+151,formula_1,constructorStandings,positionText ,position text ,,text,"same with position, not quite useful ",,The position of the constructor in text format.
+152,formula_1,constructorStandings,wins ,,wins ,integer ,,,The number of wins achieved by the constructor.
+153,formula_1,results,resultId,Result ID ,the unique identification number identifying race result ,integer,,P,This is the unique identifier for each race result.
+154,formula_1,results,raceId,race ID ,the identification number identifying the race ,integer ,,F,The unique identifier for each race.
+155,formula_1,results,driverId ,driver ID,the identification number identifying the driver ,integer ,,,The identification number of the driver.
+156,formula_1,results,constructorId ,constructor Id ,the identification number identifying which constructors ,integer ,,,The identification number of the constructor associated with the result.
+157,formula_1,results,number ,,number  ,integer ,,,The racing number assigned to the driver.
+158,formula_1,results,grid ,,the number identifying the area where cars are set into a grid formation in order to start the race. ,integer ,,,The starting position of the driver on the grid.
+159,formula_1,results,position ,,The finishing position or track of circuits ,integer ,,,The finishing position of the driver in the race.
+160,formula_1,results,positionText ,position text ,,text,not quite useful ,,The finishing position of the driver as a text value.
+161,formula_1,results,positionOrder ,position order ,the finishing order of positions ,integer ,,,The order in which drivers finished the race.
+162,formula_1,results,points ,,points ,real,,,The points scored by the driver in the race.
+163,formula_1,results,laps ,,lap number ,integer ,,,The number of laps completed by the driver in the race.
+164,formula_1,results,time  ,,finish time ,text,"commonsense evidence: 
+1. if the value exists, it means the driver finished the race. 
+2. Only the time of the champion shows in the format of ""minutes: seconds.millionsecond"", the time of the other drivers shows as ""seconds.millionsecond"" , which means their actual time is the time of the champion adding the value in this cell.",,The finish time of the driver in the race.
+165,formula_1,results,milliseconds ,,the actual finishing time of drivers in milliseconds  ,integer ,the actual finishing time of drivers  ,,The finishing time of drivers in milliseconds.
+166,formula_1,results,fastestLap ,fastest lap ,fastest lap number ,integer ,,,The fastest lap number.
+167,formula_1,results,rank ,,starting rank positioned by fastest lap speed,integer ,,,The rank of the driver's fastest lap time.
+168,formula_1,results,fastestLapTime ,fastest Lap Time,fastest Lap Time,text,"faster (smaller in the value) ""fastestLapTime"" leads to higher rank (smaller is higher rank) ",,The fastest lap time recorded by the driver during the race.
+169,formula_1,results,fastestLapSpeed ,fastest Lap Speed ,fastest Lap Speed ,text, (km / h) ,,The speed of the fastest lap achieved during the race.
+170,formula_1,results,statusId ,status Id ,status ID ,integer,its category description appear in the table status ,,The status ID associated with the result.
+171,california_schools,schools,CDSCode,CDSCode,CDSCode,text,,P,A unique identifier for each school.
+172,california_schools,schools,NCESDist,National Center for Educational Statistics school district identification number,"This field represents the 7-digit National Center for Educational Statistics (NCES) school district identification number. The first 2 digits identify the state and the last 5 digits identify the school district. Combined, they make a unique 7-digit ID for each school district.",text,,,This field represents the 7-digit National Center for Educational Statistics (NCES) school district identification number.
+173,california_schools,schools,NCESSchool,National Center for Educational Statistics school identification number,This field represents the 5-digit NCES school identification number. The NCESSchool combined with the NCESDist form a unique 12-digit ID for each school.,text,,,"This field represents the NCES school identification number, which combined with the NCESDist forms a unique 12-digit ID for each school."
+174,california_schools,schools,StatusType,,This field identifies the status of the district. ,text,"Definitions of the valid status types are listed below:
+·       Active: The district is in operation and providing instructional services.
+·       Closed: The district is not in operation and no longer providing instructional services.
+·       Merged: The district has combined with another district or districts.
+·       Pending: The district has not opened for operation and instructional services yet, but plans to open within the next 9–12 months.",,This field identifies the operational status of the school.
+175,california_schools,schools,County,,County name,text,,,The name of the county where the school is located.
+176,california_schools,schools,District,,District,text,,,The name of the school district.
+177,california_schools,schools,School,,School,text,,,The name of the school.
+178,california_schools,schools,Street,,Street,text,,,The street address of the school.
+179,california_schools,schools,StreetAbr,street address ,"The abbreviated street address of the school, district, or administrative authority’s physical location.",text,"The abbreviated street address of the school, district, or administrative authority’s physical location. Note: Some records (primarily records of closed or retired schools) may not have data in this field.",,"The abbreviated street address of the school, district, or administrative authority’s physical location."
+180,california_schools,schools,City,,City,text,,,The city where the school is located.
+181,california_schools,schools,Zip,,Zip,text,,,The ZIP code of the school's location.
+182,california_schools,schools,State,,State,text,,,The state where the school is located.
+183,california_schools,schools,MailStreet,,MailStreet,text,"The unabbreviated mailing address of the school, district, or administrative authority. Note: 1) Some entities (primarily closed or retired schools) may not have data in this field; 2) Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStreet cells with Street data.",,The mailing address of the school.
+184,california_schools,schools,MailStrAbr,mailing street address ,,text,"the abbreviated mailing street address of the school, district, or administrative authority.Note: Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStrAbr cells with StreetAbr data.",,Abbreviated mailing street address.
+185,california_schools,schools,MailCity,mailing city,,text,"The city associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address city. For your convenience we have filled the unpopulated MailCity cells with City data.",,The mailing city for the school's mailing address.
+186,california_schools,schools,MailZip,mailing zip ,,text,"The zip code associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address zip code. For your convenience we have filled the unpopulated MailZip cells with Zip data.",,The mailing zip code.
+187,california_schools,schools,MailState,mailing state,,text,The state within the mailing address. For your convenience we have filled the unpopulated MailState cells with State data.,,The state of the mailing address.
+188,california_schools,schools,Phone,,Phone,text,,,The contact phone number for the school.
+189,california_schools,schools,Ext,extension,"The phone number extension of the school, district, or administrative authority.",text,"The phone number extension of the school, district, or administrative authority.",,"The phone number extension of the school, district, or administrative authority."
+190,california_schools,schools,Website,,"The website address of the school, district, or administrative authority.",text,"The website address of the school, district, or administrative authority.",,"The website address of the school, district, or administrative authority."
+191,california_schools,schools,OpenDate,,The date the school opened.,date,,,The date the school officially opened.
+192,california_schools,schools,ClosedDate,,The date the school closed.,date,,,The date the school closed.
+193,california_schools,schools,Charter,,This field identifies a charter school. ,integer,"The field is coded as follows:
+
+·       1 = The school is a charter
+
+·       0 = The school is not a charter",,"This field indicates whether the school is a charter school, with 1 for yes and 0 for no."
+194,california_schools,schools,CharterNum,,"The charter school number,",text,4-digit number assigned to a charter school.,,The charter school number.
+195,california_schools,schools,FundingType,,Indicates the charter school funding type,text,"Values are as follows:
+
+·       Not in CS (California School) funding model
+
+·       Locally funded
+
+·       Directly funded",,Indicates the type of funding for the charter school.
+196,california_schools,schools,DOC,District Ownership Code,District Ownership Code,text,"The District Ownership Code (DOC) is the numeric code used to identify the category of the Administrative Authority.
+•       00 - County Office of Education
+•       02 – State Board of Education
+•       03 – Statewide Benefit Charter
+•       31 – State Special Schools
+•       34 – Non-school Location*
+•       52 – Elementary School District
+•       54 – Unified School District
+•       56 – High School District
+•       98 – Regional Occupational Center/Program (ROC/P)
+commonsense evidence:
+*Only the California Education Authority has been included in the non-school location category.",,The code representing the district's ownership or administrative control.
+197,california_schools,schools,DOCType,The District Ownership Code Type,The District Ownership Code Type is the text description of the DOC category.,text,(See text values in DOC field description above),,The District Ownership Code Type is the text description of the District Ownership Code (DOC) category.
+198,california_schools,schools,SOC,School Ownership Code,The School Ownership Code is a numeric code used to identify the type of school.,text,"•      08 - Preschool      
+•       09 – Special Education Schools (Public)
+•      11 – Youth Authority Facilities (CEA)
+•       13 – Opportunity Schools
+•       14 – Juvenile Court Schools
+•       15 – Other County or District Programs
+•       31 – State Special Schools
+•       60 – Elementary School (Public)
+•       61 – Elementary School in 1 School District (Public)
+•       62 – Intermediate/Middle Schools (Public)
+•       63 – Alternative Schools of Choice
+•       64 – Junior High Schools (Public)
+•       65 – K-12 Schools (Public)
+•       66 – High Schools (Public)
+•       67 – High Schools in 1 School District (Public)
+•       68 – Continuation High Schools
+•       69 – District Community Day Schools
+•       70 – Adult Education Centers
+•       98 – Regional Occupational Center/Program (ROC/P)",,The School Ownership Code is a numeric code used to identify the type of school ownership.
+199,california_schools,schools,SOCType,School Ownership Code Type,The School Ownership Code Type is the text description of the type of school.,text,The School Ownership Code Type is the text description of the type of school.,,The School Ownership Code Type is the text description of the type of school ownership.
+200,california_schools,schools,EdOpsCode,Education Option Code,The Education Option Code is a short text description of the type of education offered.,text,"
+•      ALTSOC – Alternative School of Choice
+•      COMM – County Community School
+•       COMMDAY – Community Day School
+•       CON – Continuation School
+•       JUV – Juvenile Court School
+•       OPP – Opportunity School
+•       YTH – Youth Authority School
+•       SSS – State Special School
+•       SPEC – Special Education School
+•       TRAD – Traditional
+•       ROP – Regional Occupational Program
+•       HOMHOS – Home and Hospital
+•       SPECON – District Consortia Special Education School",,The Education Option Code is a code representing the type of educational option offered.
+201,california_schools,schools,EdOpsName,Educational Option Name,Educational Option Name,text,The Educational Option Name is the long text description of the type of education being offered.,,The name of the educational option.
+202,california_schools,schools,EILCode,Educational Instruction Level Code,The Educational Instruction Level Code is a short text description of the institution's type relative to the grade range served.,text,"•       A – Adult
+•       ELEM – Elementary
+•       ELEMHIGH – Elementary-High Combination
+•       HS – High School
+•       INTMIDJR – Intermediate/Middle/Junior High
+•       PS – Preschool
+•       UG – Ungraded",,The Educational Instruction Level Code is a short text description of the institution's type relative to the grade range served.
+203,california_schools,schools,EILName,Educational Instruction Level Name ,The Educational Instruction Level Name is the long text description of the institution’s type relative to the grade range served.,text,The Educational Instruction Level Name is the long text description of the institution’s type relative to the grade range served.,,The Educational Instruction Level Name is the detailed description of the institution’s type relative to the grade range served.
+204,california_schools,schools,GSoffered,grade span offered,"The grade span offered is the lowest grade and the highest grade offered or supported by the school, district, or administrative authority. This field might differ from the grade span served as reported in the most recent certified California Longitudinal Pupil Achievement (CALPADS) Fall 1 data collection.",text,"For example XYZ School might display the following data:
+
+GSoffered = P–Adult
+
+GSserved = K–12",,The grade span offered is the range of grades (from the lowest to the highest) that the school supports or offers.
+205,california_schools,schools,GSserved,grade span served.,It is the lowest grade and the highest grade of student enrollment as reported in the most recent certified CALPADS Fall 1 data collection. Only K–12 enrollment is reported through CALPADS. This field may differ from the grade span offered.,text,"commonsense evidence:
+
+1.     Only K–12 enrollment is reported through CALPADS
+
+2.     Note: Special programs at independent study, alternative education, and special education schools will often exceed the typical grade span for schools of that type",,"The grade span served by the school, indicating the range of grades in which students are enrolled."
+206,california_schools,schools,Virtual,,"This field identifies the type of virtual instruction offered by the school. Virtual instruction is instruction in which students and teachers are separated by time and/or location, and interaction occurs via computers and/or telecommunications technologies. ",text,"The field is coded as follows:
+
+·       F = Exclusively Virtual – The school has no physical building where students meet with each other or with teachers, all instruction is virtual.
+
+·       V = Primarily Virtual – The school focuses on a systematic program of virtual instruction but includes some physical meetings among students or with teachers.
+
+·       C = Primarily Classroom – The school offers virtual courses but virtual instruction is not the primary means of instruction.
+
+·       N = Not Virtual – The school does not offer any virtual instruction.
+
+·       P = Partial Virtual – The school offers some, but not all, instruction through virtual instruction. Note: This value was retired and replaced with the Primarily Virtual and Primarily Classroom values beginning with the 2016–17 school year.",,This field identifies the type of virtual instruction offered by the school.
+207,california_schools,schools,Magnet,,This field identifies whether a school is a magnet school and/or provides a magnet program. ,text,"The field is coded as follows:
+
+·       Y = Magnet - The school is a magnet school and/or offers a magnet program.
+
+·       N = Not Magnet - The school is not a magnet school and/or does not offer a magnet program.
+
+commonsense evidence:
+
+Note: Preschools and adult education centers do not contain a magnet school indicator.",,This field identifies whether a school is a magnet school and/or provides a magnet program.
+208,california_schools,schools,Latitude,,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the equator measured north to south.",real,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the equator measured north to south.",,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the equator measured north to south."
+209,california_schools,schools,Longitude,,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the prime meridian (Greenwich, England) measured from west to east.",real,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the prime meridian (Greenwich, England) measured from west to east.",,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the prime meridian (Greenwich, England) measured from west to east."
+210,california_schools,schools,AdmFName1,administrator's first name,administrator's first name,text,"The superintendent’s or principal’s first name.
+
+commonsense evidence:
+
+Only active and pending districts and schools will display administrator information, if applicable.",,The first name of the primary administrator.
+211,california_schools,schools,AdmLName1,administrator's last name,administrator's last name,text,"The superintendent’s or principal’s last name.
+
+commonsense evidence:
+Only active and pending districts and schools will display administrator information, if applicable.",,The last name of the first administrator.
+212,california_schools,schools,AdmEmail1,administrator's email address,administrator's email address,text,"The superintendent’s or principal’s email address.
+
+commonsense evidence:
+
+Only active and pending districts and schools will display administrator information, if applicable.",,The primary email address of the first administrator.
+213,california_schools,schools,AdmFName2,,,text,SAME as 1,,Not enough information to make a valid prediction.
+214,california_schools,schools,AdmLName2,,,text,,,Not enough information to make a valid prediction.
+215,california_schools,schools,AdmEmail2,,,text,,,Email address of the second school administrator.
+216,california_schools,schools,AdmFName3,,,text,not useful,,Not enough information to make a valid prediction.
+217,california_schools,schools,AdmLName3,,,text,not useful,,Not enough information to make a valid prediction.
+218,california_schools,schools,AdmEmail3,,,text,not useful,,Not enough information to make a valid prediction.
+219,california_schools,schools,LastUpdate,,,date,when is this record updated last time,,The date when the record was last updated.
+220,california_schools,satscores,cds,,California Department Schools,text,,F,A unique identifier for each school or district.
+221,california_schools,satscores,rtype,,rtype,text,unuseful,,"The type of the reporting entity (e.g., district or school)."
+222,california_schools,satscores,sname,school name,school name,text,,,The name of the school.
+223,california_schools,satscores,dname,district name,district segment,text,,,The name of the district.
+224,california_schools,satscores,cname,county name,county name,text,,,The name of the county.
+225,california_schools,satscores,enroll12,enrollment (1st-12nd grade),enrollment (1st-12nd grade),integer,,,The number of students enrolled in grades 1 through 12.
+226,california_schools,satscores,NumTstTakr,Number of Test Takers,Number of Test Takers in this school,integer,number of test takers in each school,,The number of students who took the test.
+227,california_schools,satscores,AvgScrRead,average scores in Reading,average scores in Reading,integer,average scores in Reading,,Average scores in Reading.
+228,california_schools,satscores,AvgScrMath,average scores in Math,average scores in Math,integer,average scores in Math,,The average scores in Math.
+229,california_schools,satscores,AvgScrWrite,average scores in writing,average scores in writing,integer,average scores in writing,,The average scores in writing.
+230,california_schools,satscores,NumGE1500,Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500,Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500,integer,"Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500
+
+commonsense evidence:
+
+Excellence Rate = NumGE1500 / NumTstTakr",,The number of test takers whose total SAT scores are greater than or equal to 1500.
+231,california_schools,frpm,CDSCode,,CDSCode,integer,,F,A unique identifier for each school.
+232,california_schools,frpm,Academic Year,,Academic Year,integer ,,,The academic year for which the data is reported.
+233,california_schools,frpm,County Code,,County Code,integer,,,The code representing the county.
+234,california_schools,frpm,District Code,,District Code,integer,,,The code of the district.
+235,california_schools,frpm,School Code ,,School Code,integer,,,The unique identifier for a school within a district.
+236,california_schools,frpm,County Name,,County Code ,text,,,The name of the county.
+237,california_schools,frpm,District Name ,,District Name ,text,,,The name of the school district.
+238,california_schools,frpm,School Name,,School Name ,text,,,The name of the school.
+239,california_schools,frpm,District Type,,District Type,text,,,The type of district the school belongs to.
+240,california_schools,frpm,School Type ,,School Type ,text,,,"The type of school, such as elementary, middle, or high school."
+241,california_schools,frpm,Educational Option Type,,Educational Option Type,text,,,The type of educational option provided by the school.
+242,california_schools,frpm,NSLP Provision Status,,NSLP Provision Status,text,,,The status of the school's participation in the National School Lunch Program (NSLP) provision options.
+243,california_schools,frpm,Charter School (Y/N),,Charter School (Y/N),integer,"0: N;
+1: Y",,"Indicates whether the school is a charter school (1 for Yes, 0 for No)."
+244,california_schools,frpm,Charter School Number,,Charter School Number,text,,,The unique identifier assigned to a charter school.
+245,california_schools,frpm,Charter Funding Type,,Charter Funding Type,text,,,The type of funding for charter schools.
+246,california_schools,frpm,IRC,,,integer,Not useful,,Not enough information to make a valid prediction.
+247,california_schools,frpm,Low Grade,,Low Grade,text,,,The lowest grade level offered at the school.
+248,california_schools,frpm,High Grade,,High Grade,text,,,The highest grade level offered at the school.
+249,california_schools,frpm,Enrollment (K-12),,Enrollment (K-12),real,"commonsense evidence:
+
+K-12: 1st grade - 12nd grade ",,The total number of students enrolled in grades K-12.
+250,california_schools,frpm,Free Meal Count (K-12),,Free Meal Count (K-12),real,"commonsense evidence:
+
+eligible free rate = Free Meal Count / Enrollment",,The number of students in grades K-12 who receive free meals.
+251,california_schools,frpm,Percent (%) Eligible Free (K-12),,,real,,,The percentage of K-12 students eligible for free meals.
+252,california_schools,frpm,FRPM Count (K-12),,Free or Reduced Price Meal Count (K-12),real,"commonsense evidence:
+
+eligible FRPM rate = FRPM / Enrollment",,The count of students eligible for Free or Reduced Price Meals (K-12).
+253,california_schools,frpm,Percent (%) Eligible FRPM (K-12),,,real,,,The percentage of students eligible for free or reduced-price meals (K-12).
+254,california_schools,frpm,Enrollment (Ages 5-17),,Enrollment (Ages 5-17),real,,,The number of students enrolled aged 5 to 17.
+255,california_schools,frpm,Free Meal Count (Ages 5-17),,Free Meal Count (Ages 5-17),real,"commonsense evidence:
+
+eligible free rate = Free Meal Count / Enrollment",,The number of students aged 5-17 who receive free meals.
+256,california_schools,frpm, Percent (%) Eligible Free (Ages 5-17),,,real,,,The percentage of students aged 5-17 eligible for free meals.
+257,california_schools,frpm,FRPM Count (Ages 5-17),,,real,,,The count of students aged 5-17 eligible for Free or Reduced-Price Meals (FRPM).
+258,california_schools,frpm,Percent (%) Eligible FRPM (Ages 5-17),,,real,,,The percentage of students aged 5-17 eligible for free or reduced-price meals (FRPM).
+259,california_schools,frpm,2013-14 CALPADS Fall 1 Certification Status,,2013-14 CALPADS Fall 1 Certification Status,integer,,,The certification status for the 2013-14 CALPADS Fall 1 data submission.
+260,card_games,legalities,id,,unique id identifying this legality,integer,,P,Unique identifier for each legality record.
+261,card_games,legalities,format,,format of play,text,each value refers to different rules to play,,The format of play.
+262,card_games,legalities,status,,,text,"• legal
+• banned
+• restricted",,The status of the card's legality in a specific format.
+263,card_games,legalities,uuid,,,text,,F,A unique identifier for the card.
+264,card_games,cards,id,unique id number identifying the cards,,integer,,P,Unique identifier for each card.
+265,card_games,cards,artist,,The name of the artist that illustrated the card art.,text,,,The name of the artist that illustrated the card art.
+266,card_games,cards,asciiName,ascii Name,The ASCII(opens new window) (Basic/128) code formatted card name with no special unicode characters.,text,,,The ASCII code formatted card name with no special unicode characters.
+267,card_games,cards,availability,,A list of the card's available printing types.,text,"""arena"", ""dreamcast"", ""mtgo"", ""paper"", ""shandalar""",,"A list of the card's available formats (e.g., mtgo, paper)."
+268,card_games,cards,borderColor,border Color,The color of the card border.,text,"""black"", ""borderless"", ""gold"", ""silver"", ""white""",,The color of the card border.
+269,card_games,cards,cardKingdomFoilId,card Kingdom Foil Id,card Kingdom Foil Id,text,"commonsense evidence:
+cardKingdomFoilId, when paired with cardKingdomId that is not Null, is incredibly powerful. ",,The unique identifier for the card on Card Kingdom's foil product listing.
+270,card_games,cards,cardKingdomId,card Kingdom Id,card Kingdom Id,text,A list of all the colors in the color indicator,,The unique identifier for the card on Card Kingdom.
+271,card_games,cards,colorIdentity,color Identity,"A list of all the colors found in manaCost, colorIndicator, and text",text,,,"A list of all the colors found in manaCost, colorIndicator, and text."
+272,card_games,cards,colorIndicator,color Indicator,A list of all the colors in the color indicator (The symbol prefixed to a card's types).,text,,,A list of all the colors in the color indicator (the symbol prefixed to a card's types).
+273,card_games,cards,colors,,A list of all the colors in manaCost and colorIndicator. ,text,"Some cards may not have values, such as cards with ""Devoid"" in its text.",,A list of all the colors in manaCost and colorIndicator.
+274,card_games,cards,convertedManaCost,converted Mana Cost,The converted mana cost of the card. Use the manaValue property.,real,"if value is higher, it means that this card cost more converted mana ",,The converted mana cost of the card.
+275,card_games,cards,duelDeck,duel Deck,The indicator for which duel deck the card is in.,text,,,The indicator for which duel deck the card is in.
+276,card_games,cards,edhrecRank,rec Rank in edh,The card rank on EDHRec,integer,,,The card's rank on EDHRec.
+277,card_games,cards,faceConvertedManaCost,face Converted Mana Cost,The converted mana cost or mana value for the face for either half or part of the card. ,real,"if value is higher, it means that this card cost more converted mana for the face",,The converted mana cost or mana value for the face for either half or part of the card.
+278,card_games,cards,faceName,face Name,The name on the face of the card.,text,,,The name on the face of the card.
+279,card_games,cards,flavorName,flavor Name,The promotional card name printed above the true card name on special cards that has no game function.,text,The promotional card name printed above the true card name on special cards that has no game function.,,The promotional card name printed above the true card name on special cards that has no game function.
+280,card_games,cards,flavorText,flavor Text,The italicized text found below the rules text that has no game function.,text,The italicized text found below the rules text that has no game function.,,The italicized text found below the rules text that has no game function.
+281,card_games,cards,frameEffects,frame Effects,The visual frame effects.,text,"""colorshifted"", ""companion"", ""compasslanddfc"", ""devoid"", ""draft"", ""etched"", ""extendedart"", ""fullart"", ""inverted"", ""legendary"", ""lesson"", ""miracle"", ""mooneldrazidfc"", ""nyxtouched"", ""originpwdfc"", ""showcase"", ""snow"", ""sunmoondfc"", ""textless"", ""tombstone"", ""waxingandwaningmoondfc""",,The visual frame effects applied to the card.
+282,card_games,cards,frameVersion,frame Version,The version of the card frame style.,text,"""1993"", ""1997"", ""2003"", ""2015"", ""future""",,The version of the card frame style.
+283,card_games,cards,hand,,The starting maximum hand size total modifier. ,text,"A + or - character precedes an integer. 
+commonsense evidence:
+positive maximum hand size: +1, +2, ....
+negative maximum hand size: -1, ....
+neural maximum hand size: 0....",,The starting maximum hand size total modifier.
+284,card_games,cards,hasAlternativeDeckLimit,has Alternative Deck Limit,If the card allows a value other than 4 copies in a deck.,integer,0: disallow 1: allow,,Indicates if the card allows a value other than 4 copies in a deck.
+285,card_games,cards,hasContentWarning,has Content Warning,If the card marked by Wizards of the Coast (opens new window) for having sensitive content. See this official article (opens new window) for more information.,integer,"0: doesn't have 1: has sensitve content or Wizards of the Coast
+commonsense evidence:
+Cards with this property may have missing or degraded properties and values. ",,Indicates if the card has been marked for having sensitive content.
+286,card_games,cards,hasFoil,has Foil,If the card can be found in foil,integer,0: cannot be found 1: can be found,,Indicates if the card is available in foil.
+287,card_games,cards,hasNonFoil,has Non Foil,If the card can be found in non-foil,integer,0: cannot be found 1: can be found,,Indicates whether the card is available in non-foil.
+288,card_games,cards,isAlternative,is Alternative,If the card is an alternate variation to an original printing,integer,0: is not 1: is,,Indicates if the card is an alternate variation to an original printing.
+289,card_games,cards,isFullArt,is Full Art,If the card has full artwork.,integer,"0: doesn't have, 1: has full artwork",,Indicates whether the card features full artwork.
+290,card_games,cards,isOnlineOnly,is Online Only,If the card is only available in online game variations.,integer,0: is not 1: is,,Indicates if the card is exclusively available in online game variations.
+291,card_games,cards,isOversized,is Oversized,If the card is oversized.,integer,0: is not 1: is,,Indicates whether the card is oversized.
+292,card_games,cards,isPromo,is Promotion,If the card is a promotional printing.,integer,0: is not 1: is,,Indicates if the card is a promotional printing.
+293,card_games,cards,isReprint,is Reprint,If the card has been reprinted.,integer,0: has not 1: has not been,,Indicates whether the card has been reprinted.
+294,card_games,cards,isReserved,is Reserved,If the card is on the Magic: The Gathering Reserved List (opens new window),integer,"If the card is on the Magic, it will appear in The Gathering Reserved List",,Indicates if the card is on the Magic: The Gathering Reserved List.
+295,card_games,cards,isStarter,is Starter,If the card is found in a starter deck such as Planeswalker/Brawl decks.,integer,0: is not 1: is,,Indicates if the card is included in a starter deck such as Planeswalker or Brawl decks.
+296,card_games,cards,isStorySpotlight,is Story Spotlight,If the card is a Story Spotlight card.,integer,0: is not 1: is,,Indicates whether the card is a Story Spotlight card.
+297,card_games,cards,isTextless,is Text less,If the card does not have a text box.,integer,"commonsense evidence:
+0: has a text box;
+1: doesn't have a text box;",,Indicates whether the card lacks a text box.
+298,card_games,cards,isTimeshifted,is Time shifted,If the card is time shifted,integer,"commonsense evidence:
+If the card is ""timeshifted"", a feature of certain sets where a card will have a different frameVersion.",,Indicates whether the card is time-shifted.
+299,card_games,cards,keywords,,A list of keywords found on the card.,text,,,A list of keywords associated with the card.
+300,card_games,cards,layout,,"The type of card layout. For a token card, this will be ""token""",text,,,"The type of card layout. For a token card, this will be ""token""."
+301,card_games,cards,leadershipSkills,leadership Skills,A list of formats the card is legal to be a commander in,text,,,A list of formats the card is legal to be a commander in.
+302,card_games,cards,life,,The starting life total modifier. A plus or minus character precedes an integer.,text,,,Not enough information to make a valid prediction.
+303,card_games,cards,loyalty,,The starting loyalty value of the card.,text,"Used only on cards with ""Planeswalker"" in its types. empty means unkown",,The starting loyalty value of the card.
+304,card_games,cards,manaCost,mana Cost ,The mana cost of the card wrapped in brackets for each value.,text,"commonsense evidence:
+manaCost is unconverted mana cost",,"The mana cost of the card, represented in a specific format using curly braces for each value."
+305,card_games,cards,mcmId,,,text,NOT USEFUL,,The ID for the card on the Magic Card Market (MCM).
+306,card_games,cards,mcmMetaId,,,text,NOT USEFUL,,Not enough information to make a valid prediction.
+307,card_games,cards,mtgArenaId,,,text,NOT USEFUL,,The unique identifier for the card in the Magic: The Gathering Arena database.
+308,card_games,cards,mtgjsonV4Id,,,text,NOT USEFUL,,Not enough information to make a valid prediction.
+309,card_games,cards,mtgoFoilId,,,text,NOT USEFUL,,The unique identifier for the foil version of the card on Magic: The Gathering Online (MTGO).
+310,card_games,cards,mtgoId,,,text,NOT USEFUL,,The unique identifier for the card in the Magic: The Gathering Online (MTGO) system.
+311,card_games,cards,multiverseId,,,text,NOT USEFUL,,The unique identifier for the card in the Magic: The Gathering Multiverse database.
+312,card_games,cards,name,,The name of the card.,text,"Cards with multiple faces, like ""Split"" and ""Meld"" cards are given a delimiter.",,The name of the card.
+313,card_games,cards,number,,The number of the card,text,,,The number assigned to the card within its set.
+314,card_games,cards,originalReleaseDate,,original Release Date,text,"The original release date in ISO 8601(opens new window) format for a promotional card printed outside of a cycle window, such as Secret Lair Drop promotions.",,The original release date of the card.
+315,card_games,cards,originalText,,original Text,text,The text on the card as originally printed.,,The original text of the card as it was first printed.
+316,card_games,cards,originalType,,original Type,text,The type of the card as originally printed. Includes any supertypes and subtypes.,,The original type of the card.
+317,card_games,cards,otherFaceIds,,other Face Ids,text,"A list of card UUID's to this card's counterparts, such as transformed or melded faces.",,Identifiers for other faces of the card.
+318,card_games,cards,power,,The power of the card.,text,"commonsense evidence:
+∞ means infinite power
+null or * refers to unknown power",,The power of the card.
+319,card_games,cards,printings,,"A list of set printing codes the card was printed in, formatted in uppercase.",text,,,"A list of set printing codes where the card was printed, formatted in uppercase."
+320,card_games,cards,promoTypes,promo Types,A list of promotional types for a card.,text,"""arenaleague"", ""boosterfun"", ""boxtopper"", ""brawldeck"", ""bundle"", ""buyabox"", ""convention"", ""datestamped"", ""draculaseries"", ""draftweekend"", ""duels"", ""event"", ""fnm"", ""gameday"", ""gateway"", ""giftbox"", ""gilded"", ""godzillaseries"", ""instore"", ""intropack"", ""jpwalker"", ""judgegift"", ""league"", ""mediainsert"", ""neonink"", ""openhouse"", ""planeswalkerstamped"", ""playerrewards"", ""playpromo"", ""premiereshop"", ""prerelease"", ""promopack"", ""release"", ""setpromo"", ""stamped"", ""textured"", ""themepack"", ""thick"", ""tourney"", ""wizardsplaynetwork""",,A list of promotional types associated with a card.
+321,card_games,cards,purchaseUrls,purchase Urls,Links that navigate to websites where the card can be purchased.,text,,,Links that navigate to websites where the card can be purchased.
+322,card_games,cards,rarity,,The card printing rarity.,text,,,The rarity of the card.
+323,card_games,cards,scryfallId,,,text,NOT USEFUL,,The unique identifier for the card on Scryfall.
+324,card_games,cards,scryfallIllustrationId,,,text,NOT USEFUL,,The unique identifier for the card's illustration on Scryfall.
+325,card_games,cards,scryfallOracleId,,,text,NOT USEFUL,,The unique identifier for the card's Oracle data on Scryfall.
+326,card_games,cards,setCode,Set Code,The set printing code that the card is from.,text,,,The set printing code that the card is from.
+327,card_games,cards,side,,The identifier of the card side. ,text,"Used on cards with multiple faces on the same card.
+commonsense evidence:
+if this value is empty, then it means this card doesn't have multiple faces on the same card.",,The identifier of the card side.
+328,card_games,cards,subtypes,,A list of card subtypes found after em-dash.,text,,,A list of card subtypes found after em-dash.
+329,card_games,cards,supertypes,super types,A list of card supertypes found before em-dash.,text,"commonsense evidence:
+list of all types should be the union of subtypes and supertypes",,A list of card supertypes found before em-dash.
+330,card_games,cards,tcgplayerProductId,tcg player ProductId,,text,,,The unique identifier for the product on TCGplayer.
+331,card_games,cards,text,,The rules text of the card.,text,,,The rules text of the card.
+332,card_games,cards,toughness,,The toughness of the card.,text,,,The toughness of the card.
+333,card_games,cards,type,,"The type of the card as visible, including any supertypes and subtypes.",text,"""Artifact"", ""Card"", ""Conspiracy"", ""Creature"", ""Dragon"", ""Dungeon"", ""Eaturecray"", ""Elemental"", ""Elite"", ""Emblem"", ""Enchantment"", ""Ever"", ""Goblin"", ""Hero"", ""Instant"", ""Jaguar"", ""Knights"", ""Land"", ""Phenomenon"", ""Plane"", ""Planeswalker"", ""Scariest"", ""Scheme"", ""See"", ""Sorcery"", ""Sticker"", ""Summon"", ""Token"", ""Tribal"", ""Vanguard"", ""Wolf"", ""You’ll"", ""instant""",,"The type of the card, including any supertypes and subtypes."
+334,card_games,cards,types,,"A list of all card types of the card, including Un‑sets and gameplay variants.",text,,,"A list of all card types, including Un‑sets and gameplay variants."
+335,card_games,cards,uuid,,The universal unique identifier (v5) generated by MTGJSON. Each entry is unique.,text,NOT USEFUL,,The universal unique identifier (v5) generated by MTGJSON. Each entry is unique.
+336,card_games,cards,variations,,,text,,,Not enough information to make a valid prediction.
+337,card_games,cards,watermark,,The name of the watermark on the card.,text,,,The name of the watermark on the card.
+338,card_games,sets,id,,unique id identifying this set,integer,,P,Unique identifier for each set.
+339,card_games,sets,baseSetSize,base Set Size,The number of cards in the set.,integer,,,The number of cards in the base set.
+340,card_games,sets,block,,The block name the set was in.,text,,,The block name the set was in.
+341,card_games,sets,booster,,A breakdown of possibilities and weights of cards in a booster pack.,text,,,A breakdown of possibilities and weights of cards in a booster pack.
+342,card_games,sets,code,,The set code for the set.,text,,,The unique code identifying each set.
+343,card_games,sets,isFoilOnly,is Foil Only,If the set is only available in foil.,integer,,,Indicates whether the set is exclusively available in foil.
+344,card_games,sets,isForeignOnly,is Foreign Only,If the set is available only outside the United States of America.,integer,,,Indicates whether the set is exclusively available outside the United States.
+345,card_games,sets,isNonFoilOnly,is Non Foil Only,If the set is only available in non-foil.,integer,,,Indicates if the set is exclusively available in non-foil format.
+346,card_games,sets,isOnlineOnly,is Online Only,If the set is only available in online game variations.,integer,,,Indicates if the set is exclusively available in online game formats.
+347,card_games,sets,isPartialPreview,is Partial Preview,If the set is still in preview (spoiled). Preview sets do not have complete data.,integer,,,Indicates if the set is still in preview (spoiled).
+348,card_games,sets,keyruneCode,keyrune Code,The matching Keyrune code for set image icons.,text,,,The matching Keyrune code for set image icons.
+349,card_games,sets,mcmId,magic card market id,The Magic Card Marketset identifier.,integer,,,The Magic Card Market identifier for the set.
+350,card_games,sets,mcmIdExtras,magic card market ID Extras,The split Magic Card Market set identifier if a set is printed in two sets. This identifier represents the second set's identifier.,integer,,,The split Magic Card Market set identifier if a set is printed in two sets. This identifier represents the second set's identifier.
+351,card_games,sets,mcmName,magic card market name ,,text,,,The name of the set as listed on Magic Card Market.
+352,card_games,sets,mtgoCode,magic the gathering online code,The set code for the set as it appears on Magic: The Gathering Online,text,"commonsense evidence:
+if the value is null or empty, then it doesn't appear on Magic: The Gathering Online",,The Magic: The Gathering Online code for the set.
+353,card_games,sets,name,,The name of the set.,text,,,The name of the set.
+354,card_games,sets,parentCode,parent Code,"The parent set code for set variations like promotions, guild kits, etc.",text,,,"The parent set code for set variations like promotions, guild kits, etc."
+355,card_games,sets,releaseDate,release Date,The release date in ISO 8601 format for the set.,date,,,The release date of the set in ISO 8601 format.
+356,card_games,sets,tcgplayerGroupId,tcg player Group Id,The group identifier of the set on TCGplayer,integer,,,The group identifier of the set on TCGplayer.
+357,card_games,sets,totalSetSize,total Set Size,"The total number of cards in the set, including promotional and related supplemental products but excluding Alchemy modifications - however those cards are included in the set itself.",integer,,,"The total number of cards in the set, including promotional and related supplemental products."
+358,card_games,sets,type,,The expansion type of the set.,text,"""alchemy"", ""archenemy"", ""arsenal"", ""box"", ""commander"", ""core"", ""draft_innovation"", ""duel_deck"", ""expansion"", ""from_the_vault"", ""funny"", ""masterpiece"", ""masters"", ""memorabilia"", ""planechase"", ""premium_deck"", ""promo"", ""spellbook"", ""starter"", ""token"", ""treasure_chest"", ""vanguard""",,The type of the set.
+359,card_games,foreign_data,id,,unique id number identifying this row of data,integer,,P,Unique identifier for each row.
+360,card_games,foreign_data,flavorText,flavor Text,The foreign flavor text of the card.,text,,,The foreign flavor text of the card.
+361,card_games,foreign_data,language,,The foreign language of card.,text,,,The language of the card.
+362,card_games,foreign_data,multiverseid,,The foreign multiverse identifier of the card.,integer,,,The foreign multiverse identifier of the card.
+363,card_games,foreign_data,name,,The foreign name of the card.,text,,,The foreign name of the card.
+364,card_games,foreign_data,text,,The foreign text ruling of the card.,text,,,The foreign language text of the card.
+365,card_games,foreign_data,type,,The foreign type of the card. Includes any supertypes and subtypes.,text,,,"The type of the card, including any supertypes and subtypes."
+366,card_games,foreign_data,uuid,,,text,,F,Unique identifier referencing the related card.
+367,card_games,rulings,id,,unique id identifying this ruling,integer,,P,Unique identifier for each ruling.
+368,card_games,rulings,date,,date ,date,,,The date when the ruling was issued.
+369,card_games,rulings,text,,description about this ruling,text,,,Details about the ruling text.
+370,card_games,rulings,uuid,,,text,,F,Unique identifier linking each ruling to a specific card.
+371,card_games,set_translations,id,,unique id identifying this set,integer,,P,Unique identifier for each translation entry.
+372,card_games,set_translations,language,,language of this card,text,,,The language of the card set translation.
+373,card_games,set_translations,setCode,set code,the set code for this set,text,,F,The set code for the set.
+374,card_games,set_translations,translation,,translation of this card,text,,,The translation of the set name into different languages.
+375,european_football_2,Player,id,,the unique id for players,integer,,P,Unique identifier for each player.
+376,european_football_2,Player,player_api_id,player api id,the id of the player api,integer,,,The unique identifier for a player.
+377,european_football_2,Player,player_name,player name,player name,text,,,The name of the player.
+378,european_football_2,Player,player_fifa_api_id,player federation international football association api id,the id of the player fifa api,integer,,,The unique identifier for the player in the FIFA API.
+379,european_football_2,Player,birthday,,the player's birthday,text,"e.g. 1992-02-29 00:00:00 
+commonsense reasoning: 
+Player A is older than player B means that A's birthday is earlier than B's",,The player's date of birth.
+380,european_football_2,Player,height,,the player's height,integer,,,The player's height in centimeters.
+381,european_football_2,Player,weight,,the player's weight,integer,,,The player's weight in pounds.
+382,european_football_2,Match,id,,the unique id for matches,integer,,P,This is the unique identifier for each match.
+383,european_football_2,Match,country_id,country id,country id,integer,,F,The identifier for the country where the match took place.
+384,european_football_2,Match,league_id,league id,league id,integer,,F,The identifier for the league associated with the match.
+385,european_football_2,Match,season,,the season of the match,text,,,The season during which the match took place.
+386,european_football_2,Match,stage,,the stage of the match,integer,,,The stage of the match within the season.
+387,european_football_2,Match,date,,the date of the match,text,e.g. 2008-08-17 00:00:00,,The date of the match.
+388,european_football_2,Match,match_api_id,match api id,the id of the match api,integer,,,The unique identifier for each match.
+389,european_football_2,Match,home_team_api_id,home team api id,the id of the home team api,integer,,F,The unique identifier for the home team in the match.
+390,european_football_2,Match,away_team_api_id,away team api id,the id of the away team api,integer,,F,The ID of the away team in the match.
+391,european_football_2,Match,home_team_goal,home team goal,the goal of the home team,integer,,,The number of goals scored by the home team.
+392,european_football_2,Match,away_team_goal,away team goal,the goal of the away team,integer,,,The number of goals scored by the away team.
+393,european_football_2,Match,home_player_X1,,,,,,The X-coordinate of the first home player on the field.
+394,european_football_2,Match,home_player_X2,,,,,,The X-coordinate of the second home player on the field.
+395,european_football_2,Match,home_player_X3,,,,,,The X-coordinate of the third home player on the field.
+396,european_football_2,Match,home_player_X4,,,,,,The X-coordinate of the fourth player in the home team lineup.
+397,european_football_2,Match,home_player_X5,,,,,,The X-coordinate of the home team's fifth player on the field.
+398,european_football_2,Match,home_player_X6,,,,,,The X-coordinate of the 6th home player on the field.
+399,european_football_2,Match,home_player_X7,,,,,,The X-coordinate of the 7th home player on the field.
+400,european_football_2,Match,home_player_X8,,,,,,The X-coordinate of the 8th home player on the field.
+401,european_football_2,Match,home_player_X9,,,,,,The X-coordinate of the home team's ninth player on the field.
+402,european_football_2,Match,home_player_X10,,,,,,The X-coordinate of the 10th home player on the field.
+403,european_football_2,Match,home_player_X11,,,,,,The X-coordinate of the 11th home player on the field.
+404,european_football_2,Match,away_player_X1,,,,,,The X-coordinate of the first away team player on the field.
+405,european_football_2,Match,away_player_X2,,,,,,The X-coordinate of the second away player on the field.
+406,european_football_2,Match,away_player_X3,,,,,,The X-coordinate of the third away player on the field.
+407,european_football_2,Match,away_player_X4,,,,,,The X-coordinate of the fourth away team player.
+408,european_football_2,Match,away_player_X5,,,,,,The X-coordinate of the fifth away team player on the field.
+409,european_football_2,Match,away_player_X6,,,,,,The X-coordinate of the sixth away team player.
+410,european_football_2,Match,away_player_X7,,,,,,The X-coordinate of the 7th away team player.
+411,european_football_2,Match,away_player_X8,,,,,,The X-coordinate of the 8th away player on the field.
+412,european_football_2,Match,away_player_X9,,,,,,The X-coordinate of the 9th away team player on the field.
+413,european_football_2,Match,away_player_X10,,,,,,The X-coordinate of the 10th away team player.
+414,european_football_2,Match,away_player_X11,,,,,,The X-coordinate of the 11th away team player on the field.
+415,european_football_2,Match,home_player_Y1,,,,,,The Y-coordinate of the first home player on the field.
+416,european_football_2,Match,home_player_Y2,,,,,,The Y-coordinate of the second home player on the field.
+417,european_football_2,Match,home_player_Y3,,,,,,The Y-coordinate of the third home player on the field.
+418,european_football_2,Match,home_player_Y4,,,,,,The Y-coordinate of the fourth home player on the field.
+419,european_football_2,Match,home_player_Y5,,,,,,The Y-coordinate of the fifth home player on the field.
+420,european_football_2,Match,home_player_Y6,,,,,,The Y-coordinate of the sixth home player on the field.
+421,european_football_2,Match,home_player_Y7,,,,,,The Y-coordinate of the 7th home player on the field.
+422,european_football_2,Match,home_player_Y8,,,,,,The Y-coordinate of the 8th home player on the field.
+423,european_football_2,Match,home_player_Y9,,,,,,The Y-coordinate of the 9th home player on the field.
+424,european_football_2,Match,home_player_Y10,,,,,,The Y-coordinate of the 10th home player on the field.
+425,european_football_2,Match,home_player_Y11,,,,,,The Y-coordinate of the 11th home player on the field.
+426,european_football_2,Match,away_player_Y1,,,,,,The Y-coordinate of the first away team player on the field.
+427,european_football_2,Match,away_player_Y2,,,,,,The Y-coordinate of the second away team player on the field.
+428,european_football_2,Match,away_player_Y3,,,,,,The Y-coordinate of the third away player on the field.
+429,european_football_2,Match,away_player_Y4,,,,,,The Y-coordinate of the fourth away player on the field.
+430,european_football_2,Match,away_player_Y5,,,,,,The Y-coordinate of the fifth away player on the field.
+431,european_football_2,Match,away_player_Y6,,,,,,The Y-coordinate of the sixth away team player on the field.
+432,european_football_2,Match,away_player_Y7,,,,,,The Y-coordinate of the 7th away team player.
+433,european_football_2,Match,away_player_Y8,,,,,,The Y-coordinate of the 8th away team player.
+434,european_football_2,Match,away_player_Y9,,,,,,The Y-coordinate of the 9th away team player on the field.
+435,european_football_2,Match,away_player_Y10,,,,,,The Y-coordinate of the 10th away player on the field.
+436,european_football_2,Match,away_player_Y11,,,,,,The Y-coordinate of the 11th away team player on the field.
+437,european_football_2,Match,home_player_1,,,,,F,The ID of the first home player.
+438,european_football_2,Match,home_player_2,,,,,F,The player ID of the second home team player.
+439,european_football_2,Match,home_player_3,,,,,F,The ID of the third home player in the match.
+440,european_football_2,Match,home_player_4,,,,,F,The ID of the fourth home player.
+441,european_football_2,Match,home_player_5,,,,,F,The ID of the fifth home player in the match.
+442,european_football_2,Match,home_player_6,,,,,F,The ID of the sixth player in the home team.
+443,european_football_2,Match,home_player_7,,,,,F,The ID of the seventh player in the home team.
+444,european_football_2,Match,home_player_8,,,,,F,The ID of the eighth player in the home team.
+445,european_football_2,Match,home_player_9,,,,,F,The ID of the ninth player on the home team.
+446,european_football_2,Match,home_player_10,,,,,F,The ID of the 10th player in the home team.
+447,european_football_2,Match,home_player_11,,,,,F,The ID of the 11th player in the home team.
+448,european_football_2,Match,away_player_1,,,,,F,The ID of the first away team player.
+449,european_football_2,Match,away_player_2,,,,,F,The ID of the second away team player.
+450,european_football_2,Match,away_player_3,,,,,F,The player ID of the third away team player.
+451,european_football_2,Match,away_player_4,,,,,F,The ID of the fourth away player.
+452,european_football_2,Match,away_player_5,,,,,F,The ID of the fifth away team player.
+453,european_football_2,Match,away_player_6,,,,,F,The ID of the sixth away player.
+454,european_football_2,Match,away_player_7,,,,,F,The ID of the seventh away player.
+455,european_football_2,Match,away_player_8,,,,,F,The ID of the eighth away player.
+456,european_football_2,Match,away_player_9,,,,,F,The ID of the ninth away player.
+457,european_football_2,Match,away_player_10,,,,,F,The ID of the 10th away player.
+458,european_football_2,Match,away_player_11,,,,,F,The ID of the 11th player on the away team.
+459,european_football_2,Match,goal,,the goal of the match,text,,,Not enough information to make a valid prediction.
+460,european_football_2,Match,shoton,shot on,the shot on goal of the match,text,"commonsense reasoning: 
+A shot on goal is a shot that enters the goal or would have entered the goal if it had not been blocked by the goalkeeper or another defensive player.
+",,The number of shots on goal during the match.
+461,european_football_2,Match,shotoff,shot off,"the shot off goal of the match, which is the opposite of shot on",text,,,The number of shots that were off target during the match.
+462,european_football_2,Match,foulcommit,foul commit,the fouls occurred in the match,text,,,The fouls committed during the match.
+463,european_football_2,Match,card,,the cards given in the match,text,,,Details about the cards given in the match.
+464,european_football_2,Match,cross,,Balls sent into the opposition team's area from a wide position in the match,text,,,Balls sent into the opposition team's area from a wide position.
+465,european_football_2,Match,corner,,Ball goes out of play for a corner kick in the match,text,,,Number of corner kicks in the match.
+466,european_football_2,Match,possession,,The duration from a player taking over the ball in the match,text,,,The percentage of time a team maintains possession of the ball during a match.
+467,european_football_2,Match,B365H,,,,,,The home win odds from Bet365.
+468,european_football_2,Match,B365D,,,,,,The draw odds provided by Bet365.
+469,european_football_2,Match,B365A,,,,,,The betting odds for an away team win from Bet365.
+470,european_football_2,Match,BWH,,,,,,The BWH column represents the home win odds provided by the Bet&Win (BWin) bookmaker.
+471,european_football_2,Match,BWD,,,,,,The draw odds provided by Bet&Win (BWin) for the match.
+472,european_football_2,Match,BWA,,,,,,The BWA column represents the betting odds for an away team win provided by Betway.
+473,european_football_2,Match,IWH,,,,,,The IWH column represents the home win odds provided by the betting company Interwetten.
+474,european_football_2,Match,IWD,,,,,,The draw odds from Interwetten.
+475,european_football_2,Match,IWA,,,,,,The IWA column represents the odds for an away team win provided by the Interwetten betting company.
+476,european_football_2,Match,LBH,,,,,,The home win odds from the betting company Ladbrokes.
+477,european_football_2,Match,LBD,,,,,,The draw odds from the betting company Ladbrokes.
+478,european_football_2,Match,LBA,,,,,,The LBA column represents the betting odds for an away team win provided by the betting company LB.
+479,european_football_2,Match,PSH,,,,,,The home win odds from Pinnacle Sports.
+480,european_football_2,Match,PSD,,,,,,The draw odds from Pinnacle Sports.
+481,european_football_2,Match,PSA,,,,,,The odds for an away team win from the betting company Pinnacle Sports.
+482,european_football_2,Match,WHH,,,,,,The home win odds from William Hill.
+483,european_football_2,Match,WHD,,,,,,The draw odds from William Hill.
+484,european_football_2,Match,WHA,,,,,,The odds offered by William Hill for an away team win.
+485,european_football_2,Match,SJH,,,,,,Not enough information to make a valid prediction.
+486,european_football_2,Match,SJD,,,,,,Not enough information to make a valid prediction.
+487,european_football_2,Match,SJA,,,,,,The SJA column represents the odds offered by the betting company SJA for an away team win.
+488,european_football_2,Match,VCH,,,,,,The odds for a home win from the VCH bookmaker.
+489,european_football_2,Match,VCD,,,,,,The odds for a draw according to the VC betting company.
+490,european_football_2,Match,VCA,,,,,,The odds for an away team win from the betting company VC.
+491,european_football_2,Match,GBH,,,,,,The home win odds from the betting company GB.
+492,european_football_2,Match,GBD,,,,,,Not enough information to make a valid prediction.
+493,european_football_2,Match,GBA,,,,,,Not enough information to make a valid prediction.
+494,european_football_2,Match,BSH,,,,,,The BSH column represents the home team's betting odds from BetSafe.
+495,european_football_2,Match,BSD,,,,,,Not enough information to make a valid prediction.
+496,european_football_2,Match,BSA,,,,,,Not enough information to make a valid prediction.
+497,european_football_2,League,id,,the unique id for leagues,integer,,P,This is the unique identifier for each league.
+498,european_football_2,League,country_id,country id,the unique id for countries,integer,,F,This is the unique identifier for the country associated with the league.
+499,european_football_2,League,name,,league name,text,,,The name of the league.
+500,european_football_2,Country,id,,the unique id for countries,integer,,P,This is the unique identifier for each country.
+501,european_football_2,Country,name,,country name,text,,,The name of the country.
+502,european_football_2,Player_Attributes,id,,the unique id for players,integer,,P,Unique identifier for each player attribute record.
+503,european_football_2,Player_Attributes,player_fifa_api_id,player federation international football association api id,the id of the player fifa api,integer,,F,The unique identifier for a player in the FIFA API.
+504,european_football_2,Player_Attributes,player_api_id,player api id,the id of the player api,integer,,F,The unique identifier for the player in the API.
+505,european_football_2,Player_Attributes,date,,date,text,e.g. 2016-02-18 00:00:00,,The date when the player's attributes were recorded.
+506,european_football_2,Player_Attributes,overall_rating,,the overall rating of the player,integer,"commonsense reasoning: 
+The rating is between 0-100 which is calculated by FIFA.
+ Higher overall rating means the player has a stronger overall strength.",,The overall rating of the player.
+507,european_football_2,Player_Attributes,potential,,potential of the player,integer,"commonsense reasoning: 
+The potential score is between 0-100 which is calculated by FIFA.
+ Higher potential score means that the player has more potential",,The potential rating of the player.
+508,european_football_2,Player_Attributes,preferred_foot,preferred foot,the player's preferred foot when attacking,text,right/ left,,The player's preferred foot for playing.
+509,european_football_2,Player_Attributes,attacking_work_rate,attacking work rate,the player's attacking work rate,text,"commonsense reasoning: 
+ high: implies that the player is going to be in all of your attack moves
+ medium: implies that the player will select the attack actions he will join in
+ low: remain in his position while the team attacks ",,The player's attacking work rate.
+510,european_football_2,Player_Attributes,defensive_work_rate,,the player's defensive work rate,text,"commonsense reasoning: 
+ high: remain in his position and defense while the team attacks 
+ medium: implies that the player will select the defensive actions he will join in
+ low: implies that the player is going to be in all of your attack moves instead of defensing",,The player's defensive work rate.
+511,european_football_2,Player_Attributes,crossing,,the player's crossing score ,integer,"commonsense reasoning: 
+Cross is a long pass into the opponent's goal towards the header of sixth-yard teammate.
+ The crossing score is between 0-100 which measures the tendency/frequency of crosses in the box.
+ Higher potential score means that the player performs better in crossing actions. ",,The player's crossing ability score.
+512,european_football_2,Player_Attributes,finishing,,the player's finishing rate,integer,0-100 which is calculated by FIFA,,The player's ability to finish scoring opportunities.
+513,european_football_2,Player_Attributes,heading_accuracy,heading accuracy,the player's heading accuracy,integer,0-100 which is calculated by FIFA,,The player's accuracy in heading the ball.
+514,european_football_2,Player_Attributes,short_passing,short passing,the player's short passing score,integer,0-100 which is calculated by FIFA,,The player's short passing ability score.
+515,european_football_2,Player_Attributes,volleys,,the player's volley score,integer,0-100 which is calculated by FIFA,,The player's volley score.
+516,european_football_2,Player_Attributes,dribbling,,the player's dribbling score,integer,0-100 which is calculated by FIFA,,The player's dribbling ability score.
+517,european_football_2,Player_Attributes,curve,,the player's curve score,integer,0-100 which is calculated by FIFA,,The player's ability to curve the ball.
+518,european_football_2,Player_Attributes,free_kick_accuracy,free kick accuracy,the player's free kick accuracy,integer,0-100 which is calculated by FIFA,,The player's accuracy in taking free kicks.
+519,european_football_2,Player_Attributes,long_passing,long passing,the player's long passing score,integer,0-100 which is calculated by FIFA,,The player's long passing score.
+520,european_football_2,Player_Attributes,ball_control,ball control,the player's ball control score,integer,0-100 which is calculated by FIFA,,The player's ball control score.
+521,european_football_2,Player_Attributes,acceleration,,the player's acceleration score,integer,0-100 which is calculated by FIFA,,The player's acceleration score.
+522,european_football_2,Player_Attributes,sprint_speed,sprint speed,"the player's sprint speed
+",integer,0-100 which is calculated by FIFA,,The player's sprint speed.
+523,european_football_2,Player_Attributes,agility,,the player's agility,integer,0-100 which is calculated by FIFA,,The player's agility rating.
+524,european_football_2,Player_Attributes,reactions,,the player's reactions score,integer,0-100 which is calculated by FIFA,,The player's reactions score.
+525,european_football_2,Player_Attributes,balance,,the player's balance score,integer,0-100 which is calculated by FIFA,,The player's balance score.
+526,european_football_2,Player_Attributes,shot_power,shot power,the player's shot power,integer,0-100 which is calculated by FIFA,,The player's shot power rating.
+527,european_football_2,Player_Attributes,jumping,,the player's jumping score,integer,0-100 which is calculated by FIFA,,The player's jumping ability score.
+528,european_football_2,Player_Attributes,stamina,,the player's stamina score,integer,0-100 which is calculated by FIFA,,The player's stamina score.
+529,european_football_2,Player_Attributes,strength,,the player's strength score,integer,0-100 which is calculated by FIFA,,The player's strength score.
+530,european_football_2,Player_Attributes,long_shots,long shots,the player's long shots score,integer,0-100 which is calculated by FIFA,,The player's long shots score.
+531,european_football_2,Player_Attributes,aggression,,the player's aggression score,integer,0-100 which is calculated by FIFA,,The player's aggression score.
+532,european_football_2,Player_Attributes,interceptions,,the player's interceptions score,integer,0-100 which is calculated by FIFA,,The player's ability to intercept passes.
+533,european_football_2,Player_Attributes,positioning,,"the player's 
+positioning score
+",integer,0-100 which is calculated by FIFA,,The player's positioning score.
+534,european_football_2,Player_Attributes,vision,,"the player's vision score
+",integer,0-100 which is calculated by FIFA,,The player's vision score.
+535,european_football_2,Player_Attributes,penalties,,"the player's penalties score
+",integer,0-100 which is calculated by FIFA,,The player's penalties score.
+536,european_football_2,Player_Attributes,marking,,the player's markingscore,integer,0-100 which is calculated by FIFA,,The player's marking score.
+537,european_football_2,Player_Attributes,standing_tackle,standing tackle,the player's standing tackle score,integer,0-100 which is calculated by FIFA,,The player's ability to perform standing tackles.
+538,european_football_2,Player_Attributes,sliding_tackle,sliding tackle,the player's sliding tackle score,integer,0-100 which is calculated by FIFA,,The player's sliding tackle score.
+539,european_football_2,Player_Attributes,gk_diving,goalkeep diving,the player's goalkeep diving score,integer,0-100 which is calculated by FIFA,,The player's goalkeeping diving ability score.
+540,european_football_2,Player_Attributes,gk_handling,goalkeep handling,the player's goalkeep diving score,integer,0-100 which is calculated by FIFA,,The player's goalkeeping handling score.
+541,european_football_2,Player_Attributes,gk_kicking,goalkeep kicking,the player's goalkeep kicking score,integer,0-100 which is calculated by FIFA,,The player's goalkeeping kicking score.
+542,european_football_2,Player_Attributes,gk_positioning,goalkeep positioning,the player's goalkeep positioning score,integer,0-100 which is calculated by FIFA,,The player's goalkeeper positioning score.
+543,european_football_2,Player_Attributes,gk_reflexes,goalkeep reflexes,the player's goalkeep reflexes score,integer,0-100 which is calculated by FIFA,,The player's goalkeeping reflexes score.
+544,european_football_2,Team,id,,the unique id for teams,integer,,P,This is the unique identifier for each team.
+545,european_football_2,Team,team_api_id,team api id,the id of the team api,integer,,,The unique identifier for the team in the API.
+546,european_football_2,Team,team_fifa_api_id,team federation international football association api id,the id of the team fifa api,integer,,,The unique identifier for the team in the FIFA API.
+547,european_football_2,Team,team_long_name,team long name,the team's long name,text,,,The full name of the team.
+548,european_football_2,Team,team_short_name,team short name,the team's short name,text,,,The abbreviated name of the team.
+549,european_football_2,Team_Attributes,id,,the unique id for teams,integer,,P,Unique identifier for each team attribute record.
+550,european_football_2,Team_Attributes,team_fifa_api_id,team federation international football association api id,the id of the team fifa api,integer,,F,The unique identifier for the team in the FIFA API.
+551,european_football_2,Team_Attributes,team_api_id,team api id,the id of the team api,integer,,F,The unique identifier for the team in the API.
+552,european_football_2,Team_Attributes,date,,Date,text,e.g. 2010-02-22 00:00:00,,The date when the team attributes were recorded.
+553,european_football_2,Team_Attributes,buildUpPlaySpeed,build Up Play Speed,the speed in which attacks are put together ,integer,the score which is between 1-00 to measure the team's attack speed,,The speed at which build-up play is executed.
+554,european_football_2,Team_Attributes,buildUpPlaySpeedClass,build Up Play Speed Class,the speed class,text,"commonsense reasoning: 
+ Slow: 1-33
+ Balanced: 34-66
+ Fast: 66-100",,This is the classification of the team's build-up play speed.
+555,european_football_2,Team_Attributes,buildUpPlayDribbling,build Up Play Dribbling,the tendency/ frequency of dribbling,integer,,,The tendency or frequency of dribbling during build-up play.
+556,european_football_2,Team_Attributes,buildUpPlayDribblingClass,build Up Play Dribbling Class,the dribbling class,text,"commonsense reasoning: 
+ Little: 1-33
+ Normal: 34-66
+ Lots: 66-100",,The dribbling class during the build-up play.
+557,european_football_2,Team_Attributes,buildUpPlayPassing,build Up Play Passing,affects passing distance and support from teammates,integer,,,Affects the distance and style of passing during the build-up play.
+558,european_football_2,Team_Attributes,buildUpPlayPassingClass,build Up Play Passing Class,the passing class,text,"commonsense reasoning: 
+ Short: 1-33
+ Mixed: 34-66
+ Long: 66-100",,The passing style used during the build-up play.
+559,european_football_2,Team_Attributes,buildUpPlayPositioningClass,build Up Play Positioning Class,A team's freedom of movement in the 1st two thirds of the pitch,text,Organised / Free Form,,The degree of organization or freedom of movement a team has in the first two-thirds of the pitch during build-up play.
+560,european_football_2,Team_Attributes,chanceCreationPassing,chance Creation Passing,Amount of risk in pass decision and run support,integer,,,The amount of risk in passing decisions during chance creation.
+561,european_football_2,Team_Attributes,chanceCreationPassingClass,chance Creation Passing Class,the chance creation passing class,text,"commonsense reasoning: 
+ Safe: 1-33
+ Normal: 34-66
+ Risky: 66-100",,The classification of the team's passing strategy during chance creation.
+562,european_football_2,Team_Attributes,chanceCreationCrossing,chance Creation Crossing,The tendency / frequency of crosses into the box,integer,,,The frequency of crosses into the box during chance creation.
+563,european_football_2,Team_Attributes,chanceCreationCrossingClass,chance Creation Crossing Class,the chance creation crossing class,text,"commonsense reasoning: 
+ Little: 1-33
+ Normal: 34-66
+ Lots: 66-100",,The chance creation crossing class.
+564,european_football_2,Team_Attributes,chanceCreationShooting,chance Creation Shooting,The tendency / frequency of shots taken,integer,,,The frequency of shooting opportunities created.
+565,european_football_2,Team_Attributes,chanceCreationShootingClass,chance Creation Shooting Class,the chance creation shooting class,text,"commonsense reasoning: 
+ Little: 1-33
+ Normal: 34-66
+ Lots: 66-100",,This is the classification of the team's shooting strategy during chance creation.
+566,european_football_2,Team_Attributes,chanceCreationPositioningClass,chance Creation Positioning Class,A teams freedom of movement in the final third of the pitch,text,Organised / Free Form,,A team's strategy for player positioning during attacking plays.
+567,european_football_2,Team_Attributes,defencePressure,defence Pressure,Affects how high up the pitch the team will start pressuring,integer,,,Indicates the level of pressure applied by the team's defense.
+568,european_football_2,Team_Attributes,defencePressureClass,defence Pressure Class,the defence pressure class,text,"commonsense reasoning: 
+ Deep: 1-33
+ Medium: 34-66
+ High: 66-100",,The classification of the team's defensive pressure strategy.
+569,european_football_2,Team_Attributes,defenceAggression,defence Aggression,Affect the teams approach to tackling the ball possessor,integer,,,The level of aggression in a team's defensive tactics.
+570,european_football_2,Team_Attributes,defenceAggressionClass,defence Aggression Class,the defence aggression class,text,"commonsense reasoning: 
+ Contain: 1-33
+ Press: 34-66
+ Double: 66-100",,The classification of a team's defensive aggression level.
+571,european_football_2,Team_Attributes,defenceTeamWidth,defence Team Width,Affects how much the team will shift to the ball side,integer,,,The width of the team's defensive formation.
+572,european_football_2,Team_Attributes,defenceTeamWidthClass,defence Team Width Class,the defence team width class,text,"commonsense reasoning: 
+ Narrow: 1-33
+ Normal: 34-66
+ Wide: 66-100",,The classification of the team's defensive width strategy.
+573,european_football_2,Team_Attributes,defenceDefenderLineClass,defence Defender Line Class,Affects the shape and strategy of the defence,text,Cover/ Offside Trap,,Classification of the defensive line strategy.
+574,thrombosis_prediction,Examination,ID,,identification of the patient,integer,,F,This is the unique identifier for the patient.
+575,thrombosis_prediction,Examination,Examination Date,,Examination Date,date ,,,The date when the examination was conducted.
+576,thrombosis_prediction,Examination,aCL IgG,anti-Cardiolipin antibody (IgG) ,anti-Cardiolipin antibody (IgG) concentration,real,,,This is the concentration of anti-Cardiolipin antibody (IgG).
+577,thrombosis_prediction,Examination,aCL IgM,anti-Cardiolipin antibody (IgM) ,anti-Cardiolipin antibody (IgM) concentration,real,,,anti-Cardiolipin antibody (IgM) concentration.
+578,thrombosis_prediction,Examination,ANA,anti-nucleus antibody ,anti-nucleus antibody concentration,integer,,,The concentration of anti-nucleus antibodies.
+579,thrombosis_prediction,Examination,ANA Pattern,pattern observed in the sheet of ANA examination,pattern observed in the sheet of ANA examination,text,,,The pattern observed in the ANA examination.
+580,thrombosis_prediction,Examination,aCL IgA,anti-Cardiolipin antibody (IgA) concentration,anti-Cardiolipin antibody (IgA) concentration,integer,,,The concentration of anti-Cardiolipin antibody (IgA).
+581,thrombosis_prediction,Examination,Diagnosis,,disease names,text,,,The diagnosis or medical condition of the patient.
+582,thrombosis_prediction,Examination,KCT,measure of degree of coagulation,measure of degree of coagulation,text,"+: positive
+
+-: negative",,The measure of degree of coagulation.
+583,thrombosis_prediction,Examination,RVVT,measure of degree of coagulation,measure of degree of coagulation,text,"+: positive
+
+-: negative",,This is a measure of the degree of coagulation.
+584,thrombosis_prediction,Examination,LAC,measure of degree of coagulation,measure of degree of coagulation,text,"+: positive
+
+-: negative",,The presence of lupus anticoagulant (LAC).
+585,thrombosis_prediction,Examination,Symptoms,,other symptoms observed,text,,,Details about other symptoms observed.
+586,thrombosis_prediction,Examination,Thrombosis,,degree of thrombosis,integer,"0: negative (no thrombosis)
+1: positive (the most severe one)
+2: positive (severe)3: positive (mild)",,The degree of thrombosis.
+587,thrombosis_prediction,Laboratory,ID,,identification of the patient,integer,,F,Identification of the patient.
+588,thrombosis_prediction,Laboratory,Date,,Date of the laboratory tests (YYMMDD),date,,P,The date of the laboratory tests.
+589,thrombosis_prediction,Laboratory,GOT,AST glutamic oxaloacetic transaminase,AST glutamic oxaloacetic transaminase,integer,"Commonsense evidence:
+
+Normal range: N < 60",,The AST glutamic oxaloacetic transaminase level.
+590,thrombosis_prediction,Laboratory,GPT,ALT glutamic pyruvic transaminase,ALT glutamic pyruvic transaminase,integer,"Commonsense evidence:
+
+Normal range: N < 60",,The level of ALT glutamic pyruvic transaminase.
+591,thrombosis_prediction,Laboratory,LDH,lactate dehydrogenase,lactate dehydrogenase,integer,"Commonsense evidence:
+
+Normal range: N < 500",,This is the lactate dehydrogenase level.
+592,thrombosis_prediction,Laboratory,ALP,alkaliphophatase,alkaliphophatase,integer,"Commonsense evidence:
+
+Normal range: N < 300",,The level of alkaline phosphatase enzyme.
+593,thrombosis_prediction,Laboratory,TP,total protein,total protein,real,"Commonsense evidence:
+
+Normal range: 6.0 < N < 8.5",,The total protein level in the blood.
+594,thrombosis_prediction,Laboratory,ALB,albumin,albumin,real,"Commonsense evidence:
+
+Normal range: 3.5 < N < 5.5",,The concentration of albumin in the blood.
+595,thrombosis_prediction,Laboratory,UA,uric acid,uric acid,real,"Commonsense evidence:
+
+Normal range: N > 8.0 (Male)N > 6.5 (Female)",,The uric acid level.
+596,thrombosis_prediction,Laboratory,UN,urea nitrogen,urea nitrogen,integer,"Commonsense evidence:
+
+Normal range: N < 30",,The concentration of urea nitrogen in the blood.
+597,thrombosis_prediction,Laboratory,CRE,creatinine,creatinine,real,"Commonsense evidence:
+
+Normal range: N < 1.5",,The creatinine level in the blood.
+598,thrombosis_prediction,Laboratory,T-BIL,total bilirubin,total bilirubin,real,"Commonsense evidence:
+
+Normal range: N < 2.0",,The total bilirubin level in the blood.
+599,thrombosis_prediction,Laboratory,T-CHO,total cholesterol,total cholesterol,integer,"Commonsense evidence:
+Normal range: N < 250",,The total cholesterol level.
+600,thrombosis_prediction,Laboratory,TG,triglyceride,triglyceride,integer,"Commonsense evidence:
+
+Normal range: N < 200",,This is the triglyceride level.
+601,thrombosis_prediction,Laboratory,CPK,creatinine phosphokinase,creatinine phosphokinase,integer,"Commonsense evidence:
+Normal range: N < 250",,Creatinine phosphokinase levels.
+602,thrombosis_prediction,Laboratory,GLU,blood glucose,blood glucose,integer,"Commonsense evidence:
+Normal range: N < 180",,The blood glucose level.
+603,thrombosis_prediction,Laboratory,WBC,White blood cell,White blood cell,real,"Commonsense evidence:
+Normal range: 3.5 < N < 9.0",,White blood cell count.
+604,thrombosis_prediction,Laboratory,RBC,Red blood cell,Red blood cell,real,"Commonsense evidence:
+
+Normal range: 3.5 < N < 6.0",,The count of red blood cells.
+605,thrombosis_prediction,Laboratory,HGB,Hemoglobin,Hemoglobin,real,"Commonsense evidence:
+
+Normal range: 10 < N < 17",,The hemoglobin level in the blood.
+606,thrombosis_prediction,Laboratory,HCT,Hematoclit,Hematoclit,real,"Commonsense evidence:
+Normal range: 29 < N < 52",,The percentage of red blood cells in the blood.
+607,thrombosis_prediction,Laboratory,PLT,platelet,platelet,integer,"Commonsense evidence:
+
+Normal range: 100 < N < 400",,The platelet count.
+608,thrombosis_prediction,Laboratory,PT,prothrombin time,prothrombin time,real,"Commonsense evidence:
+
+Normal range: N < 14",,The prothrombin time.
+609,thrombosis_prediction,Laboratory,APTT,activated partial prothrombin time,activated partial prothrombin time,integer,"Commonsense evidence:
+
+Normal range: N < 45",,The activated partial prothrombin time.
+610,thrombosis_prediction,Laboratory,FG,fibrinogen,fibrinogen,real,"Commonsense evidence:
+
+Normal range: 150 < N < 450",,The fibrinogen level.
+611,thrombosis_prediction,Laboratory,PIC,,,,,,Not enough information to make a valid prediction.
+612,thrombosis_prediction,Laboratory,TAT,,,,,,Not enough information to make a valid prediction.
+613,thrombosis_prediction,Laboratory,TAT2,,,,,,Not enough information to make a valid prediction.
+614,thrombosis_prediction,Laboratory,U-PRO,proteinuria,proteinuria,text,"Commonsense evidence:
+
+Normal range: 0 < N < 30",,The presence of protein in urine.
+615,thrombosis_prediction,Laboratory,IGG,Ig G,Ig G,integer,"Commonsense evidence:
+
+Normal range: 900 < N < 2000",,The IgG level.
+616,thrombosis_prediction,Laboratory,IGA,Ig A,Ig A,integer,"Commonsense evidence:
+
+Normal range: 80 < N < 500",,The Ig A level.
+617,thrombosis_prediction,Laboratory,IGM,Ig M,Ig M,integer,"Commonsense evidence:
+
+Normal range: 40 < N < 400",,The IgM level.
+618,thrombosis_prediction,Laboratory,CRP,C-reactive protein,C-reactive protein,text,"Commonsense evidence:
+
+Normal range: N= -, +-, or N < 1.0",,C-reactive protein.
+619,thrombosis_prediction,Laboratory,RA,Rhuematoid Factor,Rhuematoid Factor,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,Rheumatoid Arthritis indicator.
+620,thrombosis_prediction,Laboratory,RF,RAHA,RAHA,text,"Commonsense evidence:
+
+Normal range: N < 20",,Not enough information to make a valid prediction.
+621,thrombosis_prediction,Laboratory,C3,complement 3,complement 3,integer,"Commonsense evidence:
+
+Normal range: N > 35",,The level of complement 3 protein in the blood.
+622,thrombosis_prediction,Laboratory,C4,complement 4,complement 4,integer,"Commonsense evidence:
+
+Normal range: N > 10",,The level of complement 4 in the blood.
+623,thrombosis_prediction,Laboratory,RNP,anti-ribonuclear protein,anti-ribonuclear protein,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,The anti-ribonuclear protein levels.
+624,thrombosis_prediction,Laboratory,SM,anti-SM,anti-SM,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,The presence of anti-SM antibodies.
+625,thrombosis_prediction,Laboratory,SC170,anti-scl70,anti-scl70,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,The presence of anti-scl70 antibodies.
+626,thrombosis_prediction,Laboratory,SSA,anti-SSA,anti-SSA,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,The anti-SSA antibody levels.
+627,thrombosis_prediction,Laboratory,SSB,anti-SSB,anti-SSB,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,The presence of anti-SSB antibodies.
+628,thrombosis_prediction,Laboratory,CENTROMEA,anti-centromere,anti-centromere,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,The presence of anti-centromere antibodies.
+629,thrombosis_prediction,Laboratory,DNA,anti-DNA,anti-DNA,text,"Commonsense evidence:
+
+Normal range: N < 8",,The anti-DNA levels.
+630,thrombosis_prediction,Laboratory,DNA-II,anti-DNA,anti-DNA,integer,"Commonsense evidence:
+
+Normal range: N < 8",,The anti-DNA level measured in the patient's laboratory tests.
+631,thrombosis_prediction,Patient,ID,,identification of the patient,integer,,P,This is the unique identifier for each patient.
+632,thrombosis_prediction,Patient,SEX,,Sex,text,F: female; M: male,,The sex of the patient.
+633,thrombosis_prediction,Patient,Birthday,,Birthday,date,,,The date of birth of the patient.
+634,thrombosis_prediction,Patient,Description,,the first date when a patient data was recorded,date,null or empty: not recorded,,The date when the patient's data was last updated.
+635,thrombosis_prediction,Patient,First Date,,the date when a patient came to the hospital,date,,,The date when a patient first visited the hospital.
+636,thrombosis_prediction,Patient,Admission,,patient was admitted to the hospital (+) or followed at the outpatient clinic (-),text,patient was admitted to the hospital (+) or followed at the outpatient clinic (-),,Indicates whether the patient was admitted to the hospital (+) or followed at the outpatient clinic (-).
+637,thrombosis_prediction,Patient,Diagnosis,,disease names,text,,,The diagnosis of the patient.
+638,toxicology,bond,bond_id,,unique id representing bonds,text,"TRxxx_A1_A2:
+TRXXX refers to which molecule
+A1 and A2 refers to which atom",P,Unique identifier representing bonds within a molecule.
+639,toxicology,bond,molecule_id,,identifying the molecule in which the bond appears,text,,F,Identifies the molecule in which the bond appears.
+640,toxicology,bond,bond_type,,type of the bond,text,"commonsense evidence:
+-: single bond
+'=': double bond
+'#': triple bond",,The type of bond between atoms.
+641,toxicology,molecule,molecule_id,molecule id,unique id of molecule,text,"""+"" --> this molecule / compound is carcinogenic
+'-' this molecule is not / compound carcinogenic",P,Unique identifier for each molecule.
+642,toxicology,molecule,label,,whether this molecule is carcinogenic or not,text,,,Indicates whether this molecule is carcinogenic.
+643,toxicology,atom,atom_id,atom id,the unique id of atoms,text,,P,The unique identifier for each atom.
+644,toxicology,atom,molecule_id,molecule id,identifying the molecule to which the atom belongs,text,"commonsense evidence:
+TRXXX_i represents ith atom of molecule TRXXX",F,Identifies the molecule to which the atom belongs.
+645,toxicology,atom,element,,the element of the toxicology ,text," cl: chlorine
+ c: carbon
+ h: hydrogen
+ o: oxygen
+ s: sulfur
+ n: nitrogen
+ p: phosphorus
+ na: sodium
+ br: bromine
+ f: fluorine
+ i: iodine
+ sn: Tin
+ pb: lead
+ te: tellurium
+ ca: Calcium",,The chemical element of the atom.
+646,toxicology,connected,atom_id,atom id,id of the first atom,text,,F,The ID of the first atom in a bond connection.
+647,toxicology,connected,atom_id2,atom id 2,id of the second atom,text,,F,The ID of the second atom in a bond connection.
+648,toxicology,connected,bond_id,bond id,bond id representing bond between two atoms,text,,F,Identifier for the bond between two atoms.
+649,student_club,income,income_id,income id,A unique identifier for each record of income,text,,P,A unique identifier for each income record.
+650,student_club,income,date_received,date received,the date that the fund received,text,,,The date the income was received.
+651,student_club,income,amount,,amount of funds,integer,the unit is dollar,,The amount of funds received.
+652,student_club,income,source,,"A value indicating where the funds come from such as dues, or the annual university allocation",text,,,"The source of the income, such as dues or fundraising activities."
+653,student_club,income,notes,,A free-text value giving any needed details about the receipt of funds,text,,,Details about the receipt of funds.
+654,student_club,income,link_to_member,link to member,link to member,text,,F,Reference to the member who is associated with the income.
+655,student_club,budget,budget_id,budget id,A unique identifier for the budget entry,text,,P,A unique identifier for each budget entry.
+656,student_club,budget,category,,"The area for which the amount is budgeted, such as, advertisement, food, parking",text,,,"The area for which the budgeted amount is allocated, such as advertisement, food, or parking."
+657,student_club,budget,spent,,The total amount spent in the budgeted category for an event.,real,the unit is dollar. This is summarized from the Expense table,,The total amount spent in the budgeted category for an event.
+658,student_club,budget,remaining,,A value calculated as the amount budgeted minus the amount spent,real,"the unit is dollar 
+commonsense evidence: If the remaining < 0, it means that the cost has exceeded the budget.",,The remaining budget after expenditures.
+659,student_club,budget,amount,,The amount budgeted for the specified category and event,integer,"the unit is dollar 
+commonsense evidence:
+some computation like: amount = spent + remaining ",,The total budgeted amount for the specified category and event.
+660,student_club,budget,event_status,event status,the status of the event,text,"Closed / Open/ Planning 
+commonsense evidence: 
+ Closed: It means that the event is closed. The spent and the remaining won't change anymore.
+ Open: It means that the event is already opened. The spent and the remaining will change with new expenses.
+ Planning: The event is not started yet but is planning. The spent and the remaining won't change at this stage. ",,The status of the event.
+661,student_club,budget,link_to_event,link to event,The unique identifier of the event to which the budget line applies.,text,References the Event table,F,The unique identifier of the event associated with the budget entry.
+662,student_club,attendance,link_to_event,link to event,The unique identifier of the event which was attended,text,References the Event table,F,The unique identifier of the event linked to the attendance record.
+663,student_club,attendance,link_to_member,link to member,The unique identifier of the member who attended the event,text,References the Member table,F,The unique identifier of the member associated with the event.
+664,student_club,event,event_id,event id,A unique identifier for the event,text,,P,A unique identifier for each event.
+665,student_club,event,event_name,event name,event name,text,,,The name of the event.
+666,student_club,event,event_date,event date,The date the event took place or is scheduled to take place,text,e.g. 2020-03-10T12:00:00,,The date the event took place or is scheduled to take place.
+667,student_club,event,type,,"The kind of event, such as game, social, election",text,,,"The kind of event, such as game, social, election, meeting, or guest speaker."
+668,student_club,event,notes,,A free text field for any notes about the event,text,,,A free text field for any notes about the event.
+669,student_club,event,location,,Address where the event was held or is to be held or the name of such a location,text,,,Address where the event was held or is to be held.
+670,student_club,event,status,,"One of three values indicating if the event is in planning, is opened, or is closed",text,Open/ Closed/ Planning,,"The status of the event, indicating if it is in planning, opened, or closed."
+671,student_club,expense,expense_id,expense id,unique id of income,text,,P,Unique identifier for each expense.
+672,student_club,expense,expense_description,expense description,A textual description of what the money was spend for,text,,,A textual description of the expense items or services for which the money was spent.
+673,student_club,expense,expense_date,expense date,The date the expense was incurred,text,e.g. YYYY-MM-DD,,The date the expense was incurred.
+674,student_club,expense,cost,,The dollar amount of the expense,real,the unit is dollar,,The dollar amount spent on an expense.
+675,student_club,expense,approved,,A true or false value indicating if the expense was approved,text,true/ false,,A true or false value indicating if the expense was approved.
+676,student_club,expense,link_to_member,link to member,The member who incurred the expense,text,,F,The member who incurred the expense.
+677,student_club,expense,link_to_budget,link to budget,The unique identifier of the record in the Budget table that indicates the expected total expenditure for a given category and event. ,text,References the Budget table,F,The unique identifier of the associated budget record.
+678,student_club,major,major_id,major id,A unique identifier for each major,text,,P,A unique identifier for each major.
+679,student_club,major,major_name,major name,major name,text,,,The name of the major.
+680,student_club,major,department,,The name of the department that offers the major,text,,,The name of the department that offers the major.
+681,student_club,major,college,,The name college that houses the department that offers the major,text,,,The name of the college that houses the department offering the major.
+682,student_club,member,member_id,member id,unique id of member,text,,P,Unique identifier for each member.
+683,student_club,member,first_name,first name,member's first name,text,,,The member's first name.
+684,student_club,member,last_name,last name,member's last name,text,"commonsense evidence: 
+full name is first_name + last_name. e.g. A member's first name is Angela and last name is Sanders. Thus, his/her full name is Angela Sanders.",,The last name of the member.
+685,student_club,member,email,,member's email,text,,,The email address of the member.
+686,student_club,member,position,,The position the member holds in the club,text,,,The role or title the member holds within the club.
+687,student_club,member,t_shirt_size,,The size of tee shirt that member wants when shirts are ordered,text,commonsense evidence: usually the student ordered t-shirt with lager size has bigger body shape ,,The size of the t-shirt that the member prefers.
+688,student_club,member,phone,,The best telephone at which to contact the member,text,,,The primary phone number to contact the member.
+689,student_club,member,zip,,the zip code of the member's hometown,integer,,F,The zip code of the member's hometown.
+690,student_club,member,link_to_major,link to major,The unique identifier of the major of the member. References the Major table,text,,F,The unique identifier for the major associated with the member. References the Major table.
+691,student_club,zip_code,zip_code,zip code,The ZIP code itself. A five-digit number identifying a US post office.,integer,,P,The ZIP code itself. A five-digit number identifying a US post office or delivery area.
+692,student_club,zip_code,type,,The kind of ZIP code,text,"commonsense evidence: 
+� Standard: the normal codes with which most people are familiar 
+� PO Box: zip codes have post office boxes 
+� Unique: zip codes that are assigned to individual organizations.",,"The classification of the ZIP code, such as Standard, PO Box, or Unique."
+693,student_club,zip_code,city,,The city to which the ZIP pertains,text,,,The city to which the ZIP code pertains.
+694,student_club,zip_code,county,,The county to which the ZIP pertains,text,,,The county to which the ZIP pertains.
+695,student_club,zip_code,state,,The name of the state to which the ZIP pertains,text,,,The name of the state to which the ZIP pertains.
+696,student_club,zip_code,short_state,short state,The abbreviation of the state to which the ZIP pertains,text,,,The standard two-letter abbreviation of the state.
+697,superhero,gender,id,,the unique identifier of the gender,integer,,P,Unique identifier for the gender.
+698,superhero,gender,gender,,the gender of the superhero,text,,,The gender of the superhero.
+699,superhero,superpower,id,,the unique identifier of the superpower,integer,,P,This is the unique identifier for each superpower.
+700,superhero,superpower,power_name,power name,the superpower name,text,,,The name of the superpower.
+701,superhero,publisher,id,,the unique identifier of the publisher,integer,,P,The unique identifier of the publisher.
+702,superhero,publisher,publisher_name,,the name of the publisher,text,,,The name of the publisher.
+703,superhero,superhero,id,,the unique identifier of the superhero,integer,,P,This is the unique identifier for each superhero.
+704,superhero,superhero,superhero_name,superhero name,the name of the superhero,text,,,The name of the superhero.
+705,superhero,superhero,full_name,full name,the full name of the superhero,text,"commonsense evidence:
+The full name of a person typically consists of their given name, also known as their first name or personal name, and their surname, also known as their last name or family name. For example, if someone's given name is ""John"" and their surname is ""Smith,"" their full name would be ""John Smith.""",,The full name of the superhero.
+706,superhero,superhero,gender_id,gender id,the id of the superhero's gender,integer,,F,The identifier for the gender of the superhero.
+707,superhero,superhero,eye_colour_id,eye colour id,the id of the superhero's eye color,integer,,F,The identifier for the superhero's eye color.
+708,superhero,superhero,hair_colour_id,hair colour id,the id of the superhero's hair color,integer,,F,The identifier for the superhero's hair color.
+709,superhero,superhero,skin_colour_id,skin colour id,the id of the superhero's skin color,integer,,F,The id of the skin color.
+710,superhero,superhero,race_id,race id,the id of the superhero's race,integer,,F,The race_id of the superhero's race.
+711,superhero,superhero,publisher_id,publisher id,the id of the publisher,integer,,F,The identifier for the publisher associated with the superhero.
+712,superhero,superhero,alignment_id,alignment id,the id of the superhero's alignment,integer,,F,The id of the superhero's alignment. This references the id in the alignment table.
+713,superhero,superhero,height_cm,height cm,the height of the superhero,integer,"commonsense evidence:
+The unit of height is centimeter. If the height_cm is NULL or 0, it means the height of the superhero is missing. ",,The height of the superhero in centimeters.
+714,superhero,superhero,weight_kg,weight kg,the weight of the superhero,integer,"commonsense evidence:
+The unit of weight is kilogram. If the weight_kg is NULL or 0, it means the weight of the superhero is missing.",,The weight of the superhero in kilograms.
+715,superhero,colour,id,,the unique identifier of the color,integer,,P,Unique identifier for each color.
+716,superhero,colour,colour,,the color of the superhero's skin/eye/hair/etc,text,,,"The color of the superhero's skin, eyes, or hair."
+717,superhero,attribute,id,,the unique identifier of the attribute,integer,,P,The unique identifier of the attribute.
+718,superhero,attribute,attribute_name,attribute name,the attribute,text,"commonsense evidence:
+A superhero's attribute is a characteristic or quality that defines who they are and what they are capable of. This could be a physical trait, such as superhuman strength or the ability to fly, or a personal trait, such as extraordinary intelligence or exceptional bravery. ",,The name of the attribute.
+719,superhero,hero_power,hero_id,hero id,"the id of the hero
+Maps to superhero(id)",integer,,F,The ID of the superhero. Maps to superhero(id).
+720,superhero,hero_power,power_id,power id,"the id of the power
+Maps to superpower(id)",integer,"commonsense evidence:
+In general, a superhero's attributes provide the foundation for their abilities and help to define who they are, while their powers are the specific abilities that they use to fight crime and protect others.",F,The ID of the superpower. Maps to superpower(id).
+721,superhero,race,id,,the unique identifier of the race,integer,,P,The unique identifier for each race.
+722,superhero,race,race,,the race of the superhero,text,"commonsense evidence:
+In the context of superheroes, a superhero's race would refer to the particular group of people that the superhero belongs to base on these physical characteristics",,The race of the superhero.
+723,superhero,alignment,id,,the unique identifier of the alignment,integer,,P,Unique identifier for the alignment.
+724,superhero,alignment,alignment,,the alignment of the superhero,text,"commonsense evidence:
+Alignment refers to a character's moral and ethical stance and can be used to describe the overall attitude or behavior of a superhero. Some common alignments for superheroes include:
+Good: These superheroes are typically kind, selfless, and dedicated to protecting others and upholding justice. Examples of good alignments include Superman, Wonder Woman, and Spider-Man.
+Neutral: These superheroes may not always prioritize the greater good, but they are not necessarily evil either. They may act in their own self-interest or make decisions based on their own moral code. Examples of neutral alignments include the Hulk and Deadpool.
+	Bad: These superheroes are typically selfish, manipulative, and willing to harm others in pursuit of their own goals. Examples of evil alignments include Lex Luthor and the Joker.",,The alignment of the superhero.
+725,superhero,hero_attribute,hero_id,hero id,"the id of the hero
+Maps to superhero(id)",,,F,The ID of the superhero. Maps to superhero(id).
+726,superhero,hero_attribute,attribute_id,attribute id,"the id of the attribute
+Maps to attribute(id)",,,F,The id of the attribute. Maps to attribute(id).
+727,superhero,hero_attribute,attribute_value,attribute value,the attribute value,,"commonsense evidence:
+If a superhero has a higher attribute value on a particular attribute, it means that they are more skilled or powerful in that area compared to other superheroes. For example, if a superhero has a higher attribute value for strength, they may be able to lift heavier objects or deliver more powerful punches than other superheroes.",,The value representing the magnitude of a specific attribute for a superhero.
+728,codebase_community,postLinks,Id,,the post link id,integer,,P,This is the unique identifier for each post link.
+729,codebase_community,postLinks,CreationDate,Creation Date,the creation date of the post link,datetime,,,The creation date of the post link.
+730,codebase_community,postLinks,PostId,Post Id,the post id,integer,,F,The ID of the post associated with the link.
+731,codebase_community,postLinks,RelatedPostId,Related Post Id,the id of the related post,integer,,F,The ID of the post that is related to the current post.
+732,codebase_community,postLinks,LinkTypeId,Link Type Id,the id of the link type,integer,,,The identifier for the type of link between posts.
+733,codebase_community,postHistory,Id,,the post history id,integer,,P,The unique identifier for each post history entry.
+734,codebase_community,postHistory,PostHistoryTypeId,Post History Type Id,the id of the post history type,integer,,,The identifier for the type of post history event.
+735,codebase_community,postHistory,PostId,Post Id,the unique id of the post,integer,,F,The unique identifier of the post associated with the post history entry.
+736,codebase_community,postHistory,RevisionGUID,Revision GUID,the revision globally unique id of the post,integer,,,The revision globally unique identifier of the post.
+737,codebase_community,postHistory,CreationDate,Creation Date,the creation date of the post,datetime,,,The date and time when the post history record was created.
+738,codebase_community,postHistory,UserId,User Id,the user who post the post,integer,,F,The ID of the user who made the post history entry.
+739,codebase_community,postHistory,Text,,the detailed content of the post,text,,,The content of the post at the time of the revision.
+740,codebase_community,postHistory,Comment,,comments of the post,text,,,Additional comments or notes related to the post history.
+741,codebase_community,postHistory,UserDisplayName,User Display Name,user's display name,text,,,The display name of the user who made the post history entry.
+742,codebase_community,badges,Id,,the badge id,integer,,P,This is the unique identifier for each badge.
+743,codebase_community,badges,UserId,User Id,the unique id of the user,integer,,F,The unique identifier of the user who received the badge.
+744,codebase_community,badges,Name,,the badge name the user obtained,text,,,The name of the badge the user obtained.
+745,codebase_community,badges,Date,,the date that the user obtained the badge,datetime,,,The date that the user obtained the badge.
+746,codebase_community,posts,Id,,the post id,integer,,P,This is the unique identifier for each post.
+747,codebase_community,posts,PostTypeId,Post Type Id,the id of the post type,integer,,,The identifier for the type of post.
+748,codebase_community,posts,AcceptedAnswerId,Accepted Answer Id,the accepted answer id of the post ,integer,,,The accepted answer id of the post.
+749,codebase_community,posts,CreaionDate,Creation Date,the creation date of the post,datetime,,,The creation date of the post.
+750,codebase_community,posts,Score,,the score of the post,integer,,,The score of the post.
+751,codebase_community,posts,ViewCount,View Count,the view count of the post,integer,"commonsense evidence:
+Higher view count means the post has higher popularity",,The number of times the post has been viewed.
+752,codebase_community,posts,Body,,the body of the post,text,,,The body of the post.
+753,codebase_community,posts,OwnerUserId,Owner User Id,the id of the owner user,integer,,F,The ID of the user who owns the post.
+754,codebase_community,posts,LasActivityDate,Last Activity Date,the last activity date,datetime,,,The last recorded activity date for the post.
+755,codebase_community,posts,Title,,the title of the post,text,,,The title of the post.
+756,codebase_community,posts,Tags,,the tag of the post,text,,,The tags associated with the post.
+757,codebase_community,posts,AnswerCount,Answer Count,the total number of answers of the post,integer,,,The total number of answers for the post.
+758,codebase_community,posts,CommentCount,Comment Count,the total number of comments of the post,integer,,,The total number of comments associated with the post.
+759,codebase_community,posts,FavoriteCount,Favorite Count,the total number of favorites of the post,integer,"commonsense evidence:
+more favorite count refers to more valuable posts. ",,The total number of times the post has been marked as a favorite by users.
+760,codebase_community,posts,LastEditorUserId,Last Editor User Id,the id of the last editor,integer,,F,The ID of the last user who edited the post.
+761,codebase_community,posts,LastEditDate,Last Edit Date,the last edit date,datetime,,,The date and time when the post was last edited.
+762,codebase_community,posts,CommunityOwnedDate,Community Owned Date,the community owned date,datetime,,,The date when the post was marked as community-owned.
+763,codebase_community,posts,ParentId,ParentId,the id of the parent post,integer,"commonsense evidence:
+If the parent id is null, the post is the root post. Otherwise, the post is the child post of other post. ",F,"The ID of the parent post, indicating a hierarchical relationship between posts."
+764,codebase_community,posts,ClosedDate,Closed Date,the closed date of the post,data_format,"commonsense evidence:
+if ClosedDate is null or empty, it means this post is not well-finished
+if CloseDate is not null or empty, it means this post has well-finished.",,The date when the post was closed.
+765,codebase_community,posts,OwnerDisplayName,Owner Display Name,the display name of the post owner,text,,,The display name of the post owner.
+766,codebase_community,posts,LastEditorDisplayName,Last Editor Display Name,the display name of the last editor,text,,,The display name of the last editor of the post.
+767,codebase_community,users,Id,,the user id,integer,,P,This is the unique identifier for each user.
+768,codebase_community,users,Reputation,,the user's reputation,integer,"commonsense evidence:
+The user with higher reputation has more influence. ",,The user's reputation score.
+769,codebase_community,users,CreationDate,Creation Date,the creation date of the user account,datetime,,,The date and time when the user account was created.
+770,codebase_community,users,DisplayName,Display Name,the user's display name,text,,,The display name chosen by the user.
+771,codebase_community,users,LastAccessDate,Last Access Date,the last access date of the user account,datetime,,,The last access date of the user.
+772,codebase_community,users,WebsiteUrl,Website Url,the website url of the user account,text,,,The website URL of the user.
+773,codebase_community,users,Location,,user's location,text,,,The user's location.
+774,codebase_community,users,AboutMe,About Me,the self introduction of the user,text,,,Self-introduction of the user.
+775,codebase_community,users,Views,,the number of views ,integer,,,The number of times the user's profile has been viewed.
+776,codebase_community,users,UpVotes,,the number of upvotes,integer,,,The number of upvotes received by the user.
+777,codebase_community,users,DownVotes,,the number of downvotes,integer,,,The number of downvotes received by the user.
+778,codebase_community,users,AccountId,Account Id,the unique id of the account,integer,,,The unique identifier for the user's account.
+779,codebase_community,users,Age,,user's age,integer," teenager: 13-18
+ adult: 19-65
+ elder: > 65",,The age of the user.
+780,codebase_community,users,ProfileImageUrl,Profile Image Url,the profile image url,text,,,URL of the user's profile image.
+781,codebase_community,tags,Id,,the tag id,integer,,P,Unique identifier for each tag.
+782,codebase_community,tags,TagName,Tag Name,the name of the tag,text,,,The name of the tag.
+783,codebase_community,tags,Count,,the count of posts that contain this tag,integer,more counts --> this tag is more popular,,The number of posts that contain this tag.
+784,codebase_community,tags,ExcerptPostId,Excerpt Post Id,the excerpt post id of the tag,integer,,F,The ID of the post containing the excerpt for the tag.
+785,codebase_community,tags,WikiPostId,Wiki Post Id,the wiki post id of the tag,text,,,The ID of the wiki post associated with the tag.
+786,codebase_community,votes,Id,,the vote id,integer,,P,The unique identifier for each vote.
+787,codebase_community,votes,PostId,Post Id,the id of the post that is voted,integer,,F,The identifier of the post that received the vote.
+788,codebase_community,votes,VoteTypeId,Vote Type Id,the id of the vote type,integer,,,The identifier for the type of vote.
+789,codebase_community,votes,CreationDate,Creation Date,the creation date of the vote,datetime,,,The date when the vote was created.
+790,codebase_community,votes,UserId,User Id,the id of the voter,integer,,F,The ID of the user who cast the vote.
+791,codebase_community,votes,BountyAmount,Bounty Amount,the amount of bounty,integer,,,The amount of bounty associated with a vote.
+792,codebase_community,comments,Id,,the comment Id,integer,,P,This is the unique identifier for each comment.
+793,codebase_community,comments,PostId,Post Id,the unique id of the post,integer,,F,The unique identifier of the post associated with the comment.
+794,codebase_community,comments,Score,,rating score,integer,"commonsense evidence:
+The score is from 0 to 100. The score more than 60 refers that the comment is a positive comment. The score less than 60 refers that the comment is a negative comment. ",,The rating score of the comment.
+795,codebase_community,comments,Text,,the detailed content of the comment,text,,,The detailed content of the comment.
+796,codebase_community,comments,CreationDate,Creation Date,the creation date of the comment,datetime,,,The date and time when the comment was created.
+797,codebase_community,comments,UserId,User Id,the id of the user who post the comment,integer,,F,The ID of the user who posted the comment.
+798,codebase_community,comments,UserDisplayName,User Display Name,user's display name,text,,,The display name of the user who made the comment.
