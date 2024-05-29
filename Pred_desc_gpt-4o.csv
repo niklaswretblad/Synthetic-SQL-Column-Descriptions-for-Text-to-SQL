@@ -1,0 +1,80 @@
+,database_name,table_name,original_column_name,column_name,column_description,data_format,value_description,type,llm_column_description
+21,financial,loan,loan_id,,the id number identifying the loan data,integer,,P,The primary purpose of the column is to uniquely identify each loan record.
+22,financial,loan,account_id,,the id number identifying the account,integer,,F,The primary purpose of the account_id column is to reference the unique identifier of the account associated with the loan.
+23,financial,loan,date,,the date when the loan is approved,date,,,The date when the loan was issued.
+24,financial,loan,amount,,approved amount,integer,unit：US dollar,,The amount column represents the total principal amount of the loan.
+25,financial,loan,duration,,loan duration,integer,unit：month,,The duration column represents the length of time (in months) over which the loan is to be repaid.
+26,financial,loan,payments,monthly payments,monthly payments,real,unit：month,,The payments column represents the periodic payment amount for a loan.
+27,financial,loan,status,,repayment status,text,"'A' stands for contract finished, no problems;
+'B' stands for contract finished, loan not paid;
+'C' stands for running contract, OK so far;
+'D' stands for running contract, client in debt",,The status column indicates the current state or condition of the loan.
+28,financial,client,client_id,,the unique number,integer,,P,Unique identifier for each client.
+29,financial,client,gender,,,text,"F：female 
+M：male ",,The gender column indicates the gender of the client.
+30,financial,client,birth_date,,birth date,date,,,The birth_date column records the birth date of the client.
+31,financial,client,district_id,location of branch,location of branch,integer,,F,The primary purpose of the column is to reference the district associated with the client.
+32,financial,district,district_id,location of branch,location of branch,integer ,,P,The primary purpose of the column is to uniquely identify each district.
+33,financial,district,A2,district_name,district_name,text,,,The primary purpose of the column A2 is to store the name of the district.
+34,financial,district,A3,region,region,text,,,The A3 column represents the region or area within the district.
+35,financial,district,A4,number of inhabitants ,,text,,,The A4 column represents the population of the district.
+36,financial,district,A5,no. of municipalities with inhabitants < 499,municipality < district < region,text,,,The primary purpose of the column A5 is to store an integer value related to the district.
+37,financial,district,A6,no. of municipalities with inhabitants 500-1999,municipality < district < region,text,,,The A6 column represents an unspecified attribute related to the district.
+38,financial,district,A7,no. of municipalities with inhabitants 2000-9999,municipality < district < region,text,,,The A7 column represents a categorical variable with values ranging from 0 to 10.
+39,financial,district,A8,no. of municipalities with inhabitants > 10000,municipality < district < region,integer,,,The A8 column represents a numerical value associated with each district.
+40,financial,district,A9,,,integer,not useful,,The A9 column represents an integer value associated with each district.
+41,financial,district,A10,ratio of urban inhabitants,ratio of urban inhabitants,real,,,Percentage of urban inhabitants.
+42,financial,district,A11,average salary,average salary,integer,,,Number of inhabitants.
+43,financial,district,A12,unemployment rate 1995,unemployment rate 1995,real,,,Not enough information to make a valid prediction.
+44,financial,district,A13,unemployment rate 1996,unemployment rate 1996,real,,,Not enough information to make a valid prediction.
+45,financial,district,A14,no. of entrepreneurs per 1000 inhabitants,no. of entrepreneurs per 1000 inhabitants,integer,,,The A14 column represents an integer value associated with each district.
+46,financial,district,A15,no. of committed crimes 1995,no. of committed crimes 1995,integer,,,Not enough information to make a valid prediction.
+47,financial,district,A16,no. of committed crimes 1996,no. of committed crimes 1996,integer,,,The A16 column represents an integer value associated with each district.
+48,financial,trans,trans_id,transaction id,transaction id,integer,,P,The primary purpose of the column is to uniquely identify each transaction.
+49,financial,trans,account_id,,,integer,,F,The primary purpose of the account_id column is to reference the unique identifier of the account associated with each transaction.
+50,financial,trans,date,date of transaction,date of transaction,date,,,The date column records the date of the transaction.
+51,financial,trans,type,+/- transaction,+/- transaction,text,"""PRIJEM"" stands for credit
+""VYDAJ"" stands for withdrawal",,"The type column indicates the nature of the transaction, such as income (PRIJEM), withdrawal (VYBER), or expense (VYDAJ)."
+52,financial,trans,operation,mode of transaction,mode of transaction,text,"""VYBER KARTOU"": credit card withdrawal
+""VKLAD"": credit in cash
+""PREVOD Z UCTU"" :collection from another bank
+""VYBER"": withdrawal in cash
+""PREVOD NA UCET"": remittance to another bank",,"The operation column indicates the type of transaction operation performed, such as deposits, withdrawals, or transfers."
+53,financial,trans,amount,amount of money,amount of money,integer,Unit：USD,,The amount column represents the monetary value of a transaction.
+54,financial,trans,balance,balance after transaction,balance after transaction,integer,Unit：USD,,The balance column represents the account balance after a transaction has been processed.
+55,financial,trans,k_symbol,characterization of the transaction,,text,"""POJISTNE"": stands for insurrance payment
+""SLUZBY"": stands for payment for statement
+""UROK"": stands for interest credited
+""SANKC. UROK"": sanction interest if negative balance
+""SIPO"": stands for household
+""DUCHOD"": stands for old-age pension
+""UVER"": stands for loan payment",,The k_symbol column represents a code for the type of transaction.
+56,financial,trans,bank,bank of the partner,,text,each bank has unique two-letter code,,The bank column represents the bank code involved in the transaction.
+57,financial,trans,account,account of the partner,,integer,,,The account column represents the account number involved in the transaction.
+58,financial,account,account_id,account id,the id of the account,integer,,P,The primary purpose of the account_id column is to uniquely identify each account.
+59,financial,account,district_id,location of branch,location of branch,integer ,,F,The primary purpose of the column is to reference the district associated with the account.
+60,financial,account,frequency,frequency,frequency of the acount,text,"""POPLATEK MESICNE"" stands for monthly issuance
+""POPLATEK TYDNE"" stands for weekly issuance
+""POPLATEK PO OBRATU"" stands for issuance after transaction",,The frequency column indicates the regularity with which account-related fees are charged.
+61,financial,account,date,date,the creation date of the account,date,in the form YYMMDD,,The date column records the date when the account was created.
+62,financial,card,card_id,credit card id,id number of credit card,integer,,P,The primary purpose of the column is to uniquely identify each card.
+63,financial,card,disp_id,disposition id,disposition id,integer,,F,The `disp_id` column references the unique identifier of the disposition (disp) associated with the card.
+64,financial,card,type,,type of credit card,text,"""junior"": junior class of credit card; 
+""classic"": standard class of credit card; 
+""gold"": high-level credit card",,The type column indicates the category of the card issued.
+65,financial,card,issued,,the date when the credit card issued ,date,in the form YYMMDD,,The issued column records the date when the card was issued.
+66,financial,order,order_id,,identifying the unique order,integer,,P,Unique identifier for each order.
+67,financial,order,account_id,,id number of account,integer,,F,The primary purpose of the account_id column is to reference the unique identifier of the account associated with the order.
+68,financial,order,bank_to,bank of the recipient,bank of the recipient,text,,,The bank_to column represents the bank code to which the order amount is being transferred.
+69,financial,order,account_to,account of the recipient,account of the recipient,integer,each bank has unique two-letter code,,The account_to column represents the account number to which the order amount is being transferred.
+70,financial,order,amount,debited amount,debited amount,real,,,The amount column represents the monetary value of the transaction.
+71,financial,order,k_symbol,characterization of the payment,purpose of the payment,text,"""POJISTNE"" stands for insurance payment
+""SIPO"" stands for household payment
+""LEASING"" stands for leasing
+""UVER"" stands for loan payment",,The k_symbol column represents a code or symbol indicating the type of transaction or payment.
+72,financial,disp,disp_id,disposition id,unique number of identifying this row of record,integer,,P,The primary purpose of the disp_id column is to uniquely identify each record in the disp table.
+73,financial,disp,client_id,,id number of client,integer,,F,The primary purpose of the column is to store the unique identifier of the client associated with the disposition.
+74,financial,disp,account_id,,id number of account,integer,,F,The primary purpose of the column is to reference the unique identifier of an account from the account table.
+75,financial,disp,type,,type of disposition,text,"""OWNER"" : ""USER"" : ""DISPONENT""
+commonsense evidence:
+the account can only have the right to issue permanent orders or apply for loans",,"The type column indicates the role of the client in relation to the account, such as OWNER or DISPONENT."

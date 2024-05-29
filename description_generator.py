@@ -144,8 +144,8 @@ class desc_gen_llm:
 if __name__ == "__main__":
     # Initiate llm
     LLM_NAME = "gpt-4o"
-    NUM_EXAMPLES_ALL = 3
-    NUM_EXAMPLES_CURRENT = 50
+    NUM_EXAMPLES_ALL = 0
+    NUM_EXAMPLES_CURRENT = 10
     NUM_EXAMPLES_ASSOCIATED = 0
     GOLD = True
     OUTPUT_FILENAME = "GOLD_DEV_desc_" + LLM_NAME
@@ -212,7 +212,7 @@ if __name__ == "__main__":
             example_data = sql_database.get_sample_data(
                 col["database_name"], col["table_name"], num_examples=NUM_EXAMPLES_CURRENT)
             unique_data = sql_database.get_sample_data(
-                col["database_name"], col["table_name"], num_examples=20, unique=True, original_column_name=col["original_column_name"])
+                col["database_name"], col["table_name"], num_examples=0, unique=True, original_column_name=col["original_column_name"])
 
         if col['type'] == 'xxx':  # ensures this is always False, insert "F" to use this function
             # This removes the "_id" from the name, works for financial, but is a hard coded test, TODO: fix this
@@ -230,6 +230,11 @@ if __name__ == "__main__":
             column_desc = model.gen_column_desc(
                 database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated, unique_data=unique_data)
         database_df.loc[col_idx, 'llm_column_description'] = column_desc
+
+        # Save every ten columns
+        if col_idx % 10 == 0 and col_idx != 0:
+            database_df.to_csv(OUTPUT_FILENAME+'.csv', index=True)
+            print(f"Progress saved at {col["database_name"]}, table {col["table_name"]}, and column {col["original_column_name"]}")
 
     # Save column descriptions to database.csv
     database_df.to_csv(OUTPUT_FILENAME+'.csv', index=True)
