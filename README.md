@@ -41,4 +41,3 @@
 8. Removed column "wins" from constructors.csv as the column does not exist in the formula_1 database.
 
  
-

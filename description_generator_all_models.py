@@ -336,15 +336,11 @@ if __name__ == "__main__":
                                                                    example_data=example_data, example_data_associated=example_data_associated, column_name=col[
                                                                        "column_name"],
                                                                    column_description=col["column_description"], unique_data=unique_data)
-                print(prompt)
                 column_desc = model.call_model(prompt)
-                print(column_desc)
-                break
             else:
                 prompt = GEN_COLUMN_DESCRIPTION_PROMPT_2.format(database_schema=database_schema, column=col["original_column_name"], table=col["table_name"],
                                                                 example_data=example_data, example_data_associated=example_data_associated, unique_data=unique_data)
                 column_desc = model.call_model(prompt)
-                break
             database_df.loc[col_idx, 'llm_column_description'] = column_desc
         # Save every ten columns
         if col_idx % 10 == 0 and col_idx != 0:
