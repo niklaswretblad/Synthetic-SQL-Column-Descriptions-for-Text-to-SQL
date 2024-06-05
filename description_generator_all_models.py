@@ -1,18 +1,13 @@
 from config import logger
 from src.timer import Timer
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from openai import OpenAI
 import os
 import torch
 from databases import BIRDDatabase
-from langchain_core.prompts import PromptTemplate
-from langchain_community.callbacks import get_openai_callback
-from langchain_openai import ChatOpenAI
-from sql_query_generator import SQLQueryGenerator
 from src.timer import Timer
 import logging
 import pandas as pd
-from dotenv import load_dotenv
 import tiktoken
 from tqdm import tqdm
 
@@ -99,113 +94,94 @@ DO NOT return anything else except the generated column description. This is ver
 
 
 class LLMInterface:
-
     total_tokens = 0
-
     prompt_tokens = 0
-
     total_cost = 0
-
     completion_tokens = 0
-
     last_call_execution_time = 0
-
     total_call_execution_time = 0
 
     def __init__(self, model_name, use_openai=True):
-
         self.use_openai = use_openai
-
         self.model_name = model_name
 
         if self.use_openai:
-
             self.client = OpenAI(
-
                 api_key=os.environ.get("OPENAI_API_KEY"),
-
             )
 
         else:
-
             access_token = os.environ.get("HUGGINGFACE_API_TOKEN")
-
-            max_memory = f"{int(torch.cuda.mem_get_info()[0]/1024**3)-2}GB"
+            max_memory = f"{int(torch.cuda.mem_get_info()[0]/1024**3)-2}GB"            
 
             n_gpus = torch.cuda.device_count()
-
             max_memory = {i: max_memory for i in range(n_gpus)}
-
-            self.tokenizer = AutoTokenizer.from_pretrained(
-                model_name, token=access_token)
-
+            print("n_gpus:", n_gpus)
+            print("max_memory:", max_memory)
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name, token=access_token)      
+            
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_compute_dtype=torch.float16,
+            )
+                  
             self.model = AutoModelForCausalLM.from_pretrained(
-
-                model_name,
-
-                device_map="auto",
-
-                load_in_8bit=True,
-
-                max_memory=max_memory,
-
+                model_name, 
+                device_map="auto", 
+                quantization_config=bnb_config,
+                max_memory=max_memory, 
                 token=access_token
-
             )
 
     def call_model(self, prompt, **kwargs):
-
-        if self.use_openai:
-
-            response = self.client.chat.completions.create(
-
-                messages=[
-
+        messages = [
                     {
-
                         "role": "user",
-
                         "content": prompt,
-
                     }
-
-                ],
-
-                model=self.model_name
-
+        ],
+        if self.use_openai:
+            response = self.client.chat.completions.create(
+                messages,
+                model = self.model_name
             )
-
             return response.choices[0].text.strip()
-
         else:
-
-            inputs = self.tokenizer(prompt, return_tensors='pt')
-
+            #inputs = self.tokenizer(prompt, return_tensors='pt')
+            inputs = self.tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=False, return_tensors="pt", return_dict=True)
             input_ids = inputs.input_ids.to('cuda')
 
             attention_mask = inputs.attention_mask.to('cuda')
-
+  
+            
             output = self.model.generate(
-
                 input_ids=input_ids,
-
                 attention_mask=attention_mask,
-
                 max_new_tokens=kwargs.get('max_new_tokens', 500),
-
+                output_logits=False,
+                return_dict_in_generate=True  # Return a dictionary with generation results
             )
-
-            generated_text = self.tokenizer.decode(
-                output[0], skip_special_tokens=True)
-
-            return generated_text.strip()
+            
+            # -------- Decode Output --------  
+            generated_token_indices = output.sequences[:, input_ids.shape[1]:] # Exclude input tokens
+            
+            #generated_token_indices = output.sequences[:, input_ids.shape[1]:-1] # Exclude input and EOS tokens
+            generated_text = self.tokenizer.decode(generated_token_indices[0], skip_special_tokens=True).strip()
+            generated_text = generated_text.replace("```", "")
+                      
+            return generated_text
+        
 
 
 if __name__ == "__main__":
     # Initiate llm
     # "gpt-4o"  # this is now for every model used
-    MODEL_NAME = "microsoft/phi-1_5"
-    MODEL_NAME_2 = "microsoft"
+    # MODEL_NAME = "mistralai/Codestral-22B-v0.1"
+    # MODEL_NAME_2 = "mistralai"
+
+    MODEL_NAME = "meta-llama/Meta-Llama-3-70B"
+    MODEL_NAME_2 = "llama-3"
+
     NUM_EXAMPLES_ALL = 0
     NUM_EXAMPLES_CURRENT = 10
     NUM_EXAMPLES_ASSOCIATED = 0
