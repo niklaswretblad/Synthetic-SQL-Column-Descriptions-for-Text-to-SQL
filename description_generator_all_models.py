@@ -210,7 +210,7 @@ if __name__ == "__main__":
     NUM_EXAMPLES_CURRENT = 10
     NUM_EXAMPLES_ASSOCIATED = 0
     UNIQUE_EXAMPLES = False
-    GOLD = True
+    GOLD = False
     OUTPUT_FILENAME = "Pred_DEV_desc_" + MODEL_NAME_2
     # OUTPUT_FILENAME = "10ex_tokens_count_" + LLM_NAME
     COUNT_TOKENS_ONLY = False
