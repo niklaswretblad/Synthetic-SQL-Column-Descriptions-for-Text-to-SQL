@@ -3,7 +3,7 @@ aiosignal==1.3.1
 annotated-types==0.7.0
 anyio==4.3.0
 attrs==23.2.0
-Bottleneck @ file:///croot/bottleneck_1709069899917/work
+Bottleneck
 certifi==2024.2.2
 charset-normalizer==3.3.2
 dataclasses-json==0.6.6
@@ -23,27 +23,24 @@ langchain-openai==0.1.7
 langchain-text-splitters==0.2.0
 langsmith==0.1.63
 marshmallow==3.21.2
-mkl-fft @ file:///work/perseverance-python-buildout/croot/mkl_fft_1698845673361/work
-mkl-random @ file:///work/perseverance-python-buildout/croot/mkl_random_1698845720894/work
-mkl-service==2.4.0
 multidict==6.0.5
 mypy-extensions==1.0.0
-numexpr @ file:///work/perseverance-python-buildout/croot/numexpr_1698871031164/work
-numpy @ file:///croot/numpy_and_numpy_base_1708638617955/work/dist/numpy-1.26.4-cp312-cp312-linux_x86_64.whl#sha256=1d700f51d8b4fa684d858c9e3b56b1656bc5c82b6b79ff08d4e3b491c430059f
+numexpr
+numpy
 openai==1.30.2
 orjson==3.10.3
 packaging==23.2
-pandas @ file:///croot/pandas_1709590491089/work/dist/pandas-2.2.1-cp312-cp312-linux_x86_64.whl#sha256=5802047a01a8af8f4a2d6aa0e3e9e6a659b7dcb47f027e62c94eab8c10d85ba7
+pandas
 pydantic==2.7.1
 pydantic_core==2.18.2
-python-dateutil @ file:///croot/python-dateutil_1715108784345/work
+python-dateutil
 python-dotenv==1.0.1
-pytz @ file:///croot/pytz_1713974312559/work
+pytz
 PyYAML==6.0.1
 regex==2024.5.15
 requests==2.32.2
 setuptools==69.5.1
-six @ file:///tmp/build/80754af9/six_1644875935023/work
+six
 sniffio==1.3.1
 SQLAlchemy==2.0.30
 tenacity==8.3.0
@@ -51,7 +48,12 @@ tiktoken==0.7.0
 tqdm==4.66.4
 typing-inspect==0.9.0
 typing_extensions==4.12.0
-tzdata @ file:///croot/python-tzdata_1690578112552/work
+tzdata
 urllib3==2.2.1
 wheel==0.43.0
 yarl==1.9.4
+bitsandbytes
+transformers
+accelerate
+sentencepiece
+protobuf

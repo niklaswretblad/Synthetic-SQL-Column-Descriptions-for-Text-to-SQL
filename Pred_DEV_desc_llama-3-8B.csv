@@ -1,0 +1,1164 @@
+,database_name,table_name,original_column_name,column_name,column_description,data_format,value_description,type,llm_column_description
+0,debit_card_specializing,yearmonth,CustomerID,Customer ID,Customer ID,integer,,F,"Foreign key referencing the CustomerID column in the customers table, uniquely identifying a customer."
+1,debit_card_specializing,yearmonth,Date,,Date,text,,P,The Date column represents a date value.
+2,debit_card_specializing,yearmonth,Consumption,,consumption,real,,,The primary purpose of the Consumption column is to store the amount of consumption data.
+3,debit_card_specializing,transactions_1k,TransactionID,Transaction ID,Transaction ID,integer,,P,Primary purpose of the column: This column uniquely identifies each transaction.
+4,debit_card_specializing,transactions_1k,Date,,Date,date,,,The primary purpose of the Date column is to record the date of a transaction.
+5,debit_card_specializing,transactions_1k,Time,,Time,text,,,"The Time column represents the time of day at which a transaction occurred, with a format of HH:MM:SS."
+6,debit_card_specializing,transactions_1k,CustomerID,Customer ID,Customer ID,integer,,,The CustomerID column uniquely identifies a customer.
+7,debit_card_specializing,transactions_1k,CardID,Card ID,Card ID,integer,,,The CardID column represents a unique identifier for a payment card used in transactions.
+8,debit_card_specializing,transactions_1k,GasStationID,Gas Station ID,Gas Station ID,integer,,,The primary purpose of the GasStationID column is to uniquely identify a gas station.
+9,debit_card_specializing,transactions_1k,ProductID,Product ID,Product ID,integer,,,"The ProductID column represents a unique identifier for a product, likely a fuel or convenience item sold at a gas station."
+10,debit_card_specializing,transactions_1k,Amount,,Amount,integer,,,The primary purpose of the Amount column is to store the monetary value of a transaction.
+11,debit_card_specializing,transactions_1k,Price,,Price,real,"commonsense evidence:
+
+total price = Amount x Price",,The primary purpose of the Price column is to store the monetary value of a transaction.
+12,debit_card_specializing,customers,CustomerID,,identification of the customer,integer,,P,The primary purpose of the CustomerID column is to uniquely identify each customer in the database.
+13,debit_card_specializing,customers,Segment,client segment,client segment,text,,,The Segment column represents a categorization of customers.
+14,debit_card_specializing,customers,Currency,,Currency,text,,,The primary purpose of the Currency column is to store the currency type for each customer.
+15,debit_card_specializing,gasstations,GasStationID,Gas Station ID,Gas Station ID,integer,,P,The GasStationID column uniquely identifies each gas station in the database.
+16,debit_card_specializing,gasstations,ChainID,Chain ID,Chain ID,integer,,,The primary purpose of the ChainID column is to uniquely identify the chain of a gas station.
+17,debit_card_specializing,gasstations,Country,,,text,,,The Country column represents the country where a gas station is located.
+18,debit_card_specializing,gasstations,Segment,chain segment,chain segment,text,,,The primary purpose of the Segment column is to categorize gas stations into different segments based on their characteristics.
+19,debit_card_specializing,products,ProductID,Product ID,Product ID,integer,,P,Unique identifier for a product.
+20,debit_card_specializing,products,Description,,Description,text,,,"The Description column in the products table contains a brief description of the product, such as its type or characteristics."
+21,financial,loan,loan_id,,the id number identifying the loan data,integer,,P,The primary purpose of the column loan_id is to uniquely identify each loan record in the loan table.
+22,financial,loan,account_id,,the id number identifying the account,integer,,F,"The primary purpose of the column account_id is to uniquely identify an account in the loan table, referencing the account_id column in the account table."
+23,financial,loan,date,,the date when the loan is approved,date,,,The date column represents the date on which a loan was made or a payment was received.
+24,financial,loan,amount,,approved amount,integer,unit：US dollar,,"The primary purpose of the ""amount"" column is to represent the total loan amount."
+25,financial,loan,duration,,loan duration,integer,unit：month,,The duration column represents the length of time a loan is scheduled to be repaid.
+26,financial,loan,payments,monthly payments,monthly payments,real,unit：month,,"The primary purpose of the ""payments"" column is to store the total amount paid by the borrower towards the loan."
+27,financial,loan,status,,repayment status,text,"'A' stands for contract finished, no problems;
+'B' stands for contract finished, loan not paid;
+'C' stands for running contract, OK so far;
+'D' stands for running contract, client in debt",,The primary purpose of the status column is to indicate the current state of a loan.
+28,financial,client,client_id,,the unique number,integer,,P,The primary purpose of the client_id column is to uniquely identify each client.
+29,financial,client,gender,,,text,"F：female 
+M：male ",,The primary purpose of the gender column is to store the biological sex of a client.
+30,financial,client,birth_date,,birth date,date,,,The birth_date column represents the date of birth for each client.
+31,financial,client,district_id,location of branch,location of branch,integer,,F,The district_id column represents the primary key of the district that a client is affiliated with.
+32,financial,district,district_id,location of branch,location of branch,integer ,,P,The primary purpose of the district_id column is to uniquely identify each district.
+33,financial,district,A2,district_name,district_name,text,,,The primary purpose of the A2 column is to store the name of a district.
+34,financial,district,A3,region,region,text,,,The primary purpose of the A3 column is to store the name of a district.
+35,financial,district,A4,number of inhabitants ,,text,,,The primary purpose of the A4 column is to store a geographic or administrative division identifier.
+36,financial,district,A5,no. of municipalities with inhabitants < 499,municipality < district < region,text,,,The primary purpose of the A5 column is to store a value.
+37,financial,district,A6,no. of municipalities with inhabitants 500-1999,municipality < district < region,text,,,The primary purpose of the column A6 is to store a value representing the number of districts.
+38,financial,district,A7,no. of municipalities with inhabitants 2000-9999,municipality < district < region,text,,,This column appears to represent the number of postal code digits in the district.
+39,financial,district,A8,no. of municipalities with inhabitants > 10000,municipality < district < region,integer,,,The primary purpose of the A8 column is to store an integer value.
+40,financial,district,A9,,,integer,not useful,,The primary purpose of the A9 column is to store an integer value.
+41,financial,district,A10,ratio of urban inhabitants,ratio of urban inhabitants,real,,,The primary purpose of the A10 column is to store a real value.
+42,financial,district,A11,average salary,average salary,integer,,,The primary purpose of the A11 column is to store an integer value.
+43,financial,district,A12,unemployment rate 1995,unemployment rate 1995,real,,,"The primary purpose of the A12 column is: REAL null.
+
+Additional useful information: This column allows for the possibility of missing or null values."
+44,financial,district,A13,unemployment rate 1996,unemployment rate 1996,real,,,"The A13 column in the district table represents a real-valued attribute with a not null constraint, indicating that it is a required field."
+45,financial,district,A14,no. of entrepreneurs per 1000 inhabitants,no. of entrepreneurs per 1000 inhabitants,integer,,,The primary purpose of the A14 column is to store an integer value representing a quantity.
+46,financial,district,A15,no. of committed crimes 1995,no. of committed crimes 1995,integer,,,This column represents the population of a district.
+47,financial,district,A16,no. of committed crimes 1996,no. of committed crimes 1996,integer,,,The primary purpose of the A16 column is to store a unique identifier for a district.
+48,financial,trans,trans_id,transaction id,transaction id,integer,,P,The primary purpose of the trans_id column is to uniquely identify each transaction record.
+49,financial,trans,account_id,,,integer,,F,"The primary purpose of the account_id column is to uniquely identify a record in the account table, referencing the primary key of the account table."
+50,financial,trans,date,date of transaction,date of transaction,date,,,The primary purpose of the date column is to record the date of a transaction.
+51,financial,trans,type,+/- transaction,+/- transaction,text,"""PRIJEM"" stands for credit
+""VYDAJ"" stands for withdrawal",,"The primary purpose of the ""type"" column is to categorize the transaction type, such as ""PRIJEM"" for deposits or ""PREVOD Z UCTU"" for transfers."
+52,financial,trans,operation,mode of transaction,mode of transaction,text,"""VYBER KARTOU"": credit card withdrawal
+""VKLAD"": credit in cash
+""PREVOD Z UCTU"" :collection from another bank
+""VYBER"": withdrawal in cash
+""PREVOD NA UCET"": remittance to another bank",,The primary purpose of the operation column is to record the type of transaction or operation performed on an account.
+53,financial,trans,amount,amount of money,amount of money,integer,Unit：USD,,The amount column represents the monetary value of a transaction.
+54,financial,trans,balance,balance after transaction,balance after transaction,integer,Unit：USD,,The balance column represents the current financial balance of an account.
+55,financial,trans,k_symbol,characterization of the transaction,,text,"""POJISTNE"": stands for insurrance payment
+""SLUZBY"": stands for payment for statement
+""UROK"": stands for interest credited
+""SANKC. UROK"": sanction interest if negative balance
+""SIPO"": stands for household
+""DUCHOD"": stands for old-age pension
+""UVER"": stands for loan payment",,The primary purpose of the k_symbol column is to store a unique symbol or identifier.
+56,financial,trans,bank,bank of the partner,,text,each bank has unique two-letter code,,The primary purpose of the bank column is to store the name of the bank associated with a transaction.
+57,financial,trans,account,account of the partner,,integer,,,"The primary purpose of the account column is to store the unique identifier of an account, referencing the account_id in the account table."
+58,financial,account,account_id,account id,the id of the account,integer,,P,The primary purpose of the account_id column is to uniquely identify each account record.
+59,financial,account,district_id,location of branch,location of branch,integer ,,F,The primary purpose of the column district_id is to uniquely identify the district associated with an account.
+60,financial,account,frequency,frequency,frequency of the acount,text,"""POPLATEK MESICNE"" stands for monthly issuance
+""POPLATEK TYDNE"" stands for weekly issuance
+""POPLATEK PO OBRATU"" stands for issuance after transaction",,The primary purpose of the frequency column is to store the periodicity of transactions or payments.
+61,financial,account,date,date,the creation date of the account,date,in the form YYMMDD,,The primary purpose of the date column is to store the date of a transaction or event related to an account.
+62,financial,card,card_id,credit card id,id number of credit card,integer,,P,The primary purpose of the card_id column is to uniquely identify each record in the card table.
+63,financial,card,disp_id,disposition id,disposition id,integer,,F,The primary purpose of the disp_id column is to uniquely identify a dispensation.
+64,financial,card,type,,type of credit card,text,"""junior"": junior class of credit card; 
+""classic"": standard class of credit card; 
+""gold"": high-level credit card",,"The primary purpose of the ""type"" column is to classify the type of card."
+65,financial,card,issued,,the date when the credit card issued ,date,in the form YYMMDD,,The issued column represents the date when a card was issued.
+66,financial,order,order_id,,identifying the unique order,integer,,P,The primary purpose of the order_id column is to uniquely identify each order record.
+67,financial,order,account_id,,id number of account,integer,,F,This column stores a unique identifier for the account associated with each order.
+68,financial,order,bank_to,bank of the recipient,bank of the recipient,text,,,The primary purpose of the bank_to column is to store the name of the bank to which a payment or transfer is made.
+69,financial,order,account_to,account of the recipient,account of the recipient,integer,each bank has unique two-letter code,,The primary purpose of the column account_to is to store the account ID to which a transaction is being made.
+70,financial,order,amount,debited amount,debited amount,real,,,The primary purpose of the amount column is to store the monetary value of a transaction.
+71,financial,order,k_symbol,characterization of the payment,purpose of the payment,text,"""POJISTNE"" stands for insurance payment
+""SIPO"" stands for household payment
+""LEASING"" stands for leasing
+""UVER"" stands for loan payment",,The primary purpose of the k_symbol column is to store a unique symbol or identifier for each order.
+72,financial,disp,disp_id,disposition id,unique number of identifying this row of record,integer,,P,"The primary purpose of the disp_id column is to uniquely identify a record in the disp table, referencing a client's account or a card's dispensation."
+73,financial,disp,client_id,,id number of client,integer,,F,The primary purpose of the client_id column is to uniquely identify a client in the disp table.
+74,financial,disp,account_id,,id number of account,integer,,F,The primary purpose of the account_id column is to store the foreign key reference to the account table.
+75,financial,disp,type,,type of disposition,text,"""OWNER"" : ""USER"" : ""DISPONENT""
+commonsense evidence:
+the account can only have the right to issue permanent orders or apply for loans",,"The primary purpose of the ""type"" column is to categorize the relationship between a client and an account."
+76,formula_1,circuits,circuitId,circuit Id ,unique identification number of the circuit ,integer ,,P,The primary purpose of the column circuitId is to uniquely identify each circuit in the circuits table.
+77,formula_1,circuits,circuitRef,circuit reference name ,circuit reference name ,text,,,The primary purpose of the column circuitRef is to uniquely identify a circuit in the database.
+78,formula_1,circuits,name ,,full name of circuit ,text,,,"The primary purpose of the column ""name"" is to store the human-readable name of a circuit."
+79,formula_1,circuits,location  ,,location of circuit ,text,,,The primary purpose of the location column is to store the geographical location of a circuit.
+80,formula_1,circuits,country ,,country of circuit ,text,,,The country column is used to store the country where the circuit is located.
+81,formula_1,circuits,lat ,latitude  ,latitude of location of circuit ,real,,,"The primary purpose of the column ""lat"" is to store the latitude coordinate of a circuit location."
+82,formula_1,circuits,lng ,longitude  ,longitude of location of circuit ,real,"commonsense evidence: 
+Location coordinates: (lat, lng)",,The lng column represents the longitude of the circuit location.
+83,formula_1,circuits,alt ,,,integer ,not useful ,,The primary purpose of the column alt is to store the altitude of the circuit.
+84,formula_1,circuits,url ,,url ,text,,,"The primary purpose of the url column is to store a unique URL for each circuit, likely providing additional information about the circuit, such as its official website or a Wikipedia page about the circuit."
+85,formula_1,status,statusId ,status ID,the unique identification number identifying status,integer,,,The primary purpose of the column statusId is to uniquely identify a status.
+86,formula_1,status,status ,,full name of status ,text,,,"The primary purpose of the ""status"" column is to record the reason for a driver's or constructor's status in a race, such as whether they finished, were disqualified, or experienced a mechanical issue."
+87,formula_1,drivers,driverId ,driver ID ,the unique identification number identifying each driver,integer,,,The primary purpose of the column driverId is to uniquely identify a driver in the drivers table.
+88,formula_1,drivers,driverRef ,driver reference name ,driver reference name ,text,,,The primary purpose of the column driverRef is to uniquely identify a driver in the drivers table.
+89,formula_1,drivers,number ,,number ,integer,,,"The primary purpose of the column ""number"" is to store the racing number assigned to each driver."
+90,formula_1,drivers,code ,,abbreviated code for drivers ,text,"if ""null"" or empty, it means it doesn't have code ",,The primary purpose of the code column is to uniquely identify a driver's code.
+91,formula_1,drivers,forename ,,forename ,text,,,The primary purpose of the forename column is to store the given name of a driver.
+92,formula_1,drivers,surname ,,surname ,text,,,"The primary purpose of the column ""surname"" is to store the family name or last name of the driver."
+93,formula_1,drivers,dob ,date of birth ,date of birth ,date,,,The primary purpose of the dob column is to store the date of birth of drivers.
+94,formula_1,drivers,nationality ,,nationality of drivers ,text,,,The primary purpose of the nationality column is to store the country of origin or citizenship of each driver.
+95,formula_1,drivers,url ,,the introduction website of the drivers ,text,,,The primary purpose of the url column is to store a unique URL that provides additional information about the driver.
+96,formula_1,driverStandings,driverStandingsId ,driver Standings Id ,the unique identification number identifying driver standing records ,integer,,,The primary purpose of the driverStandingsId column is to uniquely identify each row in the driverStandings table.
+97,formula_1,driverStandings,raceId ,constructor Reference name ,id number identifying which races ,integer,,,The primary purpose of the raceId column is to uniquely identify a race.
+98,formula_1,driverStandings,driverId ,,id number identifying which drivers ,integer,,,"The primary purpose of the column driverId is to uniquely identify a driver in the driverStandings table, referencing the primary key of the drivers table."
+99,formula_1,driverStandings,points ,,how many points acquired in each race ,real,,,"The points column represents the total points scored by a driver in a race, with a range of possible values from 1.0 to 14.0."
+100,formula_1,driverStandings,position ,,position or track of circuits ,integer,,,The primary purpose of the position column is to represent the ranking or standing of a driver in a race.
+101,formula_1,driverStandings,positionText ,position text ,,text,"same with position, not quite useful ",,The primary purpose of the column positionText is to store a text representation of the driver's position in the race.
+102,formula_1,driverStandings,wins ,,wins ,integer,,,The primary purpose of the wins column is to record the number of wins achieved by a driver in a race.
+103,formula_1,races,raceId ,race ID ,the unique identification number identifying the race ,integer ,,,"Primary purpose of the column: Unique identifier for each race.
+
+Additional useful information: This column is the primary key for the races table."
+104,formula_1,races,year ,,year ,integer ,,,The primary purpose of the column is to store the year of the race.
+105,formula_1,races,round ,,round ,integer ,,,The primary purpose of the round column is to identify the sequence of a race within a season.
+106,formula_1,races,circuitId ,Circuit Id ,circuit Id ,integer ,,,The primary purpose of the column circuitId is to uniquely identify a circuit in the database.
+107,formula_1,races,name ,,name of the race ,text,,,The name column in the races table represents the official name of each Grand Prix event.
+108,formula_1,races,date ,,duration time ,date,,,The primary purpose of the date column is to store the date of each race.
+109,formula_1,races,time ,,time of the location ,text,,,The time column represents the race start time.
+110,formula_1,races,url ,,introduction of races ,text,,,"The primary purpose of the url column is to store a unique URL for each race, likely linking to a Wikipedia article about the race."
+111,formula_1,constructors,constructorId ,constructor Id ,the unique identification number identifying constructors ,integer ,,,The primary purpose of the constructorId column is to uniquely identify each constructor in the constructors table.
+112,formula_1,constructors,constructorRef ,Constructor Reference name ,Constructor Reference name ,text,,,"The primary purpose of the column constructorRef is to store a unique reference to a constructor, which is a team that competes in a Formula One racing season."
+113,formula_1,constructors,name ,,full name of the constructor ,text,,,"The primary purpose of the column ""name"" is to store the name of a constructor."
+114,formula_1,constructors,nationality ,,nationality of the constructor ,text,,,"The primary purpose of the ""nationality"" column is to store the country of origin for each constructor."
+115,formula_1,constructors,url ,,the introduction website of the constructor ,text,"commonsense evidence: 
+How to find out the detailed introduction of the constructor: through its url",,"The primary purpose of the ""url"" column is to store a unique web address associated with each constructor."
+117,formula_1,constructorResults,constructorResultsId,constructor Results Id,constructor Results Id,integer,,P,The primary purpose of the column constructorResultsId is to uniquely identify each result of a constructor in a race.
+118,formula_1,constructorResults,raceId,race Id,race id,integer,,F,"The primary purpose of the raceId column is to uniquely identify a race in the constructorResults table, referencing the corresponding race in the races table."
+119,formula_1,constructorResults,constructorId,constructor Id,constructor id,integer,,F,The primary purpose of the constructorId column is to uniquely identify a constructor in the constructorResults table.
+120,formula_1,constructorResults,points,,points,real,,,The primary purpose of the points column is to record the points earned by a constructor in a race.
+121,formula_1,constructorResults,status,,status,text,,,The primary purpose of the status column is to indicate the current status of a constructor's performance in a race.
+122,formula_1,lapTimes,raceId ,race ID ,the identification number identifying race,integer ,,,The primary purpose of the raceId column is to uniquely identify a race in the lapTimes table.
+123,formula_1,lapTimes,driverId ,driver ID ,the identification number identifying each driver ,integer ,,,The primary purpose of the driverId column is to uniquely identify a driver.
+124,formula_1,lapTimes,lap ,,lap number ,integer ,,,"The primary purpose of the column ""lap"" is to represent the current lap number for a given driver in a race."
+125,formula_1,lapTimes,position ,,position or track of circuits  ,integer ,,,The position column in the lapTimes table represents the ranking of a driver at a specific lap during a race.
+126,formula_1,lapTimes,time ,,lap time  ,text,in minutes / seconds / ... ,,The primary purpose of the time column is to store the time taken by a driver to complete a lap during a race.
+127,formula_1,lapTimes,milliseconds ,,milliseconds ,integer ,,,The primary purpose of the milliseconds column is to store the time difference in milliseconds between the recorded lap time and the nearest whole second.
+128,formula_1,qualifying,qualifyId ,qualify Id ,the unique identification number identifying qualifying ,integer ,"How does F1 Sprint qualifying work? Sprint qualifying is essentially a short-form Grand Prix � a race that is one-third the number of laps of the main event on Sunday. However, the drivers are battling for positions on the grid for the start of Sunday's race. ",,The primary purpose of the qualifyId column is to uniquely identify each qualifying session.
+129,formula_1,qualifying,raceId ,race Id ,the identification number identifying each race ,integer ,,,"The raceId column is a foreign key referencing the raceId column in the races table, indicating the specific race for which the qualifying data is recorded."
+130,formula_1,qualifying,driverId ,driver Id,the identification number identifying each driver ,integer ,,,The primary purpose of the column driverId is to uniquely identify a driver in the qualifying table.
+131,formula_1,qualifying,constructorId ,constructor id ,constructor Id ,integer ,,,"The constructorId column represents the unique identifier for a constructor in the qualifying table, linking each qualifying record to a specific constructor."
+132,formula_1,qualifying,number ,,number ,integer ,,,"The primary purpose of the ""number"" column is to store the starting grid position of a driver in a race."
+133,formula_1,qualifying,position ,,position or track of circuit ,integer ,,,"The primary purpose of the ""position"" column is to store the position of a driver in the qualifying session."
+134,formula_1,qualifying,q1 ,qualifying 1 ,time in qualifying 1 ,text,"in minutes / seconds / ... 
+commonsense evidence: 
+Q1 lap times determine pole position and the order of the front 10 positions on the grid. The slowest driver in Q1 starts 10th, the next starts ninth and so on. 
+All 20 F1 drivers participate in the first period, called Q1, with each trying to set the fastest time possible. Those in the top 15 move on to the next period of qualifying, called Q2. The five slowest drivers are eliminated and will start the race in the last five positions on the grid. ",,The q1 column represents the fastest lap time achieved by a driver during the first qualifying session.
+135,formula_1,qualifying,q2 ,qualifying 2 ,time in qualifying 2 ,text,"in minutes / seconds / ... 
+commonsense evidence: 
+only top 15 in the q1 has the record of q2 
+Q2 is slightly shorter but follows the same format. Drivers try to put down their best times to move on to Q1 as one of the 10 fastest cars. The five outside of the top 10 are eliminated and start the race from 11th to 15th based on their best lap time. ",,The primary purpose of the column q2 is to store the second qualifying lap time for each driver.
+136,formula_1,qualifying,q3 ,qualifying 3 ,time in qualifying 3 ,text,"in minutes / seconds / ... 
+commonsense evidence: 
+only top 10 in the q2 has the record of q3 ",,The q3 column represents the third qualifying lap time for each driver.
+137,formula_1,pitStops,raceId ,race ID ,the identification number identifying race ,integer ,,,The primary purpose of the raceId column is to uniquely identify a race to which a pit stop belongs.
+138,formula_1,pitStops,driverId ,driver ID ,the identification number identifying each driver ,integer ,,,The primary purpose of the driverId column is to uniquely identify a driver in the pitStops table.
+139,formula_1,pitStops,stop ,,stop number ,integer ,,,The primary purpose of the stop column is to track the number of pit stops made by a driver during a race.
+140,formula_1,pitStops,lap ,,lap number ,integer ,,,The primary purpose of the lap column is to store the number of the lap during which a pit stop occurred.
+141,formula_1,pitStops,time ,,time ,text,exact time  ,,"The primary purpose of the ""time"" column is to store the time of a pit stop."
+142,formula_1,pitStops,duration ,,duration time ,text,seconds/ ,,The primary purpose of the duration column is to record the time taken by a driver to stop at the pit lane during a race.
+143,formula_1,pitStops,milliseconds ,,milliseconds ,integer ,,,This column stores the time difference in milliseconds between a pit stop and the previous pit stop.
+144,formula_1,seasons,year ,race ID ,the unique identification number identifying the race,integer,,,The primary purpose of the year column is to store the year of a Formula One season.
+145,formula_1,seasons,url ,,website link of season race introduction ,text,,,The primary purpose of the url column is to store a unique URL associated with each season.
+146,formula_1,constructorStandings,constructorStandingsId ,constructor Standings Id ,unique identification of the constructor standing records ,integer ,,,The primary purpose of the constructorStandingsId column is to uniquely identify each record in the constructorStandings table.
+147,formula_1,constructorStandings,raceId ,race id ,id number identifying which races ,integer ,,,The primary purpose of the raceId column is to uniquely identify each race in the constructorStandings table.
+148,formula_1,constructorStandings,constructorId ,constructor id ,id number identifying which id ,integer ,,,The constructorId column represents the unique identifier for a constructor in the constructorStandings table.
+149,formula_1,constructorStandings,points,,how many points acquired in each race ,,,,The primary purpose of the points column is to store the total points earned by a constructor in a given race.
+150,formula_1,constructorStandings,position ,,position or track of circuits ,integer ,,,"The primary purpose of the column ""position"" is to store the ranking of constructors in a race."
+151,formula_1,constructorStandings,positionText ,position text ,,text,"same with position, not quite useful ",,The primary purpose of the positionText column is to provide a text description of the position held by a constructor in a race.
+152,formula_1,constructorStandings,wins ,,wins ,integer ,,,The primary purpose of the column wins is to represent the number of times a constructor has won a race.
+153,formula_1,results,resultId,Result ID ,the unique identification number identifying race result ,integer,,P,"The primary purpose of the resultId column is to uniquely identify each row in the results table, serving as a primary key."
+154,formula_1,results,raceId,race ID ,the identification number identifying the race ,integer ,,F,The primary purpose of the raceId column is to uniquely identify a race in the results table.
+155,formula_1,results,driverId ,driver ID,the identification number identifying the driver ,integer ,,,The primary purpose of the driverId column is to uniquely identify a driver in the results.
+156,formula_1,results,constructorId ,constructor Id ,the identification number identifying which constructors ,integer ,,,"The primary purpose of the column constructorId is to uniquely identify a constructor in the results table, referencing the corresponding constructor in the constructors table."
+157,formula_1,results,number ,,number  ,integer ,,,"The primary purpose of the column ""number"" is to store the racing number of the driver."
+158,formula_1,results,grid ,,the number identifying the area where cars are set into a grid formation in order to start the race. ,integer ,,,The primary purpose of the column grid is to represent the starting position of a driver in a race.
+159,formula_1,results,position ,,The finishing position or track of circuits ,integer ,,,"The primary purpose of the ""position"" column is to record the finishing position of a driver in a race."
+160,formula_1,results,positionText ,position text ,,text,not quite useful ,,The positionText column provides a textual representation of a driver's or constructor's position in a race.
+161,formula_1,results,positionOrder ,position order ,the finishing order of positions ,integer ,,,The primary purpose of the column positionOrder is to store the order in which drivers completed the race.
+162,formula_1,results,points ,,points ,real,,,The primary purpose of the points column is to store the points earned by a driver in a race.
+163,formula_1,results,laps ,,lap number ,integer ,,,"The primary purpose of the column ""laps"" is to store the number of laps completed by a driver in a race."
+164,formula_1,results,time  ,,finish time ,text,"commonsense evidence: 
+1. if the value exists, it means the driver finished the race. 
+2. Only the time of the champion shows in the format of ""minutes: seconds.millionsecond"", the time of the other drivers shows as ""seconds.millionsecond"" , which means their actual time is the time of the champion adding the value in this cell.",,"The primary purpose of the column ""time"" is to record the elapsed time for each result in a race."
+165,formula_1,results,milliseconds ,,the actual finishing time of drivers in milliseconds  ,integer ,the actual finishing time of drivers  ,,The primary purpose of the milliseconds column is to store the time in milliseconds.
+166,formula_1,results,fastestLap ,fastest lap ,fastest lap number ,integer ,,,The primary purpose of the fastestLap column is to store the lap number on which the driver achieved their fastest lap time during the race.
+167,formula_1,results,rank ,,starting rank positioned by fastest lap speed,integer ,,,The primary purpose of the rank column is to store the ranking of a driver in a race.
+168,formula_1,results,fastestLapTime ,fastest Lap Time,fastest Lap Time,text,"faster (smaller in the value) ""fastestLapTime"" leads to higher rank (smaller is higher rank) ",,The primary purpose of the fastestLapTime column is to store the time it took for a driver to complete their fastest lap in a race.
+169,formula_1,results,fastestLapSpeed ,fastest Lap Speed ,fastest Lap Speed ,text, (km / h) ,,The primary purpose of the fastestLapSpeed column is to store the speed at which a driver achieved their fastest lap during a race.
+170,formula_1,results,statusId ,status Id ,status ID ,integer,its category description appear in the table status ,,The primary purpose of the column statusId is to identify the status of a result in a race.
+171,california_schools,schools,CDSCode,CDSCode,CDSCode,text,,P,The CDSCode column is a primary key that uniquely identifies each school record in the schools table.
+172,california_schools,schools,NCESDist,National Center for Educational Statistics school district identification number,"This field represents the 7-digit National Center for Educational Statistics (NCES) school district identification number. The first 2 digits identify the state and the last 5 digits identify the school district. Combined, they make a unique 7-digit ID for each school district.",text,,,The primary purpose of the NCESDist column is to store the National Center for Education Statistics district code.
+173,california_schools,schools,NCESSchool,National Center for Educational Statistics school identification number,This field represents the 5-digit NCES school identification number. The NCESSchool combined with the NCESDist form a unique 12-digit ID for each school.,text,,,"The NCESSchool column appears to store the National Center for Education Statistics (NCES) school identifier, which is a unique identifier assigned to each school by the NCES."
+174,california_schools,schools,StatusType,,This field identifies the status of the district. ,text,"Definitions of the valid status types are listed below:
+·       Active: The district is in operation and providing instructional services.
+·       Closed: The district is not in operation and no longer providing instructional services.
+·       Merged: The district has combined with another district or districts.
+·       Pending: The district has not opened for operation and instructional services yet, but plans to open within the next 9–12 months.",,"The primary purpose of the StatusType column is to categorize the status of a school, which can be either ""Active"" or ""Closed""."
+175,california_schools,schools,County,,County name,text,,,The County column appears to store the name of the county where each school is located.
+176,california_schools,schools,District,,District,text,,,The District column in the schools table represents the administrative district to which each school belongs.
+177,california_schools,schools,School,,School,text,,,"The School column appears to contain the name of a school, which is a primary or secondary educational institution."
+178,california_schools,schools,Street,,Street,text,,,"The Street column appears to store the physical address of the school, likely including the street name and number."
+179,california_schools,schools,StreetAbr,street address ,"The abbreviated street address of the school, district, or administrative authority’s physical location.",text,"The abbreviated street address of the school, district, or administrative authority’s physical location. Note: Some records (primarily records of closed or retired schools) may not have data in this field.",,The StreetAbr column appears to be an abbreviation of the street name where the school is located.
+180,california_schools,schools,City,,City,text,,,"The City column represents the urban area where a school is located, providing a geographic identifier for each educational institution."
+181,california_schools,schools,Zip,,Zip,text,,,The Zip column in the schools table represents the postal code of the school's location.
+182,california_schools,schools,State,,State,text,,,The State column represents the two-letter postal abbreviation of the state where the school is located.
+183,california_schools,schools,MailStreet,,MailStreet,text,"The unabbreviated mailing address of the school, district, or administrative authority. Note: 1) Some entities (primarily closed or retired schools) may not have data in this field; 2) Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStreet cells with Street data.",,The MailStreet column appears to store the street address where mail is sent to the school.
+184,california_schools,schools,MailStrAbr,mailing street address ,,text,"the abbreviated mailing street address of the school, district, or administrative authority.Note: Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStrAbr cells with StreetAbr data.",,The MailStrAbr column appears to store abbreviated street addresses for mail purposes.
+185,california_schools,schools,MailCity,mailing city,,text,"The city associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address city. For your convenience we have filled the unpopulated MailCity cells with City data.",,The primary purpose of the MailCity column is to store the city name associated with the mailing address of the school.
+186,california_schools,schools,MailZip,mailing zip ,,text,"The zip code associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address zip code. For your convenience we have filled the unpopulated MailZip cells with Zip data.",,The MailZip column appears to contain the zip code of the school's mailing address.
+187,california_schools,schools,MailState,mailing state,,text,The state within the mailing address. For your convenience we have filled the unpopulated MailState cells with State data.,,The MailState column appears to store the two-letter postal abbreviation of the state where the school is located.
+188,california_schools,schools,Phone,,Phone,text,,,The primary purpose of the Phone column is to store the contact phone number of the school.
+189,california_schools,schools,Ext,extension,"The phone number extension of the school, district, or administrative authority.",text,"The phone number extension of the school, district, or administrative authority.",,"The primary purpose of the Ext column is: ""Phone extension number."""
+190,california_schools,schools,Website,,"The website address of the school, district, or administrative authority.",text,"The website address of the school, district, or administrative authority.",,"The Website column appears to store the URL of the school's official website, providing a primary means of accessing information about the school."
+191,california_schools,schools,OpenDate,,The date the school opened.,date,,,The OpenDate column represents the date when a school was first opened.
+192,california_schools,schools,ClosedDate,,The date the school closed.,date,,,The primary purpose of the ClosedDate column is to store the date when a school was closed.
+193,california_schools,schools,Charter,,This field identifies a charter school. ,integer,"The field is coded as follows:
+
+·       1 = The school is a charter
+
+·       0 = The school is not a charter",,"The Charter column indicates whether the school is a charter school, with values of 0 (not a charter school) or 1 (a charter school)."
+194,california_schools,schools,CharterNum,,"The charter school number,",text,4-digit number assigned to a charter school.,,The CharterNum column stores a unique identifier for charter schools.
+195,california_schools,schools,FundingType,,Indicates the charter school funding type,text,"Values are as follows:
+
+·       Not in CS (California School) funding model
+
+·       Locally funded
+
+·       Directly funded",,The FundingType column represents the type of funding received by the school.
+196,california_schools,schools,DOC,District Ownership Code,District Ownership Code,text,"The District Ownership Code (DOC) is the numeric code used to identify the category of the Administrative Authority.
+•       00 - County Office of Education
+•       02 – State Board of Education
+•       03 – Statewide Benefit Charter
+•       31 – State Special Schools
+•       34 – Non-school Location*
+•       52 – Elementary School District
+•       54 – Unified School District
+•       56 – High School District
+•       98 – Regional Occupational Center/Program (ROC/P)
+commonsense evidence:
+*Only the California Education Authority has been included in the non-school location category.",,The primary purpose of the DOC column is to store a document or record type.
+197,california_schools,schools,DOCType,The District Ownership Code Type,The District Ownership Code Type is the text description of the DOC category.,text,(See text values in DOC field description above),,The primary purpose of the DOCType column is to categorize the type of document associated with a school.
+198,california_schools,schools,SOC,School Ownership Code,The School Ownership Code is a numeric code used to identify the type of school.,text,"•      08 - Preschool      
+•       09 – Special Education Schools (Public)
+•      11 – Youth Authority Facilities (CEA)
+•       13 – Opportunity Schools
+•       14 – Juvenile Court Schools
+•       15 – Other County or District Programs
+•       31 – State Special Schools
+•       60 – Elementary School (Public)
+•       61 – Elementary School in 1 School District (Public)
+•       62 – Intermediate/Middle Schools (Public)
+•       63 – Alternative Schools of Choice
+•       64 – Junior High Schools (Public)
+•       65 – K-12 Schools (Public)
+•       66 – High Schools (Public)
+•       67 – High Schools in 1 School District (Public)
+•       68 – Continuation High Schools
+•       69 – District Community Day Schools
+•       70 – Adult Education Centers
+•       98 – Regional Occupational Center/Program (ROC/P)",,"The primary purpose of the SOC column is: ""School Operation Code, representing a unique identifier for the school operation type.""
+
+(Note: This description is based solely on the provided schema and does not include any speculative or additional commentary.)"
+199,california_schools,schools,SOCType,School Ownership Code Type,The School Ownership Code Type is the text description of the type of school.,text,The School Ownership Code Type is the text description of the type of school.,,"The primary purpose of the SOCType column is to categorize the type of school or educational institution, with possible values including ""Traditional"", ""Elementary-High Combination"", ""High School"", ""Ungraded"", and possibly others."
+200,california_schools,schools,EdOpsCode,Education Option Code,The Education Option Code is a short text description of the type of education offered.,text,"
+•      ALTSOC – Alternative School of Choice
+•      COMM – County Community School
+•       COMMDAY – Community Day School
+•       CON – Continuation School
+•       JUV – Juvenile Court School
+•       OPP – Opportunity School
+•       YTH – Youth Authority School
+•       SSS – State Special School
+•       SPEC – Special Education School
+•       TRAD – Traditional
+•       ROP – Regional Occupational Program
+•       HOMHOS – Home and Hospital
+•       SPECON – District Consortia Special Education School",,"The EdOpsCode column appears to categorize schools based on their educational operations code, which is used to identify and track the type of school or educational institution."
+201,california_schools,schools,EdOpsName,Educational Option Name,Educational Option Name,text,The Educational Option Name is the long text description of the type of education being offered.,,"The EdOpsName column appears to store the name of an Educational Operations code, likely used to categorize and track schools or educational institutions."
+202,california_schools,schools,EILCode,Educational Instruction Level Code,The Educational Instruction Level Code is a short text description of the institution's type relative to the grade range served.,text,"•       A – Adult
+•       ELEM – Elementary
+•       ELEMHIGH – Elementary-High Combination
+•       HS – High School
+•       INTMIDJR – Intermediate/Middle/Junior High
+•       PS – Preschool
+•       UG – Ungraded",,The primary purpose of the EILCode column is to uniquely identify a specific Education Institution or Location.
+203,california_schools,schools,EILName,Educational Instruction Level Name ,The Educational Instruction Level Name is the long text description of the institution’s type relative to the grade range served.,text,The Educational Instruction Level Name is the long text description of the institution’s type relative to the grade range served.,,The EILName column appears to store the name of an Educational Institution or Leader.
+204,california_schools,schools,GSoffered,grade span offered,"The grade span offered is the lowest grade and the highest grade offered or supported by the school, district, or administrative authority. This field might differ from the grade span served as reported in the most recent certified California Longitudinal Pupil Achievement (CALPADS) Fall 1 data collection.",text,"For example XYZ School might display the following data:
+
+GSoffered = P–Adult
+
+GSserved = K–12",,"The GSoffered column appears to store information about the grade levels offered at a school, with possible values including 'K-12', '9-12', 'K-8', 'K-5', 'HS', and 'Elementary-High Combination'."
+205,california_schools,schools,GSserved,grade span served.,It is the lowest grade and the highest grade of student enrollment as reported in the most recent certified CALPADS Fall 1 data collection. Only K–12 enrollment is reported through CALPADS. This field may differ from the grade span offered.,text,"commonsense evidence:
+
+1.     Only K–12 enrollment is reported through CALPADS
+
+2.     Note: Special programs at independent study, alternative education, and special education schools will often exceed the typical grade span for schools of that type",,"The GSserved column appears to track the grades served by each school, with possible values including K-5, K-7, K-8, 9-12, etc."
+206,california_schools,schools,Virtual,,"This field identifies the type of virtual instruction offered by the school. Virtual instruction is instruction in which students and teachers are separated by time and/or location, and interaction occurs via computers and/or telecommunications technologies. ",text,"The field is coded as follows:
+
+·       F = Exclusively Virtual – The school has no physical building where students meet with each other or with teachers, all instruction is virtual.
+
+·       V = Primarily Virtual – The school focuses on a systematic program of virtual instruction but includes some physical meetings among students or with teachers.
+
+·       C = Primarily Classroom – The school offers virtual courses but virtual instruction is not the primary means of instruction.
+
+·       N = Not Virtual – The school does not offer any virtual instruction.
+
+·       P = Partial Virtual – The school offers some, but not all, instruction through virtual instruction. Note: This value was retired and replaced with the Primarily Virtual and Primarily Classroom values beginning with the 2016–17 school year.",,"The Virtual column appears to indicate whether a school is a virtual school or not, with a value of ""P"" for ""yes"" and ""0"" for ""no""."
+207,california_schools,schools,Magnet,,This field identifies whether a school is a magnet school and/or provides a magnet program. ,text,"The field is coded as follows:
+
+·       Y = Magnet - The school is a magnet school and/or offers a magnet program.
+
+·       N = Not Magnet - The school is not a magnet school and/or does not offer a magnet program.
+
+commonsense evidence:
+
+Note: Preschools and adult education centers do not contain a magnet school indicator.",,"The Magnet column indicates whether the school is a magnet school, with a value of 1 indicating that it is a magnet school."
+208,california_schools,schools,Latitude,,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the equator measured north to south.",real,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the equator measured north to south.",,"The Latitude column in the schools table represents the geographic coordinates of the school's location, used for mapping and spatial analysis purposes."
+209,california_schools,schools,Longitude,,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the prime meridian (Greenwich, England) measured from west to east.",real,"The angular distance (expressed in degrees) between the location of the school, district, or administrative authority and the prime meridian (Greenwich, England) measured from west to east.",,"The Longitude column represents the geographic coordinates of the school's location, measured in decimal degrees, to the east or west of the Prime Meridian."
+210,california_schools,schools,AdmFName1,administrator's first name,administrator's first name,text,"The superintendent’s or principal’s first name.
+
+commonsense evidence:
+
+Only active and pending districts and schools will display administrator information, if applicable.",,The AdmFName1 column appears to store the first name of an administrative contact for a school.
+211,california_schools,schools,AdmLName1,administrator's last name,administrator's last name,text,"The superintendent’s or principal’s last name.
+
+commonsense evidence:
+Only active and pending districts and schools will display administrator information, if applicable.",,The AdmLName1 column appears to store the last name of the first school administrator.
+212,california_schools,schools,AdmEmail1,administrator's email address,administrator's email address,text,"The superintendent’s or principal’s email address.
+
+commonsense evidence:
+
+Only active and pending districts and schools will display administrator information, if applicable.",,The AdmEmail1 column appears to store the email address of the first administrative contact for each school.
+213,california_schools,schools,AdmFName2,,,text,SAME as 1,,The AdmFName2 column appears to store the second administrator's first name.
+214,california_schools,schools,AdmLName2,,,text,,,"This column, AdmLName2, appears to store the last name of an administrative staff member at the school."
+215,california_schools,schools,AdmEmail2,,,text,,,"This column, AdmEmail2, appears to store the email address of the second administrative contact for a school."
+216,california_schools,schools,AdmFName3,,,text,not useful,,The AdmFName3 column appears to store the third name of an administrative contact for a school.
+217,california_schools,schools,AdmLName3,,,text,not useful,,Not enough information to make a valid prediction.
+218,california_schools,schools,AdmEmail3,,,text,not useful,,This column stores the email address of the third administrative contact for a school.
+219,california_schools,schools,LastUpdate,,,date,when is this record updated last time,,The LastUpdate column represents the date of the last update for each school record.
+220,california_schools,satscores,cds,,California Department Schools,text,,F,"The primary purpose of the column ""cds"" is to uniquely identify a school."
+221,california_schools,satscores,rtype,,rtype,text,unuseful,,The primary purpose of the rtype column is to identify the type of school.
+222,california_schools,satscores,sname,school name,school name,text,,,The primary purpose of the sname column is to store the name of a school.
+223,california_schools,satscores,dname,district name,district segment,text,,,The primary purpose of the column dname is to store the district name for a school.
+224,california_schools,satscores,cname,county name,county name,text,,,The primary purpose of the column cname is to store the name of the county.
+225,california_schools,satscores,enroll12,enrollment (1st-12nd grade),enrollment (1st-12nd grade),integer,,,The enroll12 column represents the number of students enrolled in a school for grades K-12.
+226,california_schools,satscores,NumTstTakr,Number of Test Takers,Number of Test Takers in this school,integer,number of test takers in each school,,The primary purpose of the NumTstTakr column is to store the number of tests taken by students.
+227,california_schools,satscores,AvgScrRead,average scores in Reading,average scores in Reading,integer,average scores in Reading,,The AvgScrRead column represents the average reading score.
+228,california_schools,satscores,AvgScrMath,average scores in Math,average scores in Math,integer,average scores in Math,,The AvgScrMath column represents the average math score.
+229,california_schools,satscores,AvgScrWrite,average scores in writing,average scores in writing,integer,average scores in writing,,The primary purpose of the AvgScrWrite column is to store the average score for writing in the SAT test.
+230,california_schools,satscores,NumGE1500,Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500,Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500,integer,"Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500
+
+commonsense evidence:
+
+Excellence Rate = NumGE1500 / NumTstTakr",,The primary purpose of the NumGE1500 column is to store the number of students who scored 1500 or higher on a test.
+231,california_schools,frpm,CDSCode,,CDSCode,integer,,F,The primary purpose of the CDSCode column is to uniquely identify each school.
+232,california_schools,frpm,Academic Year,,Academic Year,integer ,,,The Academic Year column records the year of academic study for each school.
+233,california_schools,frpm,County Code,,County Code,integer,,,"The County Code column represents a unique identifier for each county in the database, serving as a primary key to link other columns to their respective county information."
+234,california_schools,frpm,District Code,,District Code,integer,,,The primary purpose of the District Code column is to uniquely identify each district in the dataset.
+235,california_schools,frpm,School Code ,,School Code,integer,,,The primary purpose of the School Code column is to uniquely identify each school.
+236,california_schools,frpm,County Name,,County Code ,text,,,The primary purpose of the County Name column is to store the name of the county associated with each school.
+237,california_schools,frpm,District Name ,,District Name ,text,,,The primary purpose of the District Name column is to store the name of the district associated with each school.
+238,california_schools,frpm,School Name,,School Name ,text,,,"The School Name column appears to contain the name of a school, providing a unique identifier for each school in the Alameda County Office of Education."
+239,california_schools,frpm,District Type,,District Type,text,,,"The primary purpose of the District Type column is to categorize the type of district, such as County Office of Education (COE) or Juvenile Court Schools."
+240,california_schools,frpm,School Type ,,School Type ,text,,,"The School Type column identifies the type of school, categorizing it as either K-12 Schools (Public), High Schools (Public), Elementary Schools (Public), Juvenile Court Schools, or County Community."
+241,california_schools,frpm,Educational Option Type,,Educational Option Type,text,,,"The Educational Option Type column categorizes the educational options available at schools, such as traditional, charter, or community schools."
+242,california_schools,frpm,NSLP Provision Status,,NSLP Provision Status,text,,,The primary purpose of the NSLP Provision Status column is to indicate the National School Lunch Program (NSLP) provision status for each school.
+243,california_schools,frpm,Charter School (Y/N),,Charter School (Y/N),integer,"0: N;
+1: Y",,"The Charter School (Y/N) column indicates whether a school is a charter school or not, with a value of 1 indicating a charter school and any other value indicating a non-charter school."
+244,california_schools,frpm,Charter School Number,,Charter School Number,text,,,The Charter School Number column stores the unique identification number assigned to charter schools.
+245,california_schools,frpm,Charter Funding Type,,Charter Funding Type,text,,,The primary purpose of the Charter Funding Type column is to record the type of funding used to support charter schools.
+246,california_schools,frpm,IRC,,,integer,Not useful,,"The IRC column appears to represent a numerical identifier or code, likely used to uniquely identify a specific school or institution."
+247,california_schools,frpm,Low Grade,,Low Grade,text,,,The Low Grade column in the frpm table represents the lowest grade level served by the school or institution.
+248,california_schools,frpm,High Grade,,High Grade,text,,,The High Grade column represents the highest grade level offered by the school.
+249,california_schools,frpm,Enrollment (K-12),,Enrollment (K-12),real,"commonsense evidence:
+
+K-12: 1st grade - 12nd grade ",,The Enrollment (K-12) column represents the total number of students enrolled in kindergarten through 12th grade at each school.
+250,california_schools,frpm,Free Meal Count (K-12),,Free Meal Count (K-12),real,"commonsense evidence:
+
+eligible free rate = Free Meal Count / Enrollment",,The primary purpose of the Free Meal Count (K-12) column is to store the number of students who receive free meals in kindergarten through 12th grade.
+251,california_schools,frpm,Percent (%) Eligible Free (K-12),,,real,,,The primary purpose of the Percent (%) Eligible Free (K-12) column is to represent the percentage of students in a school eligible for free meals in grades K-12.
+252,california_schools,frpm,FRPM Count (K-12),,Free or Reduced Price Meal Count (K-12),real,"commonsense evidence:
+
+eligible FRPM rate = FRPM / Enrollment",,"The FRPM Count (K-12) column represents the number of students eligible for Free Reduced-Price Meals (FRPM) in a school, categorized by age range from Kindergarten to 12th grade."
+253,california_schools,frpm,Percent (%) Eligible FRPM (K-12),,,real,,,The primary purpose of the Percent (%) Eligible FRPM (K-12) column is to represent the percentage of students in a school or district who are eligible for free or reduced-price meals under the National School Lunch Program (NSLP) for kindergarten through 12th grade.
+254,california_schools,frpm,Enrollment (Ages 5-17),,Enrollment (Ages 5-17),real,,,"The Enrollment (Ages 5-17) column represents the total number of students enrolled in a school, aged 5-17, as of a specific academic year."
+255,california_schools,frpm,Free Meal Count (Ages 5-17),,Free Meal Count (Ages 5-17),real,"commonsense evidence:
+
+eligible free rate = Free Meal Count / Enrollment",,The primary purpose of the Free Meal Count (Ages 5-17) column is to record the number of students aged 5-17 who are eligible for free meals in a given school.
+256,california_schools,frpm, Percent (%) Eligible Free (Ages 5-17),,,real,,,"This column represents the percentage of students in the school who are eligible for free meals, based on the data for students aged 5-17."
+257,california_schools,frpm,FRPM Count (Ages 5-17),,,real,,,The FRPM Count (Ages 5-17) column represents the count of students aged 5-17 who are eligible for the Federal Reimbursement Program (FRPM) in a particular school.
+258,california_schools,frpm,Percent (%) Eligible FRPM (Ages 5-17),,,real,,,This column represents the percentage of students ages 5-17 who are eligible for the Free and Reduced-Price Meal Program (FRPM) in the respective school.
+259,california_schools,frpm,2013-14 CALPADS Fall 1 Certification Status,,2013-14 CALPADS Fall 1 Certification Status,integer,,,"The primary purpose of the 2013-14 CALPADS Fall 1 Certification Status column is to record the certification status of schools for the 2013-2014 academic year, as reported by CALPADS (California Longitudinal Pupil Achievement Data System) in the Fall 1 certification period."
+260,card_games,legalities,id,,unique id identifying this legality,integer,,P,The primary purpose of the id column is to uniquely identify each record in the legalities table.
+261,card_games,legalities,format,,format of play,text,each value refers to different rules to play,,The format column in the legalities table appears to store the type of game or tournament format that a card is legal in.
+262,card_games,legalities,status,,,text,"• legal
+• banned
+• restricted",,"The primary purpose of the ""status"" column is to indicate the current legal status of a card in various formats."
+263,card_games,legalities,uuid,,,text,,F,"The uuid column in the legalities table uniquely identifies each row in the table, referencing the uuid column in the cards table."
+264,card_games,cards,id,unique id number identifying the cards,,integer,,P,The primary purpose of the column id is to uniquely identify each record in the cards table.
+265,card_games,cards,artist,,The name of the artist that illustrated the card art.,text,,,The artist column stores the name of the artist who designed the card's artwork.
+266,card_games,cards,asciiName,ascii Name,The ASCII(opens new window) (Basic/128) code formatted card name with no special unicode characters.,text,,,The primary purpose of the asciiName column is to store the ASCII representation of a card's name.
+267,card_games,cards,availability,,A list of the card's available printing types.,text,"""arena"", ""dreamcast"", ""mtgo"", ""paper"", ""shandalar""",,The primary purpose of the availability column is to specify the formats in which a card is available.
+268,card_games,cards,borderColor,border Color,The color of the card border.,text,"""black"", ""borderless"", ""gold"", ""silver"", ""white""",,The primary purpose of the borderColor column is to store the color of the border surrounding a card.
+269,card_games,cards,cardKingdomFoilId,card Kingdom Foil Id,card Kingdom Foil Id,text,"commonsense evidence:
+cardKingdomFoilId, when paired with cardKingdomId that is not Null, is incredibly powerful. ",,The primary purpose of the cardKingdomFoilId column is to store a unique identifier for the foil version of a card in the cardKingdom database.
+270,card_games,cards,cardKingdomId,card Kingdom Id,card Kingdom Id,text,A list of all the colors in the color indicator,,The primary purpose of the cardKingdomId column is to store a unique identifier for each card in the cards table.
+271,card_games,cards,colorIdentity,color Identity,"A list of all the colors found in manaCost, colorIndicator, and text",text,,,The primary purpose of the colorIdentity column is to store the colors of mana that a card can be played with.
+272,card_games,cards,colorIndicator,color Indicator,A list of all the colors in the color indicator (The symbol prefixed to a card's types).,text,,,The primary purpose of the colorIndicator column is to store a value that represents the color indicator of a card.
+273,card_games,cards,colors,,A list of all the colors in manaCost and colorIndicator. ,text,"Some cards may not have values, such as cards with ""Devoid"" in its text.",,"The colors column represents a list of colors associated with each card, indicating its color identity."
+274,card_games,cards,convertedManaCost,converted Mana Cost,The converted mana cost of the card. Use the manaValue property.,real,"if value is higher, it means that this card cost more converted mana ",,The primary purpose of the convertedManaCost column is to store the converted mana cost of a card.
+275,card_games,cards,duelDeck,duel Deck,The indicator for which duel deck the card is in.,text,,,"The duelDeck column appears to represent a categorization or classification of cards into specific deck types or formats, likely for Magic: The Gathering game purposes."
+276,card_games,cards,edhrecRank,rec Rank in edh,The card rank on EDHRec,integer,,,"The edhrecRank column represents the EDHREC rank of a card, which is a measure of its popularity and effectiveness in the Commander format of Magic: The Gathering."
+277,card_games,cards,faceConvertedManaCost,face Converted Mana Cost,The converted mana cost or mana value for the face for either half or part of the card. ,real,"if value is higher, it means that this card cost more converted mana for the face",,The primary purpose of the faceConvertedManaCost column is to store the converted mana cost of the card.
+278,card_games,cards,faceName,face Name,The name on the face of the card.,text,,,"The faceName column appears to store the name of the card's face, which is the card's front side."
+279,card_games,cards,flavorName,flavor Name,The promotional card name printed above the true card name on special cards that has no game function.,text,The promotional card name printed above the true card name on special cards that has no game function.,,"The flavorName column appears to store the name of a flavor or quote associated with a card, likely providing context or background information about the card's theme or storyline."
+280,card_games,cards,flavorText,flavor Text,The italicized text found below the rules text that has no game function.,text,The italicized text found below the rules text that has no game function.,,"The primary purpose of the flavorText column is to store a brief quote or phrase that provides additional context or insight into the card's theme, mechanics, or storyline."
+281,card_games,cards,frameEffects,frame Effects,The visual frame effects.,text,"""colorshifted"", ""companion"", ""compasslanddfc"", ""devoid"", ""draft"", ""etched"", ""extendedart"", ""fullart"", ""inverted"", ""legendary"", ""lesson"", ""miracle"", ""mooneldrazidfc"", ""nyxtouched"", ""originpwdfc"", ""showcase"", ""snow"", ""sunmoondfc"", ""textless"", ""tombstone"", ""waxingandwaningmoondfc""",,The primary purpose of the frameEffects column is to store additional effects or abilities that are applied to the card.
+282,card_games,cards,frameVersion,frame Version,The version of the card frame style.,text,"""1993"", ""1997"", ""2003"", ""2015"", ""future""",,The primary purpose of the frameVersion column is to store the version of the frame for a card.
+283,card_games,cards,hand,,The starting maximum hand size total modifier. ,text,"A + or - character precedes an integer. 
+commonsense evidence:
+positive maximum hand size: +1, +2, ....
+negative maximum hand size: -1, ....
+neural maximum hand size: 0....",,"The primary purpose of the column ""hand"" is to store information about the cards that a player is holding in their hand."
+284,card_games,cards,hasAlternativeDeckLimit,has Alternative Deck Limit,If the card allows a value other than 4 copies in a deck.,integer,0: disallow 1: allow,,The hasAlternativeDeckLimit column indicates whether a card has an alternative deck limit.
+285,card_games,cards,hasContentWarning,has Content Warning,If the card marked by Wizards of the Coast (opens new window) for having sensitive content. See this official article (opens new window) for more information.,integer,"0: doesn't have 1: has sensitve content or Wizards of the Coast
+commonsense evidence:
+Cards with this property may have missing or degraded properties and values. ",,The hasContentWarning column indicates whether a card has a content warning.
+286,card_games,cards,hasFoil,has Foil,If the card can be found in foil,integer,0: cannot be found 1: can be found,,The hasFoil column indicates whether a card has a foil version.
+287,card_games,cards,hasNonFoil,has Non Foil,If the card can be found in non-foil,integer,0: cannot be found 1: can be found,,The hasNonFoil column indicates whether a card has a non-foil version.
+288,card_games,cards,isAlternative,is Alternative,If the card is an alternate variation to an original printing,integer,0: is not 1: is,,The primary purpose of the column isAlternative is to indicate whether a card is an alternative version of another card.
+289,card_games,cards,isFullArt,is Full Art,If the card has full artwork.,integer,"0: doesn't have, 1: has full artwork",,The primary purpose of the isFullArt column is to indicate whether a card is a full-art version or not.
+290,card_games,cards,isOnlineOnly,is Online Only,If the card is only available in online game variations.,integer,0: is not 1: is,,The primary purpose of the isOnlineOnly column is to indicate whether a card is only available online.
+291,card_games,cards,isOversized,is Oversized,If the card is oversized.,integer,0: is not 1: is,,The isOversized column indicates whether a card is oversized or not.
+292,card_games,cards,isPromo,is Promotion,If the card is a promotional printing.,integer,0: is not 1: is,,The isPromo column is used to indicate whether a card is a promotional card.
+293,card_games,cards,isReprint,is Reprint,If the card has been reprinted.,integer,0: has not 1: has not been,,"The primary purpose of the isReprint column is to indicate whether a card is a reprint, meaning it has been printed previously in a different set or edition."
+294,card_games,cards,isReserved,is Reserved,If the card is on the Magic: The Gathering Reserved List (opens new window),integer,"If the card is on the Magic, it will appear in The Gathering Reserved List",,The isReserved column indicates whether a card is reserved or not.
+295,card_games,cards,isStarter,is Starter,If the card is found in a starter deck such as Planeswalker/Brawl decks.,integer,0: is not 1: is,,The isStarter column indicates whether a card is a starter card or not.
+296,card_games,cards,isStorySpotlight,is Story Spotlight,If the card is a Story Spotlight card.,integer,0: is not 1: is,,The primary purpose of the isStorySpotlight column is to indicate whether a card is a story spotlight.
+297,card_games,cards,isTextless,is Text less,If the card does not have a text box.,integer,"commonsense evidence:
+0: has a text box;
+1: doesn't have a text box;",,The primary purpose of the isTextless column is to indicate whether the card has text or not.
+298,card_games,cards,isTimeshifted,is Time shifted,If the card is time shifted,integer,"commonsense evidence:
+If the card is ""timeshifted"", a feature of certain sets where a card will have a different frameVersion.",,The primary purpose of the isTimeshifted column is to indicate whether a card is timeshifted or not.
+299,card_games,cards,keywords,,A list of keywords found on the card.,text,,,"The primary purpose of the ""keywords"" column is to store additional descriptive terms or tags associated with each card in the table."
+300,card_games,cards,layout,,"The type of card layout. For a token card, this will be ""token""",text,,,"The primary purpose of the column layout is to specify the physical arrangement of the card, including its size, shape, and orientation."
+301,card_games,cards,leadershipSkills,leadership Skills,A list of formats the card is legal to be a commander in,text,,,"The primary purpose of the leadershipSkills column is to store a list of skills or abilities that a creature possesses, likely related to its leadership or commanding abilities."
+302,card_games,cards,life,,The starting life total modifier. A plus or minus character precedes an integer.,text,,,"The primary purpose of the ""life"" column is to represent the amount of life a creature or player has."
+303,card_games,cards,loyalty,,The starting loyalty value of the card.,text,"Used only on cards with ""Planeswalker"" in its types. empty means unkown",,"The primary purpose of the loyalty column is to represent the loyalty value of a card, indicating its loyalty abilities or effects."
+304,card_games,cards,manaCost,mana Cost ,The mana cost of the card wrapped in brackets for each value.,text,"commonsense evidence:
+manaCost is unconverted mana cost",,"The primary purpose of the manaCost column is to store the cost of a card in terms of mana, which is a resource used to play spells and abilities in the Magic: The Gathering game."
+305,card_games,cards,mcmId,,,text,NOT USEFUL,,The primary purpose of the mcmId column is to uniquely identify a card in the cards table.
+306,card_games,cards,mcmMetaId,,,text,NOT USEFUL,,"The mcmMetaId column appears to store a unique identifier for each card in the database, likely used for metadata tracking and linking purposes."
+307,card_games,cards,mtgArenaId,,,text,NOT USEFUL,,The primary purpose of the mtgArenaId column is to uniquely identify a specific Magic: The Gathering card.
+308,card_games,cards,mtgjsonV4Id,,,text,NOT USEFUL,,"The mtgjsonV4Id column is a unique identifier for each card in the Magic: The Gathering game, as represented in the mtgjson V4 data format."
+309,card_games,cards,mtgoFoilId,,,text,NOT USEFUL,,"The mtgoFoilId column appears to store the foil ID of Magic: The Gathering cards, specifically for the Magic Online platform."
+310,card_games,cards,mtgoId,,,text,NOT USEFUL,,"The mtgoId column appears to store a unique identifier for Magic: The Gathering cards, specifically for cards traded on Magic Online."
+311,card_games,cards,multiverseId,,,text,NOT USEFUL,,"The multiverseId column is a unique identifier for each card in the game, serving as a primary key to distinguish between different cards."
+312,card_games,cards,name,,The name of the card.,text,"Cards with multiple faces, like ""Split"" and ""Meld"" cards are given a delimiter.",,"The name column appears to store the unique identifier for each card in the database, with each value representing the name of a specific Magic: The Gathering card."
+313,card_games,cards,number,,The number of the card,text,,,"The number column appears to represent a unique identifier or sequence number for each card in the database, likely used for referencing and tracking purposes."
+314,card_games,cards,originalReleaseDate,,original Release Date,text,"The original release date in ISO 8601(opens new window) format for a promotional card printed outside of a cycle window, such as Secret Lair Drop promotions.",,The primary purpose of the originalReleaseDate column is to record the date when a card was initially released.
+315,card_games,cards,originalText,,original Text,text,The text on the card as originally printed.,,The primary purpose of the originalText column is to store the original text of the card.
+316,card_games,cards,originalType,,original Type,text,The type of the card as originally printed. Includes any supertypes and subtypes.,,The primary purpose of the originalType column is to store the original type of a card.
+317,card_games,cards,otherFaceIds,,other Face Ids,text,"A list of card UUID's to this card's counterparts, such as transformed or melded faces.",,The primary purpose of the otherFaceIds column is to store a list of IDs related to other face cards.
+318,card_games,cards,power,,The power of the card.,text,"commonsense evidence:
+∞ means infinite power
+null or * refers to unknown power",,"The power column represents the power of a creature, indicating the amount of damage it can deal to an opponent."
+319,card_games,cards,printings,,"A list of set printing codes the card was printed in, formatted in uppercase.",text,,,The primary purpose of the printings column is to store the printings of the card.
+320,card_games,cards,promoTypes,promo Types,A list of promotional types for a card.,text,"""arenaleague"", ""boosterfun"", ""boxtopper"", ""brawldeck"", ""bundle"", ""buyabox"", ""convention"", ""datestamped"", ""draculaseries"", ""draftweekend"", ""duels"", ""event"", ""fnm"", ""gameday"", ""gateway"", ""giftbox"", ""gilded"", ""godzillaseries"", ""instore"", ""intropack"", ""jpwalker"", ""judgegift"", ""league"", ""mediainsert"", ""neonink"", ""openhouse"", ""planeswalkerstamped"", ""playerrewards"", ""playpromo"", ""premiereshop"", ""prerelease"", ""promopack"", ""release"", ""setpromo"", ""stamped"", ""textured"", ""themepack"", ""thick"", ""tourney"", ""wizardsplaynetwork""",,The promoTypes column appears to store information about promotional types for cards.
+321,card_games,cards,purchaseUrls,purchase Urls,Links that navigate to websites where the card can be purchased.,text,,,The purchaseUrls column contains a list of URLs where the card can be purchased.
+322,card_games,cards,rarity,,The card printing rarity.,text,,,"The rarity column represents the classification of a card's power level, with common being the most abundant and rare being the least."
+323,card_games,cards,scryfallId,,,text,NOT USEFUL,,"The scryfallId column appears to be a unique identifier for each card in the database, likely referencing the Scryfall API, which provides card data for Magic: The Gathering."
+324,card_games,cards,scryfallIllustrationId,,,text,NOT USEFUL,,The primary purpose of the scryfallIllustrationId column is to uniquely identify the illustration associated with each card.
+325,card_games,cards,scryfallOracleId,,,text,NOT USEFUL,,"The scryfallOracleId column appears to store a unique identifier for each card in the Scryfall database, which is used to link cards to their corresponding data in the Scryfall API."
+326,card_games,cards,setCode,Set Code,The set printing code that the card is from.,text,,,The primary purpose of the setCode column is to uniquely identify a set of cards in the database.
+327,card_games,cards,side,,The identifier of the card side. ,text,"Used on cards with multiple faces on the same card.
+commonsense evidence:
+if this value is empty, then it means this card doesn't have multiple faces on the same card.",,"The primary purpose of the side column is to represent the side of the card, likely referring to its orientation or position on the battlefield."
+328,card_games,cards,subtypes,,A list of card subtypes found after em-dash.,text,,,"The primary purpose of the subtypes column is to categorize the card into specific types, such as creature, enchantment, or instant."
+329,card_games,cards,supertypes,super types,A list of card supertypes found before em-dash.,text,"commonsense evidence:
+list of all types should be the union of subtypes and supertypes",,"The primary purpose of the supertypes column is to categorize the card types, such as Creature, Instant, or Sorcery, into more specific subcategories."
+330,card_games,cards,tcgplayerProductId,tcg player ProductId,,text,,,"The tcgplayerProductId column appears to store a unique identifier for each product on TCGplayer, likely corresponding to a specific Magic: The Gathering card."
+331,card_games,cards,text,,The rules text of the card.,text,,,"The text column appears to contain the official flavor text of the cards, providing a brief narrative or quote that adds context and depth to the card's design and gameplay."
+332,card_games,cards,toughness,,The toughness of the card.,text,,,"The primary purpose of the toughness column is to store the toughness value of a creature, which represents the amount of damage it can withstand before being destroyed."
+333,card_games,cards,type,,"The type of the card as visible, including any supertypes and subtypes.",text,"""Artifact"", ""Card"", ""Conspiracy"", ""Creature"", ""Dragon"", ""Dungeon"", ""Eaturecray"", ""Elemental"", ""Elite"", ""Emblem"", ""Enchantment"", ""Ever"", ""Goblin"", ""Hero"", ""Instant"", ""Jaguar"", ""Knights"", ""Land"", ""Phenomenon"", ""Plane"", ""Planeswalker"", ""Scariest"", ""Scheme"", ""See"", ""Sorcery"", ""Sticker"", ""Summon"", ""Token"", ""Tribal"", ""Vanguard"", ""Wolf"", ""You’ll"", ""instant""",,"The type column represents the primary classification of a card, which can be one of the following: Creature, Instant, or Legendary Creature."
+334,card_games,cards,types,,"A list of all card types of the card, including Un‑sets and gameplay variants.",text,,,"This column represents the type of the card, which can be a creature, instant, or other types."
+335,card_games,cards,uuid,,The universal unique identifier (v5) generated by MTGJSON. Each entry is unique.,text,NOT USEFUL,,The primary purpose of the uuid column is to uniquely identify each record in the cards table.
+336,card_games,cards,variations,,,text,,,The variations column appears to store unique values representing different versions or editions of a card.
+337,card_games,cards,watermark,,The name of the watermark on the card.,text,,,"The watermark column appears to store a unique identifier for each card, likely used for tracking or authentication purposes."
+338,card_games,sets,id,,unique id identifying this set,integer,,P,"The primary purpose of the id column is to uniquely identify each record in the sets table, serving as a primary key."
+339,card_games,sets,baseSetSize,base Set Size,The number of cards in the set.,integer,,,The baseSetSize column represents the number of cards in the base set of a given set.
+340,card_games,sets,block,,The block name the set was in.,text,,,"The block column represents the primary set structure or category of cards in a set, such as a Core Set or an expansion set like Mirrodin."
+341,card_games,sets,booster,,A breakdown of possibilities and weights of cards in a booster pack.,text,,,"The booster column represents a collection of booster packs containing specific card quantities, with each booster pack having a unique weight and contents."
+342,card_games,sets,code,,The set code for the set.,text,,,The primary purpose of the code column is to uniquely identify a set in the database.
+343,card_games,sets,isFoilOnly,is Foil Only,If the set is only available in foil.,integer,,,"The isFoilOnly column in the sets table indicates whether a set is foil-only, meaning it only contains foil cards."
+344,card_games,sets,isForeignOnly,is Foreign Only,If the set is available only outside the United States of America.,integer,,,The primary purpose of the column isForeignOnly is to indicate whether a set is only available in foreign languages.
+345,card_games,sets,isNonFoilOnly,is Non Foil Only,If the set is only available in non-foil.,integer,,,The primary purpose of the isNonFoilOnly column is to indicate whether a set is available only in non-foil format.
+346,card_games,sets,isOnlineOnly,is Online Only,If the set is only available in online game variations.,integer,,,The primary purpose of the isOnlineOnly column is to indicate whether a set is only available online or not.
+347,card_games,sets,isPartialPreview,is Partial Preview,If the set is still in preview (spoiled). Preview sets do not have complete data.,integer,,,The primary purpose of the isPartialPreview column is to indicate whether a set is a partial preview or not.
+348,card_games,sets,keyruneCode,keyrune Code,The matching Keyrune code for set image icons.,text,,,The primary purpose of the keyruneCode column is to store a unique code for a specific set.
+349,card_games,sets,mcmId,magic card market id,The Magic Card Marketset identifier.,integer,,,"The mcmId column is used to store a unique identifier for the set, likely referring to a specific Magic: The Gathering set."
+350,card_games,sets,mcmIdExtras,magic card market ID Extras,The split Magic Card Market set identifier if a set is printed in two sets. This identifier represents the second set's identifier.,integer,,,"The primary purpose of the mcmIdExtras column is to store additional information related to the Magic: The Gathering set, likely providing supplementary data for the set's metadata."
+351,card_games,sets,mcmName,magic card market name ,,text,,,"The mcmName column appears to contain the name of a Magic: The Gathering set, likely referring to a specific Magic: The Gathering set, such as a core set, expansion, or master set."
+352,card_games,sets,mtgoCode,magic the gathering online code,The set code for the set as it appears on Magic: The Gathering Online,text,"commonsense evidence:
+if the value is null or empty, then it doesn't appear on Magic: The Gathering Online",,"The mtgoCode column appears to contain a unique code for Magic: The Gathering Online (MTGO) sets, serving as a primary identifier for each set."
+353,card_games,sets,name,,The name of the set.,text,,,The primary purpose of the name column is to store the name of a set.
+354,card_games,sets,parentCode,parent Code,"The parent set code for set variations like promotions, guild kits, etc.",text,,,The primary purpose of the column parentCode is to uniquely identify the parent set of a set in the sets table.
+355,card_games,sets,releaseDate,release Date,The release date in ISO 8601 format for the set.,date,,,The releaseDate column stores the date when a set of cards was released.
+356,card_games,sets,tcgplayerGroupId,tcg player Group Id,The group identifier of the set on TCGplayer,integer,,,"The tcgplayerGroupId column in the sets table appears to represent a unique identifier for a group of cards within a set, likely used for categorization or tracking purposes on the TCGplayer platform."
+357,card_games,sets,totalSetSize,total Set Size,"The total number of cards in the set, including promotional and related supplemental products but excluding Alchemy modifications - however those cards are included in the set itself.",integer,,,The primary purpose of the totalSetSize column is to store the total number of cards in a set.
+358,card_games,sets,type,,The expansion type of the set.,text,"""alchemy"", ""archenemy"", ""arsenal"", ""box"", ""commander"", ""core"", ""draft_innovation"", ""duel_deck"", ""expansion"", ""from_the_vault"", ""funny"", ""masterpiece"", ""masters"", ""memorabilia"", ""planechase"", ""premium_deck"", ""promo"", ""spellbook"", ""starter"", ""token"", ""treasure_chest"", ""vanguard""",,"The type column represents the primary purpose of the set, which can be either a core set, an expansion, or a foreign set."
+359,card_games,foreign_data,id,,unique id number identifying this row of data,integer,,P,"The primary purpose of the column ""id"" is to uniquely identify each record in the foreign_data table."
+360,card_games,foreign_data,flavorText,flavor Text,The foreign flavor text of the card.,text,,,"The primary purpose of the flavorText column is to store translated flavor text for cards, providing a brief narrative or description of the card's abilities, effects, or theme in various languages."
+361,card_games,foreign_data,language,,The foreign language of card.,text,,,"The primary purpose of the language column is to store the language in which the flavor text, name, and other text fields of the card are written."
+362,card_games,foreign_data,multiverseid,,The foreign multiverse identifier of the card.,integer,,,The primary purpose of the multiverseid column is to uniquely identify a card in the Magic: The Gathering multiverse.
+363,card_games,foreign_data,name,,The foreign name of the card.,text,,,The primary purpose of the name column is to store the name of a card in a foreign language.
+364,card_games,foreign_data,text,,The foreign text ruling of the card.,text,,,"The primary purpose of the ""text"" column in the foreign_data table is to store the flavor text for a card, which is a brief narrative or description that provides additional context or background information about the card's design, mechanics, or storyline."
+365,card_games,foreign_data,type,,The foreign type of the card. Includes any supertypes and subtypes.,text,,,"The primary purpose of the ""type"" column is to categorize the data into a specific category, likely indicating the nature or classification of the foreign data."
+366,card_games,foreign_data,uuid,,,text,,F,The primary purpose of the uuid column is to uniquely identify a record in the foreign_data table.
+367,card_games,rulings,id,,unique id identifying this ruling,integer,,P,The primary purpose of the id column is to uniquely identify each ruling.
+368,card_games,rulings,date,,date ,date,,,The primary purpose of the date column is to store the date of a ruling.
+369,card_games,rulings,text,,description about this ruling,text,,,"The primary purpose of the text column is to store the ruling or explanation of a specific situation or interaction in a game, providing clarification on how a particular card or mechanic works."
+370,card_games,rulings,uuid,,,text,,F,"The uuid column stores a unique identifier for each ruling, referencing the corresponding card in the cards table."
+371,card_games,set_translations,id,,unique id identifying this set,integer,,P,The primary purpose of the id column is to uniquely identify each record in the set_translations table.
+372,card_games,set_translations,language,,language of this card,text,,,The language column in the set_translations table represents the primary language used for translations of set names.
+373,card_games,set_translations,setCode,set code,the set code for this set,text,,F,"The setCode column appears to uniquely identify a set of cards, with each code corresponding to a specific edition or release of the set."
+374,card_games,set_translations,translation,,translation of this card,text,,,The translation column in the set_translations table contains translations of set names from their original language to various other languages.
+375,european_football_2,Player,id,,the unique id for players,integer,,P,The primary purpose of the column is to uniquely identify each player in the Player table.
+376,european_football_2,Player,player_api_id,player api id,the id of the player api,integer,,,The primary purpose of the column player_api_id is to uniquely identify a player.
+377,european_football_2,Player,player_name,player name,player name,text,,,The primary purpose of the column player_name is to store the name of a player.
+378,european_football_2,Player,player_fifa_api_id,player federation international football association api id,the id of the player fifa api,integer,,,The primary purpose of the player_fifa_api_id column is to uniquely identify a player in the FIFA API.
+379,european_football_2,Player,birthday,,the player's birthday,text,"e.g. 1992-02-29 00:00:00 
+commonsense reasoning: 
+Player A is older than player B means that A's birthday is earlier than B's",,The birthday column stores the date of birth for each player.
+380,european_football_2,Player,height,,the player's height,integer,,,The primary purpose of the height column is to store the physical height of each player in centimeters.
+381,european_football_2,Player,weight,,the player's weight,integer,,,The weight column stores the physical weight of players in kilograms.
+382,european_football_2,Match,id,,the unique id for matches,integer,,P,"The primary purpose of the column ""id"" is to uniquely identify each match record in the database."
+383,european_football_2,Match,country_id,country id,country id,integer,,F,The primary purpose of the country_id column is to uniquely identify a country.
+384,european_football_2,Match,league_id,league id,league id,integer,,F,The primary purpose of the column league_id is to uniquely identify a league in the context of a match.
+385,european_football_2,Match,season,,the season of the match,text,,,"The primary purpose of the season column is to represent a specific period of time, likely a year, during which a match took place."
+386,european_football_2,Match,stage,,the stage of the match,integer,,,The primary purpose of the stage column is to represent a stage or phase of a match.
+387,european_football_2,Match,date,,the date of the match,text,e.g. 2008-08-17 00:00:00,,The primary purpose of the date column is to store the date of each match.
+388,european_football_2,Match,match_api_id,match api id,the id of the match api,integer,,,Primary purpose of the column: Unique identifier for each match.
+389,european_football_2,Match,home_team_api_id,home team api id,the id of the home team api,integer,,F,The home_team_api_id column represents the API ID of the home team in a match.
+390,european_football_2,Match,away_team_api_id,away team api id,the id of the away team api,integer,,F,"The away_team_api_id column is a foreign key that references the team_api_id in the Team table, uniquely identifying a team that is playing away in a match."
+391,european_football_2,Match,home_team_goal,home team goal,the goal of the home team,integer,,,The primary purpose of the home_team_goal column is to store the number of goals scored by the home team in a match.
+392,european_football_2,Match,away_team_goal,away team goal,the goal of the away team,integer,,,The primary purpose of the away_team_goal column is to store the number of goals scored by the away team in a match.
+393,european_football_2,Match,home_player_X1,,,,,,This column represents the API ID of the first home team player in a match.
+394,european_football_2,Match,home_player_X2,,,,,,The home_player_X2 column represents the FIFA API ID of the second home team player in a match.
+395,european_football_2,Match,home_player_X3,,,,,,The primary purpose of the home_player_X3 column is to store the API ID of the third home player involved in a match.
+396,european_football_2,Match,home_player_X4,,,,,,The primary purpose of the home_player_X4 column is to store the player API ID of the fourth player from the home team in a match.
+397,european_football_2,Match,home_player_X5,,,,,,The primary purpose of the home_player_X5 column is to store the API ID of the fifth player on the home team in a match.
+398,european_football_2,Match,home_player_X6,,,,,,This column represents the FIFA API ID of the sixth home player in a match.
+399,european_football_2,Match,home_player_X7,,,,,,The primary purpose of the home_player_X7 column is to store the player ID of the 7th player from the home team in a match.
+400,european_football_2,Match,home_player_X8,,,,,,The primary purpose of the home_player_X8 column is to store the player ID of the home team's eighth player in a match.
+401,european_football_2,Match,home_player_X9,,,,,,This column represents the API ID of the 9th player in the home team.
+402,european_football_2,Match,home_player_X10,,,,,,The primary purpose of the home_player_X10 column is to store the API ID of the 10th player on the home team.
+403,european_football_2,Match,home_player_X11,,,,,,The primary purpose of the home_player_X11 column is to store the FIFA API ID of the 11th player in the home team for a specific match.
+404,european_football_2,Match,away_player_X1,,,,,,The primary purpose of the away_player_X1 column is to store the ID of the away team's first player.
+405,european_football_2,Match,away_player_X2,,,,,,The away_player_X2 column represents the API ID of the away team's second player in a match.
+406,european_football_2,Match,away_player_X3,,,,,,The away_player_X3 column represents the API ID of the third away player involved in a match.
+407,european_football_2,Match,away_player_X4,,,,,,The away_player_X4 column represents the API ID of the away team's 4th player in a match.
+408,european_football_2,Match,away_player_X5,,,,,,The away_player_X5 column represents the FIFA API ID of the away team's fifth player in a match.
+409,european_football_2,Match,away_player_X6,,,,,,The away_player_X6 column represents the API ID of the sixth player from the away team in a match.
+410,european_football_2,Match,away_player_X7,,,,,,The away_player_X7 column represents the API ID of the away team's 7th player in a match.
+411,european_football_2,Match,away_player_X8,,,,,,The away_player_X8 column represents the FIFA API ID of the away team's 8th player.
+412,european_football_2,Match,away_player_X9,,,,,,The primary purpose of the away_player_X9 column is to store the API ID of the away team's 9th player in a match.
+413,european_football_2,Match,away_player_X10,,,,,,The away_player_X10 column represents the API ID of the away team's 10th player in a match.
+414,european_football_2,Match,away_player_X11,,,,,,The away_player_X11 column represents the player API ID of the away team's 11th player in a match.
+415,european_football_2,Match,home_player_Y1,,,,,,The primary purpose of the home_player_Y1 column is to store the FIFA API ID of the first home player participating in a match.
+416,european_football_2,Match,home_player_Y2,,,,,,This column represents the player ID of the second player from the home team.
+417,european_football_2,Match,home_player_Y3,,,,,,"This column, home_player_Y3, represents the Y3 attribute of the home team's player 3."
+418,european_football_2,Match,home_player_Y4,,,,,,This column represents the player ID of the fourth home player in a match.
+419,european_football_2,Match,home_player_Y5,,,,,,The primary purpose of the home_player_Y5 column is to store the API ID of the fifth home player in a match.
+420,european_football_2,Match,home_player_Y6,,,,,,This column stores the player ID of the home team's sixth player.
+421,european_football_2,Match,home_player_Y7,,,,,,This column represents the player's yellow card count for the home team in a match.
+422,european_football_2,Match,home_player_Y8,,,,,,Not enough information to make a valid prediction.
+423,european_football_2,Match,home_player_Y9,,,,,,"The primary purpose of the home_player_Y9 column is: ""The ID of the 9th home team player participating in the match."""
+424,european_football_2,Match,home_player_Y10,,,,,,"This column, home_player_Y10, appears to store the player ID of the 10th player on the home team."
+425,european_football_2,Match,home_player_Y11,,,,,,This column represents the API ID of the 11th player on the home team.
+426,european_football_2,Match,away_player_Y1,,,,,,The primary purpose of the away_player_Y1 column is to store the API ID of the away team's first player.
+427,european_football_2,Match,away_player_Y2,,,,,,The away_player_Y2 column represents the away team's player's yellow card number.
+428,european_football_2,Match,away_player_Y3,,,,,,The primary purpose of the away_player_Y3 column is to store the player ID of the away team's player in the third position.
+429,european_football_2,Match,away_player_Y4,,,,,,The away_player_Y4 column appears to store an integer value representing the player's performance or statistics in a match.
+430,european_football_2,Match,away_player_Y5,,,,,,The primary purpose of the away_player_Y5 column is to store the player ID of the away team's fifth player in a match.
+431,european_football_2,Match,away_player_Y6,,,,,,The away_player_Y6 column appears to store an integer value representing a specific attribute or characteristic of an away team player in a match.
+432,european_football_2,Match,away_player_Y7,,,,,,The primary purpose of the away_player_Y7 column is to store an integer value representing the player's yellow card count for the away team in a match.
+433,european_football_2,Match,away_player_Y8,,,,,,The away_player_Y8 column represents the player ID of the away team's 8th player in a match.
+434,european_football_2,Match,away_player_Y9,,,,,,The away_player_Y9 column represents the player ID of the away team's 9th player in a match.
+435,european_football_2,Match,away_player_Y10,,,,,,The away_player_Y10 column represents the API ID of the 10th player from the away team in a match.
+436,european_football_2,Match,away_player_Y11,,,,,,The primary purpose of the away_player_Y11 column is to store the player ID of the away team's 11th player in a match.
+437,european_football_2,Match,home_player_1,,,,,F,The primary purpose of the home_player_1 column is to store the ID of the player who plays as the first player for the home team in a match.
+438,european_football_2,Match,home_player_2,,,,,F,The primary purpose of the home_player_2 column is to store the player ID of the second player of the home team in a match.
+439,european_football_2,Match,home_player_3,,,,,F,The primary purpose of the home_player_3 column is to store the API ID of the third player from the home team who participated in a match.
+440,european_football_2,Match,home_player_4,,,,,F,The primary purpose of the home_player_4 column is to store the FIFA API ID of the fourth player from the home team.
+441,european_football_2,Match,home_player_5,,,,,F,The primary purpose of the home_player_5 column is to store the player ID of the fifth player in the home team.
+442,european_football_2,Match,home_player_6,,,,,F,The primary purpose of the home_player_6 column is to store the player ID of the sixth player of the home team in a match.
+443,european_football_2,Match,home_player_7,,,,,F,The primary purpose of the home_player_7 column is to store the player ID of the seventh player in the home team's lineup for a given match.
+444,european_football_2,Match,home_player_8,,,,,F,The primary purpose of the home_player_8 column is to store the player ID of the eighth player on the home team.
+445,european_football_2,Match,home_player_9,,,,,F,The primary purpose of the home_player_9 column is to store the FIFA API ID of the player who played in the 9th position for the home team in a match.
+446,european_football_2,Match,home_player_10,,,,,F,The primary purpose of the home_player_10 column is to store the player ID of the 10th player in the home team's lineup for a given match.
+447,european_football_2,Match,home_player_11,,,,,F,"The home_player_11 column is a foreign key that references the Player table, specifically referencing the player_api_id of the 11th player in the home team's lineup."
+448,european_football_2,Match,away_player_1,,,,,F,The primary purpose of the away_player_1 column is to store the ID of the away team's first player in a match.
+449,european_football_2,Match,away_player_2,,,,,F,The away_player_2 column represents the API ID of the away team's second player in a match.
+450,european_football_2,Match,away_player_3,,,,,F,The away_player_3 column represents the API ID of a player who played for the away team in a match.
+451,european_football_2,Match,away_player_4,,,,,F,The primary purpose of the away_player_4 column is to store the API ID of the away team's fourth player in a match.
+452,european_football_2,Match,away_player_5,,,,,F,The away_player_5 column stores the API ID of the away team's 5th player.
+453,european_football_2,Match,away_player_6,,,,,F,The primary purpose of the away_player_6 column is to store the player ID of the away team's sixth player in a match.
+454,european_football_2,Match,away_player_7,,,,,F,The primary purpose of the away_player_7 column is to store the ID of the away team's 7th player in a match.
+455,european_football_2,Match,away_player_8,,,,,F,The primary purpose of the away_player_8 column is to store the API ID of the away team's 8th player in a match.
+456,european_football_2,Match,away_player_9,,,,,F,This column stores the ID of a player who is a member of the away team in a match.
+457,european_football_2,Match,away_player_10,,,,,F,The away_player_10 column stores the unique identifier of the away team's 10th player in a match.
+458,european_football_2,Match,away_player_11,,,,,F,The away_player_11 column represents the player API ID of the 11th player from the away team in a match.
+459,european_football_2,Match,goal,,the goal of the match,text,,,The primary purpose of the goal column is to record the number of goals scored by each team in a match.
+460,european_football_2,Match,shoton,shot on,the shot on goal of the match,text,"commonsense reasoning: 
+A shot on goal is a shot that enters the goal or would have entered the goal if it had not been blocked by the goalkeeper or another defensive player.
+",,The primary purpose of the shoton column is to track the number of shots taken by a team in a match.
+461,european_football_2,Match,shotoff,shot off,"the shot off goal of the match, which is the opposite of shot on",text,,,The primary purpose of the shotoff column is to record the number of shots that were blocked or deflected off target during a match.
+462,european_football_2,Match,foulcommit,foul commit,the fouls occurred in the match,text,,,The primary purpose of the foulcommit column is to record the number of fouls committed during a match.
+463,european_football_2,Match,card,,the cards given in the match,text,,,The primary purpose of the card column is to record the type of card given to a player during a match.
+464,european_football_2,Match,cross,,Balls sent into the opposition team's area from a wide position in the match,text,,,"The primary purpose of the column cross is: ""Indicates whether a cross was made in the match.""
+
+(Note: This description is based solely on the provided schema and does not include any speculative or additional commentary.)"
+465,european_football_2,Match,corner,,Ball goes out of play for a corner kick in the match,text,,,The primary purpose of the column corner is to store the number of corners taken in a match.
+466,european_football_2,Match,possession,,The duration from a player taking over the ball in the match,text,,,The primary purpose of the possession column is to record the possession of the ball by a team during a match.
+467,european_football_2,Match,B365H,,,,,,"The B365H column represents the home team's odds at Bet365, a bookmaking company."
+468,european_football_2,Match,B365D,,,,,,The primary purpose of the B365D column is to store decimal values representing the decimal odds for the draw outcome of a match.
+469,european_football_2,Match,B365A,,,,,,"The primary purpose of the B365A column is to store the decimal odds for the away team to win the match, provided by bookmaker Bet365."
+470,european_football_2,Match,BWH,,,,,,"The primary purpose of the BWH column is to store the ""Betfair Home Win"" value, likely representing the probability or odds of the home team winning a match."
+471,european_football_2,Match,BWD,,,,,,"The primary purpose of the BWD column is to store a real-valued probability or odds of a particular outcome, likely related to the match, such as the away team winning the match."
+472,european_football_2,Match,BWA,,,,,,The primary purpose of the BWA column is to store the odds of a particular team winning the match.
+473,european_football_2,Match,IWH,,,,,,The primary purpose of the IWH column is to store a real-valued probability or odds for a specific outcome.
+474,european_football_2,Match,IWD,,,,,,"The primary purpose of the IWD column is to store the ""IWD"" value, which represents an unknown metric related to the match."
+475,european_football_2,Match,IWA,,,,,,"The primary purpose of the IWA column is to store a real value representing the odds of a team winning a match, specifically the away team's winning average."
+476,european_football_2,Match,LBH,,,,,,"The primary purpose of the LBH column is to store the value of the ""Longest Ball Height"" in a match."
+477,european_football_2,Match,LBD,,,,,,"The primary purpose of the LBD column is to store the decimal value of a football match's draw probability, likely ranging from 0 to 1, representing the likelihood of the match ending in a draw."
+478,european_football_2,Match,LBA,,,,,,"The primary purpose of the LBA column is to store a numerical value representing the ""League Bookmaker Average"" for a match."
+479,european_football_2,Match,PSH,,,,,,The primary purpose of the PSH column is to store a real-valued probability score or handicap for a match.
+480,european_football_2,Match,PSD,,,,,,"The primary purpose of the PSD column is to store the ""PSD"" value, which appears to represent the probability of the draw (PSD) in a football match."
+481,european_football_2,Match,PSA,,,,,,"The PSA column represents the ""PSA"" value, which appears to be a probability score or odds ratio related to the match outcome."
+482,european_football_2,Match,WHH,,,,,,"The primary purpose of the WHH column is to store a real-valued probability or odds of a specific event, likely related to the match outcome or other relevant metrics."
+483,european_football_2,Match,WHD,,,,,,The primary purpose of the WHD column is to store the decimal odds of the draw in a match.
+484,european_football_2,Match,WHA,,,,,,The primary purpose of the WHA column is to store the Away Team's Asian Handicap (AH) odds.
+485,european_football_2,Match,SJH,,,,,,The primary purpose of the SJH column is to store a real-valued probability or odds ratio representing the likelihood of a certain event occurring.
+486,european_football_2,Match,SJD,,,,,,The primary purpose of the SJD column is to store a value representing the away team's shot on goal during a match.
+487,european_football_2,Match,SJA,,,,,,The primary purpose of the SJA column is to store a value representing the Shot Accuracy.
+488,european_football_2,Match,VCH,,,,,,"The primary purpose of the VCH column is to store the value of the ""Value of Clean Sheets"" for a match."
+489,european_football_2,Match,VCD,,,,,,"The primary purpose of the VCD column is to store the value of the ""VCD"" metric, which appears to be a probability or odds value related to a match event."
+490,european_football_2,Match,VCA,,,,,,"The primary purpose of the VCA column is to store a value representing ""VCA""."
+491,european_football_2,Match,GBH,,,,,,"The primary purpose of the GBH column is to store the value of ""Goal Bookmaker Home""."
+492,european_football_2,Match,GBD,,,,,,"The primary purpose of the GBD column is to store a real-valued prediction of the match outcome, likely representing the probability of a draw."
+493,european_football_2,Match,GBA,,,,,,"The GBA column represents the ""Goal Behind Average"" value."
+494,european_football_2,Match,BSH,,,,,,"The primary purpose of the BSH column is to store a real-valued probability or odds ratio related to the match, possibly representing the bookmaker's predicted score for the home team."
+495,european_football_2,Match,BSD,,,,,,"The BSD column represents the ""Bookmaker's Spread - Draw""."
+496,european_football_2,Match,BSA,,,,,,The primary purpose of the BSA column is to store the bookmaker's closing away team odds for a match.
+497,european_football_2,League,id,,the unique id for leagues,integer,,P,"The primary purpose of the column ""id"" in the League table is to uniquely identify each league."
+498,european_football_2,League,country_id,country id,the unique id for countries,integer,,F,The primary purpose of the country_id column is to identify the country associated with each league.
+499,european_football_2,League,name,,league name,text,,,"The name column in the League table stores the unique name of each league, such as ""Belgium Jupiler League"" or ""England Premier League""."
+500,european_football_2,Country,id,,the unique id for countries,integer,,P,The primary purpose of the id column is to uniquely identify each country in the Country table.
+501,european_football_2,Country,name,,country name,text,,,The name column in the Country table represents the official name of a country.
+502,european_football_2,Player_Attributes,id,,the unique id for players,integer,,P,The primary purpose of the id column is to uniquely identify each record in the Player_Attributes table.
+503,european_football_2,Player_Attributes,player_fifa_api_id,player federation international football association api id,the id of the player fifa api,integer,,F,The primary purpose of the player_fifa_api_id column is to uniquely identify a player in the FIFA API.
+504,european_football_2,Player_Attributes,player_api_id,player api id,the id of the player api,integer,,F,The primary purpose of the column player_api_id is to uniquely identify a player.
+505,european_football_2,Player_Attributes,date,,date,text,e.g. 2016-02-18 00:00:00,,The primary purpose of the date column is to store the date when the player attributes were recorded.
+506,european_football_2,Player_Attributes,overall_rating,,the overall rating of the player,integer,"commonsense reasoning: 
+The rating is between 0-100 which is calculated by FIFA.
+ Higher overall rating means the player has a stronger overall strength.",,"The primary purpose of the column overall_rating is to store the overall rating of a player, which is a numerical value that represents the player's skill level and performance."
+507,european_football_2,Player_Attributes,potential,,potential of the player,integer,"commonsense reasoning: 
+The potential score is between 0-100 which is calculated by FIFA.
+ Higher potential score means that the player has more potential",,"The primary purpose of the ""potential"" column is to represent the potential rating of a player, indicating their overall ability to develop and improve their skills."
+508,european_football_2,Player_Attributes,preferred_foot,preferred foot,the player's preferred foot when attacking,text,right/ left,,"The primary purpose of the preferred_foot column is to specify the preferred foot of a player, which can be either right or left."
+509,european_football_2,Player_Attributes,attacking_work_rate,attacking work rate,the player's attacking work rate,text,"commonsense reasoning: 
+ high: implies that the player is going to be in all of your attack moves
+ medium: implies that the player will select the attack actions he will join in
+ low: remain in his position while the team attacks ",,"The attacking_work_rate column represents the player's attacking work rate, which is categorized as either medium or not specified."
+510,european_football_2,Player_Attributes,defensive_work_rate,,the player's defensive work rate,text,"commonsense reasoning: 
+ high: remain in his position and defense while the team attacks 
+ medium: implies that the player will select the defensive actions he will join in
+ low: implies that the player is going to be in all of your attack moves instead of defensing",,"The defensive_work_rate column represents the level of defensive effort and commitment exhibited by a player, with possible values indicating the intensity of their defensive work rate."
+511,european_football_2,Player_Attributes,crossing,,the player's crossing score ,integer,"commonsense reasoning: 
+Cross is a long pass into the opponent's goal towards the header of sixth-yard teammate.
+ The crossing score is between 0-100 which measures the tendency/frequency of crosses in the box.
+ Higher potential score means that the player performs better in crossing actions. ",,"The primary purpose of the ""crossing"" column is to represent the player's ability to deliver accurate crosses into the opponent's penalty area."
+512,european_football_2,Player_Attributes,finishing,,the player's finishing rate,integer,0-100 which is calculated by FIFA,,"The finishing column in the Player_Attributes table represents the player's ability to score goals, with higher values indicating better finishing skills."
+513,european_football_2,Player_Attributes,heading_accuracy,heading accuracy,the player's heading accuracy,integer,0-100 which is calculated by FIFA,,The primary purpose of the heading_accuracy column is to store the player's ability to score goals with their head.
+514,european_football_2,Player_Attributes,short_passing,short passing,the player's short passing score,integer,0-100 which is calculated by FIFA,,"The primary purpose of the short_passing column is to represent the player's short passing ability, with higher values indicating better passing skills."
+515,european_football_2,Player_Attributes,volleys,,the player's volley score,integer,0-100 which is calculated by FIFA,,"The primary purpose of the column volleys is to represent the player's skill in volleying, with values likely indicating the player's proficiency in this aspect of football."
+516,european_football_2,Player_Attributes,dribbling,,the player's dribbling score,integer,0-100 which is calculated by FIFA,,The primary purpose of the column dribbling is to represent the player's ability to control the ball while moving at speed.
+517,european_football_2,Player_Attributes,curve,,the player's curve score,integer,0-100 which is calculated by FIFA,,The primary purpose of the curve column is to store an integer value representing a player's ability to curve the ball.
+518,european_football_2,Player_Attributes,free_kick_accuracy,free kick accuracy,the player's free kick accuracy,integer,0-100 which is calculated by FIFA,,The primary purpose of the free_kick_accuracy column is to store the player's accuracy in taking free kicks.
+519,european_football_2,Player_Attributes,long_passing,long passing,the player's long passing score,integer,0-100 which is calculated by FIFA,,The long_passing column represents the player's ability to pass the ball accurately and effectively over long distances.
+520,european_football_2,Player_Attributes,ball_control,ball control,the player's ball control score,integer,0-100 which is calculated by FIFA,,The primary purpose of the ball_control column is to store the player's ability to control the ball.
+521,european_football_2,Player_Attributes,acceleration,,the player's acceleration score,integer,0-100 which is calculated by FIFA,,The acceleration column represents the speed at which a player can accelerate on the field.
+522,european_football_2,Player_Attributes,sprint_speed,sprint speed,"the player's sprint speed
+",integer,0-100 which is calculated by FIFA,,The primary purpose of the sprint_speed column is to store the player's speed while sprinting.
+523,european_football_2,Player_Attributes,agility,,the player's agility,integer,0-100 which is calculated by FIFA,,"The primary purpose of the agility column is to represent the player's agility rating, which is likely a measure of their ability to quickly change direction, accelerate, and decelerate during a game."
+524,european_football_2,Player_Attributes,reactions,,the player's reactions score,integer,0-100 which is calculated by FIFA,,"The primary purpose of the reactions column is to store the player's reaction speed, which is a measure of their ability to quickly respond to situations on the field."
+525,european_football_2,Player_Attributes,balance,,the player's balance score,integer,0-100 which is calculated by FIFA,,"The balance column in the Player_Attributes table represents the player's balance, which is a measure of their ability to maintain their position on the field and resist opponents' attempts to knock them off balance."
+526,european_football_2,Player_Attributes,shot_power,shot power,the player's shot power,integer,0-100 which is calculated by FIFA,,"The primary purpose of the shot_power column is to store the shooting power rating of a player, indicating their ability to score goals."
+527,european_football_2,Player_Attributes,jumping,,the player's jumping score,integer,0-100 which is calculated by FIFA,,The primary purpose of the jumping column is to represent the jumping ability of a player.
+528,european_football_2,Player_Attributes,stamina,,the player's stamina score,integer,0-100 which is calculated by FIFA,,"The primary purpose of the stamina column is to store the stamina rating of a player, which represents their endurance and ability to maintain a high level of performance throughout a match."
+529,european_football_2,Player_Attributes,strength,,the player's strength score,integer,0-100 which is calculated by FIFA,,The primary purpose of the strength column is to represent the physical strength of a player.
+530,european_football_2,Player_Attributes,long_shots,long shots,the player's long shots score,integer,0-100 which is calculated by FIFA,,The long_shots column represents the player's ability to score goals from outside the penalty area.
+531,european_football_2,Player_Attributes,aggression,,the player's aggression score,integer,0-100 which is calculated by FIFA,,"The primary purpose of the aggression column is to measure the player's willingness to engage in physical confrontations during a game, with higher values indicating a more aggressive playing style."
+532,european_football_2,Player_Attributes,interceptions,,the player's interceptions score,integer,0-100 which is calculated by FIFA,,The primary purpose of the column interceptions is to represent the number of interceptions made by a player.
+533,european_football_2,Player_Attributes,positioning,,"the player's 
+positioning score
+",integer,0-100 which is calculated by FIFA,,The primary purpose of the positioning column is to represent the ability of a player to position themselves effectively on the field.
+534,european_football_2,Player_Attributes,vision,,"the player's vision score
+",integer,0-100 which is calculated by FIFA,,"The primary purpose of the ""vision"" column is to measure a player's ability to read the game, make accurate passes, and create scoring opportunities for their teammates."
+535,european_football_2,Player_Attributes,penalties,,"the player's penalties score
+",integer,0-100 which is calculated by FIFA,,"The penalties column represents the player's penalty-taking ability, with higher values indicating greater proficiency in scoring penalties."
+536,european_football_2,Player_Attributes,marking,,the player's markingscore,integer,0-100 which is calculated by FIFA,,The primary purpose of the marking column is to record the player's ability to intercept and win the ball in defensive situations.
+537,european_football_2,Player_Attributes,standing_tackle,standing tackle,the player's standing tackle score,integer,0-100 which is calculated by FIFA,,The primary purpose of the standing_tackle column is to record the player's ability to tackle the ball while standing.
+538,european_football_2,Player_Attributes,sliding_tackle,sliding tackle,the player's sliding tackle score,integer,0-100 which is calculated by FIFA,,The primary purpose of the sliding_tackle column is to record the player's ability to slide tackle the ball away from the opponent.
+539,european_football_2,Player_Attributes,gk_diving,goalkeep diving,the player's goalkeep diving score,integer,0-100 which is calculated by FIFA,,"The primary purpose of the gk_diving column is to store the diving ability of a goalkeeper, with values representing their proficiency in this skill."
+540,european_football_2,Player_Attributes,gk_handling,goalkeep handling,the player's goalkeep diving score,integer,0-100 which is calculated by FIFA,,The primary purpose of the gk_handling column is to store the goalkeeper's handling skills.
+541,european_football_2,Player_Attributes,gk_kicking,goalkeep kicking,the player's goalkeep kicking score,integer,0-100 which is calculated by FIFA,,The primary purpose of the gk_kicking column is to store the goalkeeper's kicking ability.
+542,european_football_2,Player_Attributes,gk_positioning,goalkeep positioning,the player's goalkeep positioning score,integer,0-100 which is calculated by FIFA,,The primary purpose of the gk_positioning column is to store the goalkeeper's positioning ability.
+543,european_football_2,Player_Attributes,gk_reflexes,goalkeep reflexes,the player's goalkeep reflexes score,integer,0-100 which is calculated by FIFA,,The primary purpose of the gk_reflexes column is to store the goalkeeper's reflexes rating.
+544,european_football_2,Team,id,,the unique id for teams,integer,,P,The primary purpose of the column is to uniquely identify each team in the Team table.
+545,european_football_2,Team,team_api_id,team api id,the id of the team api,integer,,,The primary purpose of the team_api_id column is to uniquely identify each team in the Team table.
+546,european_football_2,Team,team_fifa_api_id,team federation international football association api id,the id of the team fifa api,integer,,,The primary purpose of the column team_fifa_api_id is to uniquely identify teams in the FIFA API.
+547,european_football_2,Team,team_long_name,team long name,the team's long name,text,,,The primary purpose of the column team_long_name is to store the full name of a football team.
+548,european_football_2,Team,team_short_name,team short name,the team's short name,text,,,"The primary purpose of the column team_short_name is to store a unique, shortened name for each team."
+549,european_football_2,Team_Attributes,id,,the unique id for teams,integer,,P,"The id column is a primary key that uniquely identifies each record in the Team_Attributes table, serving as a unique identifier for each team's attributes."
+550,european_football_2,Team_Attributes,team_fifa_api_id,team federation international football association api id,the id of the team fifa api,integer,,F,The primary purpose of the team_fifa_api_id column is to uniquely identify a team in the FIFA API.
+551,european_football_2,Team_Attributes,team_api_id,team api id,the id of the team api,integer,,F,The primary purpose of the column team_api_id is to uniquely identify a team.
+552,european_football_2,Team_Attributes,date,,Date,text,e.g. 2010-02-22 00:00:00,,The date column stores the date of the match or event for which the team attributes are recorded.
+553,european_football_2,Team_Attributes,buildUpPlaySpeed,build Up Play Speed,the speed in which attacks are put together ,integer,the score which is between 1-00 to measure the team's attack speed,,"The primary purpose of the buildUpPlaySpeed column is to represent the speed at which a team builds up play, with higher values indicating faster build-up play and lower values indicating slower build-up play."
+554,european_football_2,Team_Attributes,buildUpPlaySpeedClass,build Up Play Speed Class,the speed class,text,"commonsense reasoning: 
+ Slow: 1-33
+ Balanced: 34-66
+ Fast: 66-100",,The primary purpose of the buildUpPlaySpeedClass column is to categorize the build-up play speed of a team.
+555,european_football_2,Team_Attributes,buildUpPlayDribbling,build Up Play Dribbling,the tendency/ frequency of dribbling,integer,,,The primary purpose of the buildUpPlayDribbling column is to store the team's ability to dribble the ball during build-up play.
+556,european_football_2,Team_Attributes,buildUpPlayDribblingClass,build Up Play Dribbling Class,the dribbling class,text,"commonsense reasoning: 
+ Little: 1-33
+ Normal: 34-66
+ Lots: 66-100",,"The primary purpose of the buildUpPlayDribblingClass column is to categorize the team's build-up play dribbling ability into different classes, likely indicating the level of proficiency in controlling the ball and creating scoring opportunities through dribbling."
+557,european_football_2,Team_Attributes,buildUpPlayPassing,build Up Play Passing,affects passing distance and support from teammates,integer,,,The primary purpose of the buildUpPlayPassing column is to store the team's passing ability in build-up play.
+558,european_football_2,Team_Attributes,buildUpPlayPassingClass,build Up Play Passing Class,the passing class,text,"commonsense reasoning: 
+ Short: 1-33
+ Mixed: 34-66
+ Long: 66-100",,"The primary purpose of the buildUpPlayPassingClass column is to categorize the build-up play passing ability of a team, with possible values indicating the level of effectiveness in this aspect of the game."
+559,european_football_2,Team_Attributes,buildUpPlayPositioningClass,build Up Play Positioning Class,A team's freedom of movement in the 1st two thirds of the pitch,text,Organised / Free Form,,The primary purpose of the buildUpPlayPositioningClass column is to classify the team's build-up play positioning.
+560,european_football_2,Team_Attributes,chanceCreationPassing,chance Creation Passing,Amount of risk in pass decision and run support,integer,,,"The chanceCreationPassing column represents the team's chance creation passing ability, with possible values indicating the level of effectiveness in creating goal-scoring opportunities through passing."
+561,european_football_2,Team_Attributes,chanceCreationPassingClass,chance Creation Passing Class,the chance creation passing class,text,"commonsense reasoning: 
+ Safe: 1-33
+ Normal: 34-66
+ Risky: 66-100",,"The chanceCreationPassingClass column describes the class of chance creation passing for a team, with possible values indicating the level of passing ability."
+562,european_football_2,Team_Attributes,chanceCreationCrossing,chance Creation Crossing,The tendency / frequency of crosses into the box,integer,,,"The chanceCreationCrossing column represents the team's ability to create chances through crossing, with values ranging from Normal to Lots."
+563,european_football_2,Team_Attributes,chanceCreationCrossingClass,chance Creation Crossing Class,the chance creation crossing class,text,"commonsense reasoning: 
+ Little: 1-33
+ Normal: 34-66
+ Lots: 66-100",,"This column, chanceCreationCrossingClass, represents the class of chance creation through crossing, categorizing the team's ability to create scoring opportunities through crosses."
+564,european_football_2,Team_Attributes,chanceCreationShooting,chance Creation Shooting,The tendency / frequency of shots taken,integer,,,The primary purpose of the chanceCreationShooting column is to store the team's ability to create shooting chances.
+565,european_football_2,Team_Attributes,chanceCreationShootingClass,chance Creation Shooting Class,the chance creation shooting class,text,"commonsense reasoning: 
+ Little: 1-33
+ Normal: 34-66
+ Lots: 66-100",,The primary purpose of the chanceCreationShootingClass column is to categorize the team's chance creation shooting abilities into different classes.
+566,european_football_2,Team_Attributes,chanceCreationPositioningClass,chance Creation Positioning Class,A teams freedom of movement in the final third of the pitch,text,Organised / Free Form,,"The chanceCreationPositioningClass column describes the team's positioning for creating chances, with possible values indicating the level of organisation, depth, and width of the team's positioning."
+567,european_football_2,Team_Attributes,defencePressure,defence Pressure,Affects how high up the pitch the team will start pressuring,integer,,,The primary purpose of the defencePressure column is to record the level of pressure exerted by the team's defenders on the opponent's players.
+568,european_football_2,Team_Attributes,defencePressureClass,defence Pressure Class,the defence pressure class,text,"commonsense reasoning: 
+ Deep: 1-33
+ Medium: 34-66
+ High: 66-100",,"The defencePressureClass column represents the class of a team's defensive pressure, which is a measure of how aggressively the team applies pressure on the opponent's defense."
+569,european_football_2,Team_Attributes,defenceAggression,defence Aggression,Affect the teams approach to tackling the ball possessor,integer,,,The defenceAggression column represents the level of aggression employed by a team's defence in their gameplay strategy.
+570,european_football_2,Team_Attributes,defenceAggressionClass,defence Aggression Class,the defence aggression class,text,"commonsense reasoning: 
+ Contain: 1-33
+ Press: 34-66
+ Double: 66-100",,The defenceAggressionClass column represents the level of defensive aggression exhibited by a team.
+571,european_football_2,Team_Attributes,defenceTeamWidth,defence Team Width,Affects how much the team will shift to the ball side,integer,,,The primary purpose of the defenceTeamWidth column is to measure the width of a team's defensive formation.
+572,european_football_2,Team_Attributes,defenceTeamWidthClass,defence Team Width Class,the defence team width class,text,"commonsense reasoning: 
+ Narrow: 1-33
+ Normal: 34-66
+ Wide: 66-100",,"The defenceTeamWidthClass column represents the classification of a team's defence width, with possible values indicating the team's defensive strategy."
+573,european_football_2,Team_Attributes,defenceDefenderLineClass,defence Defender Line Class,Affects the shape and strategy of the defence,text,Cover/ Offside Trap,,"The defenceDefenderLineClass column represents the defensive strategy employed by a team, with possible values indicating the depth and width of the team's defensive line."
+574,thrombosis_prediction,Examination,ID,,identification of the patient,integer,,F,The primary purpose of the ID column is to uniquely identify each examination record.
+575,thrombosis_prediction,Examination,Examination Date,,Examination Date,date ,,,The primary purpose of the Examination Date column is to record the date of a medical examination.
+576,thrombosis_prediction,Examination,aCL IgG,anti-Cardiolipin antibody (IgG) ,anti-Cardiolipin antibody (IgG) concentration,real,,,The primary purpose of the aCL IgG column is to store the IgG antibody levels in the blood of patients undergoing examination.
+577,thrombosis_prediction,Examination,aCL IgM,anti-Cardiolipin antibody (IgM) ,anti-Cardiolipin antibody (IgM) concentration,real,,,The primary purpose of the aCL IgM column is to store the IgM antibody concentration levels in patients undergoing examination.
+578,thrombosis_prediction,Examination,ANA,anti-nucleus antibody ,anti-nucleus antibody concentration,integer,,,"The primary purpose of the ANA column is to store the Anti-Nuclear Antibody test results, which indicate the presence or absence of ANA in a patient's blood."
+579,thrombosis_prediction,Examination,ANA Pattern,pattern observed in the sheet of ANA examination,pattern observed in the sheet of ANA examination,text,,,"The primary purpose of the ANA Pattern column is to store the pattern of Antinuclear Antibodies (ANA) detected in a patient's examination, which can help diagnose autoimmune disorders such as lupus and rheumatoid arthritis."
+580,thrombosis_prediction,Examination,aCL IgA,anti-Cardiolipin antibody (IgA) concentration,anti-Cardiolipin antibody (IgA) concentration,integer,,,The primary purpose of the aCL IgA column is to store the IgA antibody levels in patients undergoing an examination.
+581,thrombosis_prediction,Examination,Diagnosis,,disease names,text,,,The primary purpose of the Diagnosis column is to record the medical diagnosis of the patient.
+582,thrombosis_prediction,Examination,KCT,measure of degree of coagulation,measure of degree of coagulation,text,"+: positive
+
+-: negative",,"The primary purpose of the KCT column is: ""Indicates the presence or absence of a specific medical condition."""
+583,thrombosis_prediction,Examination,RVVT,measure of degree of coagulation,measure of degree of coagulation,text,"+: positive
+
+-: negative",,RVVT is a TEXT column indicating the result of a Ristocetin-induced Platelet Aggregation test.
+584,thrombosis_prediction,Examination,LAC,measure of degree of coagulation,measure of degree of coagulation,text,"+: positive
+
+-: negative",,"The LAC column represents the presence or absence of Lupus Anticoagulant Complex, with values indicating whether it is present (+) or absent (-)."
+585,thrombosis_prediction,Examination,Symptoms,,other symptoms observed,text,,,The Symptoms column records the patient's reported symptoms at the time of examination.
+586,thrombosis_prediction,Examination,Thrombosis,,degree of thrombosis,integer,"0: negative (no thrombosis)
+1: positive (the most severe one)
+2: positive (severe)3: positive (mild)",,The primary purpose of the Thrombosis column is to record the presence or absence of thrombosis in the patient.
+587,thrombosis_prediction,Laboratory,ID,,identification of the patient,integer,,F,The primary purpose of the ID column is to uniquely identify each laboratory test result.
+588,thrombosis_prediction,Laboratory,Date,,Date of the laboratory tests (YYMMDD),date,,P,"The Date column represents the date of laboratory tests or examinations, serving as a primary identifier for each test result."
+589,thrombosis_prediction,Laboratory,GOT,AST glutamic oxaloacetic transaminase,AST glutamic oxaloacetic transaminase,integer,"Commonsense evidence:
+
+Normal range: N < 60",,"The GOT column represents the Gamma Glutamyl Transpeptidase enzyme level, which is a measure of liver function."
+590,thrombosis_prediction,Laboratory,GPT,ALT glutamic pyruvic transaminase,ALT glutamic pyruvic transaminase,integer,"Commonsense evidence:
+
+Normal range: N < 60",,The primary purpose of the GPT column is to store the results of a liver function test.
+591,thrombosis_prediction,Laboratory,LDH,lactate dehydrogenase,lactate dehydrogenase,integer,"Commonsense evidence:
+
+Normal range: N < 500",,The primary purpose of the LDH column is to store laboratory test results for the enzyme lactate dehydrogenase.
+592,thrombosis_prediction,Laboratory,ALP,alkaliphophatase,alkaliphophatase,integer,"Commonsense evidence:
+
+Normal range: N < 300",,"The primary purpose of the ALP column is to store the level of Alkaline Phosphatase, a biochemical marker, in the laboratory test results."
+593,thrombosis_prediction,Laboratory,TP,total protein,total protein,real,"Commonsense evidence:
+
+Normal range: 6.0 < N < 8.5",,"The primary purpose of the TP column is to store the value of Total Protein, a measure of the total amount of protein present in the blood."
+594,thrombosis_prediction,Laboratory,ALB,albumin,albumin,real,"Commonsense evidence:
+
+Normal range: 3.5 < N < 5.5",,The ALB column represents Albumin levels.
+595,thrombosis_prediction,Laboratory,UA,uric acid,uric acid,real,"Commonsense evidence:
+
+Normal range: N > 8.0 (Male)N > 6.5 (Female)",,The UA column appears to represent the quantity of Unconjugated Alkaline Phosphatase (UA) in a patient's blood sample.
+596,thrombosis_prediction,Laboratory,UN,urea nitrogen,urea nitrogen,integer,"Commonsense evidence:
+
+Normal range: N < 30",,"The UN column appears to represent the level of Urea Nitrogen in the patient's blood sample, with values in units of INTEGER."
+597,thrombosis_prediction,Laboratory,CRE,creatinine,creatinine,real,"Commonsense evidence:
+
+Normal range: N < 1.5",,The primary purpose of the CRE column is to store the Creatinine Enzyme activity levels.
+598,thrombosis_prediction,Laboratory,T-BIL,total bilirubin,total bilirubin,real,"Commonsense evidence:
+
+Normal range: N < 2.0",,The primary purpose of the T-BIL column is to store the total bilirubin level measurement.
+599,thrombosis_prediction,Laboratory,T-CHO,total cholesterol,total cholesterol,integer,"Commonsense evidence:
+Normal range: N < 250",,The primary purpose of the T-CHO column is to store the total cholesterol value.
+600,thrombosis_prediction,Laboratory,TG,triglyceride,triglyceride,integer,"Commonsense evidence:
+
+Normal range: N < 200",,The primary purpose of the TG column is to store the value of Thromboglobulin.
+601,thrombosis_prediction,Laboratory,CPK,creatinine phosphokinase,creatinine phosphokinase,integer,"Commonsense evidence:
+Normal range: N < 250",,The primary purpose of the CPK column is to store the Creatine Phosphokinase enzyme levels in the patient's blood sample.
+602,thrombosis_prediction,Laboratory,GLU,blood glucose,blood glucose,integer,"Commonsense evidence:
+Normal range: N < 180",,The primary purpose of the GLU column is to store the glucose value.
+603,thrombosis_prediction,Laboratory,WBC,White blood cell,White blood cell,real,"Commonsense evidence:
+Normal range: 3.5 < N < 9.0",,"The primary purpose of the WBC column is to store the white blood cell count, which is a measure of the number of white blood cells present in a patient's blood sample."
+604,thrombosis_prediction,Laboratory,RBC,Red blood cell,Red blood cell,real,"Commonsense evidence:
+
+Normal range: 3.5 < N < 6.0",,The primary purpose of the RBC column is to store the Red Blood Cell count measurement for each patient.
+605,thrombosis_prediction,Laboratory,HGB,Hemoglobin,Hemoglobin,real,"Commonsense evidence:
+
+Normal range: 10 < N < 17",,The primary purpose of the HGB column is to store the hemoglobin level of a patient.
+606,thrombosis_prediction,Laboratory,HCT,Hematoclit,Hematoclit,real,"Commonsense evidence:
+Normal range: 29 < N < 52",,The primary purpose of the HCT column is to store the percentage of red blood cells in a sample.
+607,thrombosis_prediction,Laboratory,PLT,platelet,platelet,integer,"Commonsense evidence:
+
+Normal range: 100 < N < 400",,The primary purpose of the PLT column is to store the platelet count measurement.
+608,thrombosis_prediction,Laboratory,PT,prothrombin time,prothrombin time,real,"Commonsense evidence:
+
+Normal range: N < 14",,"The primary purpose of the PT column is to store the Prothrombin Time measurement, which is a laboratory test used to evaluate blood clotting ability."
+609,thrombosis_prediction,Laboratory,APTT,activated partial prothrombin time,activated partial prothrombin time,integer,"Commonsense evidence:
+
+Normal range: N < 45",,"The primary purpose of the APTT column is to store the results of the Activated Partial Thromboplastin Time test, a laboratory test used to measure the clotting ability of blood."
+610,thrombosis_prediction,Laboratory,FG,fibrinogen,fibrinogen,real,"Commonsense evidence:
+
+Normal range: 150 < N < 450",,"The primary purpose of the FG column is: ""Serum protein fraction value."""
+611,thrombosis_prediction,Laboratory,PIC,,,,,,The PIC column represents the Platelet Count value.
+612,thrombosis_prediction,Laboratory,TAT,,,,,,The primary purpose of the TAT column is to store the Tissue Antigen Titre values.
+613,thrombosis_prediction,Laboratory,TAT2,,,,,,"The primary purpose of the TAT2 column is to store the value of TAT2, a measurement likely related to the thrombin-antithrombin complex activity test."
+614,thrombosis_prediction,Laboratory,U-PRO,proteinuria,proteinuria,text,"Commonsense evidence:
+
+Normal range: 0 < N < 30",,Not enough information to make a valid prediction.
+615,thrombosis_prediction,Laboratory,IGG,Ig G,Ig G,integer,"Commonsense evidence:
+
+Normal range: 900 < N < 2000",,"The IGG column represents the level of Immunoglobulin G in a patient's blood sample, measured in units of unknown type."
+616,thrombosis_prediction,Laboratory,IGA,Ig A,Ig A,integer,"Commonsense evidence:
+
+Normal range: 80 < N < 500",,The IGA column represents the quantity of Immunoglobulin A in the laboratory test results.
+617,thrombosis_prediction,Laboratory,IGM,Ig M,Ig M,integer,"Commonsense evidence:
+
+Normal range: 40 < N < 400",,"The primary purpose of the IGM column is to store the value of Immunoglobulin M, a type of antibody, in the Laboratory table."
+618,thrombosis_prediction,Laboratory,CRP,C-reactive protein,C-reactive protein,text,"Commonsense evidence:
+
+Normal range: N= -, +-, or N < 1.0",,"The CRP column stores the result of a blood test, specifically the C-reactive protein level."
+619,thrombosis_prediction,Laboratory,RA,Rhuematoid Factor,Rhuematoid Factor,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,"The primary purpose of the RA column is: ""Stores the result of a Rheumatoid Arthritis test."""
+620,thrombosis_prediction,Laboratory,RF,RAHA,RAHA,text,"Commonsense evidence:
+
+Normal range: N < 20",,"The RF column represents the Rheumatoid Factor, which is a primary purpose of this column."
+621,thrombosis_prediction,Laboratory,C3,complement 3,complement 3,integer,"Commonsense evidence:
+
+Normal range: N > 35",,"The primary purpose of the C3 column is to store the value of C3, which appears to be a measurement or quantity related to the patient's condition."
+622,thrombosis_prediction,Laboratory,C4,complement 4,complement 4,integer,"Commonsense evidence:
+
+Normal range: N > 10",,The primary purpose of the C4 column is to store the value of a laboratory test result.
+623,thrombosis_prediction,Laboratory,RNP,anti-ribonuclear protein,anti-ribonuclear protein,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,The primary purpose of the RNP column is to store text data representing Rheumatoid Nucleoprotein antibody test results.
+624,thrombosis_prediction,Laboratory,SM,anti-SM,anti-SM,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,The primary purpose of the SM column is to store a value.
+625,thrombosis_prediction,Laboratory,SC170,anti-scl70,anti-scl70,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,"The primary purpose of the SC170 column is: ""Not enough information to make a valid prediction."""
+626,thrombosis_prediction,Laboratory,SSA,anti-SSA,anti-SSA,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,"The SSA column appears to contain text data, likely representing the results of a test or examination."
+627,thrombosis_prediction,Laboratory,SSB,anti-SSB,anti-SSB,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,"The SSB column appears to store text data, likely representing the result of a laboratory test or a medical condition, specifically Systemic Lupus Erythematosus (SLE) antibody."
+628,thrombosis_prediction,Laboratory,CENTROMEA,anti-centromere,anti-centromere,text,"Commonsense evidence:
+
+Normal range: N= -, +-",,The CENTROMEA column appears to store text data related to centromere measurements.
+629,thrombosis_prediction,Laboratory,DNA,anti-DNA,anti-DNA,text,"Commonsense evidence:
+
+Normal range: N < 8",,"The primary purpose of the DNA column is: ""Stores the DNA test results for a patient."""
+630,thrombosis_prediction,Laboratory,DNA-II,anti-DNA,anti-DNA,integer,"Commonsense evidence:
+
+Normal range: N < 8",,The primary purpose of the DNA-II column is to store the DNA-II test result values.
+631,thrombosis_prediction,Patient,ID,,identification of the patient,integer,,P,The ID column is a primary key that uniquely identifies each patient record.
+632,thrombosis_prediction,Patient,SEX,,Sex,text,F: female; M: male,,"The column SEX stores the biological sex of the patient, with possible values being ""F"" for female and ""M"" for male."
+633,thrombosis_prediction,Patient,Birthday,,Birthday,date,,,The Birthday column stores the date of birth for patients.
+634,thrombosis_prediction,Patient,Description,,the first date when a patient data was recorded,date,null or empty: not recorded,,The primary purpose of the Description column is to store a date.
+635,thrombosis_prediction,Patient,First Date,,the date when a patient came to the hospital,date,,,The First Date column stores the date of the patient's first visit or admission to a medical facility.
+636,thrombosis_prediction,Patient,Admission,,patient was admitted to the hospital (+) or followed at the outpatient clinic (-),text,patient was admitted to the hospital (+) or followed at the outpatient clinic (-),,"The Admission column records the patient's admission status, with possible values being '+' for admitted and '-' for not admitted."
+637,thrombosis_prediction,Patient,Diagnosis,,disease names,text,,,The Diagnosis column contains a list of medical conditions or diseases diagnosed for each patient.
+638,toxicology,bond,bond_id,,unique id representing bonds,text,"TRxxx_A1_A2:
+TRXXX refers to which molecule
+A1 and A2 refers to which atom",P,The primary purpose of the column bond_id is to uniquely identify a bond in the bond table.
+639,toxicology,bond,molecule_id,,identifying the molecule in which the bond appears,text,,F,The primary purpose of the column molecule_id is to uniquely identify a molecule that is involved in a bond relationship.
+640,toxicology,bond,bond_type,,type of the bond,text,"commonsense evidence:
+-: single bond
+'=': double bond
+'#': triple bond",,The primary purpose of the bond_type column is to classify the type of bond between atoms in a molecule.
+641,toxicology,molecule,molecule_id,molecule id,unique id of molecule,text,"""+"" --> this molecule / compound is carcinogenic
+'-' this molecule is not / compound carcinogenic",P,"Primary purpose of the column: Unique identifier for each molecule.
+
+Additional useful information: It appears to be a TEXT data type."
+642,toxicology,molecule,label,,whether this molecule is carcinogenic or not,text,,,The primary purpose of the label column is to store a label or description for each molecule.
+643,toxicology,atom,atom_id,atom id,the unique id of atoms,text,,P,The primary purpose of the column atom_id is to uniquely identify an atom in the database.
+644,toxicology,atom,molecule_id,molecule id,identifying the molecule to which the atom belongs,text,"commonsense evidence:
+TRXXX_i represents ith atom of molecule TRXXX",F,The primary purpose of the column molecule_id is to uniquely identify a molecule to which an atom belongs.
+645,toxicology,atom,element,,the element of the toxicology ,text," cl: chlorine
+ c: carbon
+ h: hydrogen
+ o: oxygen
+ s: sulfur
+ n: nitrogen
+ p: phosphorus
+ na: sodium
+ br: bromine
+ f: fluorine
+ i: iodine
+ sn: Tin
+ pb: lead
+ te: tellurium
+ ca: Calcium",,"The primary purpose of the column ""element"" is to store the chemical element associated with each atom."
+646,toxicology,connected,atom_id,atom id,id of the first atom,text,,F,The primary purpose of the atom_id column is to uniquely identify an atom in the connected table.
+647,toxicology,connected,atom_id2,atom id 2,id of the second atom,text,,F,"The primary purpose of the atom_id2 column is to store the identifier of another atom in a molecule, representing a connection between two atoms."
+648,toxicology,connected,bond_id,bond id,bond id representing bond between two atoms,text,,F,The primary purpose of the bond_id column is to uniquely identify a bond between two atoms.
+649,student_club,income,income_id,income id,A unique identifier for each record of income,text,,P,Primary purpose of the column: Unique identifier for each income record.
+650,student_club,income,date_received,date received,the date that the fund received,text,,,The primary purpose of the date_received column is to store the date when income was received.
+651,student_club,income,amount,,amount of funds,integer,the unit is dollar,,"The amount column represents the financial value of income received, primarily used to track dues and other forms of revenue."
+652,student_club,income,source,,"A value indicating where the funds come from such as dues, or the annual university allocation",text,,,"The source column appears to store the origin of income, with primary values including ""Dues"" and ""Fundraising"", indicating that the income is generated from membership fees or fundraising events."
+653,student_club,income,notes,,A free-text value giving any needed details about the receipt of funds,text,,,"The notes column stores additional information related to the income source, such as details about the fundraising event or secured donations."
+654,student_club,income,link_to_member,link to member,link to member,text,,F,"The primary purpose of the link_to_member column is to establish a foreign key relationship between the income table and the member table, referencing the member_id column in the member table."
+655,student_club,budget,budget_id,budget id,A unique identifier for the budget entry,text,,P,Primary purpose of the column: Unique identifier for each budget record.
+656,student_club,budget,category,,"The area for which the amount is budgeted, such as, advertisement, food, parking",text,,,"The primary purpose of the category column is to categorize the budget entries into different types, such as Advertisement, Food, Parking, and Speaker Gifts."
+657,student_club,budget,spent,,The total amount spent in the budgeted category for an event.,real,the unit is dollar. This is summarized from the Expense table,,"The primary purpose of the ""spent"" column is to record the amount of money that has been spent in a particular budget category."
+658,student_club,budget,remaining,,A value calculated as the amount budgeted minus the amount spent,real,"the unit is dollar 
+commonsense evidence: If the remaining < 0, it means that the cost has exceeded the budget.",,"The primary purpose of the ""remaining"" column is to track the amount of funds still available for a specific budget category after expenses have been deducted from the total budget amount."
+659,student_club,budget,amount,,The amount budgeted for the specified category and event,integer,"the unit is dollar 
+commonsense evidence:
+some computation like: amount = spent + remaining ",,"The primary purpose of the ""amount"" column is to store the total monetary value of a budget entry."
+660,student_club,budget,event_status,event status,the status of the event,text,"Closed / Open/ Planning 
+commonsense evidence: 
+ Closed: It means that the event is closed. The spent and the remaining won't change anymore.
+ Open: It means that the event is already opened. The spent and the remaining will change with new expenses.
+ Planning: The event is not started yet but is planning. The spent and the remaining won't change at this stage. ",,"The primary purpose of the event_status column is to track the current status of an event's budget, with possible values including ""Closed"", ""Open"", and ""Planning""."
+661,student_club,budget,link_to_event,link to event,The unique identifier of the event to which the budget line applies.,text,References the Event table,F,"The primary purpose of the link_to_event column is to establish a foreign key relationship with the event_id column in the event table, linking a budget entry to a specific event."
+662,student_club,attendance,link_to_event,link to event,The unique identifier of the event which was attended,text,References the Event table,F,The primary purpose of the link_to_event column is to establish a relationship between an event and a member's attendance.
+663,student_club,attendance,link_to_member,link to member,The unique identifier of the member who attended the event,text,References the Member table,F,"This column represents a foreign key linking an event to a member who attended it, allowing for tracking of attendance records."
+664,student_club,event,event_id,event id,A unique identifier for the event,text,,P,"The primary purpose of the column event_id is to uniquely identify each event in the event table, serving as the primary key."
+665,student_club,event,event_name,event name,event name,text,,,"The event_name column stores the name of events, which are meetings, games, elections, and other activities."
+666,student_club,event,event_date,event date,The date the event took place or is scheduled to take place,text,e.g. 2020-03-10T12:00:00,,The primary purpose of the event_date column is to store the date of each event.
+667,student_club,event,type,,"The kind of event, such as game, social, election",text,,,"The type column represents the primary purpose of the event, which can be either a Meeting, Election, Game, Guest Speaker, or Social activity."
+668,student_club,event,notes,,A free text field for any notes about the event,text,,,"The notes column appears to store additional information or comments related to the event, such as details about the event, reminders, or any other relevant information."
+669,student_club,event,location,,Address where the event was held or is to be held or the name of such a location,text,,,The location column stores the physical address or venue where the event is taking place.
+670,student_club,event,status,,"One of three values indicating if the event is in planning, is opened, or is closed",text,Open/ Closed/ Planning,,"The primary purpose of the column ""status"" is to track the current state of an event, with possible values including ""Open"", ""Planning"", ""Closed"", and others."
+671,student_club,expense,expense_id,expense id,unique id of income,text,,P,The primary purpose of the expense_id column is to uniquely identify each expense record.
+672,student_club,expense,expense_description,expense description,A textual description of what the money was spend for,text,,,"This column describes the expense or expenditure made by the organization, such as Post Cards, Posters, Water, Cookies, Pizza, Parking, etc."
+673,student_club,expense,expense_date,expense date,The date the expense was incurred,text,e.g. YYYY-MM-DD,,"The primary purpose of the column ""expense_date"" is to record the date when an expense was incurred."
+674,student_club,expense,cost,,The dollar amount of the expense,real,the unit is dollar,,The primary purpose of the cost column is to store the monetary value of an expense.
+675,student_club,expense,approved,,A true or false value indicating if the expense was approved,text,true/ false,,The approved column indicates whether the expense has been approved or not.
+676,student_club,expense,link_to_member,link to member,The member who incurred the expense,text,,F,The primary purpose of the link_to_member column is to reference the member who is associated with the expense.
+677,student_club,expense,link_to_budget,link to budget,The unique identifier of the record in the Budget table that indicates the expected total expenditure for a given category and event. ,text,References the Budget table,F,"This column links to a budget, allowing expenses to be tracked and managed within a specific financial plan."
+678,student_club,major,major_id,major id,A unique identifier for each major,text,,P,The primary purpose of the major_id column is to uniquely identify each major program.
+679,student_club,major,major_name,major name,major name,text,,,The major_name column in the major table represents the name of a major or academic program.
+680,student_club,major,department,,The name of the department that offers the major,text,,,"The primary purpose of the ""department"" column is to categorize academic programs or disciplines within a major."
+681,student_club,major,college,,The name college that houses the department that offers the major,text,,,"The primary purpose of the column ""college"" is to store the academic institution or department that a major is a part of."
+682,student_club,member,member_id,member id,unique id of member,text,,P,The primary purpose of the member_id column is to uniquely identify each member in the member table.
+683,student_club,member,first_name,first name,member's first name,text,,,"The primary purpose of the column ""first_name"" is to store the given name of a member."
+684,student_club,member,last_name,last name,member's last name,text,"commonsense evidence: 
+full name is first_name + last_name. e.g. A member's first name is Angela and last name is Sanders. Thus, his/her full name is Angela Sanders.",,"The primary purpose of the column ""last_name"" is to store the surname of a member."
+685,student_club,member,email,,member's email,text,,,The primary purpose of the email column is to store the email addresses of members.
+686,student_club,member,position,,The position the member holds in the club,text,,,"The primary purpose of the ""position"" column is to store the role or title held by each member."
+687,student_club,member,t_shirt_size,,The size of tee shirt that member wants when shirts are ordered,text,commonsense evidence: usually the student ordered t-shirt with lager size has bigger body shape ,,The primary purpose of the t_shirt_size column is to store the size of a member's t-shirt.
+688,student_club,member,phone,,The best telephone at which to contact the member,text,,,The primary purpose of the phone column is to store the contact phone number of a member.
+689,student_club,member,zip,,the zip code of the member's hometown,integer,,F,The primary purpose of the zip column is to store the postal code of a member's location.
+690,student_club,member,link_to_major,link to major,The unique identifier of the major of the member. References the Major table,text,,F,The link_to_major column links a member to a specific major.
+691,student_club,zip_code,zip_code,zip code,The ZIP code itself. A five-digit number identifying a US post office.,integer,,P,The primary purpose of the column zip_code is to uniquely identify a zip code.
+692,student_club,zip_code,type,,The kind of ZIP code,text,"commonsense evidence: 
+� Standard: the normal codes with which most people are familiar 
+� PO Box: zip codes have post office boxes 
+� Unique: zip codes that are assigned to individual organizations.",,"The primary purpose of the column ""type"" is to classify the zip_code into different categories, which can be either ""Unique"", ""Standard"", or ""PO Box""."
+693,student_club,zip_code,city,,The city to which the ZIP pertains,text,,,The city column represents the name of the city associated with a specific zip code.
+694,student_club,zip_code,county,,The county to which the ZIP pertains,text,,,The county column represents the administrative division within a state where a zip code is located.
+695,student_club,zip_code,state,,The name of the state to which the ZIP pertains,text,,,The state column in the zip_code table represents the two-letter abbreviation of a state in the United States or Puerto Rico.
+696,student_club,zip_code,short_state,short state,The abbreviation of the state to which the ZIP pertains,text,,,The primary purpose of the short_state column is to store a shortened version of the state name.
+697,superhero,gender,id,,the unique identifier of the gender,integer,,P,The primary purpose of the id column is to uniquely identify each gender.
+698,superhero,gender,gender,,the gender of the superhero,text,,,"The primary purpose of the column is to store the gender of a superhero, with possible values being ""Male"", ""Female"", and ""N/A""."
+699,superhero,superpower,id,,the unique identifier of the superpower,integer,,P,The primary purpose of the id column is to uniquely identify each record in the superpower table.
+700,superhero,superpower,power_name,power name,the superpower name,text,,,"The power_name column in the superpower table represents the primary name of a superpower, which is a unique ability or trait possessed by a superhero."
+701,superhero,publisher,id,,the unique identifier of the publisher,integer,,P,The primary purpose of the id column is to uniquely identify each publisher record.
+702,superhero,publisher,publisher_name,,the name of the publisher,text,,,The primary purpose of the publisher_name column is to store the name of a publisher.
+703,superhero,superhero,id,,the unique identifier of the superhero,integer,,P,The primary purpose of the id column is to uniquely identify each superhero.
+704,superhero,superhero,superhero_name,superhero name,the name of the superhero,text,,,The primary purpose of the column superhero_name is to store the name of a superhero.
+705,superhero,superhero,full_name,full name,the full name of the superhero,text,"commonsense evidence:
+The full name of a person typically consists of their given name, also known as their first name or personal name, and their surname, also known as their last name or family name. For example, if someone's given name is ""John"" and their surname is ""Smith,"" their full name would be ""John Smith.""",,The primary purpose of the full_name column is to store the full name of a superhero.
+706,superhero,superhero,gender_id,gender id,the id of the superhero's gender,integer,,F,"The primary purpose of the gender_id column is to identify the gender of the superhero, with values referencing the id column of the gender table."
+707,superhero,superhero,eye_colour_id,eye colour id,the id of the superhero's eye color,integer,,F,The primary purpose of the eye_colour_id column is to identify the eye color of a superhero.
+708,superhero,superhero,hair_colour_id,hair colour id,the id of the superhero's hair color,integer,,F,The hair_colour_id column represents the colour of the superhero's hair.
+709,superhero,superhero,skin_colour_id,skin colour id,the id of the superhero's skin color,integer,,F,"The primary purpose of the skin_colour_id column is to store the ID of the skin colour of a superhero, referencing the colour table."
+710,superhero,superhero,race_id,race id,the id of the superhero's race,integer,,F,The primary purpose of the race_id column is to identify the racial background of a superhero.
+711,superhero,superhero,publisher_id,publisher id,the id of the publisher,integer,,F,The primary purpose of the publisher_id column is to identify the publisher associated with each superhero.
+712,superhero,superhero,alignment_id,alignment id,the id of the superhero's alignment,integer,,F,"The primary purpose of the column alignment_id is to identify the moral alignment of a superhero, which is a reference to the alignment_id in the alignment table."
+713,superhero,superhero,height_cm,height cm,the height of the superhero,integer,"commonsense evidence:
+The unit of height is centimeter. If the height_cm is NULL or 0, it means the height of the superhero is missing. ",,The primary purpose of the height_cm column is to store the height of a superhero in centimeters.
+714,superhero,superhero,weight_kg,weight kg,the weight of the superhero,integer,"commonsense evidence:
+The unit of weight is kilogram. If the weight_kg is NULL or 0, it means the weight of the superhero is missing.",,The primary purpose of the weight_kg column is to store the weight of a superhero in kilograms.
+715,superhero,colour,id,,the unique identifier of the color,integer,,P,The primary purpose of the id column is to uniquely identify each colour in the colour table.
+716,superhero,colour,colour,,the color of the superhero's skin/eye/hair/etc,text,,,"The primary purpose of the colour column is to store the eye, hair, and skin colours of superheroes."
+717,superhero,attribute,id,,the unique identifier of the attribute,integer,,P,"The primary purpose of the ""id"" column is to uniquely identify each attribute."
+718,superhero,attribute,attribute_name,attribute name,the attribute,text,"commonsense evidence:
+A superhero's attribute is a characteristic or quality that defines who they are and what they are capable of. This could be a physical trait, such as superhuman strength or the ability to fly, or a personal trait, such as extraordinary intelligence or exceptional bravery. ",,The primary purpose of the attribute_name column is to store the names of various attributes that can be possessed by superheroes.
+719,superhero,hero_power,hero_id,hero id,"the id of the hero
+Maps to superhero(id)",integer,,F,The primary purpose of the hero_id column is to identify a specific superhero.
+720,superhero,hero_power,power_id,power id,"the id of the power
+Maps to superpower(id)",integer,"commonsense evidence:
+In general, a superhero's attributes provide the foundation for their abilities and help to define who they are, while their powers are the specific abilities that they use to fight crime and protect others.",F,The primary purpose of the power_id column is to uniquely identify a superpower assigned to a hero.
+721,superhero,race,id,,the unique identifier of the race,integer,,P,The primary purpose of the column is to uniquely identify each record in the race table.
+722,superhero,race,race,,the race of the superhero,text,"commonsense evidence:
+In the context of superheroes, a superhero's race would refer to the particular group of people that the superhero belongs to base on these physical characteristics",,The race column in the race table represents a categorization of superheroes into various species or origins.
+723,superhero,alignment,id,,the unique identifier of the alignment,integer,,P,The primary purpose of the column is to uniquely identify each record in the alignment table.
+724,superhero,alignment,alignment,,the alignment of the superhero,text,"commonsense evidence:
+Alignment refers to a character's moral and ethical stance and can be used to describe the overall attitude or behavior of a superhero. Some common alignments for superheroes include:
+Good: These superheroes are typically kind, selfless, and dedicated to protecting others and upholding justice. Examples of good alignments include Superman, Wonder Woman, and Spider-Man.
+Neutral: These superheroes may not always prioritize the greater good, but they are not necessarily evil either. They may act in their own self-interest or make decisions based on their own moral code. Examples of neutral alignments include the Hulk and Deadpool.
+	Bad: These superheroes are typically selfish, manipulative, and willing to harm others in pursuit of their own goals. Examples of evil alignments include Lex Luthor and the Joker.",,"The primary purpose of the column is to categorize the alignment of a superhero into one of three moral stances: Good, Bad, or Neutral."
+725,superhero,hero_attribute,hero_id,hero id,"the id of the hero
+Maps to superhero(id)",,,F,The hero_id column is used to identify the superhero associated with a specific attribute value.
+726,superhero,hero_attribute,attribute_id,attribute id,"the id of the attribute
+Maps to attribute(id)",,,F,"The primary purpose of the attribute_id column is to store the ID of the attribute associated with a hero, referencing the primary key of the attribute table."
+727,superhero,hero_attribute,attribute_value,attribute value,the attribute value,,"commonsense evidence:
+If a superhero has a higher attribute value on a particular attribute, it means that they are more skilled or powerful in that area compared to other superheroes. For example, if a superhero has a higher attribute value for strength, they may be able to lift heavier objects or deliver more powerful punches than other superheroes.",,The primary purpose of the attribute_value column is to store numerical values representing the level or quantity of a specific attribute associated with a superhero.
+728,codebase_community,postLinks,Id,,the post link id,integer,,P,The primary purpose of the column Id is to uniquely identify each row in the postLinks table.
+729,codebase_community,postLinks,CreationDate,Creation Date,the creation date of the post link,datetime,,,The primary purpose of the CreationDate column is to store the date and time when a link between two posts was created.
+730,codebase_community,postLinks,PostId,Post Id,the post id,integer,,F,The primary purpose of the PostId column is to uniquely identify a post in the posts table.
+731,codebase_community,postLinks,RelatedPostId,Related Post Id,the id of the related post,integer,,F,The RelatedPostId column identifies a post that is related to the post referenced by the PostId.
+732,codebase_community,postLinks,LinkTypeId,Link Type Id,the id of the link type,integer,,,The primary purpose of the LinkTypeId column is to identify the type of link between two posts.
+733,codebase_community,postHistory,Id,,the post history id,integer,,P,The primary purpose of the Id column is to uniquely identify each record in the postHistory table.
+734,codebase_community,postHistory,PostHistoryTypeId,Post History Type Id,the id of the post history type,integer,,,The primary purpose of the PostHistoryTypeId column is to categorize the type of post history.
+735,codebase_community,postHistory,PostId,Post Id,the unique id of the post,integer,,F,"The PostId column identifies a specific post in the database, referencing the primary key of the posts table."
+736,codebase_community,postHistory,RevisionGUID,Revision GUID,the revision globally unique id of the post,integer,,,The RevisionGUID column stores a unique identifier for each revision of a post.
+737,codebase_community,postHistory,CreationDate,Creation Date,the creation date of the post,datetime,,,The primary purpose of the CreationDate column is to record the date and time when the corresponding post history revision was created.
+738,codebase_community,postHistory,UserId,User Id,the user who post the post,integer,,F,The primary purpose of the UserId column is to store the identifier of the user who made the changes to the post's history.
+739,codebase_community,postHistory,Text,,the detailed content of the post,text,,,The primary purpose of the Text column is to store the text content of a post history revision.
+740,codebase_community,postHistory,Comment,,comments of the post,text,,,The Comment column stores additional text information related to the post history revisions.
+741,codebase_community,postHistory,UserDisplayName,User Display Name,user's display name,text,,,The primary purpose of the UserDisplayName column is to store the display name of the user who made a change to a post's history.
+742,codebase_community,badges,Id,,the badge id,integer,,P,The primary purpose of the column is to uniquely identify each record in the table.
+743,codebase_community,badges,UserId,User Id,the unique id of the user,integer,,F,The UserId column represents the unique identifier of a user who has been awarded a badge.
+744,codebase_community,badges,Name,,the badge name the user obtained,text,,,The primary purpose of the Name column is to store a label or title that identifies a badge.
+745,codebase_community,badges,Date,,the date that the user obtained the badge,datetime,,,The Date column represents the timestamp of when a badge was earned.
+746,codebase_community,posts,Id,,the post id,integer,,P,The primary purpose of the column is to uniquely identify each post.
+747,codebase_community,posts,PostTypeId,Post Type Id,the id of the post type,integer,,,The primary purpose of the PostTypeId column is to categorize posts as either questions (PostTypeId = 1) or answers (PostTypeId = 2).
+748,codebase_community,posts,AcceptedAnswerId,Accepted Answer Id,the accepted answer id of the post ,integer,,,The AcceptedAnswerId column represents the identifier of the answer that has been accepted as the best solution to the question.
+749,codebase_community,posts,CreaionDate,Creation Date,the creation date of the post,datetime,,,The primary purpose of the CreaionDate column is to store the date and time when a post was created.
+750,codebase_community,posts,Score,,the score of the post,integer,,,"The primary purpose of the Score column is to represent the score or rating of a post, likely used to measure its quality, relevance, or usefulness."
+751,codebase_community,posts,ViewCount,View Count,the view count of the post,integer,"commonsense evidence:
+Higher view count means the post has higher popularity",,The ViewCount column represents the number of views a post has received.
+752,codebase_community,posts,Body,,the body of the post,text,,,"The primary purpose of the Body column is to store the main content of a post, which can include text, code, or other forms of written content."
+753,codebase_community,posts,OwnerUserId,Owner User Id,the id of the owner user,integer,,F,The primary purpose of the OwnerUserId column is to uniquely identify the user who owns a post.
+754,codebase_community,posts,LasActivityDate,Last Activity Date,the last activity date,datetime,,,The LasActivityDate column records the date of the last activity on a post.
+755,codebase_community,posts,Title,,the title of the post,text,,,The primary purpose of the Title column is to store a brief summary or heading of a post.
+756,codebase_community,posts,Tags,,the tag of the post,text,,,"The primary purpose of the Tags column is to store a list of keywords or labels associated with each post, likely used for categorization, filtering, or searching purposes."
+757,codebase_community,posts,AnswerCount,Answer Count,the total number of answers of the post,integer,,,The primary purpose of the AnswerCount column is to store the number of answers associated with a post.
+758,codebase_community,posts,CommentCount,Comment Count,the total number of comments of the post,integer,,,The CommentCount column represents the number of comments associated with a post.
+759,codebase_community,posts,FavoriteCount,Favorite Count,the total number of favorites of the post,integer,"commonsense evidence:
+more favorite count refers to more valuable posts. ",,The FavoriteCount column represents the number of times a post has been favorited by users.
+760,codebase_community,posts,LastEditorUserId,Last Editor User Id,the id of the last editor,integer,,F,The primary purpose of the LastEditorUserId column is to store the unique identifier of the user who last edited a post.
+761,codebase_community,posts,LastEditDate,Last Edit Date,the last edit date,datetime,,,The LastEditDate column represents the date and time when a post was last edited.
+762,codebase_community,posts,CommunityOwnedDate,Community Owned Date,the community owned date,datetime,,,"The CommunityOwnedDate column represents the date when a post was community-owned, indicating that the post was taken over by the community and no longer maintained by its original owner."
+763,codebase_community,posts,ParentId,ParentId,the id of the parent post,integer,"commonsense evidence:
+If the parent id is null, the post is the root post. Otherwise, the post is the child post of other post. ",F,"The ParentId column is a foreign key referencing the Id column in the posts table, indicating the parent post for a given post."
+764,codebase_community,posts,ClosedDate,Closed Date,the closed date of the post,data_format,"commonsense evidence:
+if ClosedDate is null or empty, it means this post is not well-finished
+if CloseDate is not null or empty, it means this post has well-finished.",,The primary purpose of the ClosedDate column is to record the date when a post was closed.
+765,codebase_community,posts,OwnerDisplayName,Owner Display Name,the display name of the post owner,text,,,The OwnerDisplayName column contains the display name of the owner of each post.
+766,codebase_community,posts,LastEditorDisplayName,Last Editor Display Name,the display name of the last editor,text,,,The LastEditorDisplayName column stores the display name of the user who last edited the post.
+767,codebase_community,users,Id,,the user id,integer,,P,The primary purpose of the Id column is to uniquely identify each user in the database.
+768,codebase_community,users,Reputation,,the user's reputation,integer,"commonsense evidence:
+The user with higher reputation has more influence. ",,"The Reputation column represents the primary purpose of tracking the accumulated reputation points earned by each user, with higher values indicating increased credibility and authority within the community."
+769,codebase_community,users,CreationDate,Creation Date,the creation date of the user account,datetime,,,The CreationDate column in the users table represents the date and time when a user account was created.
+770,codebase_community,users,DisplayName,Display Name,the user's display name,text,,,The primary purpose of the column DisplayName is to store a unique name or identifier for each user in the users table.
+771,codebase_community,users,LastAccessDate,Last Access Date,the last access date of the user account,datetime,,,The LastAccessDate column records the date and time when a user last accessed their account.
+772,codebase_community,users,WebsiteUrl,Website Url,the website url of the user account,text,,,The WebsiteUrl column stores the URL of the website associated with each user.
+773,codebase_community,users,Location,,user's location,text,,,"The Location column in the users table represents the geographical location of the user, which is likely used to provide context and personalize the user's experience on the platform."
+774,codebase_community,users,AboutMe,About Me,the self introduction of the user,text,,,The primary purpose of the AboutMe column is to provide a brief description or biography of the user.
+775,codebase_community,users,Views,,the number of views ,integer,,,The Views column represents the number of views for a user's profile.
+776,codebase_community,users,UpVotes,,the number of upvotes,integer,,,The UpVotes column represents the total number of upvotes received by a user.
+777,codebase_community,users,DownVotes,,the number of downvotes,integer,,,The DownVotes column in the users table represents the number of downvotes received by each user.
+778,codebase_community,users,AccountId,Account Id,the unique id of the account,integer,,,"The AccountId column appears to be a unique identifier for each user's account, serving as a primary key in the users table."
+779,codebase_community,users,Age,,user's age,integer," teenager: 13-18
+ adult: 19-65
+ elder: > 65",,The Age column represents the user's age.
+780,codebase_community,users,ProfileImageUrl,Profile Image Url,the profile image url,text,,,The ProfileImageUrl column appears to store a URL that points to a user's profile image.
+781,codebase_community,tags,Id,,the tag id,integer,,P,The primary purpose of the Id column is to uniquely identify each tag in the database.
+782,codebase_community,tags,TagName,Tag Name,the name of the tag,text,,,The TagName column represents a categorization or label for a specific topic or concept.
+783,codebase_community,tags,Count,,the count of posts that contain this tag,integer,more counts --> this tag is more popular,,The primary purpose of the Count column is to store the number of times a tag has been used in the system.
+784,codebase_community,tags,ExcerptPostId,Excerpt Post Id,the excerpt post id of the tag,integer,,F,The primary purpose of the ExcerptPostId column is to store the ID of the post that is associated with the tag.
+785,codebase_community,tags,WikiPostId,Wiki Post Id,the wiki post id of the tag,text,,,The primary purpose of the WikiPostId column is to store the ID of the post that is associated with the tag's wiki content.
+786,codebase_community,votes,Id,,the vote id,integer,,P,The primary purpose of the column is to uniquely identify each record in the votes table.
+787,codebase_community,votes,PostId,Post Id,the id of the post that is voted,integer,,F,"The PostId column represents the primary key of the posts table, referencing the Id of a specific post in the votes table."
+788,codebase_community,votes,VoteTypeId,Vote Type Id,the id of the vote type,integer,,,The primary purpose of the VoteTypeId column is to identify the type of vote cast.
+789,codebase_community,votes,CreationDate,Creation Date,the creation date of the vote,datetime,,,The primary purpose of the CreationDate column is to record the date when a vote was created.
+790,codebase_community,votes,UserId,User Id,the id of the voter,integer,,F,The primary purpose of the UserId column is to uniquely identify the user who cast the vote.
+791,codebase_community,votes,BountyAmount,Bounty Amount,the amount of bounty,integer,,,The BountyAmount column represents the amount of money offered as a bounty for a post.
+792,codebase_community,comments,Id,,the comment Id,integer,,P,The primary purpose of the column is to uniquely identify each record in the comments table.
+793,codebase_community,comments,PostId,Post Id,the unique id of the post,integer,,F,"The PostId column uniquely identifies a post in the comments table, referencing the primary key of the posts table."
+794,codebase_community,comments,Score,,rating score,integer,"commonsense evidence:
+The score is from 0 to 100. The score more than 60 refers that the comment is a positive comment. The score less than 60 refers that the comment is a negative comment. ",,The Score column represents a numerical value indicating the upvote count for a comment.
+795,codebase_community,comments,Text,,the detailed content of the comment,text,,,The primary purpose of the Text column is to store the written comments or text content of users in the comments table.
+796,codebase_community,comments,CreationDate,Creation Date,the creation date of the comment,datetime,,,The primary purpose of the column CreationDate is to record the date and time when a comment was created.
+797,codebase_community,comments,UserId,User Id,the id of the user who post the comment,integer,,F,The primary purpose of the UserId column is to store the identifier of the user who made a comment.
+798,codebase_community,comments,UserDisplayName,User Display Name,user's display name,text,,,The UserDisplayName column stores the display name of the user who made a comment.

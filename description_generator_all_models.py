@@ -121,8 +121,8 @@ class LLMInterface:
             self.tokenizer = AutoTokenizer.from_pretrained(model_name, token=access_token)      
             
             bnb_config = BitsAndBytesConfig(
-                load_in_4bit=True,
-                bnb_4bit_compute_dtype=torch.float16,
+                load_in_8bit=True,
+                bnb_8bit_compute_dtype=torch.bfloat16,
             )
                   
             self.model = AutoModelForCausalLM.from_pretrained(
@@ -148,12 +148,11 @@ class LLMInterface:
             return response.choices[0].text.strip()
         else:
             #inputs = self.tokenizer(prompt, return_tensors='pt')
-            inputs = self.tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=False, return_tensors="pt", return_dict=True)
+            inputs = self.tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True, return_tensors="pt", return_dict=True)
             input_ids = inputs.input_ids.to('cuda')
-
+                        
             attention_mask = inputs.attention_mask.to('cuda')
   
-            
             output = self.model.generate(
                 input_ids=input_ids,
                 attention_mask=attention_mask,
@@ -168,7 +167,7 @@ class LLMInterface:
             #generated_token_indices = output.sequences[:, input_ids.shape[1]:-1] # Exclude input and EOS tokens
             generated_text = self.tokenizer.decode(generated_token_indices[0], skip_special_tokens=True).strip()
             generated_text = generated_text.replace("```", "")
-                      
+
             return generated_text
         
 
@@ -179,8 +178,23 @@ if __name__ == "__main__":
     # MODEL_NAME = "mistralai/Codestral-22B-v0.1"
     # MODEL_NAME_2 = "mistralai"
 
-    MODEL_NAME = "meta-llama/Meta-Llama-3-70B"
-    MODEL_NAME_2 = "llama-3"
+    #MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct" #CHECK
+    #MODEL_NAME_2 = "llama-3-8B"
+    #MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3" #CHECK
+    #MODEL_NAME_2 = "mistral-7b"
+    # MODEL_NAME = "mistralai/Codestral-22B-v0.1" #CHECK
+    # MODEL_NAME_2 = "codestral"
+    #MODEL_NAME = "meta-llama/Meta-Llama-3-70B-Instruct" #CHECK
+    #MODEL_NAME_2 = "llama-3-70B"
+    #MODEL_NAME = "Qwen/Qwen2-72B-Instruct" #CHECK
+    #MODEL_NAME_2 = "qwen2-72B"
+    #MODEL_NAME = "CohereForAI/c4ai-command-r-plus"
+    #MODEL_NAME_2 = "command-r-plus"
+    MODEL_NAME = "mistralai/Mixtral-8x22B-Instruct-v0.1" #CHECK
+    MODEL_NAME_2 = "mixtral-8x22"
+    
+    
+    print(f"Using model {MODEL_NAME}.")
 
     NUM_EXAMPLES_ALL = 0
     NUM_EXAMPLES_CURRENT = 10
@@ -321,7 +335,7 @@ if __name__ == "__main__":
         # Save every ten columns
         if col_idx % 10 == 0 and col_idx != 0:
             database_df.to_csv(OUTPUT_FILENAME+'.csv', index=True)
-            print(f"Progress saved at {col["database_name"]}, table {col["table_name"]}, and column {col["original_column_name"]}")
+            print(f"Progress saved at {col['database_name']}, table {col['table_name']}, and column {col['original_column_name']}")
 
     # Save column descriptions to database.csv
     database_df.to_csv(OUTPUT_FILENAME+'.csv', index=True)
