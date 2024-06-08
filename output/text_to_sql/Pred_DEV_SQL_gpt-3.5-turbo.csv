@@ -1,0 +1,93 @@
+,question_id,sql_gold,sql_pred,execution_accuracy
+0,0,SELECT `Free Meal Count (K-12)` / `Enrollment (K-12)` FROM frpm WHERE `County Name` = 'Alameda' ORDER BY (CAST(`Free Meal Count (K-12)` AS REAL) / `Enrollment (K-12)`) DESC LIMIT 1,"```sql
+SELECT MAX(`Percent (%) Eligible Free (K-12)`) AS Highest_Eligible_Free_Rate
+FROM frpm
+WHERE `County Name` = 'Alameda County';
+```",0
+1,1,SELECT `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` FROM frpm WHERE `Educational Option Type` = 'Continuation School' AND `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` IS NOT NULL ORDER BY `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` ASC LIMIT 3,"SELECT `Percent (%) Eligible Free (Ages 5-17)` 
+FROM frpm 
+WHERE `School Type` = 'Continuation' 
+ORDER BY `Percent (%) Eligible Free (Ages 5-17)` 
+LIMIT 3;",0
+2,2,SELECT T2.Zip FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`District Name` = 'Fresno County Office of Education' AND T1.`Charter School (Y/N)` = 1,"SELECT Zip
+FROM schools
+WHERE County = 'Fresno County Office of Education' AND Charter = 1;",0
+3,3,SELECT T2.MailStreet FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode ORDER BY T1.`FRPM Count (K-12)` DESC LIMIT 1,"```sql
+SELECT MailStreet, MailCity, MailZip, MailState
+FROM schools
+WHERE CDSCode = (
+    SELECT CDSCode
+    FROM frpm
+    WHERE `FRPM Count (K-12)` = (
+        SELECT MAX(`FRPM Count (K-12)`)
+        FROM frpm
+    )
+);
+```",0
+4,4,SELECT T2.Phone FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`Charter Funding Type` = 'Directly funded' AND T1.`Charter School (Y/N)` = 1 AND T2.OpenDate > '2000-01-01',"```sql
+SELECT Phone
+FROM schools
+WHERE Charter = 1
+AND CharterNum IS NOT NULL
+AND FundingType = 'Charter'
+AND OpenDate > '2000-01-01';
+```",0
+5,5,SELECT COUNT(DISTINCT T2.School) FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.Virtual = 'F' AND T1.AvgScrMath < 400,"```sql
+SELECT COUNT(*) 
+FROM schools 
+WHERE Virtual = 'Yes' 
+AND CDSCode IN 
+(
+    SELECT cds 
+    FROM satscores 
+    WHERE AvgScrMath < 400
+);
+```",0
+6,6,SELECT T2.School FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.Magnet = 1 AND T1.NumTstTakr > 500,"```sql
+SELECT s.School
+FROM schools s
+JOIN satscores ss ON s.CDSCode = ss.cds
+WHERE ss.NumTstTakr > 500 AND s.Magnet = 1
+```",0
+7,7,SELECT T2.Phone FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.NumGE1500 DESC LIMIT 1,"```sql
+SELECT schools.Phone
+FROM schools
+WHERE schools.CDSCode = (
+    SELECT satscores.cds
+    FROM satscores
+    WHERE NumGE1500 = (
+        SELECT MAX(NumGE1500)
+        FROM satscores
+    )
+);
+```",0
+8,8,SELECT NumTstTakr FROM satscores WHERE cds = ( SELECT CDSCode FROM frpm ORDER BY `FRPM Count (K-12)` DESC LIMIT 1 ),"```sql
+SELECT NumTstTakr
+FROM satscores
+WHERE cds IN (
+    SELECT CDSCode
+    FROM frpm
+    WHERE `FRPM Count (K-12)` = (
+        SELECT MAX(`FRPM Count (K-12)`)
+        FROM frpm
+    )
+);
+```",0
+9,9,SELECT COUNT(T2.`School Code`) FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.CDSCode WHERE T1.AvgScrMath > 560 AND T2.`Charter Funding Type` = 'Directly funded',"```sql
+SELECT COUNT(*) 
+FROM schools 
+WHERE CDSCode IN 
+    (SELECT cds 
+     FROM satscores 
+     WHERE AvgScrMath > 560) 
+AND Charter = 1;
+```",0
+10,10,SELECT T2.`FRPM Count (Ages 5-17)` FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.AvgScrRead DESC LIMIT 1,"```sql
+SELECT frpm.`FRPM Count (Ages 5-17)` 
+FROM frpm
+JOIN satscores ON frpm.CDSCode = satscores.cds
+WHERE satscores.AvgScrRead = (
+    SELECT MAX(AvgScrRead) 
+    FROM satscores
+);
+```",0

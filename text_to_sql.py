@@ -68,13 +68,13 @@ class LLMInterface:
                         "role": "user",
                         "content": prompt,
                     }
-        ],
+        ]
         if self.use_openai:
             response = self.client.chat.completions.create(
                 model = self.model_name,
                 messages=messages
             )
-            return response.choices[0].text.strip()
+            return response.choices[0].message.content
         else:
             #inputs = self.tokenizer(prompt, return_tensors='pt')
             inputs = self.tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True, return_tensors="pt", return_dict=True)
@@ -131,7 +131,7 @@ if __name__ == "__main__":
     # MODEL_NAME_2 = "qwen2-72B"
     # MODEL_NAME = "CohereForAI/c4ai-command-r-plus"
     # MODEL_NAME_2 = "command-r-plus"
-    MODEL_NAME = "gpt-3.5-turbo"  # 'gpt-3.5-turbo'  # "gpt-4o"  # CHECK
+    MODEL_NAME = "gpt-4o"  # 'gpt-3.5-turbo'  # "gpt-4o"  # CHECK
     COUNT_TOKENS_ONLY = False
     METADATA_PATH = "output/GOLD_DATASET_FINAL.csv"
 
@@ -141,7 +141,7 @@ if __name__ == "__main__":
         print("Only counting tokens!")
         output_path = "output/token_count/text_sql_tokens_count_"+MODEL_NAME+'.csv'
     else:
-        output_path = "output/test_to_sql/Pred_DEV_SQL_"+MODEL_NAME+'.csv'
+        output_path = "output/text_to_sql/Pred_DEV_SQL_"+MODEL_NAME+'.csv'
 
     # Enable logging
     log_format = '%(asctime)s - %(levelname)s - %(message)s'
@@ -192,7 +192,7 @@ if __name__ == "__main__":
             exectuion_accuracy = sql_database.execute_queries_and_match_data(sql_pred, question["SQL"], question["db_id"])
 
             row = pd.DataFrame(
-                {"question_id": [question["question_id"]], "sql_pred": sql_pred, "execution_accuracy": [exectuion_accuracy]})
+                {"question_id": [question["question_id"]],"sql_gold": question["SQL"], "sql_pred": sql_pred, "execution_accuracy": [exectuion_accuracy]})
 
         output = pd.concat([output, row], ignore_index=True)
         # Save every ten columns
@@ -200,7 +200,7 @@ if __name__ == "__main__":
             output.to_csv(output_path, index=True)
             print(
                 f"Progress saved at question {question['question_id']}")
-
+            break
     print("Finished processing all questions.")
     print(f"Output saved to {output_path}")
     print(f"Excution accuracy: {output['execution_accuracy'].mean()}")
