@@ -1,10 +1,12 @@
 
 import sqlite3
 import os
-# from config import logger
-# from src.timer import Timer
+from config import logger
+from src.timer import Timer
 from collections import Counter
 import json
+import logging
+import pandas as pd
 
 
 class Database:
@@ -227,6 +229,54 @@ class Database:
 
         return self.current_database_schema
 
+    def get_create_statements_with_metadata(self, db_name, metadata_path='output/cleaned_BIRD.csv'):
+        """
+        Retrieve, store, and return the schema and meta data from a database.
+
+        Parameters:
+           db_name (str): The name of the database to get schema and data.
+
+        Returns:
+           str: A formatted string containing schema and meta data.
+        """
+
+        database_df = pd.read_csv(metadata_path, index_col=0)
+
+        if self.current_db != db_name:
+            self.load_db(db_name)
+
+            self.cursor.execute(
+                "SELECT name FROM sqlite_master WHERE type='table';")
+            tables = self.cursor.fetchall()
+
+            schema_and_meta_data = ""
+
+            for table in tables:
+                table = table[0]
+                self.cursor.execute(
+                    f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table}';")
+                create_statement = self.cursor.fetchone()[0]
+
+                schema_and_meta_data += f"{create_statement};\n\n"
+
+                self.cursor.execute(f"PRAGMA table_info(\"{table}\");")
+                columns = self.cursor.fetchall()
+                column_names = [column[1] for column in columns]
+
+                schema_and_meta_data += f"Column descriptions for the columns in the {table} table:\n"
+                for column_name in column_names:
+                    column_description = database_df.loc[(database_df["database_name"] == db_name) & (
+                        ["table_name"] == table) & (["original_column_name"] == column_name), "column_description"]
+                    schema_and_meta_data += f"Column name: {column_name}, Column description: {column_description}\n"
+
+                schema_and_meta_data += "\n"
+
+            schema_and_meta_data += "\n"
+
+            self.current_database_schema = schema_and_meta_data
+
+        return self.current_database_schema
+
     def get_sample_data(self, db_name, table, num_examples, unique=False, original_column_name=""):
         """
         Retrieve and return sample data from a database table.
@@ -348,7 +398,7 @@ class BIRDDatabase(Database):
 
     def get_bird_table_info(self, db_name):
         """
-        Given a database name, retrieve the table schema and information 
+        Given a database name, retrieve the table schema and information
         from the corresponding bird-bench .csv files.
 
         :param database_name: str, name of the database
