@@ -201,5 +201,8 @@ if __name__ == "__main__":
             print(
                 f"Progress saved at question {question['question_id']}")
 
+    print("Finished processing all questions.")
+    print(f"Output saved to {output_path}")
+    print(f"Excution accuracy: {output['execution_accuracy'].mean()}")
     # Save column descriptions to database.csv
     output.to_csv(output_path, index=True)
