@@ -7,6 +7,7 @@ from collections import Counter
 import json
 import logging
 import pandas as pd
+import numpy as np
 
 
 class Database:
@@ -265,9 +266,10 @@ class Database:
 
                 schema_and_meta_data += f"Column descriptions for the columns in the {table} table:\n"
                 for column_name in column_names:
-                    column_description = database_df.loc[(database_df["database_name"] == db_name) & (
-                        ["table_name"] == table) & (["original_column_name"] == column_name), "column_description"]
-                    schema_and_meta_data += f"Column name: {column_name}, Column description: {column_description}\n"
+                    column_description = database_df.loc[((database_df["database_name"] == db_name) & (
+                        database_df["table_name"] == table) & (database_df["original_column_name"] == column_name)), "column_description"]
+                    pd.options.display.max_colwidth = 1000000 # I am unsure if this only affects the print or actually affects the string we send to the model
+                    schema_and_meta_data += f"Column name: {column_name}, Column description: {column_description.to_string(index=False)}\n"
 
                 schema_and_meta_data += "\n"
 
