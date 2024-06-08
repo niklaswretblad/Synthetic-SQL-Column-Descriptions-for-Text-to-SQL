@@ -63,29 +63,41 @@ class LLMInterface:
             )
 
     def call_model(self, prompt, **kwargs):
-        if self.use_openai:
-            response = self.client.chat.completions.create(
-                messages=[
+        messages = [
                     {
                         "role": "user",
                         "content": prompt,
                     }
-                ],
-                model=self.model_name
+        ],
+        if self.use_openai:
+            response = self.client.chat.completions.create(
+                model = self.model_name,
+                messages=messages
             )
             return response.choices[0].text.strip()
         else:
-            inputs = self.tokenizer(prompt, return_tensors='pt')
+            #inputs = self.tokenizer(prompt, return_tensors='pt')
+            inputs = self.tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True, return_tensors="pt", return_dict=True)
             input_ids = inputs.input_ids.to('cuda')
+                        
             attention_mask = inputs.attention_mask.to('cuda')
+  
             output = self.model.generate(
                 input_ids=input_ids,
                 attention_mask=attention_mask,
                 max_new_tokens=kwargs.get('max_new_tokens', 500),
+                output_logits=False,
+                return_dict_in_generate=True  # Return a dictionary with generation results
             )
-            generated_text = self.tokenizer.decode(
-                output[0], skip_special_tokens=True)
-            return generated_text.strip()
+            
+            # -------- Decode Output --------  
+            generated_token_indices = output.sequences[:, input_ids.shape[1]:] # Exclude input tokens
+            
+            #generated_token_indices = output.sequences[:, input_ids.shape[1]:-1] # Exclude input and EOS tokens
+            generated_text = self.tokenizer.decode(generated_token_indices[0], skip_special_tokens=True).strip()
+            generated_text = generated_text.replace("```", "")
+
+            return generated_text
 
     def nl_to_sql(self, database_schema, question):
         prompt = NL_TO_SQL_PROMPT.format(
@@ -119,8 +131,8 @@ if __name__ == "__main__":
     # MODEL_NAME_2 = "qwen2-72B"
     # MODEL_NAME = "CohereForAI/c4ai-command-r-plus"
     # MODEL_NAME_2 = "command-r-plus"
-    MODEL_NAME = "gpt-4o"  # 'gpt-3.5-turbo'  # "gpt-4o"  # CHECK
-    COUNT_TOKENS_ONLY = True
+    MODEL_NAME = "gpt-3.5-turbo"  # 'gpt-3.5-turbo'  # "gpt-4o"  # CHECK
+    COUNT_TOKENS_ONLY = False
     METADATA_PATH = "output/GOLD_DATASET_FINAL.csv"
 
     print(f"Using model {MODEL_NAME}.")
@@ -143,6 +155,7 @@ if __name__ == "__main__":
 
     if MODEL_NAME == 'gpt-4o' or MODEL_NAME == 'gpt-3.5-turbo':
         use_openai = True
+        print("Using OpenAI API")
     else:
         use_openai = False
     model = LLMInterface(MODEL_NAME, use_openai=use_openai)
@@ -169,21 +182,25 @@ if __name__ == "__main__":
             database_schema=database_schema,
             question=question["question"]
         )
+
         if COUNT_TOKENS_ONLY:
             # Count the number of tokens in the prompt
             row = pd.DataFrame({"question_id": [question["question_id"]], "num_tokens": [len(
                 encoding.encode(formatted_prompt))]})
         else:
+            sql_pred = model.call_model(formatted_prompt)
+            exectuion_accuracy = sql_database.execute_queries_and_match_data(sql_pred, question["SQL"], question["db_id"])
+
             row = pd.DataFrame(
-                {"question_id": [question["question_id"]], "num_tokens": model.call_model(formatted_prompt)})
+                {"question_id": [question["question_id"]], "sql_pred": sql_pred, "execution_accuracy": [exectuion_accuracy]})
 
         output = pd.concat([output, row], ignore_index=True)
-
         # Save every ten columns
         if question["question_id"] % 10 == 0 and question["question_id"] != 0:
             output.to_csv(output_path, index=True)
             print(
-                f"Progress saved at question {question["question_id"]}")
+                f"Progress saved at question {question['question_id']}")
+            break
 
     # Save column descriptions to database.csv
     output.to_csv(output_path, index=True)
