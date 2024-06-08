@@ -200,7 +200,6 @@ if __name__ == "__main__":
             output.to_csv(output_path, index=True)
             print(
                 f"Progress saved at question {question['question_id']}")
-            break
 
     # Save column descriptions to database.csv
     output.to_csv(output_path, index=True)
