@@ -26,8 +26,7 @@ Using valid SQL, answer the following question based on the tables provided abov
 Question: {question}
 
 ### Requirements
-DO NOT return anything else except the SQL query. Do not think out loud. ONLY return the SQL query, nothing else.
-
+DO NOT return anything else except the SQL query. Do not think out loud. ONLY return the SQL query, nothing else. Do not wrap your output in ```.
 """
 
 
@@ -64,24 +63,25 @@ class LLMInterface:
 
     def call_model(self, prompt, **kwargs):
         messages = [
-                    {
-                        "role": "user",
+            {
+                "role": "user",
                         "content": prompt,
-                    }
+            }
         ]
         if self.use_openai:
             response = self.client.chat.completions.create(
-                model = self.model_name,
+                model=self.model_name,
                 messages=messages
             )
             return response.choices[0].message.content
         else:
-            #inputs = self.tokenizer(prompt, return_tensors='pt')
-            inputs = self.tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True, return_tensors="pt", return_dict=True)
+            # inputs = self.tokenizer(prompt, return_tensors='pt')
+            inputs = self.tokenizer.apply_chat_template(
+                messages, tokenize=True, add_generation_prompt=True, return_tensors="pt", return_dict=True)
             input_ids = inputs.input_ids.to('cuda')
-                        
+
             attention_mask = inputs.attention_mask.to('cuda')
-  
+
             output = self.model.generate(
                 input_ids=input_ids,
                 attention_mask=attention_mask,
@@ -89,12 +89,14 @@ class LLMInterface:
                 output_logits=False,
                 return_dict_in_generate=True  # Return a dictionary with generation results
             )
-            
-            # -------- Decode Output --------  
-            generated_token_indices = output.sequences[:, input_ids.shape[1]:] # Exclude input tokens
-            
-            #generated_token_indices = output.sequences[:, input_ids.shape[1]:-1] # Exclude input and EOS tokens
-            generated_text = self.tokenizer.decode(generated_token_indices[0], skip_special_tokens=True).strip()
+
+            # -------- Decode Output --------
+            # Exclude input tokens
+            generated_token_indices = output.sequences[:, input_ids.shape[1]:]
+
+            # generated_token_indices = output.sequences[:, input_ids.shape[1]:-1] # Exclude input and EOS tokens
+            generated_text = self.tokenizer.decode(
+                generated_token_indices[0], skip_special_tokens=True).strip()
             generated_text = generated_text.replace("```", "")
 
             return generated_text
@@ -141,7 +143,8 @@ if __name__ == "__main__":
         print("Only counting tokens!")
         output_path = "output/token_count/text_sql_tokens_count_"+MODEL_NAME+'.csv'
     else:
-        output_path = "output/text_to_sql/Pred_DEV_SQL_"+MODEL_NAME+'.csv'
+        output_path = "output/text_to_sql/Pred_DEV_SQL_" + \
+            MODEL_NAME+'_without_descriptions.csv'
 
     # Enable logging
     log_format = '%(asctime)s - %(levelname)s - %(message)s'
@@ -165,7 +168,9 @@ if __name__ == "__main__":
     if COUNT_TOKENS_ONLY:
         encoding = tiktoken.encoding_for_model(MODEL_NAME)
 
-    output = pd.DataFrame()
+    # output = pd.DataFrame()
+    output = pd.read_csv(
+        "output/text_to_sql/Pred_DEV_SQL_gpt-4o_without_descriptions.csv")
 
     # Load questions:
     f = open('data/dev/dev.json')
@@ -173,10 +178,18 @@ if __name__ == "__main__":
 
     # Generate column descriptions
     for question in tqdm(BIRD_dev):
+        if (output['question_id'] == question['question_id']).any():
+            print(f'Skipping question {question['question_id']} because answer already exists')
+            continue
 
         # Get the database schema and example values
-        database_schema = sql_database.get_create_statements_with_metadata(
-            question["db_id"], metadata_path=METADATA_PATH)
+        # database_schema = sql_database.get_create_statements_with_metadata(
+        #     question["db_id"], metadata_path=METADATA_PATH
+        # )
+
+        database_schema = sql_database.get_create_statements(
+            question["db_id"]
+        )
 
         formatted_prompt = NL_TO_SQL_PROMPT.format(
             database_schema=database_schema,
@@ -189,10 +202,12 @@ if __name__ == "__main__":
                 encoding.encode(formatted_prompt))]})
         else:
             sql_pred = model.call_model(formatted_prompt)
-            exectuion_accuracy = sql_database.execute_queries_and_match_data(sql_pred, question["SQL"], question["db_id"])
+            print(sql_pred)
+            exectuion_accuracy = sql_database.execute_queries_and_match_data(
+                sql_pred, question["SQL"], question["db_id"])
 
             row = pd.DataFrame(
-                {"question_id": [question["question_id"]],"sql_gold": question["SQL"], "sql_pred": sql_pred, "execution_accuracy": [exectuion_accuracy]})
+                {"question_id": [question["question_id"]], "sql_gold": question["SQL"], "sql_pred": sql_pred, "execution_accuracy": [exectuion_accuracy]})
 
         output = pd.concat([output, row], ignore_index=True)
         # Save every ten columns
@@ -200,7 +215,8 @@ if __name__ == "__main__":
             output.to_csv(output_path, index=True)
             print(
                 f"Progress saved at question {question['question_id']}")
-            break
+            # break
+
     print("Finished processing all questions.")
     print(f"Output saved to {output_path}")
     print(f"Excution accuracy: {output['execution_accuracy'].mean()}")
