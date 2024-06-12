@@ -144,7 +144,7 @@ if __name__ == "__main__":
         output_path = "output/token_count/text_sql_tokens_count_"+MODEL_NAME+'.csv'
     else:
         output_path = "output/text_to_sql/Pred_DEV_SQL_" + \
-            MODEL_NAME+'_without_descriptions.csv'
+            MODEL_NAME+'_without_descr_with_sample_rows.csv'
 
     # Enable logging
     log_format = '%(asctime)s - %(levelname)s - %(message)s'
@@ -161,6 +161,7 @@ if __name__ == "__main__":
         print("Using OpenAI API")
     else:
         use_openai = False
+
     model = LLMInterface(MODEL_NAME, use_openai=use_openai)
     sql_database = BIRDDatabase()
 
@@ -168,9 +169,9 @@ if __name__ == "__main__":
     if COUNT_TOKENS_ONLY:
         encoding = tiktoken.encoding_for_model(MODEL_NAME)
 
-    # output = pd.DataFrame()
-    output = pd.read_csv(
-        "output/text_to_sql/Pred_DEV_SQL_gpt-4o_without_descriptions.csv")
+    output = pd.DataFrame()
+    # output = pd.read_csv(
+    #     "output/text_to_sql/Pred_DEV_SQL_gpt-4o_without_descriptions.csv")
 
     # Load questions:
     f = open('data/dev/dev.json')
@@ -178,17 +179,18 @@ if __name__ == "__main__":
 
     # Generate column descriptions
     for question in tqdm(BIRD_dev):
-        if (output['question_id'] == question['question_id']).any():
-            print(f'Skipping question {question['question_id']} because answer already exists')
-            continue
+        # if (output['question_id'] == question['question_id']).any():
+        #     print(f'Skipping question {question['question_id']} because answer already exists')
+        #     continue
 
         # Get the database schema and example values
         # database_schema = sql_database.get_create_statements_with_metadata(
         #     question["db_id"], metadata_path=METADATA_PATH
         # )
 
-        database_schema = sql_database.get_create_statements(
-            question["db_id"]
+        database_schema = sql_database.get_schema_and_sample_data(
+            question["db_id"],
+            num_examples=5
         )
 
         formatted_prompt = NL_TO_SQL_PROMPT.format(
@@ -210,6 +212,7 @@ if __name__ == "__main__":
                 {"question_id": [question["question_id"]], "sql_gold": question["SQL"], "sql_pred": sql_pred, "execution_accuracy": [exectuion_accuracy]})
 
         output = pd.concat([output, row], ignore_index=True)
+
         # Save every ten columns
         if question["question_id"] % 10 == 0 and question["question_id"] != 0:
             output.to_csv(output_path, index=True)

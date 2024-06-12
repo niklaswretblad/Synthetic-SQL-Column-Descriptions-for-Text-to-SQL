@@ -176,6 +176,7 @@ class Database:
                 [statement[0] for statement in create_statements])
 
         return self.current_database_schema
+    
 
     def get_schema_and_sample_data(self, db_name, num_examples=3):
         """
@@ -229,8 +230,9 @@ class Database:
             self.current_database_schema = schema_and_sample_data
 
         return self.current_database_schema
+    
 
-    def get_create_statements_with_metadata(self, db_name, metadata_path='output/cleaned_BIRD.csv'):
+    def get_create_statements_with_metadata(self, db_name, metadata_path='output/GOLD_DATASET_FINAL.csv'):
         """
         Retrieve, store, and return the schema and meta data from a database.
 
@@ -278,6 +280,8 @@ class Database:
             self.current_database_schema = schema_and_meta_data
 
         return self.current_database_schema
+        
+    
 
     def get_sample_data(self, db_name, table, num_examples, unique=False, original_column_name=""):
         """
@@ -325,6 +329,7 @@ class Database:
         sample_data += "\n"
 
         return sample_data
+    
 
     def load_db(self, db_name):
         """
@@ -337,6 +342,7 @@ class Database:
         self.conn = sqlite3.connect(db_path)
         self.cursor = self.conn.cursor()
         self.current_db = db_name
+
 
     def get_db_path(self, db_name):
         """
@@ -363,7 +369,7 @@ class BIRDDatabase(Database):
     """
 
     DEV_DB_PATH = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), '..', 'SQLDescriptionGeneration/data/dev/dev_databases/dev_databases/'))
+        os.path.join(os.path.dirname(__file__), '..', 'SQLDescriptionGeneration/data/dev/dev_databases/'))
 
     TRAIN_DB_PATH = os.path.abspath(
         os.path.join(os.path.dirname(__file__), '..', 'data/BIRD/train/train_databases/'))
@@ -373,10 +379,12 @@ class BIRDDatabase(Database):
 
         self.load_database_names()
 
+
     def load_database_names(self):
         self.dev_databases = os.listdir(self.DEV_DB_PATH)
         # self.train_databases = os.listdir(self.TRAIN_DB_PATH)
         self.train_databases = []
+
 
     def load_db(self, db_name):
         """
@@ -398,9 +406,47 @@ class BIRDDatabase(Database):
         self.cursor = self.conn.cursor()
         self.current_db = db_name
 
-    def get_bird_table_info(self, db_name):
+
+    def get_create_statements_with_bird_metadata(self, db_name):
         """
-        Given a database name, retrieve the table schema and information
+        Retrieve, store, and return the schema and meta data from a database.
+
+        Parameters:
+           db_name (str): The name of the database to get schema and data.
+
+        Returns:
+           str: A formatted string containing schema and meta data.
+        """
+
+        if self.current_db != db_name:
+            self.load_db(db_name)
+
+            self.cursor.execute(
+                "SELECT name FROM sqlite_master WHERE type='table';")
+            tables = self.cursor.fetchall()
+
+            schema_and_meta_data = ""
+
+            for table in tables:
+                table = table[0]
+                self.cursor.execute(
+                    f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table}';")
+                create_statement = self.cursor.fetchone()[0]
+
+                schema_and_meta_data += f"{create_statement};\n\n"
+                schema_and_meta_data += self.get_bird_table_info(db_name, table)
+                schema_and_meta_data += "\n"
+
+            schema_and_meta_data += "\n"
+
+            self.current_database_schema = schema_and_meta_data
+
+        return self.current_database_schema
+
+
+    def get_bird_table_info(self, db_name, table_name):
+        """
+        Given a database name, retrieve the column names and descriptions 
         from the corresponding bird-bench .csv files.
 
         :param database_name: str, name of the database
@@ -408,44 +454,29 @@ class BIRDDatabase(Database):
         containing the table information
         """
 
-        description_folder_path = ""
+        description_file_path = ""
         if db_name in self.dev_databases:
-            description_folder_path = self.DEV_DB_PATH + \
-                f"/{db_name}/database_description"
+            description_file_path = self.DEV_DB_PATH + \
+                f"/{db_name}/database_description/{table_name}.csv"
         else:
-            description_folder_path = self.TRAIN_DB_PATH + \
-                f"/{db_name}/database_description"
+            description_file_path = self.TRAIN_DB_PATH + \
+                f"/{db_name}/database_description{table_name}.csv"
 
-        if not os.path.exists(description_folder_path):
+        if not os.path.exists(description_file_path):
             raise FileNotFoundError(
-                f"No such file or directory: '{description_folder_path}'")
+                f"No such file or directory: '{description_file_path}'")
 
-        table_info = ""
+        
+        df = pd.read_csv(description_file_path)
 
-        for filename in os.listdir(description_folder_path):
-            if filename.endswith(".csv"):
-                table_name = filename.rstrip(".csv")
-                csv_path = os.path.join(description_folder_path, filename)
-
-                with open(csv_path, mode='r', encoding='utf-8') as file:
-                    file_contents = file.read()
-
-                table_info += "Table " + table_name + "\n"
-                table_info += file_contents
-
-            table_info += "\n\n"
+        table_info = "original_column_name, column_name, column_description\n"
+        for index, row in df.iterrows():
+            table_info += f"{row['original_column_name']}, {row['column_name'], {row['column_description']}}"
+        
+        table_info += "\n\n"
 
         return table_info
 
-    def get_bird_db_info(self, db_path):
-        table_info = self.get_bird_table_info(db_path)
-
-        # db_info = ""
-        # for table in table_info:
-        #    db_info += table_info[table]
-        #    db_info += "\n\n"
-
-        return table_info
 
 
 # class SpiderDataset(Dataset):
