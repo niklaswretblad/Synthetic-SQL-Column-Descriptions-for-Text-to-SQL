@@ -34,6 +34,7 @@ class Database:
         with open(path, 'r') as j:
             data = json.loads(j.read())
         return data
+    
 
     def execute_queries_and_match_data(self, sql, gold_sql, db_name):
         """
@@ -88,6 +89,44 @@ class Database:
 
         equal = (Counter(pred_res) == Counter(golden_res))
         return int(equal)
+    
+
+    def execute_query_and_get_data(self, sql, db_name):
+        """
+        Execute provided SQL queries and compare the results.
+
+        Parameters:
+           sql (str): The predicted SQL query to execute.
+           gold_sql (str): The golden SQL query to compare results.
+           db_name (str): The database name on which the queries will be executed.
+
+        Returns:
+           int: 1 if the results match, otherwise 0.
+        """
+
+        if self.current_db != db_name:
+            self.load_db(db_name)
+
+        try:
+            with Timer() as t:
+                self.cursor.execute(sql)
+                pred_res = self.cursor.fetchall()
+
+            if t.elapsed_time > 5:
+                logger.warning(
+                    f"Long predicted query execution time: {t.elapsed_time:.2f} \nSQL Query:\n" + sql)
+
+            self.last_predicted_execution_time = t.elapsed_time
+            self.total_predicted_execution_time += t.elapsed_time
+
+        except sqlite3.Error as err:
+            logger.error(
+                "DataLoader.execute_queries_and_get_data() " + str(err))
+            logger.error(f"SQL query: {sql}")
+            return []
+        
+        return pred_res
+    
 
     def execute_query(self, sql, db_name):
         """
@@ -232,7 +271,7 @@ class Database:
         return self.current_database_schema
     
 
-    def get_create_statements_with_metadata(self, db_name, metadata_path='output/GOLD_DATASET_FINAL.csv'):
+    def get_create_statements_with_metadata(self, db_name, with_sample_rows=False, metadata_path='output/GOLD_DATASET_FINAL.csv'):
         """
         Retrieve, store, and return the schema and meta data from a database.
 
@@ -242,6 +281,7 @@ class Database:
         Returns:
            str: A formatted string containing schema and meta data.
         """
+        num_examples = 5
 
         database_df = pd.read_csv(metadata_path, index_col=0)
 
@@ -266,21 +306,109 @@ class Database:
                 columns = self.cursor.fetchall()
                 column_names = [column[1] for column in columns]
 
-                schema_and_meta_data += f"Column descriptions for the columns in the {table} table:\n"
+                schema_and_meta_data += f"Column descriptions for the columns in the {table} table in format (column_name: description):\n"
                 for column_name in column_names:
                     column_description = database_df.loc[((database_df["database_name"] == db_name) & (
                         database_df["table_name"] == table) & (database_df["original_column_name"] == column_name)), "column_description"]
-                    pd.options.display.max_colwidth = 1000000 # I am unsure if this only affects the print or actually affects the string we send to the model
-                    schema_and_meta_data += f"Column name: {column_name}, Column description: {column_description.to_string(index=False)}\n"
+                    # I am unsure if this only affects the print or actually affects the string we send to the model
+                    pd.options.display.max_colwidth = 1000000
+                    schema_and_meta_data += f"{column_name}: {column_description.to_string(index=False)}\n"
 
-                schema_and_meta_data += "\n"
+                if with_sample_rows:
+                    schema_and_meta_data += "\n"
+                    self.cursor.execute(
+                        f"SELECT * FROM \"{table}\" LIMIT {num_examples};")
+                    rows = self.cursor.fetchall()
+
+                    self.cursor.execute(f"PRAGMA table_info(\"{table}\");")
+                    columns = self.cursor.fetchall()
+                    column_names = [column[1] for column in columns]
+                    column_names_line = "\t".join(column_names)
+
+                    schema_and_meta_data += f"{num_examples} rows from {table} table:\n"
+                    schema_and_meta_data += f"{column_names_line}\n"
+
+                    for row in rows:
+                        row_line = "\t".join([str(value) for value in row])
+                        schema_and_meta_data += f"{row_line}\n"
+
+                    schema_and_meta_data += "\n"
 
             schema_and_meta_data += "\n"
 
             self.current_database_schema = schema_and_meta_data
 
         return self.current_database_schema
-        
+    
+
+    def get_create_statements_with_arbitrary_metadata(self, db_name, with_sample_rows=False, metadata_path='output/GOLD_DATASET_FINAL.csv'):
+        """
+        Retrieve, store, and return the schema and meta data from a database.
+
+        Parameters:
+           db_name (str): The name of the database to get schema and data.
+
+        Returns:
+           str: A formatted string containing schema and meta data.
+        """
+        num_examples = 5
+
+        database_df = pd.read_csv(metadata_path)
+
+        if self.current_db != db_name:
+            self.load_db(db_name)
+
+            self.cursor.execute(
+                "SELECT name FROM sqlite_master WHERE type='table';")
+            tables = self.cursor.fetchall()
+
+            schema_and_meta_data = ""
+
+            for table in tables:
+                table = table[0]
+                self.cursor.execute(
+                    f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table}';")
+                create_statement = self.cursor.fetchone()[0]
+
+                schema_and_meta_data += f"{create_statement};\n\n"
+
+                self.cursor.execute(f"PRAGMA table_info(\"{table}\");")
+                columns = self.cursor.fetchall()
+                column_names = [column[1] for column in columns]
+
+                schema_and_meta_data += f"Column descriptions for the columns in the {table} table in format (column_name: description):\n"
+                for column_name in column_names:
+                    column_description = database_df.loc[((database_df["database_name"] == db_name) & (
+                        database_df["table_name"] == table) & (database_df["arbitrary_column_name"] == column_name)), "llm_column_description"]
+                    # I am unsure if this only affects the print or actually affects the string we send to the model
+                    pd.options.display.max_colwidth = 1000000
+                    schema_and_meta_data += f"{column_name}: {column_description.to_string(index=False)}\n"
+
+                if with_sample_rows:
+                    schema_and_meta_data += "\n"
+                    self.cursor.execute(
+                        f"SELECT * FROM \"{table}\" LIMIT {num_examples};")
+                    rows = self.cursor.fetchall()
+
+                    self.cursor.execute(f"PRAGMA table_info(\"{table}\");")
+                    columns = self.cursor.fetchall()
+                    column_names = [column[1] for column in columns]
+                    column_names_line = "\t".join(column_names)
+
+                    schema_and_meta_data += f"{num_examples} rows from {table} table:\n"
+                    schema_and_meta_data += f"{column_names_line}\n"
+
+                    for row in rows:
+                        row_line = "\t".join([str(value) for value in row])
+                        schema_and_meta_data += f"{row_line}\n"
+
+                    schema_and_meta_data += "\n"
+
+            schema_and_meta_data += "\n"
+
+            self.current_database_schema = schema_and_meta_data
+
+        return self.current_database_schema
     
 
     def get_sample_data(self, db_name, table, num_examples, unique=False, original_column_name=""):
@@ -377,7 +505,7 @@ class BIRDDatabase(Database):
     def __init__(self):
         super().__init__()
 
-        self.load_database_names()
+        # self.load_database_names()
 
 
     def load_database_names(self):

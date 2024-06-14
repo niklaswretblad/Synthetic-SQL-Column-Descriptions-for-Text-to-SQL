@@ -11,6 +11,7 @@ import pandas as pd
 from tqdm import tqdm
 import logging
 import json
+from collections import Counter
 
 NL_TO_SQL_PROMPT = """
 
@@ -116,6 +117,17 @@ class LLMInterface:
 
 if __name__ == "__main__":
     load_dotenv()
+        # Enable logging
+    log_format = '%(asctime)s - %(levelname)s - %(message)s'
+    logging.basicConfig(filename='debug.log',
+                        level=logging.DEBUG, format=log_format)
+
+    # # Suppress debug logs from OpenAI and requests libraries
+    logging.getLogger("openai").setLevel(logging.WARNING)
+    logging.getLogger("requests").setLevel(logging.WARNING)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
+
+
     # Initiate llm
     # "gpt-4o"  # this is now for every model used
     # MODEL_NAME = "mistralai/Codestral-22B-v0.1"
@@ -143,18 +155,8 @@ if __name__ == "__main__":
         print("Only counting tokens!")
         output_path = "output/token_count/text_sql_tokens_count_"+MODEL_NAME+'.csv'
     else:
-        output_path = "output/text_to_sql/Pred_DEV_SQL_" + \
-            MODEL_NAME+'_without_descr_with_sample_rows.csv'
+        output_path = "output/text_to_sql/Pred_DEV_SQL_arbitrary_columns_with_gpt-4o_metadata"
 
-    # Enable logging
-    log_format = '%(asctime)s - %(levelname)s - %(message)s'
-    logging.basicConfig(filename='debug.log',
-                        level=logging.DEBUG, format=log_format)
-
-    # # Suppress debug logs from OpenAI and requests libraries
-    logging.getLogger("openai").setLevel(logging.WARNING)
-    logging.getLogger("requests").setLevel(logging.WARNING)
-    logging.getLogger("urllib3").setLevel(logging.WARNING)
 
     if MODEL_NAME == 'gpt-4o' or MODEL_NAME == 'gpt-3.5-turbo':
         use_openai = True
@@ -163,7 +165,13 @@ if __name__ == "__main__":
         use_openai = False
 
     model = LLMInterface(MODEL_NAME, use_openai=use_openai)
-    sql_database = BIRDDatabase()
+
+    original_sql_database = BIRDDatabase()
+    original_sql_database.DEV_DB_PATH = "data/original_dev/dev_databases"
+    original_sql_database.load_database_names()
+    arbitrary_sql_database = BIRDDatabase()
+    arbitrary_sql_database.DEV_DB_PATH = 'data/arbitrary_dev/dev_databases'
+    arbitrary_sql_database.load_database_names()
 
     # Create a new column 'llm_column_description' if it doesn't exist
     if COUNT_TOKENS_ONLY:
@@ -174,7 +182,7 @@ if __name__ == "__main__":
     #     "output/text_to_sql/Pred_DEV_SQL_gpt-4o_without_descriptions.csv")
 
     # Load questions:
-    f = open('data/dev/dev.json')
+    f = open('data/arbitrary_dev/dev.json')
     BIRD_dev = json.load(f)
 
     # Generate column descriptions
@@ -188,10 +196,19 @@ if __name__ == "__main__":
         #     question["db_id"], metadata_path=METADATA_PATH
         # )
 
-        database_schema = sql_database.get_schema_and_sample_data(
+        database_schema = arbitrary_sql_database.get_create_statements_with_arbitrary_metadata(
             question["db_id"],
-            num_examples=5
+            with_sample_rows=False,
+            metadata_path='output/Updated_Pred_DEV_desc_gpt-4o.csv'
         )
+
+        with open('schema.txt', mode="w") as f:
+            f.write(database_schema)
+        
+
+        # database_schema = arbitrary_sql_database.get_create_statements(
+        #     question["db_id"]
+        # )
 
         formatted_prompt = NL_TO_SQL_PROMPT.format(
             database_schema=database_schema,
@@ -204,12 +221,19 @@ if __name__ == "__main__":
                 encoding.encode(formatted_prompt))]})
         else:
             sql_pred = model.call_model(formatted_prompt)
-            print(sql_pred)
-            exectuion_accuracy = sql_database.execute_queries_and_match_data(
-                sql_pred, question["SQL"], question["db_id"])
+            logger.info(f"Predicted sql: {sql_pred}")
+
+            gold_data = original_sql_database.execute_query_and_get_data(
+                question["SQL"], question["db_id"])
+
+            pred_data = arbitrary_sql_database.execute_query_and_get_data(
+                sql_pred, question["db_id"])
+            
+            success = (Counter(pred_data) == Counter(gold_data))
+            logger.info(f"Index: {question['question_id']}, success: {success}")
 
             row = pd.DataFrame(
-                {"question_id": [question["question_id"]], "sql_gold": question["SQL"], "sql_pred": sql_pred, "execution_accuracy": [exectuion_accuracy]})
+                {"question_id": [question["question_id"]], "sql_gold": question["SQL"], "sql_pred": sql_pred, "execution_accuracy": [success]})
 
         output = pd.concat([output, row], ignore_index=True)
 
