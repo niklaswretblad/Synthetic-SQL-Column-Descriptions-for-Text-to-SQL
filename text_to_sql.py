@@ -166,9 +166,7 @@ if __name__ == "__main__":
 
     model = LLMInterface(MODEL_NAME, use_openai=use_openai)
 
-    original_sql_database = BIRDDatabase()
-    original_sql_database.DEV_DB_PATH = "data/original_dev/dev_databases"
-    original_sql_database.load_database_names()
+    sql_database = BIRDDatabase()
 
     # Create a new column 'llm_column_description' if it doesn't exist
     if COUNT_TOKENS_ONLY:
@@ -193,7 +191,7 @@ if __name__ == "__main__":
         #     question["db_id"], metadata_path=METADATA_PATH
         # )
 
-        database_schema = original_sql_database.get_create_statements_with_metadata(
+        database_schema = sql_database.get_create_statements_with_metadata(
             question["db_id"],
             with_sample_rows=False          
         )
@@ -219,13 +217,7 @@ if __name__ == "__main__":
             sql_pred = model.call_model(formatted_prompt)
             logger.info(f"Predicted sql: {sql_pred}")
 
-            gold_data = original_sql_database.execute_query_and_get_data(
-                question["SQL"], question["db_id"])
-
-            pred_data = original_sql_database.execute_query_and_get_data(
-                sql_pred, question["db_id"])
-            
-            success = (Counter(pred_data) == Counter(gold_data))
+            success = sql_database.execute_queries_and_match_data(sql_pred, question['SQL'], question['db_id'])
             logger.info(f"Index: {question['question_id']}, success: {success}")
 
             row = pd.DataFrame(
