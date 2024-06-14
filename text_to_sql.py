@@ -187,9 +187,9 @@ if __name__ == "__main__":
         #     continue
 
         # --------------- SETTING 1 ---------------
-        # database_schema = arbitrary_sql_database.get_create_statements(
-        #     question["db_id"]
-        # )
+        database_schema = sql_database.get_create_statements(
+            question["db_id"]
+        )
 
         # --------------- SETTING 2 ---------------
         # Get the database schema and example values
@@ -197,16 +197,16 @@ if __name__ == "__main__":
         #     question["db_id"], metadata_path=METADATA_PATH
         # )
 
-        database_schema = sql_database.get_create_statements_with_metadata(
-            question["db_id"],
-            with_sample_rows=False,
-            metadata_path=METADATA_PATH
-        )
+        # database_schema = sql_database.get_create_statements_with_metadata(
+        #     question["db_id"],
+        #     with_sample_rows=False,
+        #     metadata_path=METADATA_PATH
+        # )
 
 
 
-        with open('schema.txt', mode="w") as f:
-            f.write(database_schema)
+        # with open('schema.txt', mode="w") as f:
+        #     f.write(database_schema)
         
 
         # database_schema = arbitrary_sql_database.get_create_statements(

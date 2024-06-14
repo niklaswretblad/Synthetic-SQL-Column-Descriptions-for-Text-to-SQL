@@ -497,7 +497,7 @@ class BIRDDatabase(Database):
     """
 
     DEV_DB_PATH = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), '..', 'SQLDescriptionGeneration/data/dev/dev_databases/'))
+        os.path.join(os.path.dirname(__file__), 'data/dev/dev_databases'))
 
     TRAIN_DB_PATH = os.path.abspath(
         os.path.join(os.path.dirname(__file__), '..', 'data/BIRD/train/train_databases/'))
@@ -505,7 +505,7 @@ class BIRDDatabase(Database):
     def __init__(self):
         super().__init__()
 
-        # self.load_database_names()
+        self.load_database_names()
 
 
     def load_database_names(self):
