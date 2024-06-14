@@ -1,0 +1,799 @@
+database_name,table_name,original_column_name,column_description,data_format,arbitrary_column_name,Final difficulty
+debit_card_specializing,yearmonth,CustomerID,The unique identifier for a customer.,integer,A51,Easy
+debit_card_specializing,yearmonth,Date,The year and month of the transaction.,text,A52,Medium
+debit_card_specializing,yearmonth,Consumption,The consumption value for a customer in a specific year and month.,real,A53,Medium
+debit_card_specializing,transactions_1k,TransactionID,Unique identifier for each transaction.,integer,A31,Easy
+debit_card_specializing,transactions_1k,Date,The date of the transaction.,date,A32,Easy
+debit_card_specializing,transactions_1k,Time,The time of the transaction.,text,A33,Easy
+debit_card_specializing,transactions_1k,CustomerID,The unique identifier for the customer associated with the transaction.,integer,A34,Easy
+debit_card_specializing,transactions_1k,CardID,The unique identifier for the card used in the transaction.,integer,A35,Easy
+debit_card_specializing,transactions_1k,GasStationID,The unique identifier for the gas station where the transaction occurred.,integer,A36,Easy
+debit_card_specializing,transactions_1k,ProductID,The unique identifier for the product involved in the transaction.,integer,A37,Easy
+debit_card_specializing,transactions_1k,Amount,The quantity of the product involved in the transaction.,integer,A38,Easy
+debit_card_specializing,transactions_1k,Price,The price of the transaction.,real,A39,Easy
+debit_card_specializing,customers,CustomerID,Unique identifier for each customer.,integer,A01,Easy
+debit_card_specializing,customers,Segment,Client segment classification.,text,A02,Hard
+debit_card_specializing,customers,Currency,The currency used by the customer.,text,A03,Easy
+debit_card_specializing,gasstations,GasStationID,Unique identifier for each gas station.,integer,A11,Easy
+debit_card_specializing,gasstations,ChainID,Identifier for the chain to which the gas station belongs.,integer,A12,Easy
+debit_card_specializing,gasstations,Country,The country where the gas station is located.,text,A13,Easy
+debit_card_specializing,gasstations,Segment,The chain segment of the gas station.,text,A14,Medium
+debit_card_specializing,products,ProductID,The unique identifier for each product.,integer,A21,Easy
+debit_card_specializing,products,Description,The description of the product.,text,A22,Easy
+financial,loan,loan_id,Unique identifier for each loan.,integer,B51,Easy
+financial,loan,account_id,This is the ID number identifying the account associated with the loan.,integer,B52,Easy
+financial,loan,date,The date when the loan was approved.,date,B53,Easy
+financial,loan,amount,The approved loan amount.,integer,B54,Easy
+financial,loan,duration,The duration of the loan in months.,integer,B55,Hard
+financial,loan,payments,The monthly payment amount for the loan.,real,B56,Hard
+financial,loan,status,The repayment status of the loan.,text,B57,Medium
+financial,client,client_id,A unique identifier for each client.,integer,B21,Easy
+financial,client,gender,The gender of the client.,text,B22,Easy
+financial,client,birth_date,The birth date of the client.,date,B23,Easy
+financial,client,district_id,Identifier for the district where the client is located.,integer,B24,Easy
+financial,district,district_id,Unique identifier for each district.,integer,B41,Easy
+financial,district,A2,The name of the district.,text,B42,Hard
+financial,district,A3,The region where the district is located.,text,B43,Hard
+financial,district,A4,The number of inhabitants in the district.,text,B44,Very Hard
+financial,district,A5,This is the number of municipalities with fewer than 499 inhabitants in the district.,text,B45,Very Hard
+financial,district,A6,This is the number of municipalities with inhabitants between 500 and 1999 in the district.,text,B46,Very Hard
+financial,district,A7,This is the number of municipalities with 2000-9999 inhabitants in the district.,text,B47,Very Hard
+financial,district,A8,"This is the number of municipalities with more than 10,000 inhabitants in the district.",integer,B48,Very Hard
+financial,district,A9,The number of cities in the district.,integer,B49,Very Hard
+financial,district,A10,The ratio of urban inhabitants in the district.,real,B410,Very Hard
+financial,district,A11,The average salary in the district.,integer,B411,Very Hard
+financial,district,A12,The unemployment rate in the district in 1995.,real,B412,Very Hard
+financial,district,A13,The unemployment rate in the district in 1996.,real,B413,Very Hard
+financial,district,A14,The number of entrepreneurs per 1000 inhabitants in the district.,integer,B414,Very Hard
+financial,district,A15,The number of committed crimes in the district in 1995.,integer,B415,Very Hard
+financial,district,A16,The number of committed crimes in the district in 1996.,integer,B416,Very Hard
+financial,trans,trans_id,Unique identifier for each transaction.,integer,B71,Easy
+financial,trans,account_id,The unique identifier for the account associated with the transaction.,integer,B72,Easy
+financial,trans,date,The date of the transaction.,date,B73,Easy
+financial,trans,type,The type of transaction.,text,B74,Medium
+financial,trans,operation,The type of transaction operation.,text,B75,Medium
+financial,trans,amount,The amount of money involved in the transaction.,integer,B76,Easy
+financial,trans,balance,The balance after the transaction.,integer,B77,Easy
+financial,trans,k_symbol,Characterization of the transaction.,text,B78,Hard
+financial,trans,bank,The bank of the partner involved in the transaction.,text,B79,Hard
+financial,trans,account,The account number of the partner involved in the transaction.,integer,B710,Medium
+financial,account,account_id,This is the unique identifier for the account.,integer,B01,Easy
+financial,account,district_id,The identifier for the district where the account is located.,integer,B02,Easy
+financial,account,frequency,The frequency of transactions on the account.,text,B03,Medium
+financial,account,date,The creation date of the account.,date,B04,Hard
+financial,card,card_id,Unique identifier for each credit card.,integer,B11,Easy
+financial,card,disp_id,The identifier for the disposition associated with the card.,integer,B12,Hard
+financial,card,type,The type of credit card issued.,text,B13,Medium
+financial,card,issued,The date when the credit card was issued.,date,B14,Medium
+financial,order,order_id,This is the unique identifier for each order.,integer,B61,Easy
+financial,order,account_id,The unique identifier for the account associated with the order.,integer,B62,Easy
+financial,order,bank_to,The bank of the recipient associated with the order.,text,B63,Hard
+financial,order,account_to,The account number of the recipient associated with the order.,integer,B64,Hard
+financial,order,amount,The amount of money in the order.,real,B65,
+financial,order,k_symbol,Characterization of the payment for the order.,text,B66,Medium
+financial,disp,disp_id,Unique identifier for each disposition record.,integer,B31,Hard
+financial,disp,client_id,The unique identifier for the client associated with the disposition.,integer,B32,Easy
+financial,disp,account_id,The unique identifier for the account associated with the disposition.,integer,B33,Easy
+financial,disp,type,The type of disposition.,text,B34,Medium
+formula_1,circuits,circuitId,Unique identification number for each circuit.,integer,C11,Easy
+formula_1,circuits,circuitRef,The unique reference name for the circuit.,text,C12,Medium
+formula_1,circuits,name,The name of the circuit.,text,C13,Easy
+formula_1,circuits,location,The city or locality where the circuit is situated.,text,C14,Medium
+formula_1,circuits,country,The country where the circuit is located.,text,C15,Easy
+formula_1,circuits,lat,Latitude of the circuit location.,real,C16,Medium
+formula_1,circuits,lng,The longitude of the circuit's location.,real,C17,Medium
+formula_1,circuits,alt,The altitude of the circuit location.,integer,C18,Medium
+formula_1,circuits,url,The URL of the circuit's Wikipedia page.,text,C19,Medium
+formula_1,status,statusId,The unique identification number for each status.,integer,C121,Easy
+formula_1,status,status,The status of the race or event.,text,C122,Medium
+formula_1,drivers,driverId,The unique identification number assigned to each driver.,integer,C31,Easy
+formula_1,drivers,driverRef,The unique reference identifier for each driver.,text,C32,Medium
+formula_1,drivers,number,The racing number assigned to the driver.,integer,C33,Hard
+formula_1,drivers,code,Abbreviated code for drivers.,text,C34,Medium
+formula_1,drivers,forename,The first name of the driver.,text,C35,Easy
+formula_1,drivers,surname,The surname of the driver.,text,C36,Easy
+formula_1,drivers,dob,The date of birth of the driver.,date,C37,Easy
+formula_1,drivers,nationality,The nationality of the driver.,text,C38,Easy
+formula_1,drivers,url,The URL of the driver's Wikipedia page.,text,C39,Medium
+formula_1,driverStandings,driverStandingsId,The unique identification number for driver standing records.,integer,C81,Easy
+formula_1,driverStandings,raceId,Identifier for the race associated with the driver's standings.,integer,C82,Easy
+formula_1,driverStandings,driverId,Unique identifier for the driver.,integer,C83,Easy
+formula_1,driverStandings,points,The number of points a driver has accumulated in a race.,real,C84,Easy
+formula_1,driverStandings,position,The position of the driver in the race standings.,integer,C85,Medium
+formula_1,driverStandings,positionText,The position of the driver as a text value.,text,C86,Medium
+formula_1,driverStandings,wins,The number of wins achieved by the driver.,integer,C87,Medium
+formula_1,races,raceId,The unique identification number for each race.,integer,C51,Easy
+formula_1,races,year,The year the race took place.,integer,C52,Easy
+formula_1,races,round,The round number of the race within the season.,integer,C53,Hard
+formula_1,races,circuitId,The unique identifier for the circuit where the race took place.,integer,C54,Easy
+formula_1,races,name,The name of the race.,text,C55,Easy
+formula_1,races,date,The date of the race.,date,C56,Easy
+formula_1,races,time,The scheduled start time of the race.,text,C57,Medium
+formula_1,races,url,The URL of the Wikipedia page for the race.,text,C58,Medium
+formula_1,constructors,constructorId,This is the unique identifier for each constructor.,integer,C21,Easy
+formula_1,constructors,constructorRef,This is the unique reference name for each constructor.,text,C22,Medium
+formula_1,constructors,name,The full name of the constructor.,text,C23,Easy
+formula_1,constructors,nationality,The nationality of the constructor.,text,C24,Easy
+formula_1,constructors,url,The URL of the constructor's official webpage.,text,C25,Medium
+formula_1,constructorResults,constructorResultsId,Unique identifier for each constructor result.,integer,C61,Easy
+formula_1,constructorResults,raceId,The unique identifier for the race associated with the constructor's results.,integer,C62,Medium
+formula_1,constructorResults,constructorId,The unique identifier for the constructor.,integer,C63,Easy
+formula_1,constructorResults,points,Points scored by the constructor in the race.,real,C64,Easy
+formula_1,constructorResults,status,The status of the constructor associated with the constructor result entry.,text,C65,Hard
+formula_1,lapTimes,raceId,The identification number of the race during which the lap time was recorded.,integer,C91,Easy
+formula_1,lapTimes,driverId,The identification number of the driver who recorded the lap time.,integer,C92,Easy
+formula_1,lapTimes,lap,The lap number of which the lap time was recorded.,integer,C93,Medium
+formula_1,lapTimes,position,The position of the driver at the end of the lap.,integer,C94,Hard
+formula_1,lapTimes,time,The lap time recorded for each lap.,text,C95,Easy
+formula_1,lapTimes,milliseconds,The time in milliseconds for a lap.,integer,C96,Medium
+formula_1,qualifying,qualifyId,The unique identifier for each qualifying session entry.,integer,C111,Easy
+formula_1,qualifying,raceId,The ID for the race associated with the qualifying session entry.,integer,C112,Easy
+formula_1,qualifying,driverId,The ID of the driver associated with the qualifying session entry.,integer,C113,Easy
+formula_1,qualifying,constructorId,The ID of the constructor associated with the driver in the qualifying session entry.,integer,C114,Easy
+formula_1,qualifying,number,The driver's car number in the qualifying session entry.,integer,C115,Hard
+formula_1,qualifying,position,The position of the driver in the qualifying session.,integer,C116,Medium
+formula_1,qualifying,q1,The time recorded for the driver in the first qualifying session period Q1.,text,C117,Medium
+formula_1,qualifying,q2,The time recorded for the driver in the second qualifying session period Q2.,text,C118,Medium
+formula_1,qualifying,q3,The time recorded for the driver in the third qualifying session period Q3.,text,C119,Medium
+formula_1,pitStops,raceId,The identification number for the race where the pit stop occured.,integer,C101,Easy
+formula_1,pitStops,driverId,The identification number for the driver that made the pit stop.,integer,C102,Easy
+formula_1,pitStops,stop,The i:th pit stop number the pit stop corresponds to for the specified driver and race.,integer,C103,Medium
+formula_1,pitStops,lap,The lap number during which the pit stop occurred.,integer,C104,Easy
+formula_1,pitStops,time,The timestamp of when the pit stop occurred.,text,C105,Medium
+formula_1,pitStops,duration,The duration of the pit stop in text format.,text,C106,Easy
+formula_1,pitStops,milliseconds,The duration of the pit stop in milliseconds.,integer,C107,Easy
+formula_1,seasons,year,The year the Formula One season took place.,integer,C41,Easy
+formula_1,seasons,url,The URL linking to the Wikipedia page for the specific Formula One season.,text,C42,Medium
+formula_1,constructorStandings,constructorStandingsId,Unique identifier for each constructor standing record.,integer,C71,Easy
+formula_1,constructorStandings,raceId,Identifier for the race associated with the constructor's standings.,integer,C72,Easy
+formula_1,constructorStandings,constructorId,Identifier for the constructor associated with the standings.,integer,C73,Easy
+formula_1,constructorStandings,points,The number of points acquired by a constructor in each race.,,C74,Easy
+formula_1,constructorStandings,position,The overall position of the constructor after the specified race.,integer,C75,Easy
+formula_1,constructorStandings,positionText,The overall position of the constructor after the specified race in text format.,text,C76,Medium
+formula_1,constructorStandings,wins,The number of wins achieved by the constructor.,integer,C77,Easy
+formula_1,results,resultId,This is the unique identifier for each race result.,integer,C131,Easy
+formula_1,results,raceId,The unique identifier for each race.,integer,C132,Easy
+formula_1,results,driverId,The identification number of the driver.,integer,C133,Easy
+formula_1,results,constructorId,The identification number of the constructor associated with the result.,integer,C134,Easy
+formula_1,results,number,The racing number assigned to the driver.,integer,C135,Hard
+formula_1,results,grid,The starting position of the driver on the grid.,integer,C136,Hard
+formula_1,results,position,The finishing position of the driver in the race.,integer,C137,Hard
+formula_1,results,positionText,The finishing position of the driver in the race as a text value.,text,C138,Medium
+formula_1,results,positionOrder,The order in which drivers finished the race.,integer,C139,Medium
+formula_1,results,points,The points scored by the driver in the race.,real,C1310,Easy
+formula_1,results,laps,The number of laps completed by the driver in the race.,integer,C1311,Medium
+formula_1,results,time,The finish time of the driver in the race.,text,C1312,Hard
+formula_1,results,milliseconds,The finishing time of the driver in the race in milliseconds.,integer,C1313,Medium
+formula_1,results,fastestLap,The number of the fastest lap in the race for the driver.,integer,C1314,Medium
+formula_1,results,rank,The overall rank of the driver's fastest lap time in the race.,integer,C1315,Hard
+formula_1,results,fastestLapTime,The fastest lap time recorded by the driver during the race.,text,C1316,Easy
+formula_1,results,fastestLapSpeed,The speed of the fastest lap achieved by the driver during the race.,text,C1317,Medium
+formula_1,results,statusId,The status ID associated with the result.,integer,C1318,Medium
+california_schools,schools,CDSCode,A unique identifier for each school.,text,D21,Medium
+california_schools,schools,NCESDist,This field represents the 7-digit National Center for Educational Statistics (NCES) school district identification number.,text,D22,Hard
+california_schools,schools,NCESSchool,This field represents the 5-digit NCES school identification number. The NCESSchool combined with the NCESDist form a unique 12-digit ID for each school.,text,D23,Hard
+california_schools,schools,StatusType,This field identifies the operational status of the school.,text,D24,Medium
+california_schools,schools,County,The name of the county where the school is located.,text,D25,Easy
+california_schools,schools,District,The name of the school district.,text,D26,Easy
+california_schools,schools,School,The name of the school.,text,D27,Medium
+california_schools,schools,Street,The street address of the school.,text,D28,Easy
+california_schools,schools,StreetAbr,"The abbreviated street address of the school, district, or administrative authority’s physical location.",text,D29,Easy
+california_schools,schools,City,The city where the school is located.,text,D210,Easy
+california_schools,schools,Zip,The ZIP code of the school's location.,text,D211,Easy
+california_schools,schools,State,The state where the school is located.,text,D212,Easy
+california_schools,schools,MailStreet,The mailing address of the school.,text,D213,Easy
+california_schools,schools,MailStrAbr,Abbreviated mailing street address of the school.,text,D214,Easy
+california_schools,schools,MailCity,The mailing city for the school's mailing address.,text,D215,Easy
+california_schools,schools,MailZip,The school's mailing zip code.,text,D216,Easy
+california_schools,schools,MailState,The state of the school's mailing address.,text,D217,Easy
+california_schools,schools,Phone,The contact phone number for the school.,text,D218,Easy
+california_schools,schools,Ext,"The phone number extension of the school, district, or administrative authority.",text,D219,Very Hard
+california_schools,schools,Website,"The website address of the school, district, or administrative authority.",text,D220,Easy
+california_schools,schools,OpenDate,The date the school officially opened.,date,D221,Medium
+california_schools,schools,ClosedDate,The date the school closed.,date,D222,Medium
+california_schools,schools,Charter,"This field indicates whether the school is a charter school, with 1 for yes and 0 for no.",integer,D223,Medium
+california_schools,schools,CharterNum,The charter school number of the school.,text,D224,Medium
+california_schools,schools,FundingType,Indicates the type of funding for the charter school.,text,D225,Easy
+california_schools,schools,DOC,The code representing the district's ownership or administrative control of the school.,text,D226,Hard
+california_schools,schools,DOCType,The District Ownership Code Type is the text description of the District Ownership Code (DOC) category of the school.,text,D227,Hard
+california_schools,schools,SOC,The School Ownership Code is a numeric code used to identify the type of school ownership.,text,D228,Hard
+california_schools,schools,SOCType,The School Ownership Code Type is the text description of the type of school ownership.,text,D229,Hard
+california_schools,schools,EdOpsCode,The Education Option Code is a code representing the type of educational option offered by the school.,text,D230,Hard
+california_schools,schools,EdOpsName,The name of the educational option offered by the school.,text,D231,Hard
+california_schools,schools,EILCode,The Educational Instruction Level Code is a short text description of the institution's type relative to the grade range served by the school.,text,D232,Hard
+california_schools,schools,EILName,The Educational Instruction Level Name is the detailed description of the institution’s type relative to the grade range served by the school.,text,D233,Hard
+california_schools,schools,GSoffered,The grade span offered is the range of grades (from the lowest to the highest) that the school supports or offers.,text,D234,Hard
+california_schools,schools,GSserved,"The grade span served by the school, indicating the range of grades in which students are enrolled.",text,D235,Hard
+california_schools,schools,Virtual,This field identifies the type of virtual instruction offered by the school.,text,D236,Hard
+california_schools,schools,Magnet,This field identifies whether a school is a magnet school and/or provides a magnet program.,text,D237,Hard
+california_schools,schools,Latitude,The latitude coordinate of the school.,real,D238,Easy
+california_schools,schools,Longitude,The longitude coordinate of the school.,real,D239,Easy
+california_schools,schools,AdmFName1,The first name of the primary administrator at the school.,text,D240,Hard
+california_schools,schools,AdmLName1,The last name of the first administrator at the school.,text,D241,Hard
+california_schools,schools,AdmEmail1,The primary email address of the first administrator at the school.,text,D242,Hard
+california_schools,schools,AdmFName2,The first name of the second administrator at the school.,text,D243,Hard
+california_schools,schools,AdmLName2,The last name of the second administrator at the school.,text,D244,Hard
+california_schools,schools,AdmEmail2,The primary email address of the second administrator at the school.,text,D245,Hard
+california_schools,schools,AdmFName3,The first name of the third administrator at the school.,text,D246,Hard
+california_schools,schools,AdmLName3,The last name of the third administrator at the school.,text,D247,Hard
+california_schools,schools,AdmEmail3,The primary email address of the third administrator at the school.,text,D248,Hard
+california_schools,schools,LastUpdate,The date when the record associated with the school was last updated.,date,D249,Hard
+california_schools,satscores,cds,The unique identifier for the school or district associated with the SAT score entry.,text,D11,Very Hard
+california_schools,satscores,rtype,"The type of the reporting entity (e.g., district or school) associated with the SAT score entry.",text,D12,Hard
+california_schools,satscores,sname,The name of the school associated with the SAT score entry.,text,D13,Medium
+california_schools,satscores,dname,The name of the district associated with the SAT score entry.,text,D14,Medium
+california_schools,satscores,cname,The name of the county associated with the SAT score entry.,text,D15,Medium
+california_schools,satscores,enroll12,The number of students enrolled at the school in grades 1 through 12 for the given SAT score entry.,integer,D16,Very Hard
+california_schools,satscores,NumTstTakr,The number of students who took the SAT test in the specified school.,integer,D17,Hard
+california_schools,satscores,AvgScrRead,Average scores in Reading for the SAT test in the specified school.,integer,D18,Medium
+california_schools,satscores,AvgScrMath,The average scores in Math for the SAT test in the specified school.,integer,D19,Medium
+california_schools,satscores,AvgScrWrite,The average scores in writing for the SAT test in the specified school.,integer,D110,Medium
+california_schools,satscores,NumGE1500,The number of test takers whose total SAT scores are greater than or equal to 1500 for the specified school.,integer,D111,Hard
+california_schools,frpm,CDSCode,The County-District-School (CDS) code for the school in California associated with the Free or Reduced-Price Meal entry.,integer,D01,Hard
+california_schools,frpm,Academic Year,The academic year for which the Free or Reduced-Price Meal data is reported.,integer,D02,Medium
+california_schools,frpm,County Code,The county for the school in California associated with the Free or Reduced-Price Meal entry.,integer,D03,Medium
+california_schools,frpm,District Code,The code of the district for the school in California associated with the Free or Reduced-Price Meal entry.,integer,D04,Medium
+california_schools,frpm,School Code,The school code for the school associated with the Free or Reduced-Price Meal entry.,integer,D05,Easy
+california_schools,frpm,County Name,The name of the county where the school associated with the Free or Reduced-Price Meal entry is located.,text,D06,Easy
+california_schools,frpm,District Name,The name of the school district of the school associated with the Free or Reduced-Price Meal entry.,text,D07,Easy
+california_schools,frpm,School Name,The name of the school associated with the Free or Reduced-Price Meal entry.,text,D08,Easy
+california_schools,frpm,District Type,The type of district the school associated with the Free or Reduced-Price Meal entry belongs to.,text,D09,Easy
+california_schools,frpm,School Type,"The type of school, such as elementary, middle, or high school, the school associated with the Free or Reduced-Price Meal entry belongs to.",text,D010,Medium
+california_schools,frpm,Educational Option Type,The type of educational option provided by the school associated with the Free or Reduced-Price Meal entry.,text,D011,Medium
+california_schools,frpm,NSLP Provision Status,The status of the school's participation in the National School Lunch Program (NSLP) provision options.,text,D012,Hard
+california_schools,frpm,Charter School (Y/N),"Indicates whether the school associated with the Free or Reduced-Price Meal entry is a charter school (1 for Yes, 0 for No).",integer,D013,Easy
+california_schools,frpm,Charter School Number,"The unique identifier assigned to a charter school, for the school associated with the Free or Reduced-Price Meal entry.",text,D014,Easy
+california_schools,frpm,Charter Funding Type,The type of funding for the charter school associated with the Free or Reduced-Price Meal entry.,text,D015,Medium
+california_schools,frpm,IRC,The IRC of the school associated with the Free or Reduced-Price Meal entry.,integer,D016,Medium
+california_schools,frpm,Low Grade,The lowest grade level offered at the school associated with the Free or Reduced-Price Meal entry.,text,D017,Medium
+california_schools,frpm,High Grade,The highest grade level offered at the school associated with the Free or Reduced-Price Meal entry.,text,D018,Medium
+california_schools,frpm,Enrollment (K-12),The total number of students at the school associated with the Free or Reduced-Price Meal entry enrolled in grades K-12.,real,D019,Medium
+california_schools,frpm,Free Meal Count (K-12),The number of students at the school associated with the Free or Reduced-Price Meal entry in grades K-12 who receive free meals.,real,D020,Medium
+california_schools,frpm,Percent (%) Eligible Free (K-12),The percentage of K-12 students at the school eligible for free meals.,real,D021,Medium
+california_schools,frpm,FRPM Count (K-12),The count of students at the school eligible for Free or Reduced Price Meals (K-12).,real,D022,Medium
+california_schools,frpm,Percent (%) Eligible FRPM (K-12),The percentage of students at the school eligible for free or reduced-price meals (K-12).,real,D023,Medium
+california_schools,frpm,Enrollment (Ages 5-17),The number of students enrolled at the school associated with the Free or Reduced-Price Meal entry aged 5 to 17.,real,D024,Medium
+california_schools,frpm,Free Meal Count (Ages 5-17),The number of students at the school associated with the Free or Reduced-Price Meal entry aged 5-17 who receive free meals.,real,D025,Medium
+california_schools,frpm,Percent (%) Eligible Free (Ages 5-17),The percentage of students at the school aged 5-17 eligible for free meals.,real,D026,Medium
+california_schools,frpm,FRPM Count (Ages 5-17),The count of students at the school aged 5-17 eligible for Free or Reduced-Price Meals (FRPM).,real,D027,Medium
+california_schools,frpm,Percent (%) Eligible FRPM (Ages 5-17),The percentage of students at the school aged 5-17 eligible for free or reduced-price meals (FRPM).,real,D028,Medium
+california_schools,frpm,2013-14 CALPADS Fall 1 Certification Status,The certification status of the school associated with the Free or Reduced-Price Meal entry for the 2013-14 CALPADS Fall 1 data submission.,integer,D029,Hard
+card_games,legalities,id,Unique identifier for each legality record.,integer,E31,Easy
+card_games,legalities,format,The format of play of the legality associated with the card.,text,E32,Hard
+card_games,legalities,status,The status of the card's legality in a specific format.,text,E33,Hard
+card_games,legalities,uuid,A unique identifier for the card.,text,E34,Hard
+card_games,cards,id,Unique identifier for each card.,integer,E11,Easy
+card_games,cards,artist,The name of the artist that illustrated the card art.,text,E12,Medium
+card_games,cards,asciiName,The ASCII code formatted card name with no special unicode characters.,text,E13,Easy
+card_games,cards,availability,"A list of the card's available formats (e.g., mtgo, paper).",text,E14,Medium
+card_games,cards,borderColor,The color of the card border.,text,E15,Easy
+card_games,cards,cardKingdomFoilId,The unique identifier for the card on Card Kingdom's foil product listing.,text,E16,Easy
+card_games,cards,cardKingdomId,The unique identifier for the card on Card Kingdom.,text,E17,Easy
+card_games,cards,colorIdentity,"A list of all the colors found in manaCost, colorIndicator, and text.",text,E18,Hard
+card_games,cards,colorIndicator,A list of all the colors in the color indicator (the symbol prefixed to a card's types).,text,E19,Hard
+card_games,cards,colors,A list of all the colors in manaCost and colorIndicator.,text,E110,Hard
+card_games,cards,convertedManaCost,The converted mana cost of the card.,real,E111,Medium
+card_games,cards,duelDeck,The indicator for which duel deck the card is in.,text,E112,Hard
+card_games,cards,edhrecRank,The card's rank on EDHRec.,integer,E113,Hard
+card_games,cards,faceConvertedManaCost,The converted mana cost or mana value for the face for either half or part of the card.,real,E114,Hard
+card_games,cards,faceName,The name on the face of the card.,text,E115,Hard
+card_games,cards,flavorName,The promotional card name printed above the true card name on special cards that has no game function.,text,E116,Hard
+card_games,cards,flavorText,The italicized text found below the rules text that has no game function.,text,E117,Hard
+card_games,cards,frameEffects,The visual frame effects applied to the card.,text,E118,Hard
+card_games,cards,frameVersion,The version of the card frame style.,text,E119,Hard
+card_games,cards,hand,The starting maximum hand size total modifier of the card.,text,E120,Hard
+card_games,cards,hasAlternativeDeckLimit,Indicates if the card allows a value other than 4 copies in a deck.,integer,E121,Hard
+card_games,cards,hasContentWarning,Indicates if the card has been marked for having sensitive content.,integer,E122,Easy
+card_games,cards,hasFoil,Indicates if the card is available in foil.,integer,E123,Hard
+card_games,cards,hasNonFoil,Indicates whether the card is available in non-foil.,integer,E124,Hard
+card_games,cards,isAlternative,Indicates if the card is an alternate variation to an original printing.,integer,E125,Hard
+card_games,cards,isFullArt,Indicates whether the card features full artwork.,integer,E126,Hard
+card_games,cards,isOnlineOnly,Indicates if the card is exclusively available in online game variations.,integer,E127,Easy
+card_games,cards,isOversized,Indicates whether the card is oversized.,integer,E128,Easy
+card_games,cards,isPromo,Indicates if the card is a promotional printing.,integer,E129,Easy
+card_games,cards,isReprint,Indicates whether the card has been reprinted.,integer,E130,Easy
+card_games,cards,isReserved,Indicates if the card is on the Magic: The Gathering Reserved List.,integer,E131,Hard
+card_games,cards,isStarter,Indicates if the card is included in a starter deck such as Planeswalker or Brawl decks.,integer,E132,Hard
+card_games,cards,isStorySpotlight,Indicates whether the card is a Story Spotlight card.,integer,E133,Easy
+card_games,cards,isTextless,Indicates whether the card lacks a text box.,integer,E134,Easy
+card_games,cards,isTimeshifted,Indicates whether the card is time-shifted.,integer,E135,Easy
+card_games,cards,keywords,A list of keywords associated with the card.,text,E136,Medium
+card_games,cards,layout,"The type of card layout. For a token card, this will be ""token"".",text,E137,Medium
+card_games,cards,leadershipSkills,A list of formats the card is legal to be a commander in.,text,E138,Medium
+card_games,cards,life,The starting life total modifier. A plus or minus character precedes an integer.,text,E139,Hard
+card_games,cards,loyalty,The starting loyalty value of the card.,text,E140,Hard
+card_games,cards,manaCost,"The mana cost of the card, represented in a specific format using curly braces for each value.",text,E141,Medium
+card_games,cards,mcmId,The ID for the card on the Magic Card Market (MCM).,text,E142,Hard
+card_games,cards,mcmMetaId,The meta ID for the card on the Magic Card Market (MCM).,text,E143,Hard
+card_games,cards,mtgArenaId,The unique identifier for the card in the Magic: The Gathering Arena database.,text,E144,Hard
+card_games,cards,mtgjsonV4Id,The Magic: The Gathering json v4 ID of the card.,text,E145,Hard
+card_games,cards,mtgoFoilId,The unique identifier for the foil version of the card on Magic: The Gathering Online (MTGO).,text,E146,Hard
+card_games,cards,mtgoId,The unique identifier for the card in the Magic: The Gathering Online (MTGO) system.,text,E147,Hard
+card_games,cards,multiverseId,The unique identifier for the card in the Magic: The Gathering Multiverse database.,text,E148,Hard
+card_games,cards,name,The name of the card.,text,E149,Easy
+card_games,cards,number,The number assigned to the card within its set.,text,E150,Hard
+card_games,cards,originalReleaseDate,The original release date of the card.,text,E151,Easy
+card_games,cards,originalText,The original text of the card as it was first printed.,text,E152,Easy
+card_games,cards,originalType,The original type of the card.,text,E153,Medium
+card_games,cards,otherFaceIds,Identifiers for other faces of the card.,text,E154,Easy
+card_games,cards,power,The power of the card.,text,E155,Easy
+card_games,cards,printings,"A list of set printing codes where the card was printed, formatted in uppercase.",text,E156,Hard
+card_games,cards,promoTypes,A list of promotional types associated with a card.,text,E157,Hard
+card_games,cards,purchaseUrls,Links that navigate to websites where the card can be purchased.,text,E158,Easy
+card_games,cards,rarity,The rarity of the card.,text,E159,Easy
+card_games,cards,scryfallId,The unique identifier for the card on Scryfall.,text,E160,Medium
+card_games,cards,scryfallIllustrationId,The unique identifier for the card's illustration on Scryfall.,text,E161,Medium
+card_games,cards,scryfallOracleId,The unique identifier for the card's Oracle data on Scryfall.,text,E162,Medium
+card_games,cards,setCode,The set printing code that the card is from.,text,E163,Easy
+card_games,cards,side,The identifier of the card side.,text,E164,Hard
+card_games,cards,subtypes,A list of card subtypes found after em-dash.,text,E165,Medium
+card_games,cards,supertypes,A list of card supertypes found before em-dash.,text,E166,Medium
+card_games,cards,tcgplayerProductId,The unique identifier for the product on TCGplayer.,text,E167,Medium
+card_games,cards,text,The rules text of the card.,text,E168,Medium
+card_games,cards,toughness,The toughness of the card.,text,E169,Easy
+card_games,cards,type,"The type of the card, including any supertypes and subtypes.",text,E170,Medium
+card_games,cards,types,"A list of all card types, including Un‑sets and gameplay variants.",text,E171,Hard
+card_games,cards,uuid,The uuid of the card.,text,E172,Hard
+card_games,cards,variations,The uuid of variations of the card.,text,E173,Hard
+card_games,cards,watermark,The name of the watermark on the card.,text,E174,Medium
+card_games,sets,id,Unique identifier for each set.,integer,E41,Easy
+card_games,sets,baseSetSize,The number of cards in the base set.,integer,E42,Medium
+card_games,sets,block,The name of the block to which the set belongs.,text,E43,Medium
+card_games,sets,booster,A breakdown of possibilities and weights of cards in a booster pack.,text,E44,Hard
+card_games,sets,code,The unique code identifying each set.,text,E45,Easy
+card_games,sets,isFoilOnly,Indicates whether the set is exclusively available in foil.,integer,E46,Easy
+card_games,sets,isForeignOnly,Indicates whether the set is exclusively available outside the United States.,integer,E47,Hard
+card_games,sets,isNonFoilOnly,Indicates if the set is exclusively available in non-foil format.,integer,E48,Easy
+card_games,sets,isOnlineOnly,Indicates if the set is exclusively available in online game formats.,integer,E49,Easy
+card_games,sets,isPartialPreview,Indicates if the set is still in preview (spoiled).,integer,E410,Hard
+card_games,sets,keyruneCode,The matching Keyrune code for set image icons.,text,E411,Hard
+card_games,sets,mcmId,The Magic Card Market identifier for the set.,integer,E412,Hard
+card_games,sets,mcmIdExtras,The split Magic Card Market set identifier if a set is printed in two sets. This identifier represents the second set's identifier.,integer,E413,Hard
+card_games,sets,mcmName,The name of the set as listed on Magic Card Market.,text,E414,Hard
+card_games,sets,mtgoCode,The Magic: The Gathering Online code for the set.,text,E415,Hard
+card_games,sets,name,The name of the set.,text,E416,Easy
+card_games,sets,parentCode,"The parent set code for set variations like promotions, guild kits, etc.",text,E417,Hard
+card_games,sets,releaseDate,The release date of the set in ISO 8601 format.,date,E418,Easy
+card_games,sets,tcgplayerGroupId,The group identifier of the set on TCGplayer.,integer,E419,Hard
+card_games,sets,totalSetSize,"The total number of cards in the set, including promotional and related supplemental products.",integer,E420,Medium
+card_games,sets,type,The type of the set.,text,E421,Medium
+card_games,foreign_data,id,The ID identifying the foreign data of a card.,integer,E21,Medium
+card_games,foreign_data,flavorText,The foreign flavor text of the card.,text,E22,Medium
+card_games,foreign_data,language,The language of the card.,text,E23,Medium
+card_games,foreign_data,multiverseid,The foreign multiverse identifier of the card.,integer,E24,Medium
+card_games,foreign_data,name,The foreign name of the card.,text,E25,Medium
+card_games,foreign_data,text,The foreign language text of the card.,text,E26,Medium
+card_games,foreign_data,type,"The foreign type of the card, including any supertypes and subtypes.",text,E27,Medium
+card_games,foreign_data,uuid,Unique identifier referencing the related card.,text,E28,Hard
+card_games,rulings,id,Unique identifier for each ruling.,integer,E61,Easy
+card_games,rulings,date,The date when the ruling was issued.,date,E62,Easy
+card_games,rulings,text,Details about the ruling text.,text,E63,Easy
+card_games,rulings,uuid,Unique identifier linking each ruling to a specific card.,text,E64,Hard
+card_games,set_translations,id,Unique identifier for each translation entry.,integer,E51,Easy
+card_games,set_translations,language,The language of the card set translation.,text,E52,Easy
+card_games,set_translations,setCode,The set code for the translated set.,text,E53,Easy
+card_games,set_translations,translation,The translation of the set name into the specified language of the translation.,text,E54,Easy
+european_football_2,Player,id,Unique identifier for each player.,integer,F21,Easy
+european_football_2,Player,player_api_id,The api ID of the player.,integer,F22,Easy
+european_football_2,Player,player_name,The name of the player.,text,F23,Easy
+european_football_2,Player,player_fifa_api_id,The unique identifier for the player in the FIFA API.,integer,F24,Easy
+european_football_2,Player,birthday,The player's date of birth.,text,F25,Easy
+european_football_2,Player,height,The player's height in centimeters.,integer,F26,Easy
+european_football_2,Player,weight,The player's weight in pounds.,integer,F27,Easy
+european_football_2,Match,id,This is the unique identifier for each match.,integer,F71,Easy
+european_football_2,Match,country_id,The identifier for the country where the match took place.,integer,F72,Easy
+european_football_2,Match,league_id,The identifier for the league associated with the match.,integer,F73,Easy
+european_football_2,Match,season,The season during which the match took place.,text,F74,Easy
+european_football_2,Match,stage,The stage of the match within the season.,integer,F75,Hard
+european_football_2,Match,date,The date of the match.,text,F76,Easy
+european_football_2,Match,match_api_id,The unique identifier for the match API.,integer,F77,Easy
+european_football_2,Match,home_team_api_id,The API ID for the home team in the match.,integer,F78,Easy
+european_football_2,Match,away_team_api_id,The API ID of the away team in the match.,integer,F79,Easy
+european_football_2,Match,home_team_goal,The number of goals scored by the home team in the match.,integer,F710,Medium
+european_football_2,Match,away_team_goal,The number of goals scored by the away team in the match.,integer,F711,Medium
+european_football_2,Match,home_player_X1,The home player X1 in the match.,,F712,Hard
+european_football_2,Match,home_player_X2,The home player X2 in the match.,,F713,Hard
+european_football_2,Match,home_player_X3,The home player X3 in the match.,,F714,Hard
+european_football_2,Match,home_player_X4,The home player X4 in the match.,,F715,Hard
+european_football_2,Match,home_player_X5,The home player X5 in the match.,,F716,Hard
+european_football_2,Match,home_player_X6,The home player X6 in the match.,,F717,Hard
+european_football_2,Match,home_player_X7,The home player X7 in the match.,,F718,Hard
+european_football_2,Match,home_player_X8,The home player X8 in the match.,,F719,Hard
+european_football_2,Match,home_player_X9,The home player X9 in the match.,,F720,Hard
+european_football_2,Match,home_player_X10,The home player X10 in the match.,,F721,Hard
+european_football_2,Match,home_player_X11,The home player X11 in the match.,,F722,Hard
+european_football_2,Match,away_player_X1,The away player X1 in the match.,,F723,Hard
+european_football_2,Match,away_player_X2,The away player X2 in the match.,,F724,Hard
+european_football_2,Match,away_player_X3,The away player X3 in the match.,,F725,Hard
+european_football_2,Match,away_player_X4,The away player X4 in the match.,,F726,Hard
+european_football_2,Match,away_player_X5,The away player X5 in the match.,,F727,Hard
+european_football_2,Match,away_player_X6,The away player X6 in the match.,,F728,Hard
+european_football_2,Match,away_player_X7,The away player X7 in the match.,,F729,Hard
+european_football_2,Match,away_player_X8,The away player X8 in the match.,,F730,Hard
+european_football_2,Match,away_player_X9,The away player X9 in the match.,,F731,Hard
+european_football_2,Match,away_player_X10,The away player X10 in the match.,,F732,Hard
+european_football_2,Match,away_player_X11,The away player X11 in the match.,,F733,Hard
+european_football_2,Match,home_player_Y1,The home player Y1 in the match.,,F734,Hard
+european_football_2,Match,home_player_Y2,The home player Y2 in the match.,,F735,Hard
+european_football_2,Match,home_player_Y3,The home player Y3 in the match.,,F736,Hard
+european_football_2,Match,home_player_Y4,The home player Y4 in the match.,,F737,Hard
+european_football_2,Match,home_player_Y5,The home player Y5 in the match.,,F738,Hard
+european_football_2,Match,home_player_Y6,The home player Y6 in the match.,,F739,Hard
+european_football_2,Match,home_player_Y7,The home player Y7 in the match.,,F740,Hard
+european_football_2,Match,home_player_Y8,The home player Y8 in the match.,,F741,Hard
+european_football_2,Match,home_player_Y9,The home player Y9 in the match.,,F742,Hard
+european_football_2,Match,home_player_Y10,The home player Y10 in the match.,,F743,Hard
+european_football_2,Match,home_player_Y11,The home player Y11 in the match.,,F744,Hard
+european_football_2,Match,away_player_Y1,The away player Y1 in the match.,,F745,Hard
+european_football_2,Match,away_player_Y2,The away player Y2 in the match.,,F746,Hard
+european_football_2,Match,away_player_Y3,The away player Y3 in the match.,,F747,Hard
+european_football_2,Match,away_player_Y4,The away player Y4 in the match.,,F748,Hard
+european_football_2,Match,away_player_Y5,The away player Y5 in the match.,,F749,Hard
+european_football_2,Match,away_player_Y6,The away player Y6 in the match.,,F750,Hard
+european_football_2,Match,away_player_Y7,The away player Y7 in the match.,,F751,Hard
+european_football_2,Match,away_player_Y8,The away player Y8 in the match.,,F752,Hard
+european_football_2,Match,away_player_Y9,The away player Y9 in the match.,,F753,Hard
+european_football_2,Match,away_player_Y10,The away player Y10 in the match.,,F754,Hard
+european_football_2,Match,away_player_Y11,The away player Y11 in the match.,,F755,Hard
+european_football_2,Match,home_player_1,The ID of the first home player in the match.,,F756,Hard
+european_football_2,Match,home_player_2,The player ID of the second home team player in the match.,,F757,Hard
+european_football_2,Match,home_player_3,The ID of the third home player in the match.,,F758,Hard
+european_football_2,Match,home_player_4,The ID of the fourth home player in the match.,,F759,Hard
+european_football_2,Match,home_player_5,The ID of the fifth home player in the match.,,F760,Hard
+european_football_2,Match,home_player_6,The ID of the sixth player in the home team in the match.,,F761,Hard
+european_football_2,Match,home_player_7,The ID of the seventh player in the home team in the match.,,F762,Hard
+european_football_2,Match,home_player_8,The ID of the eighth player in the home team in the match.,,F763,Hard
+european_football_2,Match,home_player_9,The ID of the ninth player on the home team in the match.,,F764,Hard
+european_football_2,Match,home_player_10,The ID of the 10th player in the home team in the match.,,F765,Hard
+european_football_2,Match,home_player_11,The ID of the 11th player in the home team in the match.,,F766,Hard
+european_football_2,Match,away_player_1,The ID of the first away team player in the match.,,F767,Hard
+european_football_2,Match,away_player_2,The ID of the second away team player in the match.,,F768,Hard
+european_football_2,Match,away_player_3,The player ID of the third away team player in the match.,,F769,Hard
+european_football_2,Match,away_player_4,The ID of the fourth away player in the match.,,F770,Hard
+european_football_2,Match,away_player_5,The ID of the fifth away team player in the match.,,F771,Hard
+european_football_2,Match,away_player_6,The ID of the sixth away player in the match.,,F772,Hard
+european_football_2,Match,away_player_7,The ID of the seventh away player in the match.,,F773,Hard
+european_football_2,Match,away_player_8,The ID of the eighth away player in the match.,,F774,Hard
+european_football_2,Match,away_player_9,The ID of the ninth away player in the match.,,F775,Hard
+european_football_2,Match,away_player_10,The ID of the 10th away player in the match.,,F776,Hard
+european_football_2,Match,away_player_11,The ID of the 11th player on the away team in the match.,,F777,Hard
+european_football_2,Match,goal,Information of the goals in the match in XML format.,text,F778,Medium
+european_football_2,Match,shoton,The number of shots on goal during the match.,text,F779,Medium
+european_football_2,Match,shotoff,The number of shots that were off target during the match.,text,F780,Medium
+european_football_2,Match,foulcommit,The fouls committed during the match.,text,F781,Medium
+european_football_2,Match,card,Details about the cards given in the match.,text,F782,Medium
+european_football_2,Match,cross,The number of balls sent into the opposition team's area from a wide position.,text,F783,Medium
+european_football_2,Match,corner,Number of corner kicks in the match.,text,F784,Medium
+european_football_2,Match,possession,Information on the possession is in the match in XML format.,text,F785,Medium
+european_football_2,Match,B365H,The home win odds from Bet365.,,F786,Hard
+european_football_2,Match,B365D,The draw odds provided by Bet365.,,F787,Hard
+european_football_2,Match,B365A,The betting odds for an away team win from Bet365.,,F788,Hard
+european_football_2,Match,BWH,The BWH column represents the home win odds provided by the Bet&Win (BWin) bookmaker.,,F789,Hard
+european_football_2,Match,BWD,The draw odds provided by Bet&Win (BWin) for the match.,,F790,Hard
+european_football_2,Match,BWA,The betting odds for an away team win from Bet&Win (BWin) for the match.,,F791,Hard
+european_football_2,Match,IWH,The IWH column represents the home win odds provided by the betting company Interwetten.,,F792,Hard
+european_football_2,Match,IWD,The draw odds from Interwetten.,,F793,Hard
+european_football_2,Match,IWA,The IWA column represents the odds for an away team win provided by the Interwetten betting company.,,F794,Hard
+european_football_2,Match,LBH,The home win odds from the betting company Ladbrokes.,,F795,Hard
+european_football_2,Match,LBD,The draw odds from the betting company Ladbrokes.,,F796,Hard
+european_football_2,Match,LBA,The LBA column represents the betting odds for an away team win provided by the betting company LB.,,F797,Hard
+european_football_2,Match,PSH,The home win odds from Pinnacle Sports.,,F798,Hard
+european_football_2,Match,PSD,The draw odds from Pinnacle Sports.,,F799,Hard
+european_football_2,Match,PSA,The odds for an away team win from the betting company Pinnacle Sports.,,F7100,Hard
+european_football_2,Match,WHH,The home win odds from William Hill.,,F7101,Hard
+european_football_2,Match,WHD,The draw odds from William Hill.,,F7102,Hard
+european_football_2,Match,WHA,The odds offered by William Hill for an away team win.,,F7103,Hard
+european_football_2,Match,SJH,The odds for a home win from the Stan James bookmaker.,,F7104,Hard
+european_football_2,Match,SJD,The odds for a draw according to the Stan James betting company.,,F7105,Hard
+european_football_2,Match,SJA,The SJA column represents the odds offered by the betting company Stan James for an away team win.,,F7106,Hard
+european_football_2,Match,VCH,The odds for a home win from the VC Bet bookmaker.,,F7107,Hard
+european_football_2,Match,VCD,The odds for a draw according to the VC Bet betting company.,,F7108,Hard
+european_football_2,Match,VCA,The odds for an away team win from the betting company VC Bet.,,F7109,Hard
+european_football_2,Match,GBH,The home win odds from Gamebookers.,,F7110,Hard
+european_football_2,Match,GBD,The draw odds from Gamebookers.,,F7111,Hard
+european_football_2,Match,GBA,The odds offered by Gamebookers for an away team win.,,F7112,Hard
+european_football_2,Match,BSH,The home win odds from Blue Square.,,F7113,Hard
+european_football_2,Match,BSD,The draw odds from Blue Square.,,F7114,Hard
+european_football_2,Match,BSA,The odds offered by Blue Square for an away team win.,,F7115,Hard
+european_football_2,League,id,This is the unique identifier for each league.,integer,F31,Easy
+european_football_2,League,country_id,This is the unique identifier for the country associated with the league.,integer,F32,Easy
+european_football_2,League,name,The name of the league.,text,F33,Easy
+european_football_2,Country,id,This is the unique identifier for each country.,integer,F41,Easy
+european_football_2,Country,name,The name of the country.,text,F42,Easy
+european_football_2,Player_Attributes,id,Unique identifier for each player attribute record.,integer,F11,Easy
+european_football_2,Player_Attributes,player_fifa_api_id,The unique identifier for a player in the FIFA API.,integer,F12,Easy
+european_football_2,Player_Attributes,player_api_id,The unique identifier for the player in the API.,integer,F13,Easy
+european_football_2,Player_Attributes,date,The date when the player's attributes were recorded.,text,F14,Hard
+european_football_2,Player_Attributes,overall_rating,The overall rating of the player.,integer,F15,Easy
+european_football_2,Player_Attributes,potential,The potential rating of the player.,integer,F16,Medium
+european_football_2,Player_Attributes,preferred_foot,The player's preferred foot for playing when attacking.,text,F17,Easy
+european_football_2,Player_Attributes,attacking_work_rate,The player's attacking work rate.,text,F18,Medium
+european_football_2,Player_Attributes,defensive_work_rate,The player's defensive work rate.,text,F19,Medium
+european_football_2,Player_Attributes,crossing,The player's crossing ability score.,integer,F110,Medium
+european_football_2,Player_Attributes,finishing,The player's ability to finish scoring opportunities.,integer,F111,Medium
+european_football_2,Player_Attributes,heading_accuracy,The player's accuracy in heading the ball.,integer,F112,Medium
+european_football_2,Player_Attributes,short_passing,The player's short passing ability score.,integer,F113,Medium
+european_football_2,Player_Attributes,volleys,The player's volley score.,integer,F114,Medium
+european_football_2,Player_Attributes,dribbling,The player's dribbling ability score.,integer,F115,Medium
+european_football_2,Player_Attributes,curve,The player's ability to curve the ball.,integer,F116,Medium
+european_football_2,Player_Attributes,free_kick_accuracy,The player's accuracy in taking free kicks.,integer,F117,Medium
+european_football_2,Player_Attributes,long_passing,The player's long passing score.,integer,F118,Medium
+european_football_2,Player_Attributes,ball_control,The player's ball control score.,integer,F119,Medium
+european_football_2,Player_Attributes,acceleration,The player's acceleration score.,integer,F120,Medium
+european_football_2,Player_Attributes,sprint_speed,The player's sprint speed.,integer,F121,Medium
+european_football_2,Player_Attributes,agility,The player's agility rating.,integer,F122,Medium
+european_football_2,Player_Attributes,reactions,The player's reactions score.,integer,F123,Medium
+european_football_2,Player_Attributes,balance,The player's balance score.,integer,F124,Medium
+european_football_2,Player_Attributes,shot_power,The player's shot power rating.,integer,F125,Medium
+european_football_2,Player_Attributes,jumping,The player's jumping ability score.,integer,F126,Medium
+european_football_2,Player_Attributes,stamina,The player's stamina score.,integer,F127,Medium
+european_football_2,Player_Attributes,strength,The player's strength score.,integer,F128,Medium
+european_football_2,Player_Attributes,long_shots,The player's long shots score.,integer,F129,Medium
+european_football_2,Player_Attributes,aggression,The player's aggression score.,integer,F130,Medium
+european_football_2,Player_Attributes,interceptions,The player's ability to intercept passes.,integer,F131,Medium
+european_football_2,Player_Attributes,positioning,The player's positioning score.,integer,F132,Medium
+european_football_2,Player_Attributes,vision,The player's vision score.,integer,F133,Medium
+european_football_2,Player_Attributes,penalties,The player's penalties score.,integer,F134,Medium
+european_football_2,Player_Attributes,marking,The player's marking score.,integer,F135,Medium
+european_football_2,Player_Attributes,standing_tackle,The player's ability to perform standing tackles.,integer,F136,Medium
+european_football_2,Player_Attributes,sliding_tackle,The player's sliding tackle score.,integer,F137,Medium
+european_football_2,Player_Attributes,gk_diving,The player's goalkeeping diving ability score.,integer,F138,Medium
+european_football_2,Player_Attributes,gk_handling,The player's goalkeeping handling score.,integer,F139,Medium
+european_football_2,Player_Attributes,gk_kicking,The player's goalkeeping kicking score.,integer,F140,Medium
+european_football_2,Player_Attributes,gk_positioning,The player's goalkeeper positioning score.,integer,F141,Medium
+european_football_2,Player_Attributes,gk_reflexes,The player's goalkeeping reflexes score.,integer,F142,Medium
+european_football_2,Team,id,This is the unique identifier for each team.,integer,F51,Easy
+european_football_2,Team,team_api_id,The unique identifier for the team in the API.,integer,F52,Easy
+european_football_2,Team,team_fifa_api_id,The unique identifier for the team in the FIFA API.,integer,F53,Easy
+european_football_2,Team,team_long_name,The full name of the team.,text,F54,Easy
+european_football_2,Team,team_short_name,The abbreviated name of the team.,text,F55,Easy
+european_football_2,Team_Attributes,id,Unique identifier for each team attribute record.,integer,F61,Easy
+european_football_2,Team_Attributes,team_fifa_api_id,The unique identifier for the team in the FIFA API.,integer,F62,Easy
+european_football_2,Team_Attributes,team_api_id,The unique identifier for the team in the API.,integer,F63,Easy
+european_football_2,Team_Attributes,date,The date when the team attributes were recorded.,text,F64,Hard
+european_football_2,Team_Attributes,buildUpPlaySpeed,The score of the build up play speed for the team.,integer,F65,Easy
+european_football_2,Team_Attributes,buildUpPlaySpeedClass,This is the classification of the team's build-up play speed.,text,F66,Medium
+european_football_2,Team_Attributes,buildUpPlayDribbling,The tendency or frequency of dribbling during build-up play for the team.,integer,F67,Medium
+european_football_2,Team_Attributes,buildUpPlayDribblingClass,The dribbling class during the build-up play for the team.,text,F68,Medium
+european_football_2,Team_Attributes,buildUpPlayPassing,The build up play passing score for the team.,integer,F69,Medium
+european_football_2,Team_Attributes,buildUpPlayPassingClass,The passing style used by the team during the build-up play.,text,F610,Medium
+european_football_2,Team_Attributes,buildUpPlayPositioningClass,The degree of organization or freedom of movement a team has in the first two-thirds of the pitch during build-up play.,text,F611,Medium
+european_football_2,Team_Attributes,chanceCreationPassing,The score of the team's passing strategy during chance creation.,integer,F612,Medium
+european_football_2,Team_Attributes,chanceCreationPassingClass,The classification of the team's passing strategy during chance creation.,text,F613,Medium
+european_football_2,Team_Attributes,chanceCreationCrossing,The score of the team's crosses into the box during chance creation.,integer,F614,Hard
+european_football_2,Team_Attributes,chanceCreationCrossingClass,The classification of the team's crosses into the box during chance creation.,text,F615,Hard
+european_football_2,Team_Attributes,chanceCreationShooting,The frequency of shooting opportunities created by the team.,integer,F616,Hard
+european_football_2,Team_Attributes,chanceCreationShootingClass,This is the classification of the team's shooting strategy during chance creation.,text,F617,Medium
+european_football_2,Team_Attributes,chanceCreationPositioningClass,A team's strategy for player positioning during attacking plays.,text,F618,Medium
+european_football_2,Team_Attributes,defencePressure,Indicates the level of pressure applied by the team's defense.,integer,F619,Medium
+european_football_2,Team_Attributes,defencePressureClass,The classification of the team's defensive pressure strategy.,text,F620,Medium
+european_football_2,Team_Attributes,defenceAggression,The level of aggression in a team's defensive tactics.,integer,F621,Medium
+european_football_2,Team_Attributes,defenceAggressionClass,The classification of a team's defensive aggression level.,text,F622,Medium
+european_football_2,Team_Attributes,defenceTeamWidth,The width of the team's defensive formation.,integer,F623,Hard
+european_football_2,Team_Attributes,defenceTeamWidthClass,The classification of the team's defensive width strategy.,text,F624,Medium
+european_football_2,Team_Attributes,defenceDefenderLineClass,Classification of the defensive line strategy.,text,F625,Medium
+thrombosis_prediction,Examination,ID,The unique identifier for the patient that has been examined.,integer,G01,Hard
+thrombosis_prediction,Examination,Examination Date,The date when the examination was conducted.,date,G02,Easy
+thrombosis_prediction,Examination,aCL IgG,This is the concentration of anti-Cardiolipin antibody (IgG) observed in the examination of the patient.,real,G03,Easy
+thrombosis_prediction,Examination,aCL IgM,The anti-Cardiolipin antibody (IgM) concentration observed in the examination of the patient.,real,G04,Easy
+thrombosis_prediction,Examination,ANA,The concentration of anti-nucleus antibodies observed in the examination of the patient.,integer,G05,Easy
+thrombosis_prediction,Examination,ANA Pattern,The pattern observed in the ANA examination.,text,G06,Easy
+thrombosis_prediction,Examination,aCL IgA,The concentration of anti-Cardiolipin antibody (IgA) observed in the examination of the patient.,integer,G07,Easy
+thrombosis_prediction,Examination,Diagnosis,The diagnosis given after the examination of the patient.,text,G08,Easy
+thrombosis_prediction,Examination,KCT,The measure of degree of coagulation observed in the examination of the patient.,text,G09,Hard
+thrombosis_prediction,Examination,RVVT,This is a measure of the degree of coagulation observed in the examination of the patient.,text,G010,Hard
+thrombosis_prediction,Examination,LAC,The presence of lupus anticoagulant (LAC) observed in the examination of the patient.,text,G011,Easy
+thrombosis_prediction,Examination,Symptoms,Details about other symptoms observed in the examination of the patient.,text,G012,Medium
+thrombosis_prediction,Examination,Thrombosis,The degree of thrombosis observed in the examination of the patient.,integer,G013,Medium
+thrombosis_prediction,Laboratory,ID,Identification of the patient assosiated with the laboratory test.,integer,G21,Easy
+thrombosis_prediction,Laboratory,Date,The date of the laboratory tests.,date,G22,Easy
+thrombosis_prediction,Laboratory,GOT,The AST glutamic oxaloacetic transaminase level observed in the laboratory test.,integer,G23,Easy
+thrombosis_prediction,Laboratory,GPT,The level of ALT glutamic pyruvic transaminase observed in the laboratory test.,integer,G24,Easy
+thrombosis_prediction,Laboratory,LDH,This is the lactate dehydrogenase level observed in the laboratory test.,integer,G25,Easy
+thrombosis_prediction,Laboratory,ALP,The level of alkaline phosphatase enzyme observed in the laboratory test.,integer,G26,Easy
+thrombosis_prediction,Laboratory,TP,The total protein level in the blood observed in the laboratory test.,real,G27,Easy
+thrombosis_prediction,Laboratory,ALB,The concentration of albumin in the blood observed in the laboratory test.,real,G28,Easy
+thrombosis_prediction,Laboratory,UA,The uric acid level observed in the laboratory test.,real,G29,Easy
+thrombosis_prediction,Laboratory,UN,The concentration of urea nitrogen in the blood observed in the laboratory test.,integer,G210,Easy
+thrombosis_prediction,Laboratory,CRE,The creatinine level in the blood observed in the laboratory test.,real,G211,Easy
+thrombosis_prediction,Laboratory,T-BIL,The total bilirubin level in the blood observed in the laboratory test.,real,G212,Easy
+thrombosis_prediction,Laboratory,T-CHO,The total cholesterol level observed in the laboratory test.,integer,G213,Easy
+thrombosis_prediction,Laboratory,TG,This is the triglyceride level observed in the laboratory test.,integer,G214,Easy
+thrombosis_prediction,Laboratory,CPK,Creatinine phosphokinase levels observed in the laboratory test.,integer,G215,Easy
+thrombosis_prediction,Laboratory,GLU,The blood glucose level observed in the laboratory test.,integer,G216,Easy
+thrombosis_prediction,Laboratory,WBC,White blood cell count observed in the laboratory test.,real,G217,Easy
+thrombosis_prediction,Laboratory,RBC,The count of red blood cells observed in the laboratory test.,real,G218,Easy
+thrombosis_prediction,Laboratory,HGB,The hemoglobin level in the blood observed in the laboratory test.,real,G219,Easy
+thrombosis_prediction,Laboratory,HCT,The percentage of red blood cells in the blood observed in the laboratory test.,real,G220,Easy
+thrombosis_prediction,Laboratory,PLT,The platelet count observed in the laboratory test.,integer,G221,Easy
+thrombosis_prediction,Laboratory,PT,The prothrombin time observed in the laboratory test.,real,G222,Easy
+thrombosis_prediction,Laboratory,APTT,The activated partial prothrombin time observed in the laboratory test.,integer,G223,Easy
+thrombosis_prediction,Laboratory,FG,The fibrinogen level observed in the laboratory test.,real,G224,Easy
+thrombosis_prediction,Laboratory,PIC,The PIC observed in the laboratory test.,,G225,Easy
+thrombosis_prediction,Laboratory,TAT,The turnaround time (TAT) observed in the laboratory test.,,G226,Easy
+thrombosis_prediction,Laboratory,TAT2,The TAT2 observed in the laboratory test.,,G227,Easy
+thrombosis_prediction,Laboratory,U-PRO,The presence of protein in urine observed in the patient's laboratory test.,text,G228,Easy
+thrombosis_prediction,Laboratory,IGG,The IgG level observed in the patient's laboratory test.,integer,G229,Easy
+thrombosis_prediction,Laboratory,IGA,The Ig A level observed in the patient's laboratory test.,integer,G230,Easy
+thrombosis_prediction,Laboratory,IGM,The IgM level observed in the patient's laboratory test.,integer,G231,Easy
+thrombosis_prediction,Laboratory,CRP,C-reactive protein observed in the patient's laboratory test.,text,G232,Easy
+thrombosis_prediction,Laboratory,RA,The Rhuematoid Athritis indicator observed in the laboratory test.,text,G233,Easy
+thrombosis_prediction,Laboratory,RF,The Rhuematoid Factor observed in the laboratory test.,text,G234,Easy
+thrombosis_prediction,Laboratory,C3,The level of complement 3 protein in the blood observed in the patient's laboratory test.,integer,G235,Easy
+thrombosis_prediction,Laboratory,C4,The level of complement 4 in the blood observed in the patient's laboratory test.,integer,G236,Easy
+thrombosis_prediction,Laboratory,RNP,The anti-ribonuclear protein levels observed in the patient's laboratory test.,text,G237,Easy
+thrombosis_prediction,Laboratory,SM,The presence of anti-SM antibodies observed in the patient's laboratory test.,text,G238,Easy
+thrombosis_prediction,Laboratory,SC170,The presence of anti-scl70 antibodies observed in the patient's laboratory test.,text,G239,Easy
+thrombosis_prediction,Laboratory,SSA,The anti-SSA antibody levels observed in the patient's laboratory test.,text,G240,Easy
+thrombosis_prediction,Laboratory,SSB,The presence of anti-SSB antibodies observed in the patient's laboratory test.,text,G241,Easy
+thrombosis_prediction,Laboratory,CENTROMEA,The presence of anti-centromere antibodies observed in the patient's laboratory test.,text,G242,Easy
+thrombosis_prediction,Laboratory,DNA,The anti-DNA levels observed in the patient's laboratory test.,text,G243,Easy
+thrombosis_prediction,Laboratory,DNA-II,The anti-DNA level measured in the patient's laboratory tests.,integer,G244,Easy
+thrombosis_prediction,Patient,ID,This is the unique identifier for each patient.,integer,G11,Easy
+thrombosis_prediction,Patient,SEX,The sex of the patient.,text,G12,Easy
+thrombosis_prediction,Patient,Birthday,The date of birth of the patient.,date,G13,Easy
+thrombosis_prediction,Patient,Description,The date when the patient's data was last updated.,date,G14,Hard
+thrombosis_prediction,Patient,First Date,The date when a patient first visited the hospital.,date,G15,Hard
+thrombosis_prediction,Patient,Admission,Indicates whether the patient was admitted to the hospital (+) or followed at the outpatient clinic (-).,text,G16,Hard
+thrombosis_prediction,Patient,Diagnosis,The diagnosis of the patient.,text,G17,Easy
+toxicology,bond,bond_id,Unique identifier representing bonds within a molecule.,text,H11,Easy
+toxicology,bond,molecule_id,Identifies the molecule in which the bond appears.,text,H12,Easy
+toxicology,bond,bond_type,The type of bond between atoms.,text,H13,Easy
+toxicology,molecule,molecule_id,Unique identifier for each molecule.,text,H31,Easy
+toxicology,molecule,label,Indicates whether this molecule is carcinogenic.,text,H32,Very Hard
+toxicology,atom,atom_id,The unique identifier for each atom.,text,H01,Easy
+toxicology,atom,molecule_id,Identifies the molecule to which the atom belongs.,text,H02,Easy
+toxicology,atom,element,The chemical element to which the atom belongs.,text,H03,Easy
+toxicology,connected,atom_id,The ID of the first atom in a bond connection.,text,H21,Hard
+toxicology,connected,atom_id2,The ID of the second atom in a bond connection.,text,H22,Hard
+toxicology,connected,bond_id,Identifier for the bond between two atoms.,text,H23,Easy
+student_club,income,income_id,A unique identifier for each income record.,text,I61,Easy
+student_club,income,date_received,The date the income was received.,text,I62,Easy
+student_club,income,amount,The amount of funds received.,integer,I63,Easy
+student_club,income,source,"The source of the income, such as dues or fundraising activities.",text,I64,Medium
+student_club,income,notes,Details about the receipt of funds.,text,I65,Medium
+student_club,income,link_to_member,Reference to the member who is associated with the income.,text,I66,Easy
+student_club,budget,budget_id,A unique identifier for each budget entry.,text,I41,Easy
+student_club,budget,category,"The area for which the budgeted amount is allocated, such as advertisement, food, or parking.",text,I42,Easy
+student_club,budget,spent,The total amount spent in the budgeted category for an event.,real,I43,Medium
+student_club,budget,remaining,The remaining budget after expenditures for the specified category and event.,real,I44,Medium
+student_club,budget,amount,The total budgeted amount for the specified category and event.,integer,I45,Easy
+student_club,budget,event_status,The status of the event associated with the budget entry.,text,I46,Medium
+student_club,budget,link_to_event,The unique identifier of the event associated with the budget entry.,text,I47,Easy
+student_club,attendance,link_to_event,The unique identifier of the event linked to the attendance record.,text,I31,Easy
+student_club,attendance,link_to_member,The unique identifier of the member that attended the event.,text,I32,Easy
+student_club,event,event_id,A unique identifier for each event.,text,I01,Easy
+student_club,event,event_name,The name of the event.,text,I02,Easy
+student_club,event,event_date,The date the event took place or is scheduled to take place.,text,I03,Easy
+student_club,event,type,"The kind of event, such as game, social, election, meeting, or guest speaker.",text,I04,Easy
+student_club,event,notes,A free text field for any notes about the event.,text,I05,Easy
+student_club,event,location,Address where the event was held or is to be held.,text,I06,Easy
+student_club,event,status,"The status of the event, indicating if it is in planning, opened, or closed.",text,I07,Medium
+student_club,expense,expense_id,Unique identifier for each expense.,text,I51,Easy
+student_club,expense,expense_description,A textual description of the expense items or services for which the money was spent.,text,I52,Easy
+student_club,expense,expense_date,The date the expense was incurred.,text,I53,Easy
+student_club,expense,cost,The dollar amount spent on an expense.,real,I54,Easy
+student_club,expense,approved,A true or false value indicating if the expense was approved.,text,I55,Medium
+student_club,expense,link_to_member,The member who incurred the expense.,text,I56,Medium
+student_club,expense,link_to_budget,The unique identifier of the budget record associated with the expense.,text,I57,Easy
+student_club,major,major_id,A unique identifier for each major.,text,I11,Easy
+student_club,major,major_name,The name of the major.,text,I12,Easy
+student_club,major,department,The name of the department that offers the major.,text,I13,Easy
+student_club,major,college,The name of the college that houses the department offering the major.,text,I14,Easy
+student_club,member,member_id,Unique identifier for each member.,text,I71,Easy
+student_club,member,first_name,The member's first name.,text,I72,Easy
+student_club,member,last_name,The last name of the member.,text,I73,Easy
+student_club,member,email,The email address of the member.,text,I74,Easy
+student_club,member,position,The role or title the member holds within the club.,text,I75,Easy
+student_club,member,t_shirt_size,The size of the t-shirt that the member prefers.,text,I76,Easy
+student_club,member,phone,The primary phone number to contact the member.,text,I77,Easy
+student_club,member,zip,The zip code of the member's hometown.,integer,I78,Easy
+student_club,member,link_to_major,The unique identifier for the major associated with the member. References the Major table.,text,I79,Easy
+student_club,zip_code,zip_code,The ZIP code itself. A five-digit number identifying a US post office or delivery area.,integer,I21,Easy
+student_club,zip_code,type,"The classification of the ZIP code, such as Standard, PO Box, or Unique.",text,I22,Easy
+student_club,zip_code,city,The city to which the ZIP code pertains.,text,I23,Easy
+student_club,zip_code,county,The county to which the ZIP pertains.,text,I24,Easy
+student_club,zip_code,state,The name of the state to which the ZIP pertains.,text,I25,Easy
+student_club,zip_code,short_state,The standard two-letter abbreviation of the state.,text,I26,Medium
+superhero,gender,id,Unique identifier for the gender.,integer,J31,Easy
+superhero,gender,gender,The name of the gender of the superhero.,text,J32,Easy
+superhero,superpower,id,This is the unique identifier for each superpower.,integer,J81,Easy
+superhero,superpower,power_name,The name of the superpower.,text,J82,Easy
+superhero,publisher,id,The unique identifier of the publisher.,integer,J41,Easy
+superhero,publisher,publisher_name,The name of the publisher.,text,J42,Easy
+superhero,superhero,id,This is the unique identifier for each superhero.,integer,J61,Easy
+superhero,superhero,superhero_name,The name of the superhero.,text,J62,Easy
+superhero,superhero,full_name,The full name of the superhero.,text,J63,Easy
+superhero,superhero,gender_id,The identifier for the gender of the superhero.,integer,J64,Easy
+superhero,superhero,eye_colour_id,The identifier for the superhero's eye color.,integer,J65,Easy
+superhero,superhero,hair_colour_id,The identifier for the superhero's hair color.,integer,J66,Easy
+superhero,superhero,skin_colour_id,The ID of the superhero's skin color.,integer,J67,Easy
+superhero,superhero,race_id,The identifier for the superhero's race.,integer,J68,Easy
+superhero,superhero,publisher_id,The identifier for the publisher associated with the superhero.,integer,J69,Easy
+superhero,superhero,alignment_id,The id of the superhero's alignment. This references the id in the alignment table.,integer,J610,Easy
+superhero,superhero,height_cm,The height of the superhero in centimeters.,integer,J611,Easy
+superhero,superhero,weight_kg,The weight of the superhero in kilograms.,integer,J612,Easy
+superhero,colour,id,Unique identifier for each color.,integer,J21,Easy
+superhero,colour,colour,The name of the colour.,text,J22,Easy
+superhero,attribute,id,The unique identifier of the attribute.,integer,J11,Easy
+superhero,attribute,attribute_name,The name of the attribute.,text,J12,Easy
+superhero,hero_power,hero_id,The ID of the superhero associated with the superpower.,integer,J91,Easy
+superhero,hero_power,power_id,The ID of the superpower. Maps to superpower(id).,integer,J92,Easy
+superhero,race,id,The unique identifier for each race.,integer,J51,Easy
+superhero,race,race,The name of the superhero's race.,text,J52,Easy
+superhero,alignment,id,Unique identifier for the alignment.,integer,J01,Easy
+superhero,alignment,alignment,The alignment of the superhero (Good/Bad).,text,J02,Medium
+superhero,hero_attribute,hero_id,The ID of the superhero that has the attribute.,,J71,Easy
+superhero,hero_attribute,attribute_id,The id of the attribute. Maps to attribute(id).,,J72,Easy
+superhero,hero_attribute,attribute_value,The value representing the magnitude of a specific attribute for a superhero.,,J73,Easy
+codebase_community,postLinks,Id,This is the unique identifier for each post link.,integer,K31,Easy
+codebase_community,postLinks,CreationDate,The creation date of the post link.,datetime,K32,Easy
+codebase_community,postLinks,PostId,The ID of the post associated with the link.,integer,K33,Easy
+codebase_community,postLinks,RelatedPostId,The ID of the post that is related to the current post.,integer,K34,Easy
+codebase_community,postLinks,LinkTypeId,The identifier for the type of link between posts.,integer,K35,Easy
+codebase_community,postHistory,Id,The unique identifier for each post history entry.,integer,K21,Easy
+codebase_community,postHistory,PostHistoryTypeId,The identifier for the type of post history event.,integer,K22,Easy
+codebase_community,postHistory,PostId,The unique identifier of the post associated with the post history entry.,integer,K23,Easy
+codebase_community,postHistory,RevisionGUID,The revision globally unique identifier of the post.,integer,K24,Hard
+codebase_community,postHistory,CreationDate,The date and time when the post history record was created.,datetime,K25,Easy
+codebase_community,postHistory,UserId,The ID of the user who made the post history entry.,integer,K26,Easy
+codebase_community,postHistory,Text,The content of the post at the time of the revision.,text,K27,Hard
+codebase_community,postHistory,Comment,Additional comments or notes related to the post history.,text,K28,Medium
+codebase_community,postHistory,UserDisplayName,The display name of the user who made the post history entry.,text,K29,Easy
+codebase_community,badges,Id,This is the unique identifier for each badge.,integer,K01,Easy
+codebase_community,badges,UserId,The unique identifier of the user who received the badge.,integer,K02,Easy
+codebase_community,badges,Name,The name of the badge the user obtained.,text,K03,Easy
+codebase_community,badges,Date,The date that the user obtained the badge.,datetime,K04,Easy
+codebase_community,posts,Id,This is the unique identifier for each post.,integer,K41,Easy
+codebase_community,posts,PostTypeId,The identifier for the type of post.,integer,K42,Easy
+codebase_community,posts,AcceptedAnswerId,The accepted answer id of the post.,integer,K43,Easy
+codebase_community,posts,CreaionDate,The creation date of the post.,datetime,K44,Easy
+codebase_community,posts,Score,The score of the post.,integer,K45,Easy
+codebase_community,posts,ViewCount,The number of times the post has been viewed.,integer,K46,Easy
+codebase_community,posts,Body,The body of the post.,text,K47,Easy
+codebase_community,posts,OwnerUserId,The ID of the user who owns the post.,integer,K48,Easy
+codebase_community,posts,LasActivityDate,The last recorded activity date for the post.,datetime,K49,Hard
+codebase_community,posts,Title,The title of the post.,text,K410,Easy
+codebase_community,posts,Tags,The tags associated with the post.,text,K411,Medium
+codebase_community,posts,AnswerCount,The total number of answers for the post.,integer,K412,Easy
+codebase_community,posts,CommentCount,The total number of comments associated with the post.,integer,K413,Easy
+codebase_community,posts,FavoriteCount,The total number of times the post has been marked as a favorite by users.,integer,K414,Easy
+codebase_community,posts,LastEditorUserId,The ID of the last user who edited the post.,integer,K415,Easy
+codebase_community,posts,LastEditDate,The date and time when the post was last edited.,datetime,K416,Easy
+codebase_community,posts,CommunityOwnedDate,The date when the post was marked as community-owned.,datetime,K417,Easy
+codebase_community,posts,ParentId,"The ID of the parent post, indicating a hierarchical relationship between posts.",integer,K418,Easy
+codebase_community,posts,ClosedDate,The date when the post was closed.,data_format,K419,Easy
+codebase_community,posts,OwnerDisplayName,The display name of the post owner.,text,K420,Easy
+codebase_community,posts,LastEditorDisplayName,The display name of the last editor of the post.,text,K421,Easy
+codebase_community,users,Id,This is the unique identifier for each user.,integer,K61,Easy
+codebase_community,users,Reputation,The user's reputation score.,integer,K62,Hard
+codebase_community,users,CreationDate,The date and time when the user account was created.,datetime,K63,Easy
+codebase_community,users,DisplayName,The display name chosen by the user.,text,K64,Easy
+codebase_community,users,LastAccessDate,The last access date of the user.,datetime,K65,Easy
+codebase_community,users,WebsiteUrl,The website URL of the user.,text,K66,Easy
+codebase_community,users,Location,The user's location.,text,K67,Easy
+codebase_community,users,AboutMe,Self-introduction of the user.,text,K68,Easy
+codebase_community,users,Views,The number of times the user's profile has been viewed.,integer,K69,Hard
+codebase_community,users,UpVotes,The number of upvotes received by the user.,integer,K610,Medium
+codebase_community,users,DownVotes,The number of downvotes received by the user.,integer,K611,Medium
+codebase_community,users,AccountId,The unique identifier for the user's account.,integer,K612,Easy
+codebase_community,users,Age,The age of the user.,integer,K613,Easy
+codebase_community,users,ProfileImageUrl,URL of the user's profile image.,text,K614,Easy
+codebase_community,tags,Id,Unique identifier for each tag.,integer,K51,Easy
+codebase_community,tags,TagName,The name of the tag.,text,K52,Easy
+codebase_community,tags,Count,The number of posts that contain this tag.,integer,K53,Easy
+codebase_community,tags,ExcerptPostId,The ID of the post containing the excerpt for the tag.,integer,K54,Easy
+codebase_community,tags,WikiPostId,The ID of the wiki post associated with the tag.,text,K55,Easy
+codebase_community,votes,Id,The unique identifier for each vote.,integer,K71,Easy
+codebase_community,votes,PostId,The identifier of the post that received the vote.,integer,K72,Easy
+codebase_community,votes,VoteTypeId,The identifier for the type of vote.,integer,K73,Easy
+codebase_community,votes,CreationDate,The date when the vote was created.,datetime,K74,Easy
+codebase_community,votes,UserId,The ID of the user who cast the vote.,integer,K75,Easy
+codebase_community,votes,BountyAmount,The amount of bounty associated with a vote.,integer,K76,Easy
+codebase_community,comments,Id,This is the unique identifier for each comment.,integer,K11,Easy
+codebase_community,comments,PostId,The unique identifier of the post associated with the comment.,integer,K12,Easy
+codebase_community,comments,Score,The rating score of the comment.,integer,K13,Easy
+codebase_community,comments,Text,The detailed content of the comment.,text,K14,Easy
+codebase_community,comments,CreationDate,The date and time when the comment was created.,datetime,K15,Easy
+codebase_community,comments,UserId,The ID of the user who posted the comment.,integer,K16,Easy
+codebase_community,comments,UserDisplayName,The display name of the user who made the comment.,text,K17,Easy
