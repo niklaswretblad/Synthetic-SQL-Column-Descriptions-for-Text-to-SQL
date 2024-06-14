@@ -169,9 +169,6 @@ if __name__ == "__main__":
     original_sql_database = BIRDDatabase()
     original_sql_database.DEV_DB_PATH = "data/original_dev/dev_databases"
     original_sql_database.load_database_names()
-    arbitrary_sql_database = BIRDDatabase()
-    arbitrary_sql_database.DEV_DB_PATH = 'data/arbitrary_dev/dev_databases'
-    arbitrary_sql_database.load_database_names()
 
     # Create a new column 'llm_column_description' if it doesn't exist
     if COUNT_TOKENS_ONLY:
@@ -182,7 +179,7 @@ if __name__ == "__main__":
     #     "output/text_to_sql/Pred_DEV_SQL_gpt-4o_without_descriptions.csv")
 
     # Load questions:
-    f = open('data/arbitrary_dev/dev.json')
+    f = open('data/dev/dev.json')
     BIRD_dev = json.load(f)
 
     # Generate column descriptions
@@ -196,10 +193,9 @@ if __name__ == "__main__":
         #     question["db_id"], metadata_path=METADATA_PATH
         # )
 
-        database_schema = arbitrary_sql_database.get_create_statements_with_arbitrary_metadata(
+        database_schema = original_sql_database.get_create_statements_with_metadata(
             question["db_id"],
-            with_sample_rows=False,
-            metadata_path='output/Updated_Pred_DEV_desc_gpt-4o.csv'
+            with_sample_rows=False          
         )
 
         with open('schema.txt', mode="w") as f:
@@ -226,7 +222,7 @@ if __name__ == "__main__":
             gold_data = original_sql_database.execute_query_and_get_data(
                 question["SQL"], question["db_id"])
 
-            pred_data = arbitrary_sql_database.execute_query_and_get_data(
+            pred_data = original_sql_database.execute_query_and_get_data(
                 sql_pred, question["db_id"])
             
             success = (Counter(pred_data) == Counter(gold_data))
