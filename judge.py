@@ -124,7 +124,7 @@ class LLMInterface:
         if json_response == {}:
             return ""
         else:
-            return json_response 
+            return json_response['correctness']
 
 
 
@@ -142,9 +142,9 @@ if __name__ == "__main__":
 
     MODEL_NAME = "gpt-4o"
     GOLD_DATASET_PATH = "output/GOLD_DATASET_FINAL.csv"
-    MODEL_PREDICTIONS_PATH = "output/col_desc_pred/Pred_DEV_desc_mistral-7b.csv"
+    MODEL_PREDICTIONS_PATH = "output/col_desc_pred/Pred_DEV_desc_mixtral-8x22.csv"
 
-    OUTPUT_PATH = "output/judge/judge_mistral_7b.csv"
+    OUTPUT_PATH = "output/col_desc_pred/Pred_DEV_desc_mixtral-8x22.csv"
 
     model = LLMInterface(MODEL_NAME)
 
@@ -162,11 +162,10 @@ if __name__ == "__main__":
 
 
     for index, row in prediction_df.iterrows():
-        if index in processed_indexes:
+        if (index in processed_indexes):
             print(f"Skipping already processed description number: {index}")
             continue
-         
-        print(f"Judging description number: {index}")
+                    
         predicted_descr = row['llm_column_description']
         gold_descr = gold_df.loc[index, 'column_description']
 
@@ -177,6 +176,7 @@ if __name__ == "__main__":
             except:
                 print("Failed json conversion probably. Retrying")
 
+        print(f"Judged description number: {index} with judgement: {result}")
         new_row = pd.DataFrame({
             'database_name': [row["database_name"]],
             'table_name': [row['table_name']],
