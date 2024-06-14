@@ -134,8 +134,8 @@ if __name__ == "__main__":
     # MODEL_NAME = "CohereForAI/c4ai-command-r-plus"
     # MODEL_NAME_2 = "command-r-plus"
     MODEL_NAME = "gpt-4o"  # 'gpt-3.5-turbo'  # "gpt-4o"  # CHECK
+    METADATA_PATH = "output/col_desc_pred/Pred_DEV_desc_gpt-4o.csv"
     COUNT_TOKENS_ONLY = False
-    METADATA_PATH = "output/GOLD_DATASET_FINAL.csv"
 
     print(f"Using model {MODEL_NAME}.")
 
@@ -143,8 +143,7 @@ if __name__ == "__main__":
         print("Only counting tokens!")
         output_path = "output/token_count/text_sql_tokens_count_"+MODEL_NAME+'.csv'
     else:
-        output_path = "output/text_to_sql/Pred_DEV_SQL_" + \
-            MODEL_NAME+'_without_descr_with_sample_rows.csv'
+        output_path = "output/text_to_sql/Pred_DEV_SQL_with_gpt-4o_predicted_descriptions"
 
     # Enable logging
     log_format = '%(asctime)s - %(levelname)s - %(message)s'
@@ -169,9 +168,9 @@ if __name__ == "__main__":
     if COUNT_TOKENS_ONLY:
         encoding = tiktoken.encoding_for_model(MODEL_NAME)
 
-    output = pd.DataFrame()
-    # output = pd.read_csv(
-    #     "output/text_to_sql/Pred_DEV_SQL_gpt-4o_without_descriptions.csv")
+    # output = pd.DataFrame()
+    output = pd.read_csv(
+        "output/text_to_sql/Pred_DEV_SQL_with_gpt-4o_predicted_descriptions")
 
     # Load questions:
     f = open('data/dev/dev.json')
@@ -179,19 +178,27 @@ if __name__ == "__main__":
 
     # Generate column descriptions
     for question in tqdm(BIRD_dev):
-        # if (output['question_id'] == question['question_id']).any():
-        #     print(f'Skipping question {question['question_id']} because answer already exists')
-        #     continue
+        if (output['question_id'] == question['question_id']).any():
+            print(
+                f"Skipping question {question['question_id']} because answer already exists")
+            continue
 
         # Get the database schema and example values
-        # database_schema = sql_database.get_create_statements_with_metadata(
-        #     question["db_id"], metadata_path=METADATA_PATH
+        database_schema = sql_database.get_create_statements_with_metadata(
+            question["db_id"], with_sample_rows=False, metadata_path=METADATA_PATH
+        )
+
+        # database_schema = sql_database.get_create_statements_with_bird_metadata(
+        #     question["db_id"]
         # )
 
-        database_schema = sql_database.get_schema_and_sample_data(
-            question["db_id"],
-            num_examples=5
-        )
+        with open('schema.txt', 'w') as f:
+            f.write(database_schema)
+
+        # database_schema = sql_database.get_schema_and_sample_data(
+        #     question["db_id"],
+        #     num_examples=5
+        # )
 
         formatted_prompt = NL_TO_SQL_PROMPT.format(
             database_schema=database_schema,
@@ -222,6 +229,9 @@ if __name__ == "__main__":
 
     print("Finished processing all questions.")
     print(f"Output saved to {output_path}")
-    print(f"Excution accuracy: {output['execution_accuracy'].mean()}")
+    if COUNT_TOKENS_ONLY:
+        print(f"Total tokens: {output['num_tokens'].sum()}")
+    else:
+        print(f"Excution accuracy: {output['execution_accuracy'].mean()}")
     # Save column descriptions to database.csv
     output.to_csv(output_path, index=True)

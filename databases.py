@@ -176,7 +176,6 @@ class Database:
                 [statement[0] for statement in create_statements])
 
         return self.current_database_schema
-    
 
     def get_schema_and_sample_data(self, db_name, num_examples=3):
         """
@@ -230,9 +229,8 @@ class Database:
             self.current_database_schema = schema_and_sample_data
 
         return self.current_database_schema
-    
 
-    def get_create_statements_with_metadata(self, db_name, metadata_path='output/GOLD_DATASET_FINAL.csv'):
+    def get_create_statements_with_metadata(self, db_name, with_sample_rows=False, metadata_path='output/GOLD_DATASET_FINAL.csv'):
         """
         Retrieve, store, and return the schema and meta data from a database.
 
@@ -242,8 +240,9 @@ class Database:
         Returns:
            str: A formatted string containing schema and meta data.
         """
+        num_examples = 5
 
-        database_df = pd.read_csv(metadata_path, index_col=0)
+        database_df = pd.read_csv(metadata_path)
 
         if self.current_db != db_name:
             self.load_db(db_name)
@@ -266,22 +265,39 @@ class Database:
                 columns = self.cursor.fetchall()
                 column_names = [column[1] for column in columns]
 
-                schema_and_meta_data += f"Column descriptions for the columns in the {table} table:\n"
+                schema_and_meta_data += f"Column descriptions for the columns in the {table} table in format (column_name: description):\n"
                 for column_name in column_names:
                     column_description = database_df.loc[((database_df["database_name"] == db_name) & (
-                        database_df["table_name"] == table) & (database_df["original_column_name"] == column_name)), "column_description"]
-                    pd.options.display.max_colwidth = 1000000 # I am unsure if this only affects the print or actually affects the string we send to the model
-                    schema_and_meta_data += f"Column name: {column_name}, Column description: {column_description.to_string(index=False)}\n"
+                        database_df["table_name"] == table) & (database_df["original_column_name"] == column_name)), "llm_column_description"]
+                    # I am unsure if this only affects the print or actually affects the string we send to the model
+                    pd.options.display.max_colwidth = 1000000
+                    schema_and_meta_data += f"{column_name}: {column_description.to_string(index=False)}\n"
 
-                schema_and_meta_data += "\n"
+                if with_sample_rows:
+                    schema_and_meta_data += "\n"
+                    self.cursor.execute(
+                        f"SELECT * FROM \"{table}\" LIMIT {num_examples};")
+                    rows = self.cursor.fetchall()
+
+                    self.cursor.execute(f"PRAGMA table_info(\"{table}\");")
+                    columns = self.cursor.fetchall()
+                    column_names = [column[1] for column in columns]
+                    column_names_line = "\t".join(column_names)
+
+                    schema_and_meta_data += f"{num_examples} rows from {table} table:\n"
+                    schema_and_meta_data += f"{column_names_line}\n"
+
+                    for row in rows:
+                        row_line = "\t".join([str(value) for value in row])
+                        schema_and_meta_data += f"{row_line}\n"
+
+                    schema_and_meta_data += "\n"
 
             schema_and_meta_data += "\n"
 
             self.current_database_schema = schema_and_meta_data
 
         return self.current_database_schema
-        
-    
 
     def get_sample_data(self, db_name, table, num_examples, unique=False, original_column_name=""):
         """
@@ -329,7 +345,6 @@ class Database:
         sample_data += "\n"
 
         return sample_data
-    
 
     def load_db(self, db_name):
         """
@@ -342,7 +357,6 @@ class Database:
         self.conn = sqlite3.connect(db_path)
         self.cursor = self.conn.cursor()
         self.current_db = db_name
-
 
     def get_db_path(self, db_name):
         """
@@ -379,12 +393,10 @@ class BIRDDatabase(Database):
 
         self.load_database_names()
 
-
     def load_database_names(self):
         self.dev_databases = os.listdir(self.DEV_DB_PATH)
         # self.train_databases = os.listdir(self.TRAIN_DB_PATH)
         self.train_databases = []
-
 
     def load_db(self, db_name):
         """
@@ -405,7 +417,6 @@ class BIRDDatabase(Database):
         self.conn = sqlite3.connect(db_path)
         self.cursor = self.conn.cursor()
         self.current_db = db_name
-
 
     def get_create_statements_with_bird_metadata(self, db_name):
         """
@@ -428,13 +439,19 @@ class BIRDDatabase(Database):
             schema_and_meta_data = ""
 
             for table in tables:
+                if table == "sqlite_sequence":
+                    continue
+
                 table = table[0]
                 self.cursor.execute(
                     f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table}';")
                 create_statement = self.cursor.fetchone()[0]
 
                 schema_and_meta_data += f"{create_statement};\n\n"
-                schema_and_meta_data += self.get_bird_table_info(db_name, table)
+
+                schema_and_meta_data += "Column descriptions for the columns in the {table} table in format original_column_name, column_name, column_description (if a description is missing ""nan"" will be written instead):\n"
+                schema_and_meta_data += self.get_bird_table_info(
+                    db_name, table)
                 schema_and_meta_data += "\n"
 
             schema_and_meta_data += "\n"
@@ -443,10 +460,9 @@ class BIRDDatabase(Database):
 
         return self.current_database_schema
 
-
     def get_bird_table_info(self, db_name, table_name):
         """
-        Given a database name, retrieve the column names and descriptions 
+        Given a database name, retrieve the column names and descriptions
         from the corresponding bird-bench .csv files.
 
         :param database_name: str, name of the database
@@ -462,21 +478,37 @@ class BIRDDatabase(Database):
             description_file_path = self.TRAIN_DB_PATH + \
                 f"/{db_name}/database_description{table_name}.csv"
 
+        if table_name == 'sqlite_sequence':
+            return ""
+
         if not os.path.exists(description_file_path):
             raise FileNotFoundError(
                 f"No such file or directory: '{description_file_path}'")
 
-        
         df = pd.read_csv(description_file_path)
 
-        table_info = "original_column_name, column_name, column_description\n"
+        table_info = ""
         for index, row in df.iterrows():
-            table_info += f"{row['original_column_name']}, {row['column_name'], {row['column_description']}}"
-        
+            if row['original_column_name'] is not None:
+                table_info += f"{row['original_column_name']}, "
+            else:
+                table_info += f", "
+
+            if row['column_name'] is not None:
+                table_info += f"{row['column_name']}, "
+            else:
+                table_info += f", "
+
+            if row['column_description'] is not None:
+                table_info += f"{row['column_description']}, "
+            else:
+                table_info += f", "
+
+            table_info += "\n"
+
         table_info += "\n\n"
 
         return table_info
-
 
 
 # class SpiderDataset(Dataset):
