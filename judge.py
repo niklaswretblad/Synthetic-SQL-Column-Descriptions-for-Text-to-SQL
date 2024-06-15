@@ -142,9 +142,9 @@ if __name__ == "__main__":
 
     MODEL_NAME = "gpt-4o"
     GOLD_DATASET_PATH = "output/GOLD_DATASET_FINAL copy.csv"
-    MODEL_PREDICTIONS_PATH = "output/col_desc_pred/Pred_DEV_desc_mixtral-8x22.csv"
+    MODEL_PREDICTIONS_PATH = "output/col_desc_pred/Pred_DEV_desc_codestral.csv"
 
-    OUTPUT_PATH = "output/judge/judge_mistral_22x8.csv"
+    OUTPUT_PATH = "output/judge/judge_codestral.csv"
 
     model = LLMInterface(MODEL_NAME)
 
@@ -166,8 +166,6 @@ if __name__ == "__main__":
             print(f"Skipping already processed description number: {index}")
             continue
         
-        if index == 798:
-            continue
         
         predicted_descr = row['llm_column_description']
         gold_descr = gold_df.at[index, 'column_description']

@@ -1,0 +1,799 @@
+,database_name,table_name,original_column_name,gold_column_description,llm_column_description,judgement
+0,debit_card_specializing,yearmonth,CustomerID,The unique identifier for a customer.,Identifies a customer and is a foreign key that relates to the customers table.,4
+1,debit_card_specializing,yearmonth,Date,The year and month of the transaction.,Stores the date of consumption for each customer.,2
+2,debit_card_specializing,yearmonth,Consumption,The consumption value for a customer in a specific year and month.,Records the consumption amount for a given customer during a specific month.,2
+3,debit_card_specializing,transactions_1k,TransactionID,Unique identifier for each transaction.,A unique identifier for each transaction.,4
+4,debit_card_specializing,transactions_1k,Date,The date of the transaction.,The date when a transaction occurred.,3
+5,debit_card_specializing,transactions_1k,Time,The time of the transaction.,Records the time of each transaction.,3
+6,debit_card_specializing,transactions_1k,CustomerID,The unique identifier for the customer associated with the transaction.,"A unique identifier for each customer, used to reference customer details from the 'customers' table.",2
+7,debit_card_specializing,transactions_1k,CardID,The unique identifier for the card used in the transaction.,Identifies the card used in the transaction.,2
+8,debit_card_specializing,transactions_1k,GasStationID,The unique identifier for the gas station where the transaction occurred.,Identifies the gas station where the transaction took place.,2
+9,debit_card_specializing,transactions_1k,ProductID,The unique identifier for the product involved in the transaction.,Identifies the product associated with each transaction.,2
+10,debit_card_specializing,transactions_1k,Amount,The quantity of the product involved in the transaction.,The 'Amount' column indicates the quantity of a product purchased during a transaction.,3
+11,debit_card_specializing,transactions_1k,Price,The price of the transaction.,The Price column represents the unit price of a product in a given transaction.,4
+12,debit_card_specializing,customers,CustomerID,Unique identifier for each customer.,Uniquely identifies each customer.,4
+13,debit_card_specializing,customers,Segment,Client segment classification.,Identifies the market segment or category of each customer.,3
+14,debit_card_specializing,customers,Currency,The currency used by the customer.,Stores the currency used by the customer.,4
+15,debit_card_specializing,gasstations,GasStationID,Unique identifier for each gas station.,Uniquely identifies each gas station.,4
+16,debit_card_specializing,gasstations,ChainID,Identifier for the chain to which the gas station belongs.,Identifies the chain or brand to which a gas station belongs.,4
+17,debit_card_specializing,gasstations,Country,The country where the gas station is located.,Identifies the country where a gas station is located.,4
+18,debit_card_specializing,gasstations,Segment,The chain segment of the gas station.,"Describes the market segment that a gas station targets, such as ""premium"" or ""value for money.""",3
+19,debit_card_specializing,products,ProductID,The unique identifier for each product.,Uniquely identifies each product and serves as the primary key for the table.,4
+20,debit_card_specializing,products,Description,The description of the product.,"The Description column provides a brief explanation or label for each product, offering a concise summary of what the product is or what it does.",3
+21,financial,loan,loan_id,Unique identifier for each loan.,A unique identifier for each loan record.,4
+22,financial,loan,account_id,This is the ID number identifying the account associated with the loan.,Identifies the account associated with a loan.,2
+23,financial,loan,date,The date when the loan was approved.,Records the date of the loan.,2
+24,financial,loan,amount,The approved loan amount.,Stores the monetary value of a loan.,2
+25,financial,loan,duration,The duration of the loan in months.,"The number of periods, typically in months, over which a loan is to be repaid.",3
+26,financial,loan,payments,The monthly payment amount for the loan.,The 'payments' column represents the periodic payment amount required to repay a loan.,3
+27,financial,loan,status,The repayment status of the loan.,"Indicates the current standing of a loan, providing a snapshot of its progress and health.",3
+28,financial,client,client_id,A unique identifier for each client.,A unique identifier for each client.,4
+29,financial,client,gender,The gender of the client.,"The ""gender"" column in the ""client"" table records the gender of each client, with values typically being either ""F"" for female or ""M"" for male.",3
+30,financial,client,birth_date,The birth date of the client.,Stores the birth date of each client.,3
+31,financial,client,district_id,Identifier for the district where the client is located.,Identifies the district associated with each client.,3
+32,financial,district,district_id,Unique identifier for each district.,"Unique identifier for each district, used as a foreign key in other tables to establish relationships and organize data by district.",4
+33,financial,district,A2,The name of the district.,Stores the name of the district.,3
+34,financial,district,A3,The region where the district is located.,Stores the name of the region or area where a district is located.,3
+35,financial,district,A4,The number of inhabitants in the district.,Stores the number of districts within a region.,1
+36,financial,district,A5,This is the number of municipalities with fewer than 499 inhabitants in the district.,Stores the number of districts with a value of 0.,1
+37,financial,district,A6,This is the number of municipalities with inhabitants between 500 and 1999 in the district.,Stores the number of districts.,2
+38,financial,district,A7,This is the number of municipalities with 2000-9999 inhabitants in the district.,The A7 column indicates the number of districts within a given region.,1
+39,financial,district,A8,"This is the number of municipalities with more than 10,000 inhabitants in the district.",Stores the number of districts within a region.,1
+40,financial,district,A9,The number of cities in the district.,Stores the number of districts.,1
+41,financial,district,A10,The ratio of urban inhabitants in the district.,The A10 column represents the average number of people per room in a given district.,1
+42,financial,district,A11,The average salary in the district.,The A11 column represents the number of districts within a given region.,1
+43,financial,district,A12,The unemployment rate in the district in 1995.,Stores the average number of people per room in a district.,1
+44,financial,district,A13,The unemployment rate in the district in 1996.,The A13 column represents the average number of people per room in a given district.,1
+45,financial,district,A14,The number of entrepreneurs per 1000 inhabitants in the district.,Stores the number of inhabitants in a district.,1
+46,financial,district,A15,The number of committed crimes in the district in 1995.,Stores the number of some entities related to districts.,1
+47,financial,district,A16,The number of committed crimes in the district in 1996.,Stores the number of inhabitants in the district.,1
+48,financial,trans,trans_id,Unique identifier for each transaction.,A unique identifier for each transaction record.,3
+49,financial,trans,account_id,The unique identifier for the account associated with the transaction.,Identifies the account associated with a transaction.,2
+50,financial,trans,date,The date of the transaction.,Stores the date of a transaction.,4
+51,financial,trans,type,The type of transaction.,The type column indicates the nature or category of a transaction.,3
+52,financial,trans,operation,The type of transaction operation.,"Describes the type of transaction operation, such as a deposit, withdrawal, or transfer.",3
+53,financial,trans,amount,The amount of money involved in the transaction.,Amount of money involved in the transaction.,3
+54,financial,trans,balance,The balance after the transaction.,"The 'balance' column represents the updated account balance after each transaction, displaying the total monetary amount in the account post-transaction.",3
+55,financial,trans,k_symbol,Characterization of the transaction.,"The k_symbol column stores a symbol or code associated with a transaction. It is used to identify or categorize the transaction type, providing additional context or information about the nature of the transaction.",3
+56,financial,trans,bank,The bank of the partner involved in the transaction.,Stores the name of the bank involved in the transaction.,4
+57,financial,trans,account,The account number of the partner involved in the transaction.,Identifies the account associated with a transaction.,2
+58,financial,account,account_id,This is the unique identifier for the account.,Unique identifier for each account.,4
+59,financial,account,district_id,The identifier for the district where the account is located.,Identifies the district associated with each account.,2
+60,financial,account,frequency,The frequency of transactions on the account.,"Describes the type of interest rate applied to the account, such as a monthly or annual rate.",1
+61,financial,account,date,The creation date of the account.,"Stores the date associated with each account, providing a timestamp for reference.",3
+62,financial,card,card_id,Unique identifier for each credit card.,A unique identifier for each card.,3
+63,financial,card,disp_id,The identifier for the disposition associated with the card.,"Identifies the disp entity associated with each card, providing a link to additional details about the card's dispenser.",3
+64,financial,card,type,The type of credit card issued.,"Describes the type of card issued, such as ""gold"", ""classic"", or ""junior"".",4
+65,financial,card,issued,The date when the credit card was issued.,Records the date a card was issued.,4
+66,financial,order,order_id,This is the unique identifier for each order.,A unique identifier for each order.,4
+67,financial,order,account_id,The unique identifier for the account associated with the order.,Identifies the account associated with each order.,2
+68,financial,order,bank_to,The bank of the recipient associated with the order.,The bank_to column indicates the receiving bank for a transaction.,2
+69,financial,order,account_to,The account number of the recipient associated with the order.,Stores the target account number for money transfers.,2
+70,financial,order,amount,The amount of money in the order.,Amount of money transferred in a transaction.,2
+71,financial,order,k_symbol,Characterization of the payment for the order.,The k_symbol column contains a code or symbol that represents the type of transaction or order.,2
+72,financial,disp,disp_id,Unique identifier for each disposition record.,Uniquely identifies each record/row in the disp table.,3
+73,financial,disp,client_id,The unique identifier for the client associated with the disposition.,"The client_id column is a foreign key that establishes a relationship with the client table, uniquely identifying each client associated with a disp record.",4
+74,financial,disp,account_id,The unique identifier for the account associated with the disposition.,"The account_id column is a foreign key that references the primary key of the account table, establishing a relationship between the two tables. It indicates which account a disp record is associated with.",3
+75,financial,disp,type,The type of disposition.,Indicates the type of relationship a client has with an account.,1
+76,formula_1,circuits,circuitId,Unique identification number for each circuit.,Uniquely identifies each circuit.,4
+77,formula_1,circuits,circuitRef,The unique reference name for the circuit.,A unique reference code for each circuit.,4
+78,formula_1,circuits,name ,The name of the circuit.,Stores the name of the circuit.,3
+79,formula_1,circuits,location  ,The city or locality where the circuit is situated.,"Stores the location name of a circuit, providing context to the geographical 'country' column.",3
+80,formula_1,circuits,country ,The country where the circuit is located.,The country column in the circuits table indicates the country where a circuit is located.,4
+81,formula_1,circuits,lat ,Latitude of the circuit location.,Stores the latitude coordinate of the circuit's location.,3
+82,formula_1,circuits,lng ,The longitude of the circuit's location.,Stores the longitude coordinate of the circuit's location.,3
+83,formula_1,circuits,alt ,The altitude of the circuit location.,"Stores the altitude of each circuit, providing its elevation above sea level.",3
+84,formula_1,circuits,url ,The URL of the circuit's Wikipedia page.,Contains a URL with additional information about the circuit.,2
+85,formula_1,status,statusId ,The unique identification number for each status.,"The statusId column is a primary key that uniquely identifies each status record. It is used to reference the status of a race result, such as Finished, Disqualified, Accident, etc.",3
+86,formula_1,status,status ,The status of the race or event.,Describes the outcome or reason for a driver's result in a race.,3
+87,formula_1,drivers,driverId ,The unique identification number assigned to each driver.,Uniquely identifies each driver and serves as a primary key for the table.,4
+88,formula_1,drivers,driverRef ,The unique reference identifier for each driver.,A unique reference code for each driver.,4
+89,formula_1,drivers,number ,The racing number assigned to the driver.,"The 'number' column represents the racing number assigned to each driver, which is used to identify them during races and events.",3
+90,formula_1,drivers,code ,Abbreviated code for drivers.,A unique identifier code for each driver.,4
+91,formula_1,drivers,forename ,The first name of the driver.,Stores the first name of a driver.,4
+92,formula_1,drivers,surname ,The surname of the driver.,Stores the last name of a driver.,4
+93,formula_1,drivers,dob ,The date of birth of the driver.,Stores the date of birth of each driver.,3
+94,formula_1,drivers,nationality ,The nationality of the driver.,"The 'nationality' column in the 'drivers' table indicates the nationality of each driver, providing information about their country of origin.",3
+95,formula_1,drivers,url ,The URL of the driver's Wikipedia page.,"Contains a unique URL for each driver, providing additional biographical or career information.",3
+96,formula_1,driverStandings,driverStandingsId ,The unique identification number for driver standing records.,Uniquely identifies each record in the driver standings table.,4
+97,formula_1,driverStandings,raceId ,Identifier for the race associated with the driver's standings.,"Identifies the race for which driver standings are recorded, referencing the races table.",4
+98,formula_1,driverStandings,driverId ,Unique identifier for the driver.,Identifies the driver and links their performance details to the driverStandings table.,3
+99,formula_1,driverStandings,points ,The number of points a driver has accumulated in a race.,The 'points' column indicates the number of points a driver has accumulated in a specific race.,4
+100,formula_1,driverStandings,position ,The position of the driver in the race standings.,"The position of a driver in a race, indicating their ranking at the end of the event.",3
+101,formula_1,driverStandings,positionText ,The position of the driver as a text value.,"Describes the position of a driver in a text format, providing additional context to the numerical position value.",3
+102,formula_1,driverStandings,wins ,The number of wins achieved by the driver.,The number of wins a driver has achieved in a race.,3
+103,formula_1,races,raceId ,The unique identification number for each race.,Uniquely identifies each race.,3
+104,formula_1,races,year ,The year the race took place.,The year column in the races table indicates the year in which a race took place.,3
+105,formula_1,races,round ,The round number of the race within the season.,The 'round' column indicates the sequential order of each race within a given year.,3
+106,formula_1,races,circuitId ,The unique identifier for the circuit where the race took place.,Identifies the circuit where a race took place.,2
+107,formula_1,races,name ,The name of the race.,Stores the name of the race.,4
+108,formula_1,races,date ,The date of the race.,Stores the date of each race.,3
+109,formula_1,races,time ,The scheduled start time of the race.,Stores the start time of a race.,2
+110,formula_1,races,url ,The URL of the Wikipedia page for the race.,"Contains a unique URL for each race, providing a direct link to further information about the event.",3
+111,formula_1,constructors,constructorId ,This is the unique identifier for each constructor.,Unique identifier for each constructor.,4
+112,formula_1,constructors,constructorRef ,This is the unique reference name for each constructor.,A unique reference code for each constructor.,3
+113,formula_1,constructors,name ,The full name of the constructor.,Stores the name of the constructor.,2
+114,formula_1,constructors,nationality ,The nationality of the constructor.,"The 'nationality' column indicates the nationality of a constructor, providing information about their country of origin or affiliation.",3
+115,formula_1,constructors,url ,The URL of the constructor's official webpage.,"Contains a URL linking to the constructor's Wikipedia page, providing additional information about the constructor.",1
+116,formula_1,constructorResults,constructorResultsId,Unique identifier for each constructor result.,Uniquely identifies each entry in the constructorResults table.,4
+117,formula_1,constructorResults,raceId,The unique identifier for the race associated with the constructor's results.,Identifies the race associated with the constructor's results.,2
+118,formula_1,constructorResults,constructorId,The unique identifier for the constructor.,"Identifies the constructor, linking results to a specific constructor entity.",3
+119,formula_1,constructorResults,points,Points scored by the constructor in the race.,The points column indicates the number of points earned by a constructor in a specific race.,3
+120,formula_1,constructorResults,status,The status of the constructor associated with the constructor result entry.,"Indicates the status of a constructor's result in a race, such as whether they finished, retired, or were disqualified.",3
+121,formula_1,lapTimes,raceId ,The identification number of the race during which the lap time was recorded.,"Identifies the race associated with a driver's lap times, linking to the races table.",4
+122,formula_1,lapTimes,driverId ,The identification number of the driver who recorded the lap time.,Identifies the driver associated with lap time records.,2
+123,formula_1,lapTimes,lap ,The lap number of which the lap time was recorded.,The 'lap' column indicates the specific lap number during a race at which the recorded lap time and position were achieved.,4
+124,formula_1,lapTimes,position ,The position of the driver at the end of the lap.,The position of a driver during a specific lap of a race.,2
+125,formula_1,lapTimes,time ,The lap time recorded for each lap.,Records the time taken by a driver to complete a lap during a race.,3
+126,formula_1,lapTimes,milliseconds ,The time in milliseconds for a lap.,Records the time taken to complete a lap in milliseconds.,4
+127,formula_1,qualifying,qualifyId ,The unique identifier for each qualifying session entry.,"A unique identifier for each qualifying result, indicating the performance of a driver in a specific race.",3
+128,formula_1,qualifying,raceId ,The ID for the race associated with the qualifying session entry.,"Identifies the race associated with each qualifying record, linking to the races table.",3
+129,formula_1,qualifying,driverId ,The ID of the driver associated with the qualifying session entry.,"Identifies the driver participating in a qualifying session, referencing the unique ID from the drivers table.",4
+130,formula_1,qualifying,constructorId ,The ID of the constructor associated with the driver in the qualifying session entry.,Identifies the constructor associated with a driver's qualifying position for a specific race.,1
+131,formula_1,qualifying,number ,The driver's car number in the qualifying session entry.,The number column in the qualifying table indicates the car number assigned to a driver for a specific race.,3
+132,formula_1,qualifying,position ,The position of the driver in the qualifying session.,Indicates the position a driver qualified for the race.,3
+133,formula_1,qualifying,q1 ,The time recorded for the driver in the first qualifying session period Q1.,Records the lap time achieved by a driver during the first qualifying session for a race.,3
+134,formula_1,qualifying,q2 ,The time recorded for the driver in the second qualifying session period Q2.,Stores the time achieved by a driver in the second qualifying session for a race.,3
+135,formula_1,qualifying,q3 ,The time recorded for the driver in the third qualifying session period Q3.,Records the lap time achieved by a driver during the third qualifying session for a race.,4
+136,formula_1,pitStops,raceId ,The identification number for the race where the pit stop occured.,Identifies the race during which a pit stop occurred.,2
+137,formula_1,pitStops,driverId ,The identification number for the driver that made the pit stop.,Identifies the driver making a pit stop.,2
+138,formula_1,pitStops,stop ,The i:th pit stop number the pit stop corresponds to for the specified driver and race.,The 'stop' column indicates the number of pit stops a driver has made during a race.,2
+139,formula_1,pitStops,lap ,The lap number during which the pit stop occurred.,Tracks the lap number during which a driver made a pit stop.,4
+140,formula_1,pitStops,time ,The timestamp of when the pit stop occurred.,Records the time of day when a driver made a pit stop during a race.,3
+141,formula_1,pitStops,duration ,The duration of the pit stop in text format.,The duration column records the time taken for a driver to complete a pit stop during a race.,3
+142,formula_1,pitStops,milliseconds ,The duration of the pit stop in milliseconds.,The number of milliseconds it takes for a driver to complete a pit stop.,4
+143,formula_1,seasons,year ,The year the Formula One season took place.,The 'year' column in the 'seasons' table indicates the year of a racing season. It is a primary key and a foreign key reference in other tables.,4
+144,formula_1,seasons,url ,The URL linking to the Wikipedia page for the specific Formula One season.,Stores a URL providing additional information about the respective F1 season.,2
+145,formula_1,constructorStandings,constructorStandingsId ,Unique identifier for each constructor standing record.,A unique identifier for each entry in the constructor standings.,4
+146,formula_1,constructorStandings,raceId ,Identifier for the race associated with the constructor's standings.,Identifies the race associated with the constructor's standings.,4
+147,formula_1,constructorStandings,constructorId ,Identifier for the constructor associated with the standings.,Identifies the constructor for their position and points in a given race.,2
+148,formula_1,constructorStandings,points,The number of points acquired by a constructor in each race.,The 'points' column represents the total points accumulated by a constructor in a specific race.,3
+149,formula_1,constructorStandings,position ,The overall position of the constructor after the specified race.,Indicates the ranking position of a constructor in a given race.,2
+150,formula_1,constructorStandings,positionText ,The overall position of the constructor after the specified race in text format.,"Stores the position of constructors as text, providing a textual representation of their ranking.",2
+151,formula_1,constructorStandings,wins ,The number of wins achieved by the constructor.,The 'wins' column indicates the number of race wins a constructor has achieved up to a specific race.,3
+152,formula_1,results,resultId,This is the unique identifier for each race result.,A unique identifier for each result record.,3
+153,formula_1,results,raceId,The unique identifier for each race.,"Identifies the race associated with a particular result, linking to the races table.",2
+154,formula_1,results,driverId ,The identification number of the driver.,Identifies the driver associated with a specific race result.,2
+155,formula_1,results,constructorId ,The identification number of the constructor associated with the result.,Identifies the constructor associated with a driver's result in a race.,2
+156,formula_1,results,number ,The racing number assigned to the driver.,The number column represents the car number assigned to a driver for a specific race.,3
+157,formula_1,results,grid ,The starting position of the driver on the grid.,Indicates the starting position of a driver on the grid for a specific race.,3
+158,formula_1,results,position ,The finishing position of the driver in the race.,Indicates the finishing position of a driver in a race.,4
+159,formula_1,results,positionText ,The finishing position of the driver in the race as a text value.,"Describes the position of a driver in a textual format, providing additional context beyond the numerical position value.",3
+160,formula_1,results,positionOrder ,The order in which drivers finished the race.,Stores the position of each driver at the end of a race.,4
+161,formula_1,results,points ,The points scored by the driver in the race.,Stores points earned by a driver in a race.,4
+162,formula_1,results,laps ,The number of laps completed by the driver in the race.,Number of laps completed by a driver in a race.,4
+163,formula_1,results,time  ,The finish time of the driver in the race.,Records the time taken by a driver to complete a race.,3
+164,formula_1,results,milliseconds ,The finishing time of the driver in the race in milliseconds.,Stores the race completion time in milliseconds.,2
+165,formula_1,results,fastestLap ,The number of the fastest lap in the race for the driver.,Indicates the lap number in which the driver achieved their fastest lap time during the race.,3
+166,formula_1,results,rank ,The overall rank of the driver's fastest lap time in the race.,The rank of a driver's fastest lap in a race.,3
+167,formula_1,results,fastestLapTime ,The fastest lap time recorded by the driver during the race.,The time of the fastest lap achieved by a driver in a race.,4
+168,formula_1,results,fastestLapSpeed ,The speed of the fastest lap achieved by the driver during the race.,Records the speed of the fastest lap achieved by a driver during a race.,4
+169,formula_1,results,statusId ,The status ID associated with the result.,"The statusId column is a foreign key that references the status table and provides additional context about a driver's result in a race, such as whether they retired (R), are active (+), or have some other relevant status.",3
+170,california_schools,schools,CDSCode,A unique identifier for each school.,A unique identifier for each school.,4
+171,california_schools,schools,NCESDist,This field represents the 7-digit National Center for Educational Statistics (NCES) school district identification number.,NCESDist is a unique identifier for a school district.,2
+172,california_schools,schools,NCESSchool,This field represents the 5-digit NCES school identification number. The NCESSchool combined with the NCESDist form a unique 12-digit ID for each school.,"The NCESSchool column contains the NCES school code, a unique identifier assigned to each school by the National Center for Education Statistics.",2
+173,california_schools,schools,StatusType,This field identifies the operational status of the school.,"Indicates whether a school is active, closed, or has another status.",4
+174,california_schools,schools,County,The name of the county where the school is located.,Stores the name of the county where the school is located.,3
+175,california_schools,schools,District,The name of the school district.,The District column identifies the school district that a school belongs to.,3
+176,california_schools,schools,School,The name of the school.,The School column contains the name of the school.,3
+177,california_schools,schools,Street,The street address of the school.,The address of the school.,2
+178,california_schools,schools,StreetAbr,"The abbreviated street address of the school, district, or administrative authority’s physical location.",Abbreviation of the street name.,2
+179,california_schools,schools,City,The city where the school is located.,Stores the city where the school is located.,3
+180,california_schools,schools,Zip,The ZIP code of the school's location.,Zip code of the school's location.,4
+181,california_schools,schools,State,The state where the school is located.,The State column indicates the U.S. state where the school is located.,4
+182,california_schools,schools,MailStreet,The mailing address of the school.,The MailStreet column contains the mailing address street name and number for the school.,3
+183,california_schools,schools,MailStrAbr,Abbreviated mailing street address of the school.,Abbreviation of the mailing street address.,2
+184,california_schools,schools,MailCity,The mailing city for the school's mailing address.,The MailCity column contains the mailing city for the school.,3
+185,california_schools,schools,MailZip,The school's mailing zip code.,The 'MailZip' column contains the zip code for the mailing address of the school.,3
+186,california_schools,schools,MailState,The state of the school's mailing address.,The two-letter abbreviation for the state where the school's mailing address is located.,4
+187,california_schools,schools,Phone,The contact phone number for the school.,The phone number of the school.,3
+188,california_schools,schools,Ext,"The phone number extension of the school, district, or administrative authority.",The Ext column contains the extension number for the phone number listed in the Phone column.,2
+189,california_schools,schools,Website,"The website address of the school, district, or administrative authority.",The website URL for the school.,2
+190,california_schools,schools,OpenDate,The date the school officially opened.,The OpenDate column indicates the date when a school first opened.,4
+191,california_schools,schools,ClosedDate,The date the school closed.,The date the school was closed.,3
+192,california_schools,schools,Charter,"This field indicates whether the school is a charter school, with 1 for yes and 0 for no.",Indicates whether the school is a charter school.,2
+193,california_schools,schools,CharterNum,The charter school number of the school.,A unique identifier for a charter school.,4
+194,california_schools,schools,FundingType,Indicates the type of funding for the charter school.,Describes the type of funding the school receives.,2
+195,california_schools,schools,DOC,The code representing the district's ownership or administrative control of the school.,"The DOC column contains a code that represents the type of school, such as a County Office of Education or a Juvenile Court School.",2
+196,california_schools,schools,DOCType,The District Ownership Code Type is the text description of the District Ownership Code (DOC) category of the school.,DOCType indicates the type of the school's District of Choice (DOC) program.,2
+197,california_schools,schools,SOC,The School Ownership Code is a numeric code used to identify the type of school ownership.,"Indicates the type of school, such as elementary, high school, or juvenile court school.",2
+198,california_schools,schools,SOCType,The School Ownership Code Type is the text description of the type of school ownership.,"The SOCType column indicates the type of school or educational institution, such as elementary, high school, or juvenile court school.",1
+199,california_schools,schools,EdOpsCode,The Education Option Code is a code representing the type of educational option offered by the school.,Code for the educational operation of the school.,2
+200,california_schools,schools,EdOpsName,The name of the educational option offered by the school.,The EdOpsName column contains the name of the educational operations entity associated with the school.,2
+201,california_schools,schools,EILCode,The Educational Instruction Level Code is a short text description of the institution's type relative to the grade range served by the school.,The EILCode column contains a code for the Educational Institution and Locality (EIL) name.,2
+202,california_schools,schools,EILName,The Educational Instruction Level Name is the detailed description of the institution’s type relative to the grade range served by the school.,The EILName column contains the name of the Educationally Related Intensive Counseling Services (ERICS) program offered by the school.,1
+203,california_schools,schools,GSoffered,The grade span offered is the range of grades (from the lowest to the highest) that the school supports or offers.,"The GSoffered column indicates the grade span offered by a school, representing the range of grades a student can enroll in at that school.",4
+204,california_schools,schools,GSserved,"The grade span served by the school, indicating the range of grades in which students are enrolled.",The GSserved column indicates the grade span served by the school.,2
+205,california_schools,schools,Virtual,This field identifies the type of virtual instruction offered by the school.,Indicates whether the school is virtual or not.,2
+206,california_schools,schools,Magnet,This field identifies whether a school is a magnet school and/or provides a magnet program.,Indicates whether a school is a magnet school or not.,2
+207,california_schools,schools,Latitude,The latitude coordinate of the school.,Stores the latitude coordinate of the school's location.,3
+208,california_schools,schools,Longitude,The longitude coordinate of the school.,"The ""Longitude"" column contains the longitude coordinate of the school's location.",3
+209,california_schools,schools,AdmFName1,The first name of the primary administrator at the school.,The first name of the first administrator for the school.,4
+210,california_schools,schools,AdmLName1,The last name of the first administrator at the school.,The AdmLName1 column contains the last name of the first administrator listed for each school.,3
+211,california_schools,schools,AdmEmail1,The primary email address of the first administrator at the school.,Email address of the first administrator.,2
+212,california_schools,schools,AdmFName2,The first name of the second administrator at the school.,The middle name of the second administrator.,1
+213,california_schools,schools,AdmLName2,The last name of the second administrator at the school.,The AdmLName2 column contains the middle name of the second administrator listed for each school.,1
+214,california_schools,schools,AdmEmail2,The primary email address of the second administrator at the school.,Email address of the second administrator.,2
+215,california_schools,schools,AdmFName3,The first name of the third administrator at the school.,Stores the first name of the third administrator.,2
+216,california_schools,schools,AdmLName3,The last name of the third administrator at the school.,The AdmLName3 column contains the last name of the third administrator at a school.,3
+217,california_schools,schools,AdmEmail3,The primary email address of the third administrator at the school.,Email address of the third administrator.,2
+218,california_schools,schools,LastUpdate,The date when the record associated with the school was last updated.,"The ""LastUpdate"" column indicates the most recent date when information about a school was updated in the database.",3
+219,california_schools,satscores,cds,The unique identifier for the school or district associated with the SAT score entry.,Primary key that references the CDSCode in the schools table.,2
+220,california_schools,satscores,rtype,"The type of the reporting entity (e.g., district or school) associated with the SAT score entry.","Indicates the type of school, such as District (D), School (S), or other designations.",3
+221,california_schools,satscores,sname,The name of the school associated with the SAT score entry.,Stores the name of the school.,2
+222,california_schools,satscores,dname,The name of the district associated with the SAT score entry.,Stores the name of the district where the school is located.,2
+223,california_schools,satscores,cname,The name of the county associated with the SAT score entry.,The 'cname' column contains the name of the county where the school is located.,2
+224,california_schools,satscores,enroll12,The number of students enrolled at the school in grades 1 through 12 for the given SAT score entry.,Number of students enrolled in the 12th grade.,1
+225,california_schools,satscores,NumTstTakr,The number of students who took the SAT test in the specified school.,The number of students who took the SAT test.,2
+226,california_schools,satscores,AvgScrRead,Average scores in Reading for the SAT test in the specified school.,The average reading score for students who took the SAT.,2
+227,california_schools,satscores,AvgScrMath,The average scores in Math for the SAT test in the specified school.,The average math score for students who took the SAT.,2
+228,california_schools,satscores,AvgScrWrite,The average scores in writing for the SAT test in the specified school.,The average writing score for students who took the SAT.,2
+229,california_schools,satscores,NumGE1500,The number of test takers whose total SAT scores are greater than or equal to 1500 for the specified school.,Number of students who scored 1500 or higher on the SAT.,2
+230,california_schools,frpm,CDSCode,The County-District-School (CDS) code for the school in California associated with the Free or Reduced-Price Meal entry.,A unique identifier for each school.,2
+231,california_schools,frpm,Academic Year,The academic year for which the Free or Reduced-Price Meal data is reported.,"The 'Academic Year' column indicates the school year for which the data is relevant, allowing for tracking changes over time.",2
+232,california_schools,frpm,County Code,The county for the school in California associated with the Free or Reduced-Price Meal entry.,The County Code column identifies the county in which a school is located.,2
+233,california_schools,frpm,District Code,The code of the district for the school in California associated with the Free or Reduced-Price Meal entry.,The District Code column identifies the district number associated with a school.,2
+234,california_schools,frpm,School Code ,The school code for the school associated with the Free or Reduced-Price Meal entry.,A unique identifier for each school within a district.,2
+235,california_schools,frpm,County Name,The name of the county where the school associated with the Free or Reduced-Price Meal entry is located.,The County Name column identifies the name of the county where the school is located.,2
+236,california_schools,frpm,District Name ,The name of the school district of the school associated with the Free or Reduced-Price Meal entry.,The name of the district in which the school is located.,2
+237,california_schools,frpm,School Name,The name of the school associated with the Free or Reduced-Price Meal entry.,The School Name column contains the name of the school.,2
+238,california_schools,frpm,District Type,The type of district the school associated with the Free or Reduced-Price Meal entry belongs to.,"The District Type column indicates the type of school district the school belongs to, such as County Office of Education (COE) or Unified.",3
+239,california_schools,frpm,School Type ,"The type of school, such as elementary, middle, or high school, the school associated with the Free or Reduced-Price Meal entry belongs to.","The School Type column indicates the type of school, such as elementary, high school, or juvenile court school.",2
+240,california_schools,frpm,Educational Option Type,The type of educational option provided by the school associated with the Free or Reduced-Price Meal entry.,"Describes the type of educational option the school provides, such as traditional, alternative, or magnet.",2
+241,california_schools,frpm,NSLP Provision Status,The status of the school's participation in the National School Lunch Program (NSLP) provision options.,Describes the type of meal provision status for the school.,2
+242,california_schools,frpm,Charter School (Y/N),"Indicates whether the school associated with the Free or Reduced-Price Meal entry is a charter school (1 for Yes, 0 for No).","Indicates whether a school is a charter school or not, represented as a numerical value.",2
+243,california_schools,frpm,Charter School Number,"The unique identifier assigned to a charter school, for the school associated with the Free or Reduced-Price Meal entry.",A unique identifier for a charter school.,2
+244,california_schools,frpm,Charter Funding Type,The type of funding for the charter school associated with the Free or Reduced-Price Meal entry.,Describes the type of funding received by a charter school.,2
+245,california_schools,frpm,IRC,The IRC of the school associated with the Free or Reduced-Price Meal entry.,"The IRC column indicates the Indirectly Reimbursable Costs for a school, which is a measure of the costs incurred by a school that are not directly related to a specific program or activity but are necessary for the overall operation of the school.",2
+246,california_schools,frpm,Low Grade,The lowest grade level offered at the school associated with the Free or Reduced-Price Meal entry.,The lowest grade level offered at a school.,2
+247,california_schools,frpm,High Grade,The highest grade level offered at the school associated with the Free or Reduced-Price Meal entry.,The highest grade level offered at a school.,2
+248,california_schools,frpm,Enrollment (K-12),The total number of students at the school associated with the Free or Reduced-Price Meal entry enrolled in grades K-12.,The number of students enrolled in grades K-12 at a school.,2
+249,california_schools,frpm,Free Meal Count (K-12),The number of students at the school associated with the Free or Reduced-Price Meal entry in grades K-12 who receive free meals.,"The number of students who received free meals during the academic year, for grades K-12.",2
+250,california_schools,frpm,Percent (%) Eligible Free (K-12),The percentage of K-12 students at the school eligible for free meals.,The percentage of students eligible for free meals in K-12 grades.,4
+251,california_schools,frpm,FRPM Count (K-12),The count of students at the school eligible for Free or Reduced Price Meals (K-12).,The number of students enrolled in grades K-12 who are eligible for free or reduced-price meals.,4
+252,california_schools,frpm,Percent (%) Eligible FRPM (K-12),The percentage of students at the school eligible for free or reduced-price meals (K-12).,"The percentage of students eligible for the Free and Reduced Price Meals (FRPM) program, for grades K-12.",4
+253,california_schools,frpm,Enrollment (Ages 5-17),The number of students enrolled at the school associated with the Free or Reduced-Price Meal entry aged 5 to 17.,The number of students enrolled in the school who are between the ages of 5 and 17.,2
+254,california_schools,frpm,Free Meal Count (Ages 5-17),The number of students at the school associated with the Free or Reduced-Price Meal entry aged 5-17 who receive free meals.,The number of students aged 5-17 who are eligible for and receive free meals.,2
+255,california_schools,frpm, Percent (%) Eligible Free (Ages 5-17),The percentage of students at the school aged 5-17 eligible for free meals.,The percentage of students aged 5-17 who are eligible for free meals.,2
+256,california_schools,frpm,FRPM Count (Ages 5-17),The count of students at the school aged 5-17 eligible for Free or Reduced-Price Meals (FRPM).,The number of students aged 5-17 who are eligible for free or reduced-price meals.,2
+257,california_schools,frpm,Percent (%) Eligible FRPM (Ages 5-17),The percentage of students at the school aged 5-17 eligible for free or reduced-price meals (FRPM).,The percentage of students aged 5-17 who are eligible for the Free and Reduced-Price Meals (FRPM) program.,2
+258,california_schools,frpm,2013-14 CALPADS Fall 1 Certification Status,The certification status of the school associated with the Free or Reduced-Price Meal entry for the 2013-14 CALPADS Fall 1 data submission.,Describes the certification status of the school for the 2013-2014 CALPADS Fall 1 reporting period.,2
+259,card_games,legalities,id,Unique identifier for each legality record.,A unique identifier for each legality entry.,4
+260,card_games,legalities,format,The format of play of the legality associated with the card.,"The ""format"" column indicates the format of a game or tournament in which a specific card is legal to play.",3
+261,card_games,legalities,status,The status of the card's legality in a specific format.,Describes the legality status of a card in a specific format.,4
+262,card_games,legalities,uuid,A unique identifier for the card.,"A unique identifier for a card, used to reference its legality status in various formats.",3
+263,card_games,cards,id,Unique identifier for each card.,A unique identifier for each card.,4
+264,card_games,cards,artist,The name of the artist that illustrated the card art.,Stores the name of the artist who created the artwork for the card.,4
+265,card_games,cards,asciiName,The ASCII code formatted card name with no special unicode characters.,Stores the ASCII-encoded name of the card.,2
+266,card_games,cards,availability,"A list of the card's available formats (e.g., mtgo, paper).","Indicates where the card is available, such as online or in print.",3
+267,card_games,cards,borderColor,The color of the card border.,Indicates the color of the card's border.,4
+268,card_games,cards,cardKingdomFoilId,The unique identifier for the card on Card Kingdom's foil product listing.,Stores the ID of the card on Card Kingdom's website for its foil version.,2
+269,card_games,cards,cardKingdomId,The unique identifier for the card on Card Kingdom.,A unique identifier for cards on the Card Kingdom website.,3
+270,card_games,cards,colorIdentity,"A list of all the colors found in manaCost, colorIndicator, and text.",The colorIdentity column identifies the colors of mana required to cast the card.,2
+271,card_games,cards,colorIndicator,A list of all the colors in the color indicator (the symbol prefixed to a card's types).,"Indicates the color of a card's color indicator, if it has one.",2
+272,card_games,cards,colors,A list of all the colors in manaCost and colorIndicator.,The colors column indicates the color or colors of the card.,2
+273,card_games,cards,convertedManaCost,The converted mana cost of the card.,"The converted mana cost of a card, represented as a floating-point number.",3
+274,card_games,cards,duelDeck,The indicator for which duel deck the card is in.,Indicates the duel deck in which the card appears.,4
+275,card_games,cards,edhrecRank,The card's rank on EDHRec.,"A card's ranking on EDHREC, a website that provides recommendations for Magic: The Gathering cards based on their popularity in the Commander format.",3
+276,card_games,cards,faceConvertedManaCost,The converted mana cost or mana value for the face for either half or part of the card.,The faceConvertedManaCost column indicates the converted mana cost of the face of a double-faced card.,2
+277,card_games,cards,faceName,The name on the face of the card.,Stores the name of the face of a card.,4
+278,card_games,cards,flavorName,The promotional card name printed above the true card name on special cards that has no game function.,Stores the name of the flavor text.,2
+279,card_games,cards,flavorText,The italicized text found below the rules text that has no game function.,Contains flavor text for the card.,2
+280,card_games,cards,frameEffects,The visual frame effects applied to the card.,Describes the frame effects of the card.,3
+281,card_games,cards,frameVersion,The version of the card frame style.,The frameVersion column indicates the version of the card frame design used for a particular Magic: The Gathering card.,3
+282,card_games,cards,hand,The starting maximum hand size total modifier of the card.,"The ""hand"" column indicates the number of copies of a card that a player is allowed to have in their opening hand when playing a game of Magic: The Gathering.",3
+283,card_games,cards,hasAlternativeDeckLimit,Indicates if the card allows a value other than 4 copies in a deck.,Indicates if the card has an alternative deck limit.,4
+284,card_games,cards,hasContentWarning,Indicates if the card has been marked for having sensitive content.,Indicates whether the card has a content warning.,4
+285,card_games,cards,hasFoil,Indicates if the card is available in foil.,Indicates whether the card has a foil version.,4
+286,card_games,cards,hasNonFoil,Indicates whether the card is available in non-foil.,Indicates whether the card has a non-foil version.,4
+287,card_games,cards,isAlternative,Indicates if the card is an alternate variation to an original printing.,Indicates if the card is an alternative version of another card.,4
+288,card_games,cards,isFullArt,Indicates whether the card features full artwork.,Indicates whether the card is full art or not.,4
+289,card_games,cards,isOnlineOnly,Indicates if the card is exclusively available in online game variations.,Indicates if the card is only available online.,2
+290,card_games,cards,isOversized,Indicates whether the card is oversized.,Indicates if the card is oversized.,4
+291,card_games,cards,isPromo,Indicates if the card is a promotional printing.,Indicates if the card is a promotional card.,4
+292,card_games,cards,isReprint,Indicates whether the card has been reprinted.,Indicates if the card is a reprint.,4
+293,card_games,cards,isReserved,Indicates if the card is on the Magic: The Gathering Reserved List.,Indicates if the card is reserved.,2
+294,card_games,cards,isStarter,Indicates if the card is included in a starter deck such as Planeswalker or Brawl decks.,Indicates if the card is a starter card.,2
+295,card_games,cards,isStorySpotlight,Indicates whether the card is a Story Spotlight card.,Indicates whether the card is featured in the Magic: The Gathering story spotlight.,4
+296,card_games,cards,isTextless,Indicates whether the card lacks a text box.,Indicates whether the card has no text box.,4
+297,card_games,cards,isTimeshifted,Indicates whether the card is time-shifted.,"Indicates if the card is a timeshifted card, which is a card with alternate artwork and a different expansion symbol.",3
+298,card_games,cards,keywords,A list of keywords associated with the card.,Contains keywords and abilities associated with the card.,3
+299,card_games,cards,layout,"The type of card layout. For a token card, this will be ""token"".",Describes the physical layout of the card.,1
+300,card_games,cards,leadershipSkills,A list of formats the card is legal to be a commander in.,Stores the leadership skills of the card.,1
+301,card_games,cards,life,The starting life total modifier. A plus or minus character precedes an integer.,Stores the life value of the card.,2
+302,card_games,cards,loyalty,The starting loyalty value of the card.,"The loyalty column indicates the loyalty abilities and counters of a card, if it is a planeswalker.",3
+303,card_games,cards,manaCost,"The mana cost of the card, represented in a specific format using curly braces for each value.","The manaCost column indicates the cost of casting a card, represented by a combination of symbols and numbers.",2
+304,card_games,cards,mcmId,The ID for the card on the Magic Card Market (MCM).,"The mcmId column contains an identifier for the card on MagicCardMarket, a website for buying and selling Magic: The Gathering cards.",3
+305,card_games,cards,mcmMetaId,The meta ID for the card on the Magic Card Market (MCM).,A unique ID for the card on the MagicCardMarket website.,2
+306,card_games,cards,mtgArenaId,The unique identifier for the card in the Magic: The Gathering Arena database.,A unique ID for cards in the MTG Arena game.,4
+307,card_games,cards,mtgjsonV4Id,The Magic: The Gathering json v4 ID of the card.,A unique identifier for each card in the MTGJSON database.,2
+308,card_games,cards,mtgoFoilId,The unique identifier for the foil version of the card on Magic: The Gathering Online (MTGO).,The mtgoFoilId column contains identifiers for cards with a foil version on MTGO.,2
+309,card_games,cards,mtgoId,The unique identifier for the card in the Magic: The Gathering Online (MTGO) system.,The mtgoId column contains unique identifiers for cards in the Magic: The Gathering Online (MTGO) game.,3
+310,card_games,cards,multiverseId,The unique identifier for the card in the Magic: The Gathering Multiverse database.,"A unique identifier for each card, used to reference additional information about the card in other tables.",3
+311,card_games,cards,name,The name of the card.,The name of the card.,4
+312,card_games,cards,number,The number assigned to the card within its set.,Card number within a set.,3
+313,card_games,cards,originalReleaseDate,The original release date of the card.,Stores the original release date of the card.,4
+314,card_games,cards,originalText,The original text of the card as it was first printed.,Contains the original text of the card.,2
+315,card_games,cards,originalType,The original type of the card.,The originalType column indicates the original type of the card.,3
+316,card_games,cards,otherFaceIds,Identifiers for other faces of the card.,Stores the IDs of other cards that are part of the same card but have different faces.,3
+317,card_games,cards,power,The power of the card.,The power column indicates the power value of a creature card.,3
+318,card_games,cards,printings,"A list of set printing codes where the card was printed, formatted in uppercase.",Lists the sets in which the card has been printed.,2
+319,card_games,cards,promoTypes,A list of promotional types associated with a card.,A list of promotional types associated with the card.,4
+320,card_games,cards,purchaseUrls,Links that navigate to websites where the card can be purchased.,Contains URLs for purchasing the card from various online retailers.,4
+321,card_games,cards,rarity,The rarity of the card.,"Indicates the rarity of the card, such as common, uncommon, or rare.",3
+322,card_games,cards,scryfallId,The unique identifier for the card on Scryfall.,A unique identifier for each card in the Scryfall database.,4
+323,card_games,cards,scryfallIllustrationId,The unique identifier for the card's illustration on Scryfall.,"The scryfallIllustrationId column contains a unique identifier for the illustration of a card on Scryfall, a popular Magic: The Gathering card search engine and database.",3
+324,card_games,cards,scryfallOracleId,The unique identifier for the card's Oracle data on Scryfall.,A unique identifier for the card in the Scryfall database.,2
+325,card_games,cards,setCode,The set printing code that the card is from.,Stores the code of the set the card belongs to.,2
+326,card_games,cards,side,The identifier of the card side.,"Indicates which side of a card is being referenced, such as the front or back.",3
+327,card_games,cards,subtypes,A list of card subtypes found after em-dash.,The subtypes column contains a list of creature types or other card types that further describe the card.,2
+328,card_games,cards,supertypes,A list of card supertypes found before em-dash.,"Indicates the supertype of the card, such as ""Legendary"" or ""Basic.""",3
+329,card_games,cards,tcgplayerProductId,The unique identifier for the product on TCGplayer.,A unique identifier for the product on the TCGPlayer marketplace.,4
+330,card_games,cards,text,The rules text of the card.,Contains the text printed on the card.,3
+331,card_games,cards,toughness,The toughness of the card.,"The toughness of a creature, representing how much damage it can withstand before being destroyed.",3
+332,card_games,cards,type,"The type of the card, including any supertypes and subtypes.","The type of card, such as ""Creature"", ""Instant"", or ""Legendary Creature"".",3
+333,card_games,cards,types,"A list of all card types, including Un‑sets and gameplay variants.","The types column contains a list of card types, such as creature, instant, or enchantment.",2
+334,card_games,cards,uuid,The uuid of the card.,A unique identifier for each card.,2
+335,card_games,cards,variations,The uuid of variations of the card.,"A list of variations of the card, such as alternate art or promotional versions.",1
+336,card_games,cards,watermark,The name of the watermark on the card.,The watermark column indicates the watermark symbol present on the card.,3
+337,card_games,sets,id,Unique identifier for each set.,A unique identifier for each set of cards.,3
+338,card_games,sets,baseSetSize,The number of cards in the base set.,The baseSetSize column indicates the total number of cards in a set.,3
+339,card_games,sets,block,The name of the block to which the set belongs.,"Indicates the block to which the set belongs, providing context to the release and its relationship to other sets in the same block.",3
+340,card_games,sets,booster,A breakdown of possibilities and weights of cards in a booster pack.,"Details the distribution of cards in a set's booster packs, including the number of cards of each rarity and their weights.",3
+341,card_games,sets,code,The unique code identifying each set.,A unique identifier for each set of cards.,4
+342,card_games,sets,isFoilOnly,Indicates whether the set is exclusively available in foil.,Indicates whether the set contains only foil cards.,3
+343,card_games,sets,isForeignOnly,Indicates whether the set is exclusively available outside the United States.,Indicates whether the set is exclusive to foreign markets.,4
+344,card_games,sets,isNonFoilOnly,Indicates if the set is exclusively available in non-foil format.,Indicates whether the set only contains non-foil cards (1) or includes foil cards (0).,3
+345,card_games,sets,isOnlineOnly,Indicates if the set is exclusively available in online game formats.,Indicates whether the set is exclusive to online purchases or available through other means.,2
+346,card_games,sets,isPartialPreview,Indicates if the set is still in preview (spoiled).,Indicates whether the set is a partial preview of an upcoming release.,2
+347,card_games,sets,keyruneCode,The matching Keyrune code for set image icons.,"A code that identifies the set's keyrune, if applicable.",3
+348,card_games,sets,mcmId,The Magic Card Market identifier for the set.,The mcmId column contains the ID of the set on MagicCardMarket.eu.,3
+349,card_games,sets,mcmIdExtras,The split Magic Card Market set identifier if a set is printed in two sets. This identifier represents the second set's identifier.,The mcmIdExtras column contains an additional identifier for the set used by Magic Card Market.,2
+350,card_games,sets,mcmName,The name of the set as listed on Magic Card Market.,The mcmName column contains the name of the Magic: The Gathering set as listed on MagicCardMarket.com.,3
+351,card_games,sets,mtgoCode,The Magic: The Gathering Online code for the set.,Code for the set used on MTGO.,2
+352,card_games,sets,name,The name of the set.,The name of a set of cards.,3
+353,card_games,sets,parentCode,"The parent set code for set variations like promotions, guild kits, etc.",The parentCode column indicates the code of the parent set for a set with a parent-child relationship.,2
+354,card_games,sets,releaseDate,The release date of the set in ISO 8601 format.,The releaseDate column indicates the date a set was released.,2
+355,card_games,sets,tcgplayerGroupId,The group identifier of the set on TCGplayer.,A unique identifier for the TCGPlayer group associated with a specific set.,3
+356,card_games,sets,totalSetSize,"The total number of cards in the set, including promotional and related supplemental products.",The totalSetSize column indicates the total number of cards in a set.,2
+357,card_games,sets,type,The type of the set.,"Indicates the type of card set, such as ""core,"" ""expansion,"" or ""masters.""",4
+358,card_games,foreign_data,id,The ID identifying the foreign data of a card.,"A unique identifier for each entry, acting as a primary key.",2
+359,card_games,foreign_data,flavorText,The foreign flavor text of the card.,The flavorText column contains the flavor text of a card in various languages.,3
+360,card_games,foreign_data,language,The language of the card.,"The language column indicates the language of the card's text, flavor text, and name.",3
+361,card_games,foreign_data,multiverseid,The foreign multiverse identifier of the card.,"A unique identifier for each card, used to reference additional information in other languages.",2
+362,card_games,foreign_data,name,The foreign name of the card.,The name of the card in a given language.,3
+363,card_games,foreign_data,text,The foreign language text of the card.,The text column contains the translated text of cards in various languages.,4
+364,card_games,foreign_data,type,"The foreign type of the card, including any supertypes and subtypes.","The type of card, such as ""creature"", ""enchantment"", or ""planeswalker"".",2
+365,card_games,foreign_data,uuid,Unique identifier referencing the related card.,"A unique identifier for each row, referencing the cards table.",4
+366,card_games,rulings,id,Unique identifier for each ruling.,A unique identifier for each ruling.,4
+367,card_games,rulings,date,The date when the ruling was issued.,The date column records the date when a ruling was made.,3
+368,card_games,rulings,text,Details about the ruling text.,Contains the text of a ruling for a specific card.,1
+369,card_games,rulings,uuid,Unique identifier linking each ruling to a specific card.,"A unique identifier for each ruling, used to reference and relate rulings to specific cards.",3
+370,card_games,set_translations,id,Unique identifier for each translation entry.,A unique identifier for each translation of a set's name into a different language.,3
+371,card_games,set_translations,language,The language of the card set translation.,Stores the language of the translation for a set's name.,4
+372,card_games,set_translations,setCode,The set code for the translated set.,The setCode column contains a unique code that identifies a specific set of cards in the game.,2
+373,card_games,set_translations,translation,The translation of the set name into the specified language of the translation.,The translation column contains the localized name of a card set in a specified language.,4
+374,european_football_2,Player,id,Unique identifier for each player.,Uniquely identifies each player in the dataset.,4
+375,european_football_2,Player,player_api_id,The api ID of the player.,A unique identifier for each player.,2
+376,european_football_2,Player,player_name,The name of the player.,Stores the name of each player.,3
+377,european_football_2,Player,player_fifa_api_id,The unique identifier for the player in the FIFA API.,"A unique identifier for each player, as assigned by the FIFA API.",4
+378,european_football_2,Player,birthday,The player's date of birth.,Stores the date of birth of each player.,4
+379,european_football_2,Player,height,The player's height in centimeters.,Stores the height of each player in centimeters.,3
+380,european_football_2,Player,weight,The player's weight in pounds.,Stores the weight of each player in kilograms.,1
+381,european_football_2,Match,id,This is the unique identifier for each match.,Primary key for uniquely identifying each match.,4
+382,european_football_2,Match,country_id,The identifier for the country where the match took place.,The country_id column contains a foreign key reference to the unique identifier of a country in the Country table. It indicates the country where a particular match took place.,4
+383,european_football_2,Match,league_id,The identifier for the league associated with the match.,The `league_id` column identifies the league in which a match was played.,4
+384,european_football_2,Match,season,The season during which the match took place.,The season column indicates the time period in which a match was played.,4
+385,european_football_2,Match,stage,The stage of the match within the season.,The stage column indicates the progression of a match within a league or tournament.,3
+386,european_football_2,Match,date,The date of the match.,Stores the date when a match was played.,3
+387,european_football_2,Match,match_api_id,The unique identifier for the match API.,Unique identifier for each match.,2
+388,european_football_2,Match,home_team_api_id,The API ID for the home team in the match.,The home_team_api_id column contains the unique identifier for the home team in a match.,3
+389,european_football_2,Match,away_team_api_id,The API ID of the away team in the match.,The away_team_api_id column contains the unique identifier for the away team in a match.,3
+390,european_football_2,Match,home_team_goal,The number of goals scored by the home team in the match.,Number of goals scored by the home team.,2
+391,european_football_2,Match,away_team_goal,The number of goals scored by the away team in the match.,Number of goals scored by the away team.,2
+392,european_football_2,Match,home_player_X1,The home player X1 in the match.,Player ID of the first player in the home team.,3
+393,european_football_2,Match,home_player_X2,The home player X2 in the match.,The home_player_X2 column identifies the second player on the home team for a given match.,4
+394,european_football_2,Match,home_player_X3,The home player X3 in the match.,The home_player_X3 column identifies the third player on the home team for a given match.,3
+395,european_football_2,Match,home_player_X4,The home player X4 in the match.,The home_player_X4 column identifies the fourth player on the home team for a given match.,3
+396,european_football_2,Match,home_player_X5,The home player X5 in the match.,Player ID for the 5th home team member.,3
+397,european_football_2,Match,home_player_X6,The home player X6 in the match.,The home_player_X6 column identifies the sixth player on the home team for a given match.,3
+398,european_football_2,Match,home_player_X7,The home player X7 in the match.,Player ID of the 7th home team member.,3
+399,european_football_2,Match,home_player_X8,The home player X8 in the match.,Player ID of the 8th home team member.,3
+400,european_football_2,Match,home_player_X9,The home player X9 in the match.,The home_player_X9 column identifies the 9th player on the home team for a given match.,3
+401,european_football_2,Match,home_player_X10,The home player X10 in the match.,The home_player_X10 column contains the ID of the 10th player on the home team for a given match.,3
+402,european_football_2,Match,home_player_X11,The home player X11 in the match.,The ID of the 11th player on the home team.,3
+403,european_football_2,Match,away_player_X1,The away player X1 in the match.,Player ID of the first substitute player for the away team.,3
+404,european_football_2,Match,away_player_X2,The away player X2 in the match.,Player ID of the second away team player in the match.,3
+405,european_football_2,Match,away_player_X3,The away player X3 in the match.,The away_player_X3 column identifies a player on the away team for a given match.,4
+406,european_football_2,Match,away_player_X4,The away player X4 in the match.,Player ID of the fourth away team player.,3
+407,european_football_2,Match,away_player_X5,The away player X5 in the match.,Player ID of the away team's fifth player.,4
+408,european_football_2,Match,away_player_X6,The away player X6 in the match.,Player ID of the away team's 6th player.,4
+409,european_football_2,Match,away_player_X7,The away player X7 in the match.,Player ID of the away team's 7th player.,3
+410,european_football_2,Match,away_player_X8,The away player X8 in the match.,Player ID of the 8th away team player in the match.,3
+411,european_football_2,Match,away_player_X9,The away player X9 in the match.,Player ID of the away team's 9th player.,3
+412,european_football_2,Match,away_player_X10,The away player X10 in the match.,Player ID of the 10th player on the away team.,3
+413,european_football_2,Match,away_player_X11,The away player X11 in the match.,Player ID of the 11th player on the away team.,3
+414,european_football_2,Match,home_player_Y1,The home player Y1 in the match.,The `home_player_Y1` column contains the ID of the first player on the home team.,3
+415,european_football_2,Match,home_player_Y2,The home player Y2 in the match.,Player ID of the second substitute player for the home team.,1
+416,european_football_2,Match,home_player_Y3,The home player Y3 in the match.,The home_player_Y3 column contains the ID of the third substitute player for the home team.,3
+417,european_football_2,Match,home_player_Y4,The home player Y4 in the match.,The home_player_Y4 column contains the ID of the fourth substitute player for the home team.,3
+418,european_football_2,Match,home_player_Y5,The home player Y5 in the match.,The home_player_Y5 column identifies a player from the home team who participated in the match.,3
+419,european_football_2,Match,home_player_Y6,The home player Y6 in the match.,The home_player_Y6 column contains the ID of the sixth player on the home team for a given match.,3
+420,european_football_2,Match,home_player_Y7,The home player Y7 in the match.,Player ID of the 7th substitute for the home team.,3
+421,european_football_2,Match,home_player_Y8,The home player Y8 in the match.,Player ID of the 8th substitute for the home team.,3
+422,european_football_2,Match,home_player_Y9,The home player Y9 in the match.,The home_player_Y9 column identifies a player from the home team who participated in a specific match.,3
+423,european_football_2,Match,home_player_Y10,The home player Y10 in the match.,The `home_player_Y10` column identifies a player from the home team who participated in the match.,3
+424,european_football_2,Match,home_player_Y11,The home player Y11 in the match.,The `home_player_Y11` column identifies a player from the home team who participated in a specific match.,3
+425,european_football_2,Match,away_player_Y1,The away player Y1 in the match.,The away_player_Y1 column contains the ID of the first away team player in a match.,3
+426,european_football_2,Match,away_player_Y2,The away player Y2 in the match.,The away_player_Y2 column contains the ID of the second player on the away team.,3
+427,european_football_2,Match,away_player_Y3,The away player Y3 in the match.,The away_player_Y3 column contains the ID of the third player on the away team.,3
+428,european_football_2,Match,away_player_Y4,The away player Y4 in the match.,Player ID of the fourth substitute player for the away team.,4
+429,european_football_2,Match,away_player_Y5,The away player Y5 in the match.,The away_player_Y5 column contains the ID of the fifth player on the away team for a given match.,4
+430,european_football_2,Match,away_player_Y6,The away player Y6 in the match.,The away_player_Y6 column contains the ID of the sixth player on the away team for a given match.,3
+431,european_football_2,Match,away_player_Y7,The away player Y7 in the match.,The away_player_Y7 column identifies a player from the away team who participated in a specific match.,3
+432,european_football_2,Match,away_player_Y8,The away player Y8 in the match.,The away_player_Y8 column identifies a specific player from the away team who participated in a particular match.,3
+433,european_football_2,Match,away_player_Y9,The away player Y9 in the match.,The away_player_Y9 column contains the ID of the 9th player on the away team for a given match.,3
+434,european_football_2,Match,away_player_Y10,The away player Y10 in the match.,The away_player_Y10 column identifies a player from the away team who participated in a specific match.,3
+435,european_football_2,Match,away_player_Y11,The away player Y11 in the match.,The away_player_Y11 column contains the ID of the 11th player on the away team for a given match.,4
+436,european_football_2,Match,home_player_1,The ID of the first home player in the match.,The `home_player_1` column contains the ID of the first player on the home team for a given match.,3
+437,european_football_2,Match,home_player_2,The player ID of the second home team player in the match.,The `home_player_2` column contains the ID of the second player on the home team for a given match.,4
+438,european_football_2,Match,home_player_3,The ID of the third home player in the match.,The home_player_3 column contains the ID of the third player on the home team for a given match.,3
+439,european_football_2,Match,home_player_4,The ID of the fourth home player in the match.,The home_player_4 column identifies the fourth player on the home team for a given match.,2
+440,european_football_2,Match,home_player_5,The ID of the fifth home player in the match.,The home_player_5 column contains the ID of the fifth player on the home team for a given match.,4
+441,european_football_2,Match,home_player_6,The ID of the sixth player in the home team in the match.,The ID of the sixth player on the home team.,2
+442,european_football_2,Match,home_player_7,The ID of the seventh player in the home team in the match.,Player ID for the 7th player on the home team.,4
+443,european_football_2,Match,home_player_8,The ID of the eighth player in the home team in the match.,The home_player_8 column identifies the 8th player on the home team for a given match.,4
+444,european_football_2,Match,home_player_9,The ID of the ninth player on the home team in the match.,The `home_player_9` column identifies the 9th player on the home team for a given match.,2
+445,european_football_2,Match,home_player_10,The ID of the 10th player in the home team in the match.,The `home_player_10` column contains the ID of the 10th player on the home team for a given match.,4
+446,european_football_2,Match,home_player_11,The ID of the 11th player in the home team in the match.,The `home_player_11` column identifies the 11th player on the home team for a given match.,3
+447,european_football_2,Match,away_player_1,The ID of the first away team player in the match.,The away_player_1 column contains the ID of the first player on the away team.,3
+448,european_football_2,Match,away_player_2,The ID of the second away team player in the match.,The away_player_2 column contains the ID of the second player on the away team for a given match.,4
+449,european_football_2,Match,away_player_3,The player ID of the third away team player in the match.,The ID of the third player on the away team.,2
+450,european_football_2,Match,away_player_4,The ID of the fourth away player in the match.,The away_player_4 column contains the ID of the fourth player on the away team for a given match.,4
+451,european_football_2,Match,away_player_5,The ID of the fifth away team player in the match.,Player ID of the fifth player on the away team.,2
+452,european_football_2,Match,away_player_6,The ID of the sixth away player in the match.,Player ID of the sixth player on the away team.,4
+453,european_football_2,Match,away_player_7,The ID of the seventh away player in the match.,The away_player_7 column identifies the 7th player on the away team for a given match.,4
+454,european_football_2,Match,away_player_8,The ID of the eighth away player in the match.,The away_player_8 column identifies the 8th player on the away team for a given match.,2
+455,european_football_2,Match,away_player_9,The ID of the ninth away player in the match.,The away_player_9 column contains the ID of the 9th player on the away team for a given match.,4
+456,european_football_2,Match,away_player_10,The ID of the 10th away player in the match.,The away_player_10 column contains the ID of the 10th player on the away team for a given match.,3
+457,european_football_2,Match,away_player_11,The ID of the 11th player on the away team in the match.,The away_player_11 column contains the ID of the 11th player on the away team for a given match.,3
+458,european_football_2,Match,goal,Information of the goals in the match in XML format.,The 'goal' column records the number of goals scored by each team in a match.,2
+459,european_football_2,Match,shoton,The number of shots on goal during the match.,The shoton column indicates the number of shots on target during a match.,4
+460,european_football_2,Match,shotoff,The number of shots that were off target during the match.,"The ""shotoff"" column records the number of shots that missed the target during a match.",4
+461,european_football_2,Match,foulcommit,The fouls committed during the match.,"The ""foulcommit"" column indicates the number of fouls committed by each team during a match.",3
+462,european_football_2,Match,card,Details about the cards given in the match.,Tracks the number of cards (yellow or red) given during a match.,3
+463,european_football_2,Match,cross,The number of balls sent into the opposition team's area from a wide position.,"The ""cross"" column indicates the number of crosses made during a match.",2
+464,european_football_2,Match,corner,Number of corner kicks in the match.,The corner column indicates the number of corner kicks taken by each team during a match.,3
+465,european_football_2,Match,possession,Information on the possession is in the match in XML format.,Indicates the percentage of possession each team had during a match.,2
+466,european_football_2,Match,B365H,The home win odds from Bet365.,Odds for a home team win according to bookmaker B365.,3
+467,european_football_2,Match,B365D,The draw odds provided by Bet365.,Odds for a draw outcome offered by bookmaker B365.,4
+468,european_football_2,Match,B365A,The betting odds for an away team win from Bet365.,Odds for a draw at Bet365 bookmaker.,1
+469,european_football_2,Match,BWH,The BWH column represents the home win odds provided by the Bet&Win (BWin) bookmaker.,"BWH contains the odds for a home team win, as provided by bookmaker William Hill.",1
+470,european_football_2,Match,BWD,The draw odds provided by Bet&Win (BWin) for the match.,Odds for a draw at Betway.,1
+471,european_football_2,Match,BWA,The betting odds for an away team win from Bet&Win (BWin) for the match.,Odds for a home win according to bookmaker William Hill.,1
+472,european_football_2,Match,IWH,The IWH column represents the home win odds provided by the betting company Interwetten.,Odds for a home win according to bookmaker Interwetten.,2
+473,european_football_2,Match,IWD,The draw odds from Interwetten.,"Describes the odds for a draw outcome in the match, as provided by the bookmaker Interwetten.",3
+474,european_football_2,Match,IWA,The IWA column represents the odds for an away team win provided by the Interwetten betting company.,"Indicates the odds for a draw in the match, provided by the bookmaker Interwetten.",1
+475,european_football_2,Match,LBH,The home win odds from the betting company Ladbrokes.,Odds for a home team win according to bookmaker Ladbrokes.,4
+476,european_football_2,Match,LBD,The draw odds from the betting company Ladbrokes.,Odds for a draw at Betfair.,1
+477,european_football_2,Match,LBA,The LBA column represents the betting odds for an away team win provided by the betting company LB.,Odds for a home team win according to bookmaker Ladbrokes.,1
+478,european_football_2,Match,PSH,The home win odds from Pinnacle Sports.,Odds for a home team win from Pinnacle Sports.,4
+479,european_football_2,Match,PSD,The draw odds from Pinnacle Sports.,"The PSD column contains the pre-match odds for a draw from the sportsbook provider, Pinnacle Sports.",3
+480,european_football_2,Match,PSA,The odds for an away team win from the betting company Pinnacle Sports.,Odds for a home team win according to the PSA (Probability of Scoring A goal) model.,1
+481,european_football_2,Match,WHH,The home win odds from William Hill.,Odds for a home win in a match.,2
+482,european_football_2,Match,WHD,The draw odds from William Hill.,Odds for a home team draw at William Hill.,3
+483,european_football_2,Match,WHA,The odds offered by William Hill for an away team win.,Odds for the home team to win.,1
+484,european_football_2,Match,SJH,The odds for a home win from the Stan James bookmaker.,SJH is the decimal odds for a home team win according to bookmaker SJ.,3
+485,european_football_2,Match,SJD,The odds for a draw according to the Stan James betting company.,Describes the number of yellow cards shown to the away team during a match.,1
+486,european_football_2,Match,SJA,The SJA column represents the odds offered by the betting company Stan James for an away team win.,Odds from bookmaker SJ for the home team to win.,1
+487,european_football_2,Match,VCH,The odds for a home win from the VC Bet bookmaker.,VCH contains the odds for a home team victory offered by bookmaker Victor Chandler.,4
+488,european_football_2,Match,VCD,The odds for a draw according to the VC Bet betting company.,Describes the number of conceded corners in a match.,1
+489,european_football_2,Match,VCA,The odds for an away team win from the betting company VC Bet.,Odds for a draw from bookmaker Victor Chandler.,1
+490,european_football_2,Match,GBH,The home win odds from Gamebookers.,Odds from bookmaker GB for the home team to win.,2
+491,european_football_2,Match,GBD,The draw odds from Gamebookers.,"Odds for the home team to win, provided by bookmaker GB.",1
+492,european_football_2,Match,GBA,The odds offered by Gamebookers for an away team win.,"Odds for the home team to win, provided by bookmaker Gamebookers.",1
+493,european_football_2,Match,BSH,The home win odds from Blue Square.,Odds for a home team win according to bookmaker BSH.,3
+494,european_football_2,Match,BSD,The draw odds from Blue Square.,Odds for a draw from bookmaker BSH.,2
+495,european_football_2,Match,BSA,The odds offered by Blue Square for an away team win.,"Odds for the home team to win, provided by bookmaker Betsson.",1
+496,european_football_2,League,id,This is the unique identifier for each league.,"The 'id' column serves as a unique identifier for each league, acting as the primary key to ensure distinct references when linked to other tables.",4
+497,european_football_2,League,country_id,This is the unique identifier for the country associated with the league.,The 'country_id' column contains a unique identifier for each country that a league is associated with.,3
+498,european_football_2,League,name,The name of the league.,Stores the name of the league.,3
+499,european_football_2,Country,id,This is the unique identifier for each country.,The 'id' column serves as a unique identifier for each country.,3
+500,european_football_2,Country,name,The name of the country.,Stores the name of the country.,4
+501,european_football_2,Player_Attributes,id,Unique identifier for each player attribute record.,A unique identifier for each player's attribute record.,4
+502,european_football_2,Player_Attributes,player_fifa_api_id,The unique identifier for a player in the FIFA API.,Unique identifier for a player in the FIFA API.,4
+503,european_football_2,Player_Attributes,player_api_id,The unique identifier for the player in the API.,"The player_api_id column is a unique identifier for each player, acting as a primary key to reference player details from the Player table.",4
+504,european_football_2,Player_Attributes,date,The date when the player's attributes were recorded.,The date column records when a player's attributes were assessed.,4
+505,european_football_2,Player_Attributes,overall_rating,The overall rating of the player.,Describes a player's overall ability rating.,4
+506,european_football_2,Player_Attributes,potential,The potential rating of the player.,The potential column indicates a player's maximum overall rating they could achieve.,3
+507,european_football_2,Player_Attributes,preferred_foot,The player's preferred foot for playing when attacking.,"Indicates the preferred foot of a player, such as ""right"" or ""left"".",2
+508,european_football_2,Player_Attributes,attacking_work_rate,The player's attacking work rate.,Describes a player's work rate when attacking.,4
+509,european_football_2,Player_Attributes,defensive_work_rate,The player's defensive work rate.,"Describes a player's defensive work rate, indicating their level of defensive involvement and intensity.",3
+510,european_football_2,Player_Attributes,crossing,The player's crossing ability score.,Describes a player's ability to deliver accurate crosses into the box.,2
+511,european_football_2,Player_Attributes,finishing,The player's ability to finish scoring opportunities.,Describes a player's ability to finish goal-scoring opportunities.,4
+512,european_football_2,Player_Attributes,heading_accuracy,The player's accuracy in heading the ball.,Describes a player's accuracy in directing a ball with their head.,3
+513,european_football_2,Player_Attributes,short_passing,The player's short passing ability score.,Describes a player's ability to make short passes.,2
+514,european_football_2,Player_Attributes,volleys,The player's volley score.,Describes a player's ability to strike the ball out of the air.,3
+515,european_football_2,Player_Attributes,dribbling,The player's dribbling ability score.,Describes a player's ability to control the ball while maneuvering on the field.,2
+516,european_football_2,Player_Attributes,curve,The player's ability to curve the ball.,Describes a player's ability to curve the ball when shooting or passing.,3
+517,european_football_2,Player_Attributes,free_kick_accuracy,The player's accuracy in taking free kicks.,Describes a player's accuracy when taking free kicks.,4
+518,european_football_2,Player_Attributes,long_passing,The player's long passing score.,Describes a player's ability to make long passes.,2
+519,european_football_2,Player_Attributes,ball_control,The player's ball control score.,Describes a player's ability to control the ball.,3
+520,european_football_2,Player_Attributes,acceleration,The player's acceleration score.,"Acceleration rating of a player, on a scale of 1 to 100.",4
+521,european_football_2,Player_Attributes,sprint_speed,The player's sprint speed.,"Describes a player's sprint speed, rated on a scale.",3
+522,european_football_2,Player_Attributes,agility,The player's agility rating.,"Describes a player's agility rating, a measure of their speed, balance, and change of direction abilities.",3
+523,european_football_2,Player_Attributes,reactions,The player's reactions score.,"Describes a player's ability to react to in-game situations, such as intercepting passes or responding to an opponent's movement.",3
+524,european_football_2,Player_Attributes,balance,The player's balance score.,"Describes a player's balance attribute, indicating their stability and ability to maintain posture while moving or interacting with the ball.",3
+525,european_football_2,Player_Attributes,shot_power,The player's shot power rating.,Describes the player's ability to shoot with power.,3
+526,european_football_2,Player_Attributes,jumping,The player's jumping ability score.,Describes a player's ability to jump.,2
+527,european_football_2,Player_Attributes,stamina,The player's stamina score.,"Describes a player's endurance and energy levels, indicating their ability to maintain performance throughout a match.",3
+528,european_football_2,Player_Attributes,strength,The player's strength score.,"Describes a player's physical strength, likely impacting their ability to compete for balls and hold off defenders.",3
+529,european_football_2,Player_Attributes,long_shots,The player's long shots score.,Describes a player's ability to shoot from distance.,3
+530,european_football_2,Player_Attributes,aggression,The player's aggression score.,"Describes a player's aggression level, indicating their tendency to commit fouls and challenge for the ball.",3
+531,european_football_2,Player_Attributes,interceptions,The player's ability to intercept passes.,Indicates a player's ability to intercept passes and loose balls.,3
+532,european_football_2,Player_Attributes,positioning,The player's positioning score.,Describes a player's ability to position themselves on the field.,2
+533,european_football_2,Player_Attributes,vision,The player's vision score.,Describes a player's ability to pick out a pass and includes their peripheral vision and ability to read the game.,3
+534,european_football_2,Player_Attributes,penalties,The player's penalties score.,Describes a player's ability to score penalties.,2
+535,european_football_2,Player_Attributes,marking,The player's marking score.,Describes a player's ability to mark an opponent.,3
+536,european_football_2,Player_Attributes,standing_tackle,The player's ability to perform standing tackles.,Describes a player's ability to tackle an opponent while standing.,4
+537,european_football_2,Player_Attributes,sliding_tackle,The player's sliding tackle score.,Describes a player's ability to perform sliding tackles.,3
+538,european_football_2,Player_Attributes,gk_diving,The player's goalkeeping diving ability score.,"Describes a goalkeeper's diving ability, rated from 1 to 100.",3
+539,european_football_2,Player_Attributes,gk_handling,The player's goalkeeping handling score.,Describes the goalkeeping handling ability of a player on a scale.,3
+540,european_football_2,Player_Attributes,gk_kicking,The player's goalkeeping kicking score.,Describes the goalkeeping kicking ability of a player.,3
+541,european_football_2,Player_Attributes,gk_positioning,The player's goalkeeper positioning score.,Describes the goalkeeping positioning ability of a player.,2
+542,european_football_2,Player_Attributes,gk_reflexes,The player's goalkeeping reflexes score.,Describes the goalkeeper's reflexes and ability to make saves.,3
+543,european_football_2,Team,id,This is the unique identifier for each team.,A unique identifier for each team.,4
+544,european_football_2,Team,team_api_id,The unique identifier for the team in the API.,A unique identifier for each team.,4
+545,european_football_2,Team,team_fifa_api_id,The unique identifier for the team in the FIFA API.,"Unique identifier for each team, referencing the FIFA API.",4
+546,european_football_2,Team,team_long_name,The full name of the team.,Stores the full name of the team.,4
+547,european_football_2,Team,team_short_name,The abbreviated name of the team.,Abbreviation for the team's name.,4
+548,european_football_2,Team_Attributes,id,Unique identifier for each team attribute record.,Primary key to uniquely identify each record of team attributes.,4
+549,european_football_2,Team_Attributes,team_fifa_api_id,The unique identifier for the team in the FIFA API.,"Identifies a team in the context of its attributes, such as build-up play style, chance creation, and defensive strategy.",1
+550,european_football_2,Team_Attributes,team_api_id,The unique identifier for the team in the API.,"The `team_api_id` column is a unique identifier for each team, used to reference and join data across tables.",3
+551,european_football_2,Team_Attributes,date,The date when the team attributes were recorded.,The date column indicates when the team attributes were recorded.,3
+552,european_football_2,Team_Attributes,buildUpPlaySpeed,The score of the build up play speed for the team.,"Describes the speed at which the team builds up play, with values ranging from a scale of slow to fast.",2
+553,european_football_2,Team_Attributes,buildUpPlaySpeedClass,This is the classification of the team's build-up play speed.,"Describes the speed at which a team builds up play, with values such as ""Balanced"", ""Fast"", or ""Slow"".",4
+554,european_football_2,Team_Attributes,buildUpPlayDribbling,The tendency or frequency of dribbling during build-up play for the team.,"Describes the dribbling style used by the team during build-up play, with options like ""None"", ""Little"", ""Normal"", and ""Lots"".",3
+555,european_football_2,Team_Attributes,buildUpPlayDribblingClass,The dribbling class during the build-up play for the team.,"Describes the dribbling style of a team's build-up play, with values such as ""Little"", ""Normal"", or ""None"".",3
+556,european_football_2,Team_Attributes,buildUpPlayPassing,The build up play passing score for the team.,"Describes the team's passing strategy during build-up play, with values indicating the style and frequency of passing.",3
+557,european_football_2,Team_Attributes,buildUpPlayPassingClass,The passing style used by the team during the build-up play.,"Describes the passing style of a team's build-up play, with options like ""Mixed"", ""Short"", or ""Long"".",4
+558,european_football_2,Team_Attributes,buildUpPlayPositioningClass,The degree of organization or freedom of movement a team has in the first two-thirds of the pitch during build-up play.,Describes the positioning strategy used by the team during build-up play.,2
+559,european_football_2,Team_Attributes,chanceCreationPassing,The score of the team's passing strategy during chance creation.,Describes the team's passing ability when creating goal-scoring chances.,2
+560,european_football_2,Team_Attributes,chanceCreationPassingClass,The classification of the team's passing strategy during chance creation.,"Describes the passing style of a team's chance creation strategy, indicating whether it is normal, mixed, or another type.",3
+561,european_football_2,Team_Attributes,chanceCreationCrossing,The score of the team's crosses into the box during chance creation.,Describes the team's tendency to create chances through crossing.,1
+562,european_football_2,Team_Attributes,chanceCreationCrossingClass,The classification of the team's crosses into the box during chance creation.,"Describes the team's crossing approach during chance creation, with values like ""Normal"" or ""Lots"".",2
+563,european_football_2,Team_Attributes,chanceCreationShooting,The frequency of shooting opportunities created by the team.,Describes the team's style of play in terms of shooting during a chance creation.,1
+564,european_football_2,Team_Attributes,chanceCreationShootingClass,This is the classification of the team's shooting strategy during chance creation.,Describes the team's style of play in terms of shooting during a match.,2
+565,european_football_2,Team_Attributes,chanceCreationPositioningClass,A team's strategy for player positioning during attacking plays.,Describes the positioning class of a team's chance creation strategy.,4
+566,european_football_2,Team_Attributes,defencePressure,Indicates the level of pressure applied by the team's defense.,Indicates the level of pressure applied by a team's defense.,4
+567,european_football_2,Team_Attributes,defencePressureClass,The classification of the team's defensive pressure strategy.,"Indicates the team's defensive pressure style, such as ""Press"" or ""Deep"".",4
+568,european_football_2,Team_Attributes,defenceAggression,The level of aggression in a team's defensive tactics.,"Describes the team's defensive aggression level, indicating how aggressively the team defends.",3
+569,european_football_2,Team_Attributes,defenceAggressionClass,The classification of a team's defensive aggression level.,"Describes the team's defensive aggression strategy, indicating whether they favor a more aggressive or conservative approach when defending.",4
+570,european_football_2,Team_Attributes,defenceTeamWidth,The width of the team's defensive formation.,"Describes the team's defensive width strategy, indicating how compact or stretched the team's defensive line is.",4
+571,european_football_2,Team_Attributes,defenceTeamWidthClass,The classification of the team's defensive width strategy.,"Describes the team's defensive width strategy, indicating whether they play with a narrow, wide, or normal defensive formation.",4
+572,european_football_2,Team_Attributes,defenceDefenderLineClass,Classification of the defensive line strategy.,"Describes the defensive strategy of the team, specifically the positioning of the defensive line.",2
+573,thrombosis_prediction,Examination,ID,The unique identifier for the patient that has been examined.,"Unique identifier for each examination record, referencing the patient's ID in the Patient table.",3
+574,thrombosis_prediction,Examination,Examination Date,The date when the examination was conducted.,Records the date of a patient's examination.,4
+575,thrombosis_prediction,Examination,aCL IgG,This is the concentration of anti-Cardiolipin antibody (IgG) observed in the examination of the patient.,"Records the immunoglobulin G (IgG) level for the anti-cardiolipin antibody test, indicating the presence of autoimmune antibodies.",3
+576,thrombosis_prediction,Examination,aCL IgM,The anti-Cardiolipin antibody (IgM) concentration observed in the examination of the patient.,Records the level of IgM antibodies against anticardiolipin (aCL) in a patient's blood sample.,4
+577,thrombosis_prediction,Examination,ANA,The concentration of anti-nucleus antibodies observed in the examination of the patient.,"Stores the Anti-Nuclear Antibody (ANA) test result, indicating the presence of autoantibodies to cell nuclei.",2
+578,thrombosis_prediction,Examination,ANA Pattern,The pattern observed in the ANA examination.,"Stores the pattern of antinuclear antibody (ANA) test results, indicating the presence of autoantibodies in the patient's blood. The patterns may include promyelocytic leukemia (P), speckled (S), or other patterns.",3
+579,thrombosis_prediction,Examination,aCL IgA,The concentration of anti-Cardiolipin antibody (IgA) observed in the examination of the patient.,Records the immunoglobulin A (IgA) level for anticardiolipin antibodies (aCL) in a patient's examination results.,4
+580,thrombosis_prediction,Examination,Diagnosis,The diagnosis given after the examination of the patient.,Records the diagnosis or diagnoses associated with the examination.,3
+581,thrombosis_prediction,Examination,KCT,The measure of degree of coagulation observed in the examination of the patient.,"Records the results of the KCT (Kappa Light Chain) test, indicating the presence or absence of certain antibodies.",1
+582,thrombosis_prediction,Examination,RVVT,This is a measure of the degree of coagulation observed in the examination of the patient.,"Indicates the result of the Russell Viper Venom Time (RVVT) test, which assesses blood coagulation and aids in diagnosing lupus anticoagulant (LAC) and other coagulation disorders.",3
+583,thrombosis_prediction,Examination,LAC,The presence of lupus anticoagulant (LAC) observed in the examination of the patient.,"Records the result of the Lupus Anticoagulant (LAC) test, indicating the presence or absence of lupus anticoagulants in the patient's blood.",3
+584,thrombosis_prediction,Examination,Symptoms,Details about other symptoms observed in the examination of the patient.,Describes the symptoms experienced by the patient.,3
+585,thrombosis_prediction,Examination,Thrombosis,The degree of thrombosis observed in the examination of the patient.,"Indicates the presence of thrombosis (blood clot) in the patient, represented as a binary value.",2
+586,thrombosis_prediction,Laboratory,ID,Identification of the patient assosiated with the laboratory test.,Uniquely identifies each laboratory record and is a foreign key referencing the patient ID in the Patient table.,3
+587,thrombosis_prediction,Laboratory,Date,The date of the laboratory tests.,Records the date of a patient's laboratory test results.,3
+588,thrombosis_prediction,Laboratory,GOT,The AST glutamic oxaloacetic transaminase level observed in the laboratory test.,"Stores the GOT (Glutamic-Oxaloacetic Transaminase) levels in a patient's blood, which is an enzyme that indicates liver health.",3
+589,thrombosis_prediction,Laboratory,GPT,The level of ALT glutamic pyruvic transaminase observed in the laboratory test.,Stores the glutamic-pyruvic transaminase (GPT) levels in a patient's blood.,2
+590,thrombosis_prediction,Laboratory,LDH,This is the lactate dehydrogenase level observed in the laboratory test.,"Measures the amount of lactate dehydrogenase (LDH) in the blood, which is an enzyme that plays a role in energy production and is found in various tissues throughout the body.",3
+591,thrombosis_prediction,Laboratory,ALP,The level of alkaline phosphatase enzyme observed in the laboratory test.,Stores the Alkaline Phosphatase (ALP) levels in the patient's blood.,3
+592,thrombosis_prediction,Laboratory,TP,The total protein level in the blood observed in the laboratory test.,TP column stores the total protein level in a patient's blood sample.,2
+593,thrombosis_prediction,Laboratory,ALB,The concentration of albumin in the blood observed in the laboratory test.,ALB column stores the albumin levels in a patient's blood.,2
+594,thrombosis_prediction,Laboratory,UA,The uric acid level observed in the laboratory test.,The UA column contains the uric acid level in the patient's blood.,3
+595,thrombosis_prediction,Laboratory,UN,The concentration of urea nitrogen in the blood observed in the laboratory test.,"Stores the UN value, representing a specific measurement or test result.",2
+596,thrombosis_prediction,Laboratory,CRE,The creatinine level in the blood observed in the laboratory test.,Stores creatinine levels in mg/dL.,2
+597,thrombosis_prediction,Laboratory,T-BIL,The total bilirubin level in the blood observed in the laboratory test.,Stores the total bilirubin level in a patient's blood.,2
+598,thrombosis_prediction,Laboratory,T-CHO,The total cholesterol level observed in the laboratory test.,Stores the total cholesterol level of a patient.,2
+599,thrombosis_prediction,Laboratory,TG,This is the triglyceride level observed in the laboratory test.,Stores the triglyceride levels of patients.,2
+600,thrombosis_prediction,Laboratory,CPK,Creatinine phosphokinase levels observed in the laboratory test.,Stores the creatine phosphokinase (CPK) levels in the patient's laboratory results.,4
+601,thrombosis_prediction,Laboratory,GLU,The blood glucose level observed in the laboratory test.,Stores glucose levels in mg/dL.,2
+602,thrombosis_prediction,Laboratory,WBC,White blood cell count observed in the laboratory test.,Stores the white blood cell count.,2
+603,thrombosis_prediction,Laboratory,RBC,The count of red blood cells observed in the laboratory test.,Stores the red blood cell count.,2
+604,thrombosis_prediction,Laboratory,HGB,The hemoglobin level in the blood observed in the laboratory test.,Stores the hemoglobin level in grams per deciliter (g/dL) for each laboratory test result.,3
+605,thrombosis_prediction,Laboratory,HCT,The percentage of red blood cells in the blood observed in the laboratory test.,"Stores the hematocrit level, indicating the volume percentage of red blood cells in whole blood.",2
+606,thrombosis_prediction,Laboratory,PLT,The platelet count observed in the laboratory test.,Stores platelet count.,2
+607,thrombosis_prediction,Laboratory,PT,The prothrombin time observed in the laboratory test.,"Stores the PT (Prothrombin Time) test result, indicating the time it takes for blood to clot.",3
+608,thrombosis_prediction,Laboratory,APTT,The activated partial prothrombin time observed in the laboratory test.,APTT (Activated Partial Thromboplastin Time) is a measure of the time it takes for a blood sample to clot.,3
+609,thrombosis_prediction,Laboratory,FG,The fibrinogen level observed in the laboratory test.,FG column contains fibrinogen levels in a patient's blood.,3
+610,thrombosis_prediction,Laboratory,PIC,The PIC observed in the laboratory test.,The PIC column contains numerical data representing a medical measurement or test result.,3
+611,thrombosis_prediction,Laboratory,TAT,The turnaround time (TAT) observed in the laboratory test.,"Stores the TAT (Tap and Tapson) test results, indicating the presence of lupus anticoagulant, an immunoglobulin that can cause blood clots.",1
+612,thrombosis_prediction,Laboratory,TAT2,The TAT2 observed in the laboratory test.,"Stores the TAT2 (Thrombin-Antithrombin Complex) test result, indicating the presence of a blood clotting disorder.",3
+613,thrombosis_prediction,Laboratory,U-PRO,The presence of protein in urine observed in the patient's laboratory test.,"Stores the result of a urine protein test, indicating the presence or absence of protein in the patient's urine.",4
+614,thrombosis_prediction,Laboratory,IGG,The IgG level observed in the patient's laboratory test.,"The IGG column contains data on the immunoglobulin G levels of patients, which is a type of antibody.",3
+615,thrombosis_prediction,Laboratory,IGA,The Ig A level observed in the patient's laboratory test.,IGA is a column that records the immunoglobulin A (IgA) levels in a patient's laboratory results.,3
+616,thrombosis_prediction,Laboratory,IGM,The IgM level observed in the patient's laboratory test.,"Stores immunoglobulin measurements, specifically the IgM isotype, which plays a role in the body's immune response.",3
+617,thrombosis_prediction,Laboratory,CRP,C-reactive protein observed in the patient's laboratory test.,"CRP is a measure of C-reactive protein, a marker of inflammation in the body.",3
+618,thrombosis_prediction,Laboratory,RA,The Rhuematoid Athritis indicator observed in the laboratory test.,Stores the rheumatoid arthritis (RA) test result.,2
+619,thrombosis_prediction,Laboratory,RF,The Rhuematoid Factor observed in the laboratory test.,"Stores the RF (Rheumatoid Factor) test result, a marker for autoimmune diseases like rheumatoid arthritis.",3
+620,thrombosis_prediction,Laboratory,C3,The level of complement 3 protein in the blood observed in the patient's laboratory test.,Stores the C3 complement level of a patient.,2
+621,thrombosis_prediction,Laboratory,C4,The level of complement 4 in the blood observed in the patient's laboratory test.,Stores the C4 complement protein level in a patient's blood.,2
+622,thrombosis_prediction,Laboratory,RNP,The anti-ribonuclear protein levels observed in the patient's laboratory test.,"Stores the value of the RNP test, which detects antibodies to the ribonucleoprotein antigen.",2
+623,thrombosis_prediction,Laboratory,SM,The presence of anti-SM antibodies observed in the patient's laboratory test.,"Stores the SM value, which is a specific type of antinuclear antibody (ANA) test result.",2
+624,thrombosis_prediction,Laboratory,SC170,The presence of anti-scl70 antibodies observed in the patient's laboratory test.,Stores the SC170 antibody test result for each patient.,2
+625,thrombosis_prediction,Laboratory,SSA,The anti-SSA antibody levels observed in the patient's laboratory test.,Stores the presence or absence of SSA antibodies in the patient's laboratory results.,2
+626,thrombosis_prediction,Laboratory,SSB,The presence of anti-SSB antibodies observed in the patient's laboratory test.,"Stores the results of the SSB (Sjogrens-syndrome-related antigen B) test, indicating the presence or absence of SSB antibodies.",3
+627,thrombosis_prediction,Laboratory,CENTROMEA,The presence of anti-centromere antibodies observed in the patient's laboratory test.,Stores the results of a test for the presence of antibodies against the centromere protein B (CENP-B).,3
+628,thrombosis_prediction,Laboratory,DNA,The anti-DNA levels observed in the patient's laboratory test.,Stores DNA test results.,2
+629,thrombosis_prediction,Laboratory,DNA-II,The anti-DNA level measured in the patient's laboratory tests.,Stores the DNA-II test results.,2
+630,thrombosis_prediction,Patient,ID,This is the unique identifier for each patient.,Unique identifier for each patient.,3
+631,thrombosis_prediction,Patient,SEX,The sex of the patient.,"The 'SEX' column indicates the biological sex of each patient, with values of either 'F' or 'M'.",3
+632,thrombosis_prediction,Patient,Birthday,The date of birth of the patient.,Stores the birthdate of each patient.,4
+633,thrombosis_prediction,Patient,Description,The date when the patient's data was last updated.,"The ""Description"" column provides a brief summary or note about the patient, potentially including relevant medical details or events.",1
+634,thrombosis_prediction,Patient,First Date,The date when a patient first visited the hospital.,"The ""First Date"" column records the date of the patient's first visit or admission.",3
+635,thrombosis_prediction,Patient,Admission,Indicates whether the patient was admitted to the hospital (+) or followed at the outpatient clinic (-).,Indicates whether the patient has been admitted to the hospital or not.,2
+636,thrombosis_prediction,Patient,Diagnosis,The diagnosis of the patient.,The Diagnosis column contains a patient's medical diagnosis or condition.,3
+637,toxicology,bond,bond_id,Unique identifier representing bonds within a molecule.,Uniquely identifies each bond and references the associated molecule.,4
+638,toxicology,bond,molecule_id,Identifies the molecule in which the bond appears.,Identifies the molecule associated with a specific bond.,4
+639,toxicology,bond,bond_type,The type of bond between atoms.,Indicates the type of bond present between atoms in a molecule.,3
+640,toxicology,molecule,molecule_id,Unique identifier for each molecule.,A unique identifier for each molecule.,4
+641,toxicology,molecule,label,Indicates whether this molecule is carcinogenic.,Stores the polarity of the molecule.,1
+642,toxicology,atom,atom_id,The unique identifier for each atom.,"A unique identifier for each atom, used as a primary key to reference and connect atoms within the database.",4
+643,toxicology,atom,molecule_id,Identifies the molecule to which the atom belongs.,Identifies the molecule to which the atom belongs.,4
+644,toxicology,atom,element,The chemical element to which the atom belongs.,The 'element' column identifies the chemical element of each atom.,4
+645,toxicology,connected,atom_id,The ID of the first atom in a bond connection.,"The 'atom_id' column identifies a specific atom within a molecule, serving as a unique identifier to distinguish it from other atoms.",2
+646,toxicology,connected,atom_id2,The ID of the second atom in a bond connection.,"The 'atom_id2' column contains the identifier for the second atom involved in a connection, establishing a relationship between two atoms.",3
+647,toxicology,connected,bond_id,Identifier for the bond between two atoms.,Identifies the bond that connects two atoms.,4
+648,student_club,income,income_id,A unique identifier for each income record.,A unique identifier for each income record.,4
+649,student_club,income,date_received,The date the income was received.,The date when income was received.,4
+650,student_club,income,amount,The amount of funds received.,Amount of money received.,4
+651,student_club,income,source,"The source of the income, such as dues or fundraising activities.","The source of the income, such as dues, fundraising, donations, etc.",3
+652,student_club,income,notes,Details about the receipt of funds.,"Contains additional details or notes about the income, such as the reason or context for the transaction.",3
+653,student_club,income,link_to_member,Reference to the member who is associated with the income.,Links to the member who is associated with the income.,4
+654,student_club,budget,budget_id,A unique identifier for each budget entry.,A unique identifier for each budget record.,4
+655,student_club,budget,category,"The area for which the budgeted amount is allocated, such as advertisement, food, or parking.",Indicates the category or type of expense that the budget entry falls under.,2
+656,student_club,budget,spent,The total amount spent in the budgeted category for an event.,Tracks the amount of money spent from the allocated budget for a specific category in an event.,4
+657,student_club,budget,remaining,The remaining budget after expenditures for the specified category and event.,The amount of money left in a budget category for a specific event.,4
+658,student_club,budget,amount,The total budgeted amount for the specified category and event.,The amount of money allocated for a specific budget category.,2
+659,student_club,budget,event_status,The status of the event associated with the budget entry.,"Indicates the status of the event linked to the budget, providing context for the budget's progress and whether it is still open for spending.",3
+660,student_club,budget,link_to_event,The unique identifier of the event associated with the budget entry.,Links to the event for which the budget is created.,2
+661,student_club,attendance,link_to_event,The unique identifier of the event linked to the attendance record.,"Links events to members, indicating attendance.",2
+662,student_club,attendance,link_to_member,The unique identifier of the member that attended the event.,Links a member to an event they attended.,2
+663,student_club,event,event_id,A unique identifier for each event.,A unique identifier for each event.,4
+664,student_club,event,event_name,The name of the event.,The name of the event.,4
+665,student_club,event,event_date,The date the event took place or is scheduled to take place.,The date of the event.,2
+666,student_club,event,type,"The kind of event, such as game, social, election, meeting, or guest speaker.","The type column indicates the nature or category of an event, providing a concise label that describes the purpose or format of the gathering.",3
+667,student_club,event,notes,A free text field for any notes about the event.,Contains additional information or context about the event.,2
+668,student_club,event,location,Address where the event was held or is to be held.,The location column indicates the venue or place where an event takes place.,2
+669,student_club,event,status,"The status of the event, indicating if it is in planning, opened, or closed.",Indicates the planning or execution stage of an event.,2
+670,student_club,expense,expense_id,Unique identifier for each expense.,A unique identifier for each expense record.,3
+671,student_club,expense,expense_description,A textual description of the expense items or services for which the money was spent.,Details of the goods or services for which the expense was incurred.,4
+672,student_club,expense,expense_date,The date the expense was incurred.,The date when an expense was incurred.,3
+673,student_club,expense,cost,The dollar amount spent on an expense.,The cost column records the monetary value of an expense.,3
+674,student_club,expense,approved,A true or false value indicating if the expense was approved.,Indicates whether the expense has been approved or not.,3
+675,student_club,expense,link_to_member,The member who incurred the expense.,Links to the member who incurred the expense.,3
+676,student_club,expense,link_to_budget,The unique identifier of the budget record associated with the expense.,Links to the relevant budget record for the expense.,2
+677,student_club,major,major_id,A unique identifier for each major.,Uniquely identifies each major and serves as the primary key for the table.,4
+678,student_club,major,major_name,The name of the major.,"Stores the name of a specific field of study, indicating the academic major a member is pursuing.",3
+679,student_club,major,department,The name of the department that offers the major.,The department column identifies the academic department associated with a specific major.,3
+680,student_club,major,college,The name of the college that houses the department offering the major.,The college column identifies the academic division associated with a specific major.,2
+681,student_club,member,member_id,Unique identifier for each member.,A unique identifier for each member.,4
+682,student_club,member,first_name,The member's first name.,Stores the first name of a member.,3
+683,student_club,member,last_name,The last name of the member.,Stores the last name of a member.,3
+684,student_club,member,email,The email address of the member.,Stores the email address of each member.,4
+685,student_club,member,position,The role or title the member holds within the club.,Indicates the role or standing of a member within the organization.,3
+686,student_club,member,t_shirt_size,The size of the t-shirt that the member prefers.,Stores the T-shirt size of each member.,2
+687,student_club,member,phone,The primary phone number to contact the member.,Stores the phone number of a member.,2
+688,student_club,member,zip,The zip code of the member's hometown.,Stores the zip code of the member's address.,2
+689,student_club,member,link_to_major,The unique identifier for the major associated with the member. References the Major table.,"Identifies the major of a member, referencing the major_id in the major table.",4
+690,student_club,zip_code,zip_code,The ZIP code itself. A five-digit number identifying a US post office or delivery area.,"The zip code column contains the unique zip code for a specific location, enabling the identification of cities, counties, and states.",3
+691,student_club,zip_code,type,"The classification of the ZIP code, such as Standard, PO Box, or Unique.","Indicates the type of zip code, such as ""Standard"", ""Unique"", ""PO Box"", etc.",3
+692,student_club,zip_code,city,The city to which the ZIP code pertains.,Stores the name of the city associated with a particular zip code.,4
+693,student_club,zip_code,county,The county to which the ZIP pertains.,Stores the name of the county associated with a given zip code.,3
+694,student_club,zip_code,state,The name of the state to which the ZIP pertains.,The state column indicates the full name of the state or territory associated with a particular zip code.,4
+695,student_club,zip_code,short_state,The standard two-letter abbreviation of the state.,Abbreviation for the state or territory associated with a zip code.,3
+696,superhero,gender,id,Unique identifier for the gender.,The primary key used to uniquely identify each gender option.,3
+697,superhero,gender,gender,The name of the gender of the superhero.,"The ""gender"" column identifies the gender of a superhero, with options such as Male, Female, or N/A.",3
+698,superhero,superpower,id,This is the unique identifier for each superpower.,Unique identifier for each superpower.,4
+699,superhero,superpower,power_name,The name of the superpower.,The power_name column contains the name or title of a superpower.,3
+700,superhero,publisher,id,The unique identifier of the publisher.,"The ""id"" column serves as a unique identifier for each publisher, acting as a primary key to ensure each publisher entry has a distinct reference.",4
+701,superhero,publisher,publisher_name,The name of the publisher.,Stores the name of a publisher.,4
+702,superhero,superhero,id,This is the unique identifier for each superhero.,Unique identifier for each superhero.,4
+703,superhero,superhero,superhero_name,The name of the superhero.,Stores the name or alias of a superhero.,3
+704,superhero,superhero,full_name,The full name of the superhero.,"Stores the full name of the superhero, if available.",3
+705,superhero,superhero,gender_id,The identifier for the gender of the superhero.,Identifies the gender of the superhero.,4
+706,superhero,superhero,eye_colour_id,The identifier for the superhero's eye color.,"Identifies the eye color of each superhero, referencing the color's unique ID from the 'colour' table.",3
+707,superhero,superhero,hair_colour_id,The identifier for the superhero's hair color.,"Identifies the hair color of a superhero, referencing a unique ID from the 'colour' table.",3
+708,superhero,superhero,skin_colour_id,The ID of the superhero's skin color.,"Identifies the skin color of a superhero, referencing the ID from the color table.",3
+709,superhero,superhero,race_id,The identifier for the superhero's race.,The race_id column is a foreign key that references the race table and is used to identify the race of each superhero.,3
+710,superhero,superhero,publisher_id,The identifier for the publisher associated with the superhero.,Identifies the publisher associated with a superhero.,2
+711,superhero,superhero,alignment_id,The id of the superhero's alignment. This references the id in the alignment table.,"Identifies the alignment of a superhero, referencing the alignment table to describe a superhero's moral or ethical standpoint.",3
+712,superhero,superhero,height_cm,The height of the superhero in centimeters.,Stores the height of superheroes in centimeters.,4
+713,superhero,superhero,weight_kg,The weight of the superhero in kilograms.,Stores the weight of each superhero in kilograms.,3
+714,superhero,colour,id,Unique identifier for each color.,"The 'id' column serves as a unique identifier for each colour, acting as a primary key to ensure distinct and consistent referencing across the database.",4
+715,superhero,colour,colour,The name of the colour.,"The ""colour"" column stores various colors associated with superheroes in the database. It is used to describe the eye, hair, and skin colors of superheroes, providing a detailed physical description of their appearance.",3
+716,superhero,attribute,id,The unique identifier of the attribute.,Primary key for uniquely identifying each attribute.,4
+717,superhero,attribute,attribute_name,The name of the attribute.,"Lists the various attributes that superheroes may possess, such as intelligence, strength, speed, etc.",3
+718,superhero,hero_power,hero_id,The ID of the superhero associated with the superpower.,Identifies the superhero associated with a specific power.,2
+719,superhero,hero_power,power_id,The ID of the superpower. Maps to superpower(id).,Identifies the superpower associated with a superhero.,2
+720,superhero,race,id,The unique identifier for each race.,A unique identifier for each race.,4
+721,superhero,race,race,The name of the superhero's race.,"The ""race"" column identifies the race or species of a superhero, providing a categorical label that describes their origin or genetic makeup.",3
+722,superhero,alignment,id,Unique identifier for the alignment.,Uniquely identifies each alignment type.,2
+723,superhero,alignment,alignment,The alignment of the superhero (Good/Bad).,"The alignment column indicates the moral or ethical standing of a superhero, categorizing them as ""Good"", ""Bad"", ""Neutral"", or unspecified (""N/A"").",3
+724,superhero,hero_attribute,hero_id,The ID of the superhero that has the attribute.,Identifies the superhero associated with a particular attribute and its value.,3
+725,superhero,hero_attribute,attribute_id,The id of the attribute. Maps to attribute(id).,"The attribute_id column is a foreign key that establishes a relationship between a superhero and their attributes, such as strength or intelligence.",3
+726,superhero,hero_attribute,attribute_value,The value representing the magnitude of a specific attribute for a superhero.,"The attribute_value column contains numerical values that represent a superhero's specific attribute, such as strength or intelligence.",3
+727,codebase_community,postLinks,Id,This is the unique identifier for each post link.,A unique identifier for each record in the table.,2
+728,codebase_community,postLinks,CreationDate,The creation date of the post link.,Records the date and time when a link between two posts was created.,4
+729,codebase_community,postLinks,PostId,The ID of the post associated with the link.,Identifies the post that is linked to another post.,3
+730,codebase_community,postLinks,RelatedPostId,The ID of the post that is related to the current post.,"Identifies a post that is related to another post, establishing a connection between two posts.",3
+731,codebase_community,postLinks,LinkTypeId,The identifier for the type of link between posts.,"Describes the type of link between two posts, indicating the relationship or association between them.",3
+732,codebase_community,postHistory,Id,The unique identifier for each post history entry.,A unique identifier for each record in the table.,3
+733,codebase_community,postHistory,PostHistoryTypeId,The identifier for the type of post history event.,"Tracks the type of post history event, categorizing the change made to the post.",3
+734,codebase_community,postHistory,PostId,The unique identifier of the post associated with the post history entry.,"A unique identifier for a post, indicating the post to which the history entry belongs.",3
+735,codebase_community,postHistory,RevisionGUID,The revision globally unique identifier of the post.,A unique identifier for a specific revision of a post.,3
+736,codebase_community,postHistory,CreationDate,The date and time when the post history record was created.,Records the date and time when a post's history entry was created.,4
+737,codebase_community,postHistory,UserId,The ID of the user who made the post history entry.,The UserId column identifies the user who made changes to a post.,2
+738,codebase_community,postHistory,Text,The content of the post at the time of the revision.,Stores the text of a post's revision.,2
+739,codebase_community,postHistory,Comment,Additional comments or notes related to the post history.,Captures comments or remarks associated with a post's history.,3
+740,codebase_community,postHistory,UserDisplayName,The display name of the user who made the post history entry.,Stores the display name of the user who made changes to a post.,2
+741,codebase_community,badges,Id,This is the unique identifier for each badge.,Unique identifier for each badge.,4
+742,codebase_community,badges,UserId,The unique identifier of the user who received the badge.,Identifies the user associated with a specific badge.,2
+743,codebase_community,badges,Name,The name of the badge the user obtained.,The Name column identifies the type of badge earned by a user.,3
+744,codebase_community,badges,Date,The date that the user obtained the badge.,"The ""Date"" column indicates when a user received a particular badge.",4
+745,codebase_community,posts,Id,This is the unique identifier for each post.,A unique identifier for each post.,4
+746,codebase_community,posts,PostTypeId,The identifier for the type of post.,"Identifies the type of post, such as a question or an answer.",3
+747,codebase_community,posts,AcceptedAnswerId,The accepted answer id of the post.,The AcceptedAnswerId column indicates the ID of the accepted answer for a given post.,3
+748,codebase_community,posts,CreaionDate,The creation date of the post.,The CreaionDate column records the date and time a post was created.,3
+749,codebase_community,posts,Score,The score of the post.,The Score column indicates the score or rating of a post.,3
+750,codebase_community,posts,ViewCount,The number of times the post has been viewed.,The number of times a post has been viewed.,4
+751,codebase_community,posts,Body,The body of the post.,"Contains the body text of the post, which can include HTML formatting.",3
+752,codebase_community,posts,OwnerUserId,The ID of the user who owns the post.,Identifies the user who owns the post.,2
+753,codebase_community,posts,LasActivityDate,The last recorded activity date for the post.,The LasActivityDate column stores the date and time of the last activity associated with a post.,4
+754,codebase_community,posts,Title,The title of the post.,Title of the post.,4
+755,codebase_community,posts,Tags,The tags associated with the post.,Tags are used to categorize and describe the content of a post.,3
+756,codebase_community,posts,AnswerCount,The total number of answers for the post.,The number of answers associated with a post.,4
+757,codebase_community,posts,CommentCount,The total number of comments associated with the post.,The number of comments associated with a post.,3
+758,codebase_community,posts,FavoriteCount,The total number of times the post has been marked as a favorite by users.,The number of times a post has been favorited by users.,4
+759,codebase_community,posts,LastEditorUserId,The ID of the last user who edited the post.,The LastEditorUserId column identifies the user who last edited a post.,4
+760,codebase_community,posts,LastEditDate,The date and time when the post was last edited.,Tracks the date when the last edit was made to a post.,2
+761,codebase_community,posts,CommunityOwnedDate,The date when the post was marked as community-owned.,The CommunityOwnedDate column indicates the date when a post became community-owned.,3
+762,codebase_community,posts,ParentId,"The ID of the parent post, indicating a hierarchical relationship between posts.","The ParentId column is a foreign key that references the primary key of the posts table, indicating a parent-child relationship between posts.",4
+763,codebase_community,posts,ClosedDate,The date when the post was closed.,The ClosedDate column indicates when a post was closed.,4
+764,codebase_community,posts,OwnerDisplayName,The display name of the post owner.,The OwnerDisplayName column stores the display name of the user who owns the post.,3
+765,codebase_community,posts,LastEditorDisplayName,The display name of the last editor of the post.,Stores the display name of the last user who edited a post.,3
+766,codebase_community,users,Id,This is the unique identifier for each user.,Unique identifier for each user.,4
+767,codebase_community,users,Reputation,The user's reputation score.,"The 'Reputation' column represents a user's reputation score, which is likely influenced by their activity and contributions on the platform.",3
+768,codebase_community,users,CreationDate,The date and time when the user account was created.,Records the date and time when a user account was created.,3
+769,codebase_community,users,DisplayName,The display name chosen by the user.,The DisplayName column contains the username chosen by the user to be displayed publicly on the site.,3
+770,codebase_community,users,LastAccessDate,The last access date of the user.,The LastAccessDate column stores the date and time when a user last accessed their account.,4
+771,codebase_community,users,WebsiteUrl,The website URL of the user.,The WebsiteUrl column stores the URL of a user's personal website or blog.,3
+772,codebase_community,users,Location,The user's location.,The Location column stores the geographic location of a user.,3
+773,codebase_community,users,AboutMe,Self-introduction of the user.,A free-text field for users to provide a description of themselves.,4
+774,codebase_community,users,Views,The number of times the user's profile has been viewed.,Number of times a user's profile has been viewed.,4
+775,codebase_community,users,UpVotes,The number of upvotes received by the user.,Number of upvotes received by the user.,4
+776,codebase_community,users,DownVotes,The number of downvotes received by the user.,The number of downvotes received by a user.,4
+777,codebase_community,users,AccountId,The unique identifier for the user's account.,The 'AccountId' column is a unique identifier for each user's account.,3
+778,codebase_community,users,Age,The age of the user.,The Age column stores the age of a user.,3
+779,codebase_community,users,ProfileImageUrl,URL of the user's profile image.,Stores the URL to a user's profile image.,4
+780,codebase_community,tags,Id,Unique identifier for each tag.,Unique identifier for each tag.,4
+781,codebase_community,tags,TagName,The name of the tag.,Stores the name of a tag.,3
+782,codebase_community,tags,Count,The number of posts that contain this tag.,The number of times a tag has been used across all posts.,1
+783,codebase_community,tags,ExcerptPostId,The ID of the post containing the excerpt for the tag.,The ExcerptPostId column contains the ID of a post that best represents or exemplifies the tag.,3
+784,codebase_community,tags,WikiPostId,The ID of the wiki post associated with the tag.,The WikiPostId column contains the ID of the post that serves as the wiki post for the tag.,4
+785,codebase_community,votes,Id,The unique identifier for each vote.,Unique identifier for each vote.,4
+786,codebase_community,votes,PostId,The identifier of the post that received the vote.,Identifies the post associated with a vote.,3
+787,codebase_community,votes,VoteTypeId,The identifier for the type of vote.,"Describes the type of vote cast by a user, such as an upvote or downvote.",2
+788,codebase_community,votes,CreationDate,The date when the vote was created.,Records the date when a vote was created.,3
+789,codebase_community,votes,UserId,The ID of the user who cast the vote.,Identifies the user who cast the vote.,3
+790,codebase_community,votes,BountyAmount,The amount of bounty associated with a vote.,The BountyAmount column indicates the amount of bounty awarded for a post.,2
+791,codebase_community,comments,Id,This is the unique identifier for each comment.,A unique identifier for each comment.,4
+792,codebase_community,comments,PostId,The unique identifier of the post associated with the comment.,Identifies the post associated with the comment.,2
+793,codebase_community,comments,Score,The rating score of the comment.,"The Score column indicates the rating or popularity of a comment, with higher scores representing more favorable reception.",3
+794,codebase_community,comments,Text,The detailed content of the comment.,Contains the body of the comment.,0
+795,codebase_community,comments,CreationDate,The date and time when the comment was created.,Records the date and time when a comment was created.,4
+796,codebase_community,comments,UserId,The ID of the user who posted the comment.,Identifies the user who authored the comment.,2
+797,codebase_community,comments,UserDisplayName,The display name of the user who made the comment.,The UserDisplayName column displays the display name of the user who authored the comment.,3
