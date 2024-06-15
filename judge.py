@@ -142,9 +142,9 @@ if __name__ == "__main__":
 
     MODEL_NAME = "gpt-4o"
     GOLD_DATASET_PATH = "output/GOLD_DATASET_FINAL.csv"
-    MODEL_PREDICTIONS_PATH = "output/col_desc_pred/Pred_DEV_desc_mixtral-8x22.csv"
+    MODEL_PREDICTIONS_PATH = "output/col_desc_pred/Pred_DEV_desc_llama-3-70B.csv"
 
-    OUTPUT_PATH = "output/col_desc_pred/Pred_DEV_desc_mixtral-8x22.csv"
+    OUTPUT_PATH = "output/judge/judge_llama70b.csv"
 
     model = LLMInterface(MODEL_NAME)
 
