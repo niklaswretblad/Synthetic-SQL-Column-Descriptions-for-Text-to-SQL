@@ -34,7 +34,6 @@ class Database:
         with open(path, 'r') as j:
             data = json.loads(j.read())
         return data
-    
 
     def execute_queries_and_match_data(self, sql, gold_sql, db_name):
         """
@@ -89,44 +88,6 @@ class Database:
 
         equal = (Counter(pred_res) == Counter(golden_res))
         return int(equal)
-    
-
-    def execute_query_and_get_data(self, sql, db_name):
-        """
-        Execute provided SQL queries and compare the results.
-
-        Parameters:
-           sql (str): The predicted SQL query to execute.
-           gold_sql (str): The golden SQL query to compare results.
-           db_name (str): The database name on which the queries will be executed.
-
-        Returns:
-           int: 1 if the results match, otherwise 0.
-        """
-
-        if self.current_db != db_name:
-            self.load_db(db_name)
-
-        try:
-            with Timer() as t:
-                self.cursor.execute(sql)
-                pred_res = self.cursor.fetchall()
-
-            if t.elapsed_time > 5:
-                logger.warning(
-                    f"Long predicted query execution time: {t.elapsed_time:.2f} \nSQL Query:\n" + sql)
-
-            self.last_predicted_execution_time = t.elapsed_time
-            self.total_predicted_execution_time += t.elapsed_time
-
-        except sqlite3.Error as err:
-            logger.error(
-                "DataLoader.execute_queries_and_get_data() " + str(err))
-            logger.error(f"SQL query: {sql}")
-            return []
-        
-        return pred_res
-    
 
     def execute_query(self, sql, db_name):
         """
@@ -215,7 +176,6 @@ class Database:
                 [statement[0] for statement in create_statements])
 
         return self.current_database_schema
-    
 
     def get_schema_and_sample_data(self, db_name, num_examples=3):
         """
@@ -269,79 +229,8 @@ class Database:
             self.current_database_schema = schema_and_sample_data
 
         return self.current_database_schema
-    
 
     def get_create_statements_with_metadata(self, db_name, with_sample_rows=False, metadata_path='output/GOLD_DATASET_FINAL.csv'):
-        """
-        Retrieve, store, and return the schema and meta data from a database.
-
-        Parameters:
-           db_name (str): The name of the database to get schema and data.
-
-        Returns:
-           str: A formatted string containing schema and meta data.
-        """
-        num_examples = 5
-
-        database_df = pd.read_csv(metadata_path, index_col=0)
-
-        if self.current_db != db_name:
-            self.load_db(db_name)
-
-            self.cursor.execute(
-                "SELECT name FROM sqlite_master WHERE type='table';")
-            tables = self.cursor.fetchall()
-
-            schema_and_meta_data = ""
-
-            for table in tables:
-                table = table[0]
-                self.cursor.execute(
-                    f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table}';")
-                create_statement = self.cursor.fetchone()[0]
-
-                schema_and_meta_data += f"{create_statement};\n\n"
-
-                self.cursor.execute(f"PRAGMA table_info(\"{table}\");")
-                columns = self.cursor.fetchall()
-                column_names = [column[1] for column in columns]
-
-                schema_and_meta_data += f"Column descriptions for the columns in the {table} table in format (column_name: description):\n"
-                for column_name in column_names:
-                    column_description = database_df.loc[((database_df["database_name"] == db_name) & (
-                        database_df["table_name"] == table) & (database_df["original_column_name"] == column_name)), "column_description"]
-                    # I am unsure if this only affects the print or actually affects the string we send to the model
-                    pd.options.display.max_colwidth = 1000000
-                    schema_and_meta_data += f"{column_name}: {column_description.to_string(index=False)}\n"
-
-                if with_sample_rows:
-                    schema_and_meta_data += "\n"
-                    self.cursor.execute(
-                        f"SELECT * FROM \"{table}\" LIMIT {num_examples};")
-                    rows = self.cursor.fetchall()
-
-                    self.cursor.execute(f"PRAGMA table_info(\"{table}\");")
-                    columns = self.cursor.fetchall()
-                    column_names = [column[1] for column in columns]
-                    column_names_line = "\t".join(column_names)
-
-                    schema_and_meta_data += f"{num_examples} rows from {table} table:\n"
-                    schema_and_meta_data += f"{column_names_line}\n"
-
-                    for row in rows:
-                        row_line = "\t".join([str(value) for value in row])
-                        schema_and_meta_data += f"{row_line}\n"
-
-                    schema_and_meta_data += "\n"
-
-            schema_and_meta_data += "\n"
-
-            self.current_database_schema = schema_and_meta_data
-
-        return self.current_database_schema
-    
-
-    def get_create_statements_with_arbitrary_metadata(self, db_name, with_sample_rows=False, metadata_path='output/GOLD_DATASET_FINAL.csv'):
         """
         Retrieve, store, and return the schema and meta data from a database.
 
@@ -379,7 +268,7 @@ class Database:
                 schema_and_meta_data += f"Column descriptions for the columns in the {table} table in format (column_name: description):\n"
                 for column_name in column_names:
                     column_description = database_df.loc[((database_df["database_name"] == db_name) & (
-                        database_df["table_name"] == table) & (database_df["arbitrary_column_name"] == column_name)), "llm_column_description"]
+                        database_df["table_name"] == table) & (database_df["original_column_name"] == column_name)), "llm_column_description"]
                     # I am unsure if this only affects the print or actually affects the string we send to the model
                     pd.options.display.max_colwidth = 1000000
                     schema_and_meta_data += f"{column_name}: {column_description.to_string(index=False)}\n"
@@ -409,7 +298,6 @@ class Database:
             self.current_database_schema = schema_and_meta_data
 
         return self.current_database_schema
-    
 
     def get_sample_data(self, db_name, table, num_examples, unique=False, original_column_name=""):
         """
@@ -457,7 +345,6 @@ class Database:
         sample_data += "\n"
 
         return sample_data
-    
 
     def load_db(self, db_name):
         """
@@ -470,7 +357,6 @@ class Database:
         self.conn = sqlite3.connect(db_path)
         self.cursor = self.conn.cursor()
         self.current_db = db_name
-
 
     def get_db_path(self, db_name):
         """
@@ -496,8 +382,10 @@ class BIRDDatabase(Database):
     Dataset class for the BIRD dataset.
     """
 
-    DEV_DB_PATH = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), 'data/dev/dev_databases'))
+    # DEV_DB_PATH = os.path.abspath(
+    #     os.path.join(os.path.dirname(__file__), '..', 'data/dev/dev_databases/dev_databases'))
+
+    DEV_DB_PATH = 'data/dev/dev_databases'
 
     TRAIN_DB_PATH = os.path.abspath(
         os.path.join(os.path.dirname(__file__), '..', 'data/BIRD/train/train_databases/'))
@@ -507,12 +395,10 @@ class BIRDDatabase(Database):
 
         self.load_database_names()
 
-
     def load_database_names(self):
         self.dev_databases = os.listdir(self.DEV_DB_PATH)
         # self.train_databases = os.listdir(self.TRAIN_DB_PATH)
         self.train_databases = []
-
 
     def load_db(self, db_name):
         """
@@ -530,10 +416,10 @@ class BIRDDatabase(Database):
             raise ValueError(
                 "BIRDDataset load_db() trying to load non-existing database")
 
+
         self.conn = sqlite3.connect(db_path)
         self.cursor = self.conn.cursor()
         self.current_db = db_name
-
 
     def get_create_statements_with_bird_metadata(self, db_name):
         """
@@ -556,13 +442,19 @@ class BIRDDatabase(Database):
             schema_and_meta_data = ""
 
             for table in tables:
+                if table == "sqlite_sequence":
+                    continue
+
                 table = table[0]
                 self.cursor.execute(
                     f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table}';")
                 create_statement = self.cursor.fetchone()[0]
 
                 schema_and_meta_data += f"{create_statement};\n\n"
-                schema_and_meta_data += self.get_bird_table_info(db_name, table)
+
+                schema_and_meta_data += "Column descriptions for the columns in the {table} table in format original_column_name, column_name, column_description (if a description is missing ""nan"" will be written instead):\n"
+                schema_and_meta_data += self.get_bird_table_info(
+                    db_name, table)
                 schema_and_meta_data += "\n"
 
             schema_and_meta_data += "\n"
@@ -571,10 +463,9 @@ class BIRDDatabase(Database):
 
         return self.current_database_schema
 
-
     def get_bird_table_info(self, db_name, table_name):
         """
-        Given a database name, retrieve the column names and descriptions 
+        Given a database name, retrieve the column names and descriptions
         from the corresponding bird-bench .csv files.
 
         :param database_name: str, name of the database
@@ -590,21 +481,37 @@ class BIRDDatabase(Database):
             description_file_path = self.TRAIN_DB_PATH + \
                 f"/{db_name}/database_description{table_name}.csv"
 
+        if table_name == 'sqlite_sequence':
+            return ""
+
         if not os.path.exists(description_file_path):
             raise FileNotFoundError(
                 f"No such file or directory: '{description_file_path}'")
 
-        
         df = pd.read_csv(description_file_path)
 
-        table_info = "original_column_name, column_name, column_description\n"
+        table_info = ""
         for index, row in df.iterrows():
-            table_info += f"{row['original_column_name']}, {row['column_name'], {row['column_description']}}"
-        
+            if row['original_column_name'] is not None:
+                table_info += f"{row['original_column_name']}, "
+            else:
+                table_info += f", "
+
+            if row['column_name'] is not None:
+                table_info += f"{row['column_name']}, "
+            else:
+                table_info += f", "
+
+            if row['column_description'] is not None:
+                table_info += f"{row['column_description']}, "
+            else:
+                table_info += f", "
+
+            table_info += "\n"
+
         table_info += "\n\n"
 
         return table_info
-
 
 
 # class SpiderDataset(Dataset):

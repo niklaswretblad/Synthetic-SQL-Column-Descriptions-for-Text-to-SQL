@@ -141,10 +141,10 @@ if __name__ == "__main__":
     logging.getLogger("urllib3").setLevel(logging.WARNING)
 
     MODEL_NAME = "gpt-4o"
-    GOLD_DATASET_PATH = "output/GOLD_DATASET_FINAL.csv"
-    MODEL_PREDICTIONS_PATH = "output/col_desc_pred/Pred_DEV_desc_llama-3-70B.csv"
+    GOLD_DATASET_PATH = "output/GOLD_DATASET_FINAL copy.csv"
+    MODEL_PREDICTIONS_PATH = "output/col_desc_pred/Pred_DEV_desc_codestral.csv"
 
-    OUTPUT_PATH = "output/judge/judge_llama70b.csv"
+    OUTPUT_PATH = "output/judge/judge_codestral.csv"
 
     model = LLMInterface(MODEL_NAME)
 
@@ -165,9 +165,10 @@ if __name__ == "__main__":
         if (index in processed_indexes):
             print(f"Skipping already processed description number: {index}")
             continue
-                    
+        
+        
         predicted_descr = row['llm_column_description']
-        gold_descr = gold_df.loc[index, 'column_description']
+        gold_descr = gold_df.at[index, 'column_description']
 
         result = ""
         while result == "":
