@@ -59,7 +59,6 @@ class LLMInterface:
                 load_in_8bit=True,
                 max_memory=max_memory,
                 token=access_token
-
             )
 
     def call_model(self, prompt, **kwargs):

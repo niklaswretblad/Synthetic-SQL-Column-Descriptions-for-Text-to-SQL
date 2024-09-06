@@ -51,16 +51,13 @@ class LLMInterface:
             n_gpus = torch.cuda.device_count()
             max_memory = {i: max_memory for i in range(n_gpus)}
             self.tokenizer = AutoTokenizer.from_pretrained(
-                model_name, 
-                token=access_token
-            )
-            quant_config = BitsAndBytesConfig(load_in_8bit=True)
+                model_name, token=access_token)
             self.model = AutoModelForCausalLM.from_pretrained(
                 model_name,
-                device_map="auto",                
+                device_map="auto",
+                load_in_8bit=True,
                 max_memory=max_memory,
-                token=access_token,
-                quantization_config=quant_config,
+                token=access_token
             )
 
     def call_model(self, prompt, **kwargs):
@@ -78,7 +75,6 @@ class LLMInterface:
             )
             return response.choices[0].message.content
         else:
-            # inputs = self.tokenizer(prompt, return_tensors='pt')
             inputs = self.tokenizer.apply_chat_template(
                 messages, 
                 tokenize=True, 
@@ -87,9 +83,14 @@ class LLMInterface:
                 return_dict=True
             )
 
-            input_ids = inputs.input_ids.to('cuda')
+            device = next(self.model.parameters()).device
 
-            attention_mask = inputs.attention_mask.to('cuda')
+            # Move the inputs to the correct device
+            input_ids = inputs.input_ids.to(device)
+            attention_mask = inputs.attention_mask.to(device)
+
+            # input_ids = inputs.input_ids
+            # attention_mask = inputs.attention_mask
 
             output = self.model.generate(
                 do_sample=False,
@@ -97,16 +98,13 @@ class LLMInterface:
                 attention_mask=attention_mask,
                 max_new_tokens=kwargs.get('max_new_tokens', 500),
                 output_logits=False,
-                return_dict_in_generate=True  # Return a dictionary with generation results
+                return_dict_in_generate=True  
             )
-
-            # -------- Decode Output --------
+            
             # Exclude input tokens
             generated_token_indices = output.sequences[:, input_ids.shape[1]:]
 
-            # generated_token_indices = output.sequences[:, input_ids.shape[1]:-1] # Exclude input and EOS tokens
-            generated_text = self.tokenizer.decode(
-                generated_token_indices[0], skip_special_tokens=True).strip()
+            generated_text = self.tokenizer.decode(generated_token_indices[0], skip_special_tokens=True).strip()
             generated_text = generated_text.replace("```", "")
 
             return generated_text
@@ -122,6 +120,28 @@ class LLMInterface:
         self.last_call_execution_time = t.elapsed_time
 
         return response
+    
+
+def execute_query_and_check_accuracy(sql_pred, question, sql_database, used_metadata):
+    """
+    Function to execute the predicted SQL query and check if it matches the expected SQL.
+    """
+    try:
+        success = sql_database.execute_queries_and_match_data(
+            sql_pred, question["SQL"], question["db_id"]
+        )
+        logger.info(f"Question index: {question['question_id']} Success: {success}")
+        row = pd.DataFrame({
+            "question_id": [question["question_id"]],
+            "sql_gold": question["SQL"],
+            "sql_pred": sql_pred,
+            "execution_accuracy": [success],
+            'used_metadata': used_metadata
+        })
+        return row
+    except Exception as e:
+        logger.error(f"Error executing query for question {question['question_id']}: {e}")
+        return None
 
 
 if __name__ == "__main__":
@@ -151,26 +171,27 @@ if __name__ == "__main__":
     # MODEL_NAME_2 = "llama-3-70B"
     # MODEL_NAME = "Qwen/Qwen2-72B-Instruct" #CHECK
     # MODEL_NAME_2 = "qwen2-72B"
-    # MODEL_NAME = "CohereForAI/c4ai-command-r-plus"
-    # OUTPUT_MODEL_NAME = 'c4ai-command-r-plus'
+    MODEL_NAME = "CohereForAI/c4ai-command-r-plus"
+    OUTPUT_MODEL_NAME = 'c4ai-command-r-plus'
     # MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3"
     # OUTPUT_MODEL_NAME = 'Mistral-7B-Instruct-v0.3'
     # MODEL_NAME = "mistralai/Codestral-22B-v0.1"
     # OUTPUT_MODEL_NAME = 'Codestral-22B-v0.1'
     # MODEL_NAME = "Qwen/Qwen2-72B-Instruct"
     # OUTPUT_MODEL_NAME = 'Qwen2-72B-Instruct'
-    # MODEL_NAME_2 = "command-r-plus"
     #MODEL_NAME = "gpt-4o"  # 'gpt-3.5-turbo'  # "gpt-4o"  # CHECK
-    MODEL_NAME = "mistralai/Mixtral-8x22B-Instruct-v0.1"
-    OUTPUT_MODEL_NAME = "Mixtral-8x22B-Instruct-v0.1"
+    # MODEL_NAME = "mistralai/Mixtral-8x22B-Instruct-v0.1"
+    # OUTPUT_MODEL_NAME = "Mixtral-8x22B-Instruct-v0.1"
     # MODEL_NAME = "gpt-4o"
     # OUTPUT_MODEL_NAME = "gpt-4o"
-    BEST_PRED_METADATA_PATH = "Pred_DEV_desc_gpt-4o.csv"
-    GOLD_METADATA_PATH = 'GOLD_DATASET_FINAL.csv'
+    BEST_PRED_METADATA_PATH = "output/col_desc_pred/Pred_DEV_desc_gpt-4o.csv"
+    GOLD_METADATA_PATH = 'output/GOLD_DATASET_FINAL copy.csv'
+    QWEN2_METADATA_PATH = "output/col_desc_pred/Pred_DEV_desc_qwen2-72B.csv"
+    CODESTRAL_METADATA_PATH = "output/col_desc_pred/Pred_DEV_desc_codestral.csv"
     OUTPUT_PATH = ''
-    COUNT_TOKENS_ONLY = True
+    COUNT_TOKENS_ONLY = False
 
-    used_metadata = ['no_metadata', 'gold_metadata', 'best_pred_metadata', 'bird_metadata'][3]
+    used_metadata = ['no_metadata', 'gold_metadata', 'best_pred_metadata', 'bird_metadata', 'qwen2_metadata', 'codestral_metadata'][4]
 
     logger.info(f"Using model {MODEL_NAME} with metadata: {used_metadata}")
 
@@ -197,6 +218,10 @@ if __name__ == "__main__":
     # output = pd.read_csv(
     #     output_path)
 
+       # Thread pool for executing SQL queries
+    executor = ThreadPoolExecutor(max_workers=4)  # Adjust the number of workers based on the system capabilities
+    futures = []
+    
     # Load questions:
     f = open('data/dev/dev.json')
     BIRD_dev = json.load(f)
@@ -226,6 +251,18 @@ if __name__ == "__main__":
         elif used_metadata == 'bird_metadata':
             database_schema = sql_database.get_create_statements_with_bird_metadata(
                 question["db_id"]
+            )
+        elif used_metadata == "qwen2_metadata":
+            database_schema = sql_database.get_create_statements_with_metadata(
+                question["db_id"], 
+                with_sample_rows=False, 
+                metadata_path=QWEN2_METADATA_PATH
+            )
+        elif used_metadata == "codestral_metadata":
+            database_schema = sql_database.get_create_statements_with_metadata(
+                question["db_id"], 
+                with_sample_rows=False, 
+                metadata_path=CODESTRAL_METADATA_PATH
             )
 
         with open('schema.txt', 'w') as f:

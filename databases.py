@@ -273,6 +273,8 @@ class Database:
                     pd.options.display.max_colwidth = 1000000
                     schema_and_meta_data += f"{column_name}: {column_description.to_string(index=False)}\n"
 
+                schema_and_meta_data += "\n"
+
                 if with_sample_rows:
                     schema_and_meta_data += "\n"
                     self.cursor.execute(
