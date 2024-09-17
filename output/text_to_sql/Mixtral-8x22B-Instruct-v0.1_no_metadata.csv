@@ -13130,3 +13130,599 @@ GROUP BY c.CustomerID
 ORDER BY MaxConsumption DESC
 LIMIT 1;
 ",0,debit_card_specializing,no_metadata
+1485,1488,"SELECT T2.CustomerID, SUM(T2.Consumption) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'KAM' GROUP BY T2.CustomerID ORDER BY SUM(T2.Consumption) DESC LIMIT 1","
+SQL Query:
+sql
+SELECT ym.CustomerID, MAX(ym.Consumption) as MaxConsumption
+FROM yearmonth ym
+JOIN customers c ON ym.CustomerID = c.CustomerID
+WHERE c.Segment = 'KAM'
+GROUP BY ym.CustomerID
+ORDER BY MaxConsumption DESC
+LIMIT 1;
+",0,debit_card_specializing,no_metadata
+1486,1489,SELECT SUM(T2.Consumption) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Date = '201305' AND T1.Segment = 'KAM',"
+SQL Query:
+
+
+SELECT SUM(Consumption)
+FROM yearmonth
+WHERE CustomerID IN (
+    SELECT CustomerID
+    FROM customers
+    WHERE Segment = 'KAM'
+) AND Date LIKE '2013-05-%';
+",0,debit_card_specializing,no_metadata
+1487,1490,"SELECT CAST(SUM(IIF(T2.Consumption > 46.73, 1, 0)) AS FLOAT) * 100 / COUNT(T1.CustomerID) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM'","
+SQL Query:
+
+
+WITH LAM_Consumption AS (
+    SELECT
+        ym.CustomerID,
+        ym.Consumption
+    FROM
+        yearmonth ym
+        JOIN customers c ON ym.CustomerID = c.CustomerID
+    WHERE
+        c.Segment = 'LAM'
+)
+SELECT
+    ROUND(
+        100.0 * (
+            SELECT
+                COUNT(*)
+            FROM
+                LAM_Consumption
+            WHERE
+                Consumption > 46.73
+        ) / (
+            SELECT
+                COUNT(*)
+            FROM
+                LAM_Consumption
+        ),
+        2
+    ) AS Percentage
+",0,debit_card_specializing,no_metadata
+1488,1491,"SELECT Country , ( SELECT COUNT(GasStationID) FROM gasstations WHERE Segment = 'Value for money' ) FROM gasstations WHERE Segment = 'Value for money' GROUP BY Country ORDER BY COUNT(GasStationID) DESC LIMIT 1","
+SELECT
+    Country,
+    COUNT(*) as ""Total Value for Money Gas Stations""
+FROM
+    (
+        SELECT
+            GasStationID,
+            Country,
+            SUM(Amount * Price) as TotalValue,
+            SUM(Amount) as TotalAmount
+        FROM
+            transactions_1k
+            JOIN gasstations ON transactions_1k.GasStationID = gasstations.GasStationID
+        GROUP BY
+            GasStationID,
+            Country
+    ) as Subquery
+WHERE
+    TotalValue / TotalAmount <= (
+        SELECT
+            AVG(TotalValue / TotalAmount)
+        FROM
+            (
+                SELECT
+                    GasStationID,
+                    SUM(Amount * Price) as TotalValue,
+                    SUM(Amount) as TotalAmount
+                FROM
+                    transactions_1k
+                    JOIN gasstations ON transactions_1k.GasStationID = gasstations.GasStationID
+                GROUP BY
+                    GasStationID
+            ) as AverageSubquery
+    )
+GROUP BY
+    Country
+ORDER BY
+    ""Total Value for Money Gas Stations"" DESC;",0,debit_card_specializing,no_metadata
+1489,1492,SELECT CAST(SUM(Currency = 'EUR') AS FLOAT) * 100 / COUNT(CustomerID) FROM customers WHERE Segment = 'KAM',"
+SQL Query:
+
+
+WITH kam_customers AS (
+  SELECT CustomerID
+  FROM customers
+  WHERE Segment = 'KAM'
+),
+euro_transactions AS (
+  SELECT COUNT(*) as euro_count
+  FROM transactions_1k
+  JOIN kam_customers ON transactions_1k.CustomerID = kam_customers.CustomerID
+  WHERE transactions_1k.Currency = 'EUR'
+),
+total_transactions AS (
+  SELECT COUNT(*) as total_count
+  FROM transactions_1k
+  JOIN kam_customers ON transactions_1k.CustomerID = kam_customers.CustomerID
+)
+SELECT (euro_count * 100.0) / total_count AS percentage
+FROM euro_transactions, total_transactions
+",0,debit_card_specializing,no_metadata
+1490,1493,"SELECT CAST(SUM(IIF(Consumption > 528.3, 1, 0)) AS FLOAT) * 100 / COUNT(CustomerID) FROM yearmonth WHERE Date = '201202'","
+SQL Query:
+
+
+WITH customer_consumption AS (
+  SELECT
+    c.CustomerID,
+    SUM(t.Amount) AS TotalConsumption
+  FROM
+    customers c
+    JOIN transactions_1k t ON c.CustomerID = t.CustomerID
+    JOIN yearmonth ym ON c.CustomerID = ym.CustomerID
+  WHERE
+    ym.Date LIKE '2012-02-%'
+  GROUP BY
+    c.CustomerID
+)
+
+SELECT
+  COUNT(*) * 100.0 / (SELECT COUNT(*) FROM customers) AS Percentage
+FROM
+  customer_consumption
+WHERE
+  TotalConsumption > 528.3;
+",0,debit_card_specializing,no_metadata
+1491,1494,"SELECT CAST(SUM(IIF(Segment = 'Premium', 1, 0)) AS FLOAT) * 100 / COUNT(GasStationID) FROM gasstations WHERE Country = 'SVK'","
+SQL Query:
+
+sql
+WITH premium_gas_stations AS (
+  SELECT COUNT(*) as premium_count
+  FROM gasstations
+  WHERE Country = 'Slovakia' AND Segment = 'Premium'
+),
+total_gas_stations AS (
+  SELECT COUNT(*) as total_count
+  FROM gasstations
+  WHERE Country = 'Slovakia'
+)
+SELECT (premium_count * 100.0) / total_count as percentage
+FROM premium_gas_stations, total_gas_stations;
+",0,debit_card_specializing,no_metadata
+1492,1495,SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Date = '201309' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) DESC LIMIT 1,"
+SQL Query:
+sql
+SELECT CustomerID
+FROM yearmonth
+WHERE strftime('%Y-%m', Date) = '2013-09'
+ORDER BY Consumption DESC
+LIMIT 1;
+",0,debit_card_specializing,no_metadata
+1493,1496,SELECT T1.Segment FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Date = '201309' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1,"
+SQL Query:
+
+
+WITH consumption_by_segment AS (
+  SELECT
+    c.Segment,
+    SUM(t.""Amount"") AS total_consumption
+  FROM
+    customers c
+    JOIN ""transactions_1k"" t ON c.CustomerID = t.CustomerID
+    WHERE strftime('%Y-%m', t.Date) = '2013-09'
+  GROUP BY
+    c.Segment
+)
+SELECT
+  Segment
+FROM
+  consumption_by_segment
+ORDER BY
+  total_consumption
+LIMIT
+  1;
+",0,debit_card_specializing,no_metadata
+1494,1497,SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Date = '201206' AND T1.Segment = 'SME' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1,"
+SQL Query:
+
+
+SELECT c.CustomerID, MIN(y.Consumption) as MinConsumption
+FROM customers c
+JOIN yearmonth y ON c.CustomerID = y.CustomerID
+WHERE c.Segment = 'SME' AND y.Date LIKE '2012-06%'
+GROUP BY c.CustomerID
+ORDER BY MinConsumption ASC
+LIMIT 1;
+",0,debit_card_specializing,no_metadata
+1495,1498,"SELECT SUM(Consumption) FROM yearmonth WHERE SUBSTRING(Date, 1, 4) = '2012' GROUP BY SUBSTRING(Date, 5, 2) ORDER BY SUM(Consumption) DESC LIMIT 1","
+SELECT MAX(Consumption) FROM yearmonth WHERE Date LIKE '2012-%';",0,debit_card_specializing,no_metadata
+1496,1499,SELECT SUM(T2.Consumption) / 12 AS MonthlyConsumption FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'EUR' GROUP BY T1.CustomerID ORDER BY MonthlyConsumption DESC LIMIT 1,"
+SELECT MAX(Consumption)
+FROM yearmonth
+WHERE CustomerID IN (
+    SELECT CustomerID
+    FROM customers
+    WHERE Currency = 'Euro'
+)",0,debit_card_specializing,no_metadata
+1497,1500,SELECT T3.Description FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Date = '201309',"
+SQL Query:
+
+
+SELECT Description
+FROM products
+WHERE ProductID IN (
+    SELECT ProductID
+    FROM transactions_1k
+    WHERE strftime('%Y-%m', Date) = '2013-09'
+);
+",0,debit_card_specializing,no_metadata
+1498,1501,SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN yearmonth AS T3 ON T1.CustomerID = T3.CustomerID WHERE T3.Date = '201306',"
+SQL Query:
+
+SELECT DISTINCT Country
+FROM gasstations
+WHERE GasStationID IN (
+    SELECT GasStationID
+    FROM transactions_1k
+    WHERE strftime('%Y-%m', Date) = '2013-06'
+)",0,debit_card_specializing,no_metadata
+1499,1502,SELECT DISTINCT T3.ChainID FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID INNER JOIN gasstations AS T3 ON T1.GasStationID = T3.GasStationID WHERE T2.Currency = 'EUR',"
+SQL Query:
+
+
+SELECT DISTINCT ChainID
+FROM gasstations
+WHERE GasStationID IN (
+    SELECT GasStationID
+    FROM transactions_1k
+    WHERE Currency = 'Euro'
+)
+",0,debit_card_specializing,no_metadata
+1500,1503,"SELECT DISTINCT T1.ProductID, T3.Description FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Currency = 'EUR'","
+SQL Query:
+
+
+SELECT products.Description
+FROM products
+JOIN transactions_1k ON products.ProductID = transactions_1k.ProductID
+JOIN customers ON transactions_1k.CustomerID = customers.CustomerID
+WHERE customers.Currency = 'Euro';
+",0,debit_card_specializing,no_metadata
+1501,1504,SELECT AVG(Amount) FROM transactions_1k WHERE Date LIKE '2012-01%',"
+SQL Query:
+
+SELECT AVG(Amount * Price)
+FROM transactions_1k
+WHERE strftime('%Y-%m', Date) = '2012-01';",0,debit_card_specializing,no_metadata
+1502,1505,SELECT COUNT(*) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Currency = 'EUR' AND T1.Consumption > 1000.00,"
+SQL Query:
+
+
+WITH monthly_consumption AS (
+  SELECT
+    c.CustomerID,
+    strftime('%Y-%m', t.Date) AS YearMonth,
+    SUM(t.Amount * t.Price) AS MonthlyConsumption
+  FROM
+    customers c
+    JOIN transactions_1k t ON c.CustomerID = t.CustomerID
+  WHERE
+    c.Currency = 'euro'
+  GROUP BY
+    c.CustomerID,
+    YearMonth
+)
+
+SELECT
+  COUNT(DISTINCT CustomerID)
+FROM
+  monthly_consumption
+WHERE
+  MonthlyConsumption > 1000;
+",0,debit_card_specializing,no_metadata
+1503,1506,SELECT T3.Description FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Country = 'CZE',"
+SQL Query:
+
+
+SELECT products.Description
+FROM transactions_1k
+JOIN gasstations ON transactions_1k.GasStationID = gasstations.GasStationID
+JOIN products ON transactions_1k.ProductID = products.ProductID
+WHERE gasstations.Country = 'Czech Republic';
+",0,debit_card_specializing,no_metadata
+1504,1507,SELECT DISTINCT T1.Time FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T2.ChainID = 11,"
+SQL Query:
+
+
+SELECT DISTINCT Time
+FROM transactions_1k
+WHERE GasStationID IN (
+    SELECT GasStationID
+    FROM gasstations
+    WHERE ChainID = 11
+);
+",0,debit_card_specializing,no_metadata
+1505,1508,SELECT COUNT(T1.TransactionID) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T2.Country = 'CZE' AND T1.Price > 1000,"
+SQL Query:
+
+SELECT COUNT(*)
+FROM transactions_1k
+WHERE GasStationID IN (SELECT GasStationID FROM gasstations WHERE Country = 'Czech Republic') AND Price > 1000;",0,debit_card_specializing,no_metadata
+1506,1509,"SELECT COUNT(T1.TransactionID) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T2.Country = 'CZE' AND strftime('%Y', T1.Date) >= '2012'","
+SQL Query:
+
+SELECT COUNT(*)
+FROM transactions_1k
+WHERE GasStationID IN (SELECT GasStationID FROM gasstations WHERE Country = 'Czech Republic')
+AND Date > '2012-01-01';",0,debit_card_specializing,no_metadata
+1507,1510,SELECT AVG(T1.Price) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T2.Country = 'CZE',"
+SQL Query:
+
+
+SELECT AVG(Amount * Price)
+FROM transactions_1k
+WHERE GasStationID IN (
+    SELECT GasStationID
+    FROM gasstations
+    WHERE Country = 'Czech Republic'
+);
+",0,debit_card_specializing,no_metadata
+1508,1511,SELECT AVG(T1.Price) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN customers AS T3 ON T1.CustomerID = T3.CustomerID WHERE T3.Currency = 'EUR',"
+SQL Query:
+
+
+SELECT AVG(t.Amount * t.Price)
+FROM transactions_1k t
+JOIN customers c ON t.CustomerID = c.CustomerID
+WHERE c.Currency = 'euro'
+",0,debit_card_specializing,no_metadata
+1509,1512,SELECT CustomerID FROM transactions_1k WHERE Date = '2012-08-25' GROUP BY CustomerID ORDER BY SUM(Price) DESC LIMIT 1,"
+SQL Query:
+
+SELECT CustomerID
+FROM transactions_1k
+WHERE Date = '2012-08-25'
+GROUP BY CustomerID
+ORDER BY SUM(Amount * Price) DESC
+LIMIT 1;",0,debit_card_specializing,no_metadata
+1510,1513,SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-25' ORDER BY T1.Time DESC LIMIT 1,"
+SQL Query:
+sql
+SELECT Country
+FROM gasstations
+WHERE GasStationID = (
+    SELECT GasStationID
+    FROM transactions_1k
+    WHERE Date = '2012-08-25'
+    ORDER BY Time ASC
+    LIMIT 1
+)
+",0,debit_card_specializing,no_metadata
+1511,1514,SELECT T3.Currency FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN customers AS T3 ON T1.CustomerID = T3.CustomerID WHERE T1.Date = '2012-08-24' AND T1.Time = '16:25:00',"
+SQL Query:
+
+
+SELECT customers.Currency
+FROM customers
+JOIN transactions_1k ON customers.CustomerID = transactions_1k.CustomerID
+WHERE transactions_1k.Time = '16:25:00' AND transactions_1k.Date = '2012-08-24';
+",0,debit_card_specializing,no_metadata
+1512,1515,SELECT T2.Segment FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.date = '2012-08-23' AND T1.time = '21:20:00',"
+SQL Query:
+
+
+SELECT customers.Segment
+FROM customers
+JOIN transactions_1k ON customers.CustomerID = transactions_1k.CustomerID
+WHERE transactions_1k.Date = '2012-08-23' AND transactions_1k.Time = '21:20:00';
+",0,debit_card_specializing,no_metadata
+1513,1516,SELECT COUNT(T1.TransactionID) FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-26' AND T1.Time < '13:00:00' AND T2.Currency = 'EUR',"
+SQL Query:
+
+
+SELECT COUNT(*)
+FROM transactions_1k
+WHERE Currency = 'EUR' AND Date = '2012-08-26' AND Time < '12:00:00';
+",0,debit_card_specializing,no_metadata
+1514,1517,SELECT T2.Segment FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID ORDER BY Date ASC LIMIT 1,"
+SELECT Segment FROM customers ORDER BY CustomerID ASC LIMIT 1;",0,debit_card_specializing,no_metadata
+1515,1518,SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-24' AND T1.Time = '12:42:00',"
+SQL Query:
+
+sql
+SELECT Country
+FROM gasstations
+JOIN transactions_1k
+ON gasstations.GasStationID = transactions_1k.GasStationID
+WHERE transactions_1k.Date = '2012-08-24' AND transactions_1k.Time = '12:42:00';
+",0,debit_card_specializing,no_metadata
+1516,1519,SELECT T1.ProductID FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-23' AND T1.Time = '21:20:00',"
+SQL Query:
+
+
+SELECT ProductID
+FROM transactions_1k
+WHERE Date = '2012-08-23' AND Time = '21:20:00';
+",0,debit_card_specializing,no_metadata
+1517,1520,"SELECT T1.CustomerID, T2.Date, T2.Consumption FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-24' AND T1.Price = 124.05 AND T2.Date = '201201'","
+SQL Query:
+sql
+WITH customer_id AS (
+  SELECT CustomerID
+  FROM transactions_1k
+  WHERE Date = '2012-08-24' AND Price = 124.05
+),
+january_2012_expenses AS (
+  SELECT CustomerID, SUM(Amount * Price) AS total_expenses, Date
+  FROM transactions_1k
+  WHERE Date BETWEEN '2012-01-01' AND '2012-01-31'
+  AND CustomerID IN (SELECT CustomerID FROM customer_id)
+  GROUP BY CustomerID, Date
+)
+SELECT total_expenses, Date
+FROM january_2012_expenses;
+",0,debit_card_specializing,no_metadata
+1518,1521,SELECT COUNT(T1.TransactionID) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-26' AND T1.Time BETWEEN '08:00:00' AND '09:00:00' AND T2.Country = 'CZE',"
+SQL Query:
+
+
+SELECT COUNT(*)
+FROM transactions_1k
+WHERE Date = '2012-08-26' AND Time >= '08:00:00' AND Time <= '09:00:00' AND GasStationID IN (
+    SELECT GasStationID
+    FROM gasstations
+    WHERE Country = 'CZE'
+)
+",0,debit_card_specializing,no_metadata
+1519,1522,SELECT T2.Currency FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '201306' AND T1.Consumption = 214582.17,"
+SQL Query:
+
+
+SELECT customers.Currency
+FROM customers
+JOIN (
+    SELECT CustomerID, SUM(Amount * Price) as TotalSpent
+    FROM transactions_1k
+    WHERE strftime('%Y-%m', Date) = '2013-06'
+    GROUP BY CustomerID
+    HAVING TotalSpent = 214582.17
+) AS subquery
+ON customers.CustomerID = subquery.CustomerID;
+",0,debit_card_specializing,no_metadata
+1520,1523,SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.CardID = '667467',"
+SQL Query:
+sql
+SELECT Country
+FROM gasstations
+WHERE GasStationID IN (
+    SELECT GasStationID
+    FROM transactions_1k
+    WHERE CardID = 667467
+)
+",0,debit_card_specializing,no_metadata
+1521,1524,SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-24' AND T1.Price = 548.4,"
+SELECT customers.Currency
+FROM customers
+JOIN transactions_1k ON customers.CustomerID = transactions_1k.CustomerID
+WHERE transactions_1k.Date = '2012-08-24' AND transactions_1k.Amount = 548.4;",0,debit_card_specializing,no_metadata
+1522,1525,"SELECT CAST(SUM(IIF(T2.Currency = 'EUR', 1, 0)) AS FLOAT) * 100 / COUNT(T1.CustomerID) FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-25'","
+SQL Query:
+
+
+WITH total_customers AS (
+  SELECT COUNT(DISTINCT CustomerID) AS total_customers
+  FROM customers
+),
+eur_customers AS (
+  SELECT COUNT(DISTINCT t.CustomerID) AS eur_customers
+  FROM transactions_1k t
+  JOIN customers c ON t.CustomerID = c.CustomerID
+  WHERE c.Currency = 'EUR' AND t.Date = '2012-08-25'
+)
+SELECT (eur_customers * 100.0) / total_customers AS percentage
+FROM total_customers, eur_customers;
+",0,debit_card_specializing,no_metadata
+1523,1526,"SELECT CAST(SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) - SUM(IIF(SUBSTRING(Date, 1, 4) = '2013', Consumption, 0)) AS FLOAT) / SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) FROM yearmonth WHERE CustomerID = ( SELECT T1.CustomerID FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-25' AND T1.Price = 634.8 )","
+SQL Query:
+
+
+WITH customer_id AS (
+  SELECT CustomerID
+  FROM transactions_1k
+  WHERE Date = '2012-08-25' AND Price = 634.8
+),
+consumption_2012 AS (
+  SELECT SUM(Consumption) as total_consumption_2012
+  FROM yearmonth
+  WHERE CustomerID = (SELECT * FROM customer_id) AND Date LIKE '2012%'
+),
+consumption_2013 AS (
+  SELECT SUM(Consumption) as total_consumption_2013
+  FROM yearmonth
+  WHERE CustomerID = (SELECT * FROM customer_id) AND Date LIKE '2013%'
+),
+decrease_rate AS (
+  SELECT
+    (total_consumption_2012 - total_consumption_2013) / total_consumption_2012 AS decrease_rate
+  FROM consumption_2012, consumption_2013
+)
+SELECT decrease_rate FROM decrease_rate;
+",0,debit_card_specializing,no_metadata
+1524,1527,SELECT GasStationID FROM transactions_1k GROUP BY GasStationID ORDER BY SUM(Price) DESC LIMIT 1,"
+SQL Query:
+
+
+SELECT GasStationID, SUM(Amount * Price) as TotalRevenue
+FROM transactions_1k
+GROUP BY GasStationID
+ORDER BY TotalRevenue DESC
+LIMIT 1;
+",0,debit_card_specializing,no_metadata
+1525,1528,"SELECT CAST(SUM(IIF(Country = 'SVK' AND Segment = 'Premium', 1, 0)) AS FLOAT) * 100 / SUM(IIF(Country = 'SVK', 1, 0)) FROM gasstations","
+SQL Query:
+
+
+WITH total_transactions AS (
+  SELECT COUNT(*) AS total
+  FROM transactions_1k
+  JOIN gasstations ON transactions_1k.GasStationID = gasstations.GasStationID
+  WHERE gasstations.Country = 'SVK'
+),
+premium_transactions AS (
+  SELECT COUNT(*) AS premium
+  FROM transactions_1k
+  JOIN gasstations ON transactions_1k.GasStationID = gasstations.GasStationID
+  WHERE gasstations.Country = 'SVK' AND gasstations.Segment = 'premium'
+)
+SELECT (premium * 100.0) / total AS percentage
+FROM total_transactions, premium_transactions
+",0,debit_card_specializing,no_metadata
+1526,1529,"SELECT SUM(T1.Price) , SUM(IIF(T3.Date = '201201', T1.Price, 0)) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN yearmonth AS T3 ON T1.CustomerID = T3.CustomerID WHERE T1.CustomerID = '38508'","
+SQL Query:
+
+SELECT SUM(Amount) AS TotalAmount,
+       SUM(CASE WHEN strftime('%Y-%m', Date) = '2012-01' THEN Amount ELSE 0 END) AS January2012Amount
+FROM transactions_1k
+WHERE CustomerID = 38508;
+",0,debit_card_specializing,no_metadata
+1527,1530,SELECT T2.Description FROM transactions_1k AS T1 INNER JOIN products AS T2 ON T1.ProductID = T2.ProductID ORDER BY T1.Amount DESC LIMIT 5,"
+SELECT products.Description, SUM(transactions_1k.Amount) as TotalAmount
+FROM products
+JOIN transactions_1k ON products.ProductID = transactions_1k.ProductID
+GROUP BY products.ProductID
+ORDER BY TotalAmount DESC
+LIMIT 5;",0,debit_card_specializing,no_metadata
+1528,1531,"SELECT T2.CustomerID, SUM(T2.Price / T2.Amount), T1.Currency FROM customers AS T1 INNER JOIN transactions_1k AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.CustomerID = ( SELECT CustomerID FROM yearmonth ORDER BY Consumption DESC LIMIT 1 ) GROUP BY T2.CustomerID, T1.Currency","
+SELECT
+    customers.CustomerID,
+    customers.Currency,
+    AVG(transactions_1k.Price) AS AveragePricePerItem
+FROM
+    customers
+JOIN
+    transactions_1k ON customers.CustomerID = transactions_1k.CustomerID
+GROUP BY
+    customers.CustomerID
+ORDER BY
+    SUM(transactions_1k.Amount * transactions_1k.Price) DESC
+LIMIT 1;",0,debit_card_specializing,no_metadata
+1529,1532,SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.ProductID = 2 ORDER BY T1.Price DESC LIMIT 1,"
+SELECT Country
+FROM gasstations
+WHERE GasStationID IN (
+    SELECT GasStationID
+    FROM transactions_1k
+    WHERE ProductID = 2
+    GROUP BY GasStationID
+    ORDER BY MAX(Price) DESC
+    LIMIT 1
+)",1,debit_card_specializing,no_metadata
+1530,1533,SELECT T2.Consumption FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Price / T1.Amount > 29.00 AND T1.ProductID = 5 AND T2.Date = '201208',"
+SQL Query:
+
+
+SELECT ym.Consumption
+FROM yearmonth ym
+JOIN transactions_1k t ON ym.CustomerID = t.CustomerID
+WHERE t.ProductID = 5 AND t.Price > 29.00 AND ym.Date = '2012-08'
+",0,debit_card_specializing,no_metadata
