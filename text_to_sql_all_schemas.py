@@ -11,6 +11,10 @@ import pandas as pd
 from tqdm import tqdm
 import logging
 import json
+import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor
+import threading
+import time
 
 NL_TO_SQL_PROMPT = """
 
@@ -144,6 +148,15 @@ def execute_query_and_check_accuracy(sql_pred, question, sql_database, used_meta
         return None
 
 
+def run_dummy_llm_inference(model):
+    """
+    Function to run arbitrary LLM inference to keep the GPUs busy.
+    """
+    dummy_prompt = "Generate a random SQL query."
+    dummy_result = model.call_model(dummy_prompt)
+    logger.info(f"Dummy LLM inference result: {dummy_result}")
+
+
 if __name__ == "__main__":
     # Enable logging
     log_format = '%(asctime)s - %(levelname)s - %(message)s'
@@ -171,10 +184,10 @@ if __name__ == "__main__":
     # MODEL_NAME_2 = "llama-3-70B"
     # MODEL_NAME = "Qwen/Qwen2-72B-Instruct" #CHECK
     # MODEL_NAME_2 = "qwen2-72B"
-    MODEL_NAME = "CohereForAI/c4ai-command-r-plus"
-    OUTPUT_MODEL_NAME = 'c4ai-command-r-plus'
-    # MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3"
-    # OUTPUT_MODEL_NAME = 'Mistral-7B-Instruct-v0.3'
+    # MODEL_NAME = "CohereForAI/c4ai-command-r-plus"
+    # OUTPUT_MODEL_NAME = 'c4ai-command-r-plus'
+    MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3"
+    OUTPUT_MODEL_NAME = 'Mistral-7B-Instruct-v0.3'
     # MODEL_NAME = "mistralai/Codestral-22B-v0.1"
     # OUTPUT_MODEL_NAME = 'Codestral-22B-v0.1'
     # MODEL_NAME = "Qwen/Qwen2-72B-Instruct"
@@ -221,6 +234,8 @@ if __name__ == "__main__":
        # Thread pool for executing SQL queries
     executor = ThreadPoolExecutor(max_workers=4)  # Adjust the number of workers based on the system capabilities
     futures = []
+    processed_count = 0
+    save_interval = 10  # Number of futures to process before saving progress
     
     # Load questions:
     f = open('data/dev/dev.json')
@@ -282,29 +297,40 @@ if __name__ == "__main__":
             sql_pred = model.call_model(formatted_prompt)
             logger.info(f"Predicted SQL: {sql_pred}")
 
-            success = sql_database.execute_queries_and_match_data(
-                sql_pred, question["SQL"], question["db_id"])
+             # Submit the query execution and accuracy checking to the thread pool
+            future = executor.submit(
+                execute_query_and_check_accuracy, 
+                sql_pred, question, sql_database, used_metadata
+            )
+            futures.append(future)
             
-            logger.info(f"Question index: {question['question_id']} Success: {success}")
+            logger.info(f"Question with index: {question['question_id']} queued")
 
-            row = pd.DataFrame({
-                "question_id": [question["question_id"]], 
-                "sql_gold": question["SQL"], 
-                "sql_pred": sql_pred, 
-                "execution_accuracy": [success],
-                'used_metadata': used_metadata
-            })
 
-        output = pd.concat([output, row], ignore_index=True)
+    # While waiting for SQL tasks to finish, continue running arbitrary LLM inferences
+    while futures:
+        # Check completed futures and remove them from the list
+        completed_futures = [f for f in futures if f.done()]
+        for future in completed_futures:
+            result = future.result()
+            if result is not None:
+                output = pd.concat([output, result], ignore_index=True)
 
-        # Save every ten columns
-        if question["question_id"] % 10 == 0 and question["question_id"] != 0 and not COUNT_TOKENS_ONLY:
+            futures.remove(future)
+
+        # Save the progress periodically
+        if processed_count >= save_interval:
             output.to_csv(output_path, index=True)
-            logger.info(
-                f"Progress saved at question {question['question_id']} to file {output_path}")
+            logger.info(f"Progress saved to {output_path}")
+            processed_count = 0  # Reset the counter after saving
 
+        # Run an arbitrary LLM inference to keep the GPUs busy while waiting for remaining SQL tasks
+        run_dummy_llm_inference(model)
 
+        # Sleep for a short time to avoid overwhelming the system
+        time.sleep(1)  # Adjust the sleep time based on the system's capacity
 
+       
     logger.info("Finished processing all questions.")
     logger.info(f"Output saved to {output_path}")
     if COUNT_TOKENS_ONLY:
