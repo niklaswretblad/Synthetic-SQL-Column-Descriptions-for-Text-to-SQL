@@ -1,0 +1,3415 @@
+,question_id,sql_gold,sql_pred,execution_accuracy,db_id,used_metadata
+0,0,SELECT `Free Meal Count (K-12)` / `Enrollment (K-12)` FROM frpm WHERE `County Name` = 'Alameda' ORDER BY (CAST(`Free Meal Count (K-12)` AS REAL) / `Enrollment (K-12)`) DESC LIMIT 1,"
+SQL Query:
+
+SELECT MAX(`Percent (%) Eligible Free (K-12)`)
+FROM frpm
+WHERE `County Name` = 'Alameda County';",0,california_schools,bird_metadata
+1,1,SELECT `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` FROM frpm WHERE `Educational Option Type` = 'Continuation School' AND `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` IS NOT NULL ORDER BY `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)` ASC LIMIT 3,"
+SQL Query:
+
+
+SELECT `Percent (%) Eligible Free (Ages 5-17)`
+FROM frpm
+WHERE `School Type` = 'Continuation'
+ORDER BY `Percent (%) Eligible Free (Ages 5-17)` ASC
+LIMIT 3;
+",0,california_schools,bird_metadata
+2,2,SELECT T2.Zip FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`District Name` = 'Fresno County Office of Education' AND T1.`Charter School (Y/N)` = 1,"
+SELECT zip
+FROM schools
+WHERE district = 'Fresno County Office of Education' AND charter = 1;",0,california_schools,bird_metadata
+3,3,SELECT T2.MailStreet FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode ORDER BY T1.`FRPM Count (K-12)` DESC LIMIT 1,"
+SELECT CONCAT(MailStreet, ' ', MailStrAbr, ' ', MailCity, ' ', MailZip, ' ', MailState) AS unabbreviated_mailing_address
+FROM schools
+WHERE CDSCode = (
+    SELECT CDSCode
+    FROM frpm
+    WHERE `FRPM Count (K-12)` = (
+        SELECT MAX(`FRPM Count (K-12)`)
+        FROM frpm
+    )
+)",0,california_schools,bird_metadata
+4,4,SELECT T2.Phone FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`Charter Funding Type` = 'Directly funded' AND T1.`Charter School (Y/N)` = 1 AND T2.OpenDate > '2000-01-01',"
+SELECT schools.Phone
+FROM schools
+JOIN frpm ON schools.CDSCode = frpm.CDSCode
+WHERE frpm.CharterSchoolNumber IS NOT NULL AND frpm.CharterFundingType = 'Direct Funded Charter' AND schools.OpenDate > '2000-01-01';",0,california_schools,bird_metadata
+5,5,SELECT COUNT(DISTINCT T2.School) FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.Virtual = 'F' AND T1.AvgScrMath < 400,"
+SELECT COUNT(*) FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE AvgScrMath < 400 AND Virtual = 'Virtual' AND GSserved = GSoffered;",1,california_schools,bird_metadata
+6,6,SELECT T2.School FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.Magnet = 1 AND T1.NumTstTakr > 500,"
+SELECT schools.School
+FROM schools
+JOIN satscores
+ON schools.CDSCode = satscores.cds
+WHERE satscores.NumTstTakr > 500 AND schools.Magnet = 1;",1,california_schools,bird_metadata
+7,7,SELECT T2.Phone FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.NumGE1500 DESC LIMIT 1,"
+SELECT phone
+FROM schools
+WHERE CDSCode = (
+    SELECT cds
+    FROM satscores
+    WHERE NumGE1500 = (
+        SELECT MAX(NumGE1500)
+        FROM satscores
+    )
+)",1,california_schools,bird_metadata
+8,8,SELECT NumTstTakr FROM satscores WHERE cds = ( SELECT CDSCode FROM frpm ORDER BY `FRPM Count (K-12)` DESC LIMIT 1 ),"
+SQL Query:
+
+
+SELECT NumTstTakr
+FROM satscores
+WHERE cds IN (
+    SELECT CDSCode
+    FROM frpm
+    ORDER BY `FRPM Count (K-12)` DESC
+    LIMIT 1
+);
+",0,california_schools,bird_metadata
+9,9,SELECT COUNT(T2.`School Code`) FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.CDSCode WHERE T1.AvgScrMath > 560 AND T2.`Charter Funding Type` = 'Directly funded',"
+SELECT COUNT(*) FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE AvgScrMath > 560 AND FundingType = 'Direct Funded Charter'",0,california_schools,bird_metadata
+10,10,SELECT T2.`FRPM Count (Ages 5-17)` FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.AvgScrRead DESC LIMIT 1,"
+SQL Query:
+
+
+SELECT frpm.""FRPM Count (Ages 5-17)""
+FROM frpm
+JOIN satscores ON frpm.CDSCode = satscores.cds
+WHERE satscores.AvgScrRead = (SELECT MAX(AvgScrRead) FROM satscores)
+LIMIT 1;
+",0,california_schools,bird_metadata
+11,11,SELECT T2.CDSCode FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.`Enrollment (K-12)` + T2.`Enrollment (Ages 5-17)` > 500,"
+SELECT CDSCode FROM frpm WHERE `Enrollment (K-12)` > 500;",0,california_schools,bird_metadata
+12,12,SELECT MAX(CAST(T1.`Free Meal Count (Ages 5-17)` AS REAL) / T1.`Enrollment (Ages 5-17)`) FROM frpm AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE CAST(T2.NumGE1500 AS REAL) / T2.NumTstTakr > 0.3,"
+SELECT MAX(`Percent (%) Eligible Free (Ages 5-17)`)
+FROM frpm
+WHERE `Percent (%) Eligible Free (Ages 5-17)` IS NOT NULL
+AND CDSCode IN (
+    SELECT cds
+    FROM satscores
+    WHERE (NumGE1500 / NumTstTakr) > 0.3
+)",0,california_schools,bird_metadata
+13,13,SELECT T1.Phone FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds ORDER BY CAST(T2.NumGE1500 AS REAL) / T2.NumTstTakr DESC LIMIT 3,"
+SELECT schools.Phone
+FROM schools
+JOIN satscores ON schools.CDSCode = satscores.cds
+ORDER BY (satscores.NumGE1500 / satscores.NumTstTakr) DESC
+LIMIT 3;",0,california_schools,bird_metadata
+14,14,SELECT T1.NCESSchool FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.CDSCode = T2.CDSCode ORDER BY T2.`Enrollment (Ages 5-17)` DESC LIMIT 5,"
+SQL Query:
+
+SELECT NCESSchool, `Enrollment (Ages 5-17)`
+FROM frpm
+JOIN schools ON frpm.CDSCode = schools.CDSCode
+ORDER BY `Enrollment (Ages 5-17)` DESC
+LIMIT 5;",0,california_schools,bird_metadata
+15,15,SELECT T1.District FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T1.StatusType = 'Active' ORDER BY T2.AvgScrRead DESC LIMIT 1,"
+SELECT s.dname, AVG(ss.AvgScrRead) as avg_reading_score
+FROM satscores ss
+JOIN schools s ON ss.cds = s.CDSCode
+WHERE s.StatusType = 'Active'
+GROUP BY s.dname
+ORDER BY avg_reading_score DESC
+LIMIT 1;",0,california_schools,bird_metadata
+16,16,SELECT COUNT(T1.CDSCode) FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T1.StatusType = 'Merged' AND T2.NumTstTakr < 100 AND T1.County = 'Alameda',"
+SQL Query:
+
+SELECT COUNT(*)
+FROM satscores
+WHERE cname = 'Alameda' AND NumTstTakr < 100;",0,california_schools,bird_metadata
+17,17,SELECT T1.CharterNum FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T2.AvgScrWrite = 499,"
+SELECT CharterSchoolNumber
+FROM frpm
+JOIN satscores ON frpm.CDSCode = satscores.cds
+WHERE AvgScrWrite = 499;",0,california_schools,bird_metadata
+18,18,SELECT COUNT(T1.CDSCode) FROM frpm AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T1.`Charter Funding Type` = 'Directly funded' AND T1.`County Name` = 'Contra Costa' AND T2.NumTstTakr <= 250,"
+SELECT COUNT(*) FROM schools
+JOIN satscores ON schools.CDSCode = satscores.cds
+WHERE schools.County = 'Contra Costa' AND satscores.FundingType = 'Direct Funded' AND satscores.NumTstTakr <= 250;",0,california_schools,bird_metadata
+19,19,SELECT T1.Phone FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds ORDER BY T2.AvgScrMath DESC LIMIT 1,"
+SELECT phone
+FROM schools
+WHERE CDSCode = (
+    SELECT cds
+    FROM satscores
+    WHERE AvgScrMath = (
+        SELECT MAX(AvgScrMath)
+        FROM satscores
+    )
+)",0,california_schools,bird_metadata
+20,20,SELECT COUNT(T1.`School Name`) FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.County = 'Amador' AND T1.`Low Grade` = 9 AND T1.`High Grade` = 12,"
+SQL Query:
+
+SELECT COUNT(*)
+FROM frpm
+WHERE `County Name` = 'Amador' AND `Low Grade` = '9' AND `High Grade` = '12';",0,california_schools,bird_metadata
+21,21,SELECT COUNT(CDSCode) FROM frpm WHERE `County Name` = 'Los Angeles' AND `Free Meal Count (K-12)` > 500 AND `Free Meal Count (K-12)` < 700,"
+SQL Query:
+
+SELECT COUNT(*)
+FROM frpm
+WHERE CountyName = 'Los Angeles'
+AND FreeMealCountK12 > 500
+AND FRPMCountK12 < 700;",0,california_schools,bird_metadata
+22,22,SELECT sname FROM satscores WHERE cname = 'Contra Costa' AND sname IS NOT NULL ORDER BY NumTstTakr DESC LIMIT 1,"
+SELECT sname, NumTstTakr
+FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE County = 'Contra Costa'
+ORDER BY NumTstTakr DESC
+LIMIT 1;",0,california_schools,bird_metadata
+23,23,"SELECT T1.School, T1.StreetAbr FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.`Enrollment (K-12)` - T2.`Enrollment (Ages 5-17)` > 30","
+SQL Query:
+
+SELECT
+    frpm.School_Name,
+    schools.Street,
+    schools.StreetAbr,
+    schools.City,
+    schools.Zip,
+    schools.State
+FROM
+    frpm
+JOIN
+    schools ON frpm.CDSCode = schools.CDSCode
+WHERE
+    ABS(frpm.`Enrollment (K-12)` - frpm.`Enrollment (Ages 5-17)`) > 30;",0,california_schools,bird_metadata
+24,24,SELECT T2.`School Name` FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.CDSCode WHERE CAST(T2.`Free Meal Count (K-12)` AS REAL) / T2.`Enrollment (K-12)` > 0.1 AND T1.NumGE1500 > 0,"
+SQL Query:
+
+SELECT frpm.School_Name
+FROM frpm
+JOIN satscores ON frpm.CDSCode = satscores.cds
+WHERE frpm.""Percent (%) Eligible Free (K-12)"" > 0.1
+AND satscores.NumGE1500 > 0;",0,california_schools,bird_metadata
+25,25,"SELECT T1.sname, T2.`Charter Funding Type` FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.CDSCode WHERE T2.`District Name` LIKE 'Riverside%' GROUP BY T1.sname, T2.`Charter Funding Type` HAVING CAST(SUM(T1.AvgScrMath) AS REAL) / COUNT(T1.cds) > 400","
+SELECT schools.School, schools.FundingType
+FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE schools.County = 'Riverside' AND satscores.AvgScrMath > 400;",0,california_schools,bird_metadata
+26,26,"SELECT T1.`School Name`, T2.Zip, T2.Street, T2.City, T2.State FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.County = 'Monterey' AND T1.`Free Meal Count (Ages 5-17)` > 800 AND T1.`School Type` = 'High Schools (Public)'","
+SELECT
+    s.School,
+    CONCAT(s.Street, ' ', s.StreetAbr, ', ', s.City, ', ', s.State, ' ', s.Zip) AS FullAddress
+FROM
+    frpm f
+JOIN
+    schools s ON f.CDSCode = s.CDSCode
+WHERE
+    f.`Free Meal Count (Ages 5-17)` > 800
+    AND f.`School Type` = 'High School'
+    AND f.`County Name` = 'Monterey';",0,california_schools,bird_metadata
+27,27,"SELECT T2.School, T1.AvgScrWrite, T2.Phone, strftime('%Y', T2.OpenDate), strftime('%Y', T2.ClosedDate) FROM schools AS T2 LEFT JOIN satscores AS T1 ON T2.CDSCode = T1.cds WHERE strftime('%Y', T2.OpenDate) > '1991' AND strftime('%Y', T2.ClosedDate) < '2000'","
+SQL Query:
+
+SELECT s.sname, s.AvgScrWrite, s.Phone
+FROM satscores s
+JOIN schools sch ON s.cds = sch.CDSCode
+WHERE sch.OpenDate > '1991-01-01' OR sch.ClosedDate < '2000-01-01';",0,california_schools,bird_metadata
+28,28,"SELECT T2.School, T2.DOC FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.FundingType = 'Locally funded' AND (T1.`Enrollment (K-12)` - T1.`Enrollment (Ages 5-17)`) > (SELECT AVG(T3.`Enrollment (K-12)` - T3.`Enrollment (Ages 5-17)`) FROM frpm AS T3 INNER JOIN schools AS T4 ON T3.CDSCode = T4.CDSCode WHERE T4.FundingType = 'Locally funded')","
+SQL Query:
+
+
+WITH avg_diff AS (
+  SELECT AVG(frpm.""Enrollment (K-12)"" - frpm.""Enrollment (Ages 5-17)"") AS avg_difference
+  FROM frpm
+  JOIN schools ON frpm.CDSCode = schools.CDSCode
+  WHERE schools.FundingType = 'Locally Funded'
+),
+school_diff AS (
+  SELECT frpm.CDSCode, frpm.""Enrollment (K-12)"" - frpm.""Enrollment (Ages 5-17)"" AS diff, schools.DOCType
+  FROM frpm
+  JOIN schools ON frpm.CDSCode = schools.CDSCode
+  WHERE schools.FundingType = 'Locally Funded'
+)
+SELECT schools.School, schools.DOCType
+FROM school_diff
+JOIN schools ON school_diff.CDSCode = schools.CDSCode
+WHERE school_diff.diff > (SELECT avg_difference FROM avg_diff)
+",0,california_schools,bird_metadata
+29,29,SELECT T2.OpenDate FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode ORDER BY T1.`Enrollment (K-12)` DESC LIMIT 1,"
+SELECT OpenDate FROM schools WHERE School IS NOT NULL AND GSserved LIKE '%-%' AND GSserved NOT LIKE '%-%-%' AND GSserved NOT LIKE '%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%' AND GSserved NOT LIKE '%-%-%-%-%-%-%-%-%",0,california_schools,bird_metadata
+30,30,SELECT T2.City FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode GROUP BY T2.City ORDER BY SUM(T1.`Enrollment (K-12)`) ASC LIMIT 5,"
+SELECT City, Enrollment_1_12
+FROM (
+    SELECT s.City, frpm.`Enrollment (K-12)` AS Enrollment_1_12,
+           ROW_NUMBER() OVER (ORDER BY frpm.`Enrollment (K-12)` ASC) as rn
+    FROM frpm
+    JOIN schools s ON frpm.CDSCode = s.CDSCode
+) t
+WHERE rn <= 5;",0,california_schools,bird_metadata
+31,31,"SELECT CAST(`Free Meal Count (K-12)` AS REAL) / `Enrollment (K-12)` FROM frpm ORDER BY `Enrollment (K-12)` DESC LIMIT 9, 2","
+SELECT
+    `Percent (%) Eligible Free (K-12)`
+FROM
+    frpm
+WHERE
+    `Low Grade` <= 1
+    AND `High Grade` >= 12
+ORDER BY
+    `Enrollment (K-12)` DESC
+LIMIT 10;",0,california_schools,bird_metadata
+32,32,SELECT CAST(T1.`FRPM Count (K-12)` AS REAL) / T1.`Enrollment (K-12)` FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.SOC = 66 ORDER BY T1.`FRPM Count (K-12)` DESC LIMIT 5,"
+SQL Query:
+
+
+SELECT
+    frpm.School_Name,
+    (frpm.FRPM_Count_K_12 / frpm.Enrollment_K_12) * 100 AS Eligible_Free_or_Reduced_Price_Meal_Rate
+FROM
+    frpm
+JOIN
+    schools ON frpm.CDSCode = schools.CDSCode
+WHERE
+    schools.SOC = 66
+ORDER BY
+    frpm.FRPM_Count_K_12 DESC
+LIMIT 5;
+",0,california_schools,bird_metadata
+33,33,"SELECT T2.Website, T1.`School Name` FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`Free Meal Count (Ages 5-17)` BETWEEN 1900 AND 2000 AND T2.Website IS NOT NULL","
+SELECT schools.Website, schools.School
+FROM frpm
+JOIN schools ON frpm.CDSCode = schools.CDSCode
+WHERE frpm.""Free Meal Count (Ages 5-17)"" BETWEEN 1900 AND 2000;",0,california_schools,bird_metadata
+34,34,SELECT CAST(T2.`Free Meal Count (Ages 5-17)` AS REAL) / T2.`Enrollment (Ages 5-17)` FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.AdmFName1 = 'Kacey' AND T1.AdmLName1 = 'Gibson',"
+SELECT
+    `Percent (%) Eligible Free (Ages 5-17)`
+FROM
+    frpm
+WHERE
+    `AdmFName1` = 'Kacey'
+    AND `AdmLName1` = 'Gibson';",0,california_schools,bird_metadata
+35,35,SELECT T2.AdmEmail1 FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`Charter School (Y/N)` = 1 ORDER BY T1.`Enrollment (K-12)` ASC LIMIT 1,"
+SQL Query:
+
+
+SELECT AdmEmail1
+FROM schools
+WHERE CDSCode IN (
+    SELECT CDSCode
+    FROM frpm
+    WHERE CharterSchool(Y/N) = 1
+    ORDER BY Enrollment(K-12) ASC
+    LIMIT 1
+);
+",0,california_schools,bird_metadata
+36,36,"SELECT T2.AdmFName1, T2.AdmLName1, T2.AdmFName2, T2.AdmLName2, T2.AdmFName3, T2.AdmLName3 FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.NumGE1500 DESC LIMIT 1","
+SQL Query:
+
+SELECT
+    s.AdmFName1 || ' ' || s.AdmLName1 AS FullName
+FROM
+    satscores AS ss
+JOIN
+    schools AS s ON ss.cds = s.CDSCode
+WHERE
+    ss.NumGE1500 = (SELECT MAX(NumGE1500) FROM satscores)
+LIMIT 1;",0,california_schools,bird_metadata
+37,37,"SELECT T2.Street, T2.City, T2.Zip, T2.State FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY CAST(T1.NumGE1500 AS REAL) / T1.NumTstTakr ASC LIMIT 1","
+SELECT Street, City, Zip, State FROM schools WHERE CDSCode = (SELECT CDSCode FROM frpm WHERE Percent (%) Eligible FRPM (K-12) = (SELECT MIN(Percent (%) Eligible FRPM (K-12)) FROM frpm));",0,california_schools,bird_metadata
+38,38,SELECT T2.Website FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T1.NumTstTakr BETWEEN 2000 AND 3000 AND T2.County = 'Los Angeles',"
+SQL Query:
+
+SELECT Website
+FROM schools
+WHERE County = 'Los Angeles County'
+AND CDSCode IN (
+    SELECT cds
+    FROM satscores
+    WHERE NumTstTakr BETWEEN 2000 AND 3000
+);",0,california_schools,bird_metadata
+39,39,"SELECT AVG(T1.NumTstTakr) FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE strftime('%Y', T2.OpenDate) = '1980' AND T2.County = 'Fresno'","
+SQL Query:
+
+SELECT AVG(NumTstTakr)
+FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE schools.City = 'Fresno' AND schools.OpenDate BETWEEN '1980-01-01' AND '1980-12-31';",0,california_schools,bird_metadata
+40,40,SELECT T2.Phone FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.District = 'Fresno Unified' AND T1.AvgScrRead IS NOT NULL ORDER BY T1.AvgScrRead ASC LIMIT 1,"
+SELECT phone
+FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE dname = 'Fresno Unified'
+ORDER BY AvgScrRead
+LIMIT 1;",0,california_schools,bird_metadata
+41,41,SELECT T2.School FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.Virtual = 'F' ORDER BY T1.AvgScrRead DESC LIMIT 5,"
+SELECT s.sname, s.rtype, s.AvgScrRead
+FROM satscores s
+JOIN schools sch ON s.cds = sch.CDSCode
+WHERE sch.Virtual = 'Virtual' AND sch.GSserved = sch.GSoffered
+ORDER BY s.AvgScrRead DESC
+LIMIT 5;",0,california_schools,bird_metadata
+42,42,SELECT T2.EdOpsName FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.AvgScrMath DESC LIMIT 1,"
+SELECT satscores.rtype
+FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE satscores.AvgScrMath = (SELECT MAX(AvgScrMath) FROM satscores)
+LIMIT 1;",0,california_schools,bird_metadata
+43,43,"SELECT T1.AvgScrMath, T2.County FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T1.AvgScrMath IS NOT NULL ORDER BY T1.AvgScrMath + T1.AvgScrRead + T1.AvgScrWrite ASC LIMIT 1","
+SELECT satscores.AvgScrMath, frpm.`County Name`
+FROM satscores
+JOIN frpm ON satscores.cds = frpm.CDSCode
+WHERE (satscores.AvgScrRead + satscores.AvgScrMath + satscores.AvgScrWrite) = (
+    SELECT MIN(satscores.AvgScrRead + satscores.AvgScrMath + satscores.AvgScrWrite)
+    FROM satscores
+)",0,california_schools,bird_metadata
+44,44,"SELECT T1.AvgScrWrite, T2.City FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.NumGE1500 DESC LIMIT 1","
+SELECT satscores.AvgScrWrite, schools.City
+FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE satscores.NumGE1500 = (SELECT MAX(NumGE1500) FROM satscores)
+LIMIT 1;",1,california_schools,bird_metadata
+45,45,"SELECT T2.School, T1.AvgScrWrite FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.AdmFName1 = 'Ricci' AND T2.AdmLName1 = 'Ulrich'","
+SQL Query:
+
+SELECT sname, AvgScrWrite
+FROM satscores
+WHERE (AdmFName1 = 'Ricci' AND AdmLName1 = 'Ulrich')
+GROUP BY sname;",0,california_schools,bird_metadata
+46,46,SELECT T2.School FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.DOC = 31 ORDER BY T1.`Enrollment (K-12)` DESC LIMIT 1,"
+SELECT s.State, frpm.`Enrollment (K-12)`, frpm.`School Name`
+FROM frpm
+JOIN schools s ON frpm.CDSCode = s.CDSCode
+WHERE s.SOCType = 'State Special School'
+ORDER BY frpm.`Enrollment (K-12)` DESC
+LIMIT 1;",0,california_schools,bird_metadata
+47,47,"SELECT CAST(COUNT(School) AS REAL) / 12 FROM schools WHERE DOC = 52 AND County = 'Alameda' AND strftime('%Y', OpenDate) = '1980'","
+SQL Query:
+
+SELECT COUNT(*) / 12 AS monthly_avg
+FROM schools
+WHERE County = 'Alameda'
+AND District LIKE '%Elementary School District%'
+AND OpenDate >= '1980-01-01'
+AND OpenDate < '1981-01-01';",0,california_schools,bird_metadata
+48,48,SELECT CAST(SUM(CASE WHEN DOC = 54 THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN DOC = 52 THEN 1 ELSE 0 END) FROM schools WHERE StatusType = 'Merged' AND County = 'Orange',"
+SQL Query:
+
+
+WITH merged_unified AS (
+  SELECT COUNT(*) as count_unified
+  FROM frpm
+  JOIN schools ON frpm.CDSCode = schools.CDSCode
+  WHERE schools.County = 'Orange' AND schools.DistrictType = 'Unified School District' AND schools.DOCType = 'Merged'
+),
+merged_elementary AS (
+  SELECT COUNT(*) as count_elementary
+  FROM frpm
+  JOIN schools ON frpm.CDSCode = schools.CDSCode
+  WHERE schools.County = 'Orange' AND schools.DistrictType = 'Elementary School District' AND schools.DOCType = 'Merged'
+)
+SELECT count_unified::float / count_elementary::float as ratio
+FROM merged_unified, merged_elementary;
+",0,california_schools,bird_metadata
+49,49,"SELECT DISTINCT County, School, ClosedDate FROM schools WHERE County = ( SELECT County FROM schools WHERE StatusType = 'Closed' GROUP BY County ORDER BY COUNT(School) DESC LIMIT 1 ) AND StatusType = 'Closed' AND school IS NOT NULL","
+SQL Query:
+
+
+SELECT County, School, ClosedDate
+FROM schools
+WHERE ClosedDate IS NOT NULL
+GROUP BY County, School, ClosedDate
+ORDER BY COUNT(*) DESC, County
+LIMIT 1;
+",0,california_schools,bird_metadata
+50,50,"SELECT T2.MailStreet, T2.School FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.AvgScrMath DESC LIMIT 5, 1","
+SELECT Street
+FROM schools
+WHERE CDSCode = (
+    SELECT cds
+    FROM satscores
+    WHERE AvgScrMath = (
+        SELECT AvgScrMath
+        FROM satscores
+        ORDER BY AvgScrMath DESC
+        LIMIT 1 OFFSET 5
+    )
+)
+AND School = (
+    SELECT sname
+    FROM satscores
+    WHERE AvgScrMath = (
+        SELECT AvgScrMath
+        FROM satscores
+        ORDER BY AvgScrMath DESC
+        LIMIT 1 OFFSET 5
+    )
+)",0,california_schools,bird_metadata
+51,51,"SELECT T2.MailStreet, T2.School FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T1.AvgScrRead IS NOT NULL ORDER BY T1.AvgScrRead ASC LIMIT 1","
+SELECT sname, MailStreet
+FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE AvgScrRead = (SELECT MIN(AvgScrRead) FROM satscores)
+LIMIT 1;",0,california_schools,bird_metadata
+52,52,SELECT COUNT(T1.cds) FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.MailCity = 'Lakeport' AND (T1.AvgScrRead + T1.AvgScrMath + T1.AvgScrWrite) >= 1500,"
+SELECT COUNT(*) FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE NumGE1500 >= 1500 AND schools.MailCity = 'Lakeport';",0,california_schools,bird_metadata
+53,53,SELECT T1.NumTstTakr FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.MailCity = 'Fresno',"
+SELECT COUNT(NumTstTakr) FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE schools.MailCity = 'Fresno';",0,california_schools,bird_metadata
+54,54,"SELECT School, MailZip FROM schools WHERE AdmFName1 = 'Avetik' AND AdmLName1 = 'Atoian'","
+SELECT schools.School, schools.MailZip
+FROM schools
+WHERE schools.AdmFName1 = 'Avetik' AND schools.AdmLName1 = 'Atoian';",1,california_schools,bird_metadata
+55,55,SELECT CAST(SUM(CASE WHEN County = 'Colusa' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN County = 'Humboldt' THEN 1 ELSE 0 END) FROM schools WHERE MailState = 'CA',"
+SELECT
+    (
+        (SELECT COUNT(*) FROM schools WHERE MailState = 'California' AND County = 'Colusa')
+        /
+        (SELECT COUNT(*) FROM schools WHERE MailState = 'California' AND County = 'Humboldt')
+    ) AS Ratio
+;",0,california_schools,bird_metadata
+56,56,SELECT COUNT(CDSCode) FROM schools WHERE City = 'San Joaquin' AND MailState = 'CA' AND StatusType = 'Active',"
+SELECT COUNT(*) FROM schools
+WHERE MailState = 'California' AND County = 'San Joaquin' AND StatusType = 'Active';",0,california_schools,bird_metadata
+57,57,"SELECT T2.Phone, T2.Ext FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.AvgScrWrite DESC LIMIT 332, 1","
+SELECT Phone, Ext
+FROM satscores
+WHERE AvgScrWrite = (SELECT AvgScrWrite FROM satscores ORDER BY AvgScrWrite DESC LIMIT 1 OFFSET 332)
+LIMIT 1;",0,california_schools,bird_metadata
+58,58,"SELECT Phone, Ext, School FROM schools WHERE Zip = '95203-3704'","
+SELECT schools.Phone, schools.Ext, schools.School
+FROM schools
+WHERE schools.Zip = '95203-3704';",1,california_schools,bird_metadata
+59,59,SELECT Website FROM schools WHERE (AdmFName1 = 'Mike' AND AdmLName1 = 'Larson') OR (AdmFName1 = 'Dante' AND AdmLName1 = 'Alvarez'),"
+SELECT Website
+FROM schools
+WHERE (AdmFName1 = 'Mike' AND AdmLName1 = 'Larson') OR (AdmFName1 = 'Dante' AND AdmLName1 = 'Alvarez');",1,california_schools,bird_metadata
+60,60,SELECT Website FROM schools WHERE County = 'San Joaquin' AND Virtual = 'P' AND Charter = 1,"
+SELECT schools.Website
+FROM schools
+JOIN frpm ON schools.CDSCode = frpm.CDSCode
+WHERE schools.County = 'San Joaquin' AND schools.Charter = 1 AND schools.Virtual = 'Partially Virtual';",0,california_schools,bird_metadata
+61,61,SELECT COUNT(School) FROM schools WHERE DOC = 52 AND Charter = 1 AND City = 'Hickman',"
+SELECT COUNT(*) FROM schools
+WHERE Charter = 1 AND City = 'Hickman' AND SOCType = 'Elementary School District';",0,california_schools,bird_metadata
+62,62,SELECT COUNT(T2.School) FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.County = 'Los Angeles' AND T2.Charter = 0 AND CAST(T1.`Free Meal Count (K-12)` AS REAL) * 100 / T1.`Enrollment (K-12)` < 0.18,"
+SQL Query:
+
+SELECT COUNT(*)
+FROM frpm
+WHERE `County Name` = 'Los Angeles' AND `Charter School (Y/N)` = 0 AND `Percent (%) Eligible Free (K-12)` < 0.18;",0,california_schools,bird_metadata
+63,63,"SELECT AdmFName1, AdmLName1, School, City FROM schools WHERE Charter = 1 AND CharterNum = '00D2'","
+SELECT schools.School, schools.City, schools.AdmFName1, schools.AdmLName1, schools.AdmFName2, schools.AdmLName2, schools.AdmFName3, schools.AdmLName3
+FROM schools
+JOIN frpm ON schools.CDSCode = frpm.CDSCode
+WHERE frpm.CharterSchoolNumber = '00D2' AND frpm.CharterSchool = 1;",0,california_schools,bird_metadata
+64,64,SELECT COUNT(*) FROM schools WHERE CharterNum = '00D4' AND MailCity = 'Hickman',"
+SELECT COUNT(*) FROM schools WHERE MailCity = 'Hickman' AND CharterNum = '00D4';",1,california_schools,bird_metadata
+65,65,SELECT CAST(SUM(CASE WHEN FundingType = 'Locally funded' THEN 1 ELSE 0 END) AS REAL) * 100 / SUM(CASE WHEN FundingType != 'Locally funded' THEN 1 ELSE 0 END) FROM schools WHERE County = 'Santa Clara' AND Charter = 1,"
+SQL Query:
+
+SELECT
+    (
+        COUNT(CASE WHEN frpm.`County Name` = 'Santa Clara' AND satscores.rtype = 'Charter' AND satscores.FundingType = 'Local' THEN 1 END) * 100.0
+    ) /
+    COUNT(CASE WHEN frpm.`County Name` = 'Santa Clara' AND satscores.rtype = 'Charter' THEN 1 END) AS Ratio
+FROM
+    frpm
+    JOIN satscores ON frpm.CDSCode = satscores.cds
+WHERE
+    frpm.`County Name` = 'Santa Clara'
+    AND satscores.rtype = 'Charter';",0,california_schools,bird_metadata
+66,66,"SELECT COUNT(School) FROM schools WHERE strftime('%Y', OpenDate) BETWEEN '2000' AND '2005' AND County = 'Stanislaus' AND FundingType = 'Directly funded'","
+SELECT COUNT(*) FROM schools
+WHERE County = 'Stanislaus'
+AND FundingType = 'Direct Funded Charter'
+AND OpenDate BETWEEN '2000-01-01' AND '2005-12-31';",0,california_schools,bird_metadata
+67,67,"SELECT COUNT(School) FROM schools WHERE strftime('%Y', ClosedDate) = '1989' AND City = 'San Francisco' AND DOCType = 'Community College District'","
+SQL Query:
+
+SELECT COUNT(*)
+FROM schools
+WHERE StatusType = 'Community College District' AND ClosedDate = '1989-01-01' AND City = 'San Francisco';",0,california_schools,bird_metadata
+68,68,"SELECT County FROM schools WHERE strftime('%Y', ClosedDate) BETWEEN '1980' AND '1989' AND StatusType = 'Closed' AND SOC = 11 GROUP BY County ORDER BY COUNT(School) DESC LIMIT 1","
+SELECT County, COUNT(*) as ClosureCount
+FROM schools
+WHERE SOC = 'CEA' AND ClosedDate BETWEEN '1980-01-01' AND '1989-12-31'
+GROUP BY County
+ORDER BY ClosureCount DESC
+LIMIT 1;",0,california_schools,bird_metadata
+69,69,SELECT NCESDist FROM schools WHERE SOC = 31,"
+SELECT NCESDist
+FROM schools
+WHERE SOC = 'State Special Schools';",0,california_schools,bird_metadata
+70,70,SELECT COUNT(School) FROM schools WHERE (StatusType = 'Closed' OR StatusType = 'Active') AND County = 'Alpine',"
+SELECT COUNT(*) FROM schools
+WHERE County = 'Alpine' AND (StatusType = 'Active' OR StatusType = 'Closed') AND School LIKE '%District Community Day School%';",0,california_schools,bird_metadata
+71,71,SELECT T1.`District Code` FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.City = 'Fresno' AND T2.Magnet = 0,"
+SQL Query:
+
+SELECT `District Code`
+FROM frpm
+WHERE `School Code` NOT IN (SELECT `School Code` FROM frpm WHERE `Magnet` = 1) AND `City` = 'Fresno';",0,california_schools,bird_metadata
+72,72,SELECT T1.`Enrollment (Ages 5-17)` FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.EdOpsCode = 'SSS' AND T2.City = 'Fremont' AND T1.`Academic Year` BETWEEN 2014 AND 2015,"
+SELECT ""Enrollment (Ages 5-17)""
+FROM frpm
+WHERE ""School Name"" = 'State Special School'
+AND ""City"" = 'Fremont'
+AND ""Academic Year"" = '2014-2015';",0,california_schools,bird_metadata
+73,73,SELECT T1.`FRPM Count (Ages 5-17)` FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.MailStreet = 'PO Box 1040' AND T2.SOCType = 'Youth Authority Facilities',"
+SELECT `FRPM Count (Ages 5-17)`
+FROM frpm
+JOIN schools ON frpm.CDSCode = schools.CDSCode
+WHERE schools.School = 'Youth Authority School' AND schools.MailStrAbr = 'PO Box 1040';",0,california_schools,bird_metadata
+74,74,SELECT MIN(T1.`Low Grade`) FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.NCESDist = 613360 AND T2.EdOpsCode = 'SPECON',"
+SQL Query:
+
+SELECT LowGrade
+FROM frpm
+JOIN schools ON frpm.CDSCode = schools.CDSCode
+WHERE NCESDist = '613360' AND District = 'District Special Education Consortia';",0,california_schools,bird_metadata
+75,75,"SELECT T2.EILName, T2.School FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`NSLP Provision Status` = 'Breakfast Provision 2' AND T1.`County Code` = 37","
+SELECT EILName, School
+FROM frpm
+JOIN schools ON frpm.CDSCode = schools.CDSCode
+WHERE frpm.""NSLP Provision Status"" = 'Breakfast Provision 2' AND frpm.""County Code"" = '37';",1,california_schools,bird_metadata
+76,76,SELECT T2.City FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.`NSLP Provision Status` = 'Lunch Provision 2' AND T2.County = 'Merced' AND T1.`Low Grade` = 9 AND T1.`High Grade` = 12 AND T2.EILCode = 'HS',"
+SQL Query:
+
+SELECT City
+FROM frpm
+JOIN schools ON frpm.CDSCode = schools.CDSCode
+WHERE `Low Grade` = '9' AND `High Grade` = '12' AND `NSLP Provision Status` = '2' AND `County Name` = 'Merced' AND `School Type` = 'High School';",0,california_schools,bird_metadata
+77,77,"SELECT T2.School, T1.`FRPM Count (Ages 5-17)` * 100 / T1.`Enrollment (Ages 5-17)` FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.County = 'Los Angeles' AND T2.GSserved = 'K-9'","
+SELECT frpm.""School Name"", frpm.""Percent (%) Eligible FRPM (Ages 5-17)""
+FROM frpm
+JOIN schools ON frpm.CDSCode = schools.CDSCode
+WHERE schools.County = 'Los Angeles' AND frpm.""Low Grade"" = 'K' AND frpm.""High Grade"" = '9';",0,california_schools,bird_metadata
+78,78,SELECT GSserved FROM schools WHERE City = 'Adelanto' GROUP BY GSserved ORDER BY COUNT(GSserved) DESC LIMIT 1,"
+SQL Query:
+
+SELECT GSserved, COUNT(*) as count
+FROM schools
+WHERE City = 'Adelanto'
+GROUP BY GSserved
+ORDER BY count DESC
+LIMIT 1;",0,california_schools,bird_metadata
+79,79,"SELECT County, COUNT(Virtual) FROM schools WHERE (County = 'San Diego' OR County = 'Santa Barbara') AND Virtual = 'F' GROUP BY County ORDER BY COUNT(Virtual) DESC LIMIT 1","
+SELECT COUNT(*) as school_count, County
+FROM schools
+WHERE County IN ('San Diego', 'Santa Barbara')
+AND GSserved = 'Virtual'
+GROUP BY County
+ORDER BY school_count DESC
+LIMIT 1;",0,california_schools,bird_metadata
+80,80,"SELECT T1.`School Type`, T1.`School Name`, T2.Latitude FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode ORDER BY T2.Latitude DESC LIMIT 1","
+SELECT SchoolType, Latitude
+FROM frpm
+JOIN schools ON frpm.CDSCode = schools.CDSCode
+ORDER BY Latitude DESC
+LIMIT 1;",0,california_schools,bird_metadata
+81,81,"SELECT T2.City, T1.`Low Grade`, T1.`School Name` FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.State = 'CA' ORDER BY T2.Latitude ASC LIMIT 1","
+SELECT School, City, Low_Grade
+FROM schools
+JOIN frpm ON schools.CDSCode = frpm.CDSCode
+WHERE State = 'California'
+ORDER BY Latitude ASC
+LIMIT 1;",0,california_schools,bird_metadata
+82,82,SELECT GSoffered FROM schools ORDER BY ABS(longitude) DESC LIMIT 1,"
+SELECT GSoffered FROM schools WHERE Longitude = (SELECT MAX(Longitude) FROM schools);",0,california_schools,bird_metadata
+83,83,"SELECT T2.City, COUNT(T2.CDSCode) FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.Magnet = 1 AND T2.GSoffered = 'K-8' AND T1.`NSLP Provision Status` = 'Multiple Provision Types' GROUP BY T2.City","
+SELECT COUNT(DISTINCT City) as num_cities, City, COUNT(*) as num_schools
+FROM schools
+WHERE GSserved LIKE 'K%8' AND Magnet = 1 AND `Educational Option Type` = 'Multiple Provision Types'
+GROUP BY City;",0,california_schools,bird_metadata
+84,84,"SELECT DISTINCT T1.AdmFName1, T1.District FROM schools AS T1 INNER JOIN ( SELECT admfname1 FROM schools GROUP BY admfname1 ORDER BY COUNT(admfname1) DESC LIMIT 2 ) AS T2 ON T1.AdmFName1 = T2.admfname1","
+SELECT
+    AdmFName1,
+    COUNT(*) as count
+FROM
+    schools
+GROUP BY
+    AdmFName1
+ORDER BY
+    count DESC
+LIMIT 2
+UNION ALL
+SELECT
+    AdmFName2,
+    COUNT(*) as count
+FROM
+    schools
+GROUP BY
+    AdmFName2
+ORDER BY
+    count DESC
+LIMIT 2
+UNION ALL
+SELECT
+    AdmFName3,
+    COUNT(*) as count
+FROM
+    schools
+GROUP BY
+    AdmFName3
+ORDER BY
+    count DESC
+LIMIT 2;",0,california_schools,bird_metadata
+85,85,"SELECT T1.`Free Meal Count (K-12)` * 100 / T1.`Enrollment (K-12)`, T1.`District Code` FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.AdmFName1 = 'Alusine'","
+SELECT `Percent (%) Eligible Free (K-12)`, `District Code`
+FROM frpm
+JOIN schools ON frpm.CDSCode = schools.CDSCode
+WHERE `AdmFName1` = 'Alusine';",0,california_schools,bird_metadata
+86,86,"SELECT AdmLName1, District, County, School FROM schools WHERE CharterNum = '0040'","
+SELECT
+    schools.District,
+    schools.County,
+    schools.School,
+    schools.AdmLName1
+FROM
+    schools
+WHERE
+    schools.CharterNum = '40';",0,california_schools,bird_metadata
+87,87,"SELECT T2.AdmEmail1 FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.County = 'San Bernardino' AND T2.City = 'San Bernardino' AND T2.DOC = 54 AND strftime('%Y', T2.OpenDate) BETWEEN '2009' AND '2010' AND T2.SOC = 62","
+SQL Query:
+
+SELECT AdmEmail1
+FROM schools
+WHERE County = 'San Bernardino'
+AND District = 'San Bernardino City Unified'
+AND OpenDate BETWEEN '2009-01-01' AND '2010-12-31'
+AND SchoolType IN ('Public Intermediate/Middle Schools', 'Unified Schools');",0,california_schools,bird_metadata
+88,88,"SELECT T2.AdmEmail1, T2.School FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.NumGE1500 DESC LIMIT 1","
+SQL Query:
+
+
+SELECT sname, AdmEmail1
+FROM satscores
+JOIN schools ON satscores.cds = schools.CDSCode
+WHERE NumGE1500 = (SELECT MAX(NumGE1500) FROM satscores)
+LIMIT 1;
+",0,california_schools,bird_metadata
+89,89,SELECT COUNT(T1.district_id) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id WHERE T1.A3 = 'East Bohemia' AND T2.frequency = 'POPLATEK PO OBRATU',"
+SQL Query:
+
+
+SELECT COUNT(*)
+FROM account
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+JOIN district ON client.district_id = district.district_id
+WHERE district.A3 = 'East Bohemia' AND disp.type = 'issuance' AND account.frequency = 'after transaction';
+",0,financial,bird_metadata
+90,90,SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T1.district_id = T3.district_id WHERE T3.A3 = 'Prague',"
+SELECT COUNT(*) FROM account
+JOIN district ON account.district_id = district.district_id
+WHERE district.A3 = 'Prague';",0,financial,bird_metadata
+91,91,"SELECT DISTINCT IIF(AVG(A13) > AVG(A12), '1996', '1995') FROM district","
+SQL Query:
+
+SELECT
+    AVG(A12) AS avg_unemployment_1995,
+    AVG(A13) AS avg_unemployment_1996
+FROM
+    district;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+",0,financial,bird_metadata
+92,92,SELECT DISTINCT T2.district_id FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'F' AND T2.A11 BETWEEN 6000 AND 10000,"
+SELECT COUNT(*) FROM district WHERE A11 > 6000 AND A11 < 10000 AND A3 = 'female';",0,financial,bird_metadata
+93,93,SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'M' AND T2.A3 = 'North Bohemia' AND T2.A11 > 8000,"
+SELECT COUNT(*) FROM client
+JOIN district ON client.district_id = district.district_id
+WHERE client.gender = 'male' AND district.A3 = 'North Bohemia' AND district.A11 > 8000;",1,financial,bird_metadata
+94,94,"SELECT T1.account_id , ( SELECT MAX(A11) - MIN(A11) FROM district ) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.district_id = ( SELECT district_id FROM client WHERE gender = 'F' ORDER BY birth_date ASC LIMIT 1 ) ORDER BY T2.A11 DESC LIMIT 1","
+SELECT account_id
+FROM client
+JOIN district ON client.district_id = district.district_id
+WHERE gender = 'female'
+GROUP BY account_id
+ORDER BY birth_date DESC, A11 ASC
+LIMIT 1
+
+SELECT MAX(A11) - MIN(A11) AS salary_gap
+FROM district;",0,financial,bird_metadata
+95,95,SELECT T1.account_id FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.district_id = ( SELECT district_id FROM client ORDER BY birth_date DESC LIMIT 1 ) ORDER BY T2.A11 DESC LIMIT 1,"
+SELECT account_id
+FROM account
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+JOIN district ON client.district_id = district.district_id
+ORDER BY client.birth_date DESC, district.A11 DESC
+LIMIT 1;",0,financial,bird_metadata
+96,96,SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN disp AS T2 ON T1.account_id = T2.account_id WHERE T2.type = 'Owner' AND T1.frequency = 'POPLATEK TYDNE',"
+SQL Query:
+
+
+SELECT COUNT(*)
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN account ON disp.account_id = account.account_id
+WHERE account.frequency = 'weekly' AND client.gender = 'Owner';
+",0,financial,bird_metadata
+97,97,SELECT T2.client_id FROM account AS T1 INNER JOIN disp AS T2 ON T1.account_id = T2.account_id WHERE T1.frequency = 'POPLATEK PO OBRATU' AND T2.type = 'DISPONENT',"
+SELECT client.client_id
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN trans ON disp.account_id = trans.account_id
+WHERE trans.type = 'Disponent' AND trans.operation = 'statement of issuance';",0,financial,bird_metadata
+98,98,"SELECT T2.account_id FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE STRFTIME('%Y', T1.date) = '1997' AND T2.frequency = 'POPLATEK TYDNE' ORDER BY T1.amount LIMIT 1","
+SELECT account_id, MIN(amount)
+FROM loan
+WHERE date LIKE '1997%' AND frequency = 'weekly'
+GROUP BY account_id;",0,financial,bird_metadata
+99,99,"SELECT T1.account_id FROM loan AS T1 INNER JOIN disp AS T2 ON T1.account_id = T2.account_id WHERE STRFTIME('%Y', T1.date) = '1993' AND T1.duration = 12 ORDER BY T1.amount DESC LIMIT 1","
+SELECT account_id, MAX(amount)
+FROM loan
+JOIN account ON loan.account_id = account.account_id
+WHERE duration > 12 AND date_part('year', account.date) = 1993
+GROUP BY account_id;",0,financial,bird_metadata
+100,100,"SELECT COUNT(T2.client_id) FROM district AS T1 INNER JOIN client AS T2 ON T1.district_id = T2.district_id WHERE T2.gender = 'F' AND STRFTIME('%Y', T2.birth_date) < '1950' AND T1.A2 = 'Slokolov'","
+SELECT COUNT(*) FROM client
+JOIN account ON client.client_id = account.client_id
+WHERE client.gender = 'female' AND client.birth_date < '1950-01-01' AND client.district_id = (SELECT district_id FROM district WHERE A2 = 'Slokolov');",0,financial,bird_metadata
+101,101,"SELECT account_id FROM trans WHERE STRFTIME('%Y', date) = '1995' ORDER BY date ASC LIMIT 1","
+SELECT account_id, date
+FROM account
+WHERE date = (SELECT MIN(date) FROM account WHERE date >= '1995-01-01' AND date < '1996-01-01')
+LIMIT 10;",0,financial,bird_metadata
+102,102,"SELECT DISTINCT T2.account_id FROM trans AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE STRFTIME('%Y', T2.date) < '1997' AND T1.amount > 3000","
+SELECT account_id, date, balance
+FROM trans
+WHERE date < '1997-01-01' AND balance > 3000;",0,financial,bird_metadata
+103,103,SELECT T2.client_id FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id INNER JOIN card AS T3 ON T2.disp_id = T3.disp_id WHERE T3.issued = '1994-03-03',"
+SELECT client_id
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN card ON disp.disp_id = card.disp_id
+WHERE card.issued = '1994-03-03';",0,financial,bird_metadata
+104,104,SELECT T1.date FROM account AS T1 INNER JOIN trans AS T2 ON T1.account_id = T2.account_id WHERE T2.amount = 840 AND T2.date = '1998-10-14',"
+SELECT date FROM account WHERE account_id = (SELECT account_id FROM trans WHERE amount = 840 AND date = '1998-10-14');",1,financial,bird_metadata
+105,105,SELECT T1.district_id FROM account AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id WHERE T2.date = '1994-08-25',"
+SELECT district_id FROM account WHERE account_id IN (SELECT account_id FROM loan WHERE date = '1994-08-25');",1,financial,bird_metadata
+106,106,SELECT T2.amount FROM account AS T1 INNER JOIN trans AS T2 ON T1.account_id = T2.account_id WHERE T1.date = '1996-10-21' ORDER BY T2.amount DESC LIMIT 1,"
+SELECT MAX(amount) FROM trans
+JOIN card ON trans.account_id = card.disp_id
+JOIN disp ON card.disp_id = disp.disp_id
+JOIN client ON disp.client_id = client.client_id
+WHERE card.issued = '1996-10-21';",0,financial,bird_metadata
+107,107,"SELECT T2.gender FROM district AS T1 INNER JOIN client AS T2 ON T1.district_id = T2.district_id ORDER BY T1.A11 DESC, T2.birth_date ASC LIMIT 1","
+SELECT client.gender
+FROM client
+JOIN account ON client.district_id = account.district_id
+JOIN district ON account.district_id = district.district_id
+WHERE client.birth_date = (SELECT MIN(birth_date) FROM client)
+AND district.A11 = (SELECT MAX(A11) FROM district)
+LIMIT 1;",0,financial,bird_metadata
+108,108,"SELECT T2.amount FROM loan AS T1 INNER JOIN trans AS T2 ON T1.account_id = T2.account_id ORDER BY T1.amount DESC, T2.date ASC LIMIT 1","
+SELECT trans.amount
+FROM trans
+JOIN account ON trans.account_id = account.account_id
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+JOIN loan ON account.account_id = loan.account_id
+WHERE trans.date > account.date
+ORDER BY loan.amount DESC, trans.date ASC
+LIMIT 1;",0,financial,bird_metadata
+109,109,SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'F' AND T2.A2 = 'Jesenik',"
+SELECT COUNT(*) FROM client
+JOIN account ON client.district_id = account.district_id
+WHERE client.gender = 'female' AND account.district_id = (SELECT district_id FROM district WHERE A2 = 'Jesenik');",0,financial,bird_metadata
+110,110,SELECT T1.disp_id FROM disp AS T1 INNER JOIN trans AS T2 ON T1.account_id = T2.account_id WHERE T2.date = '1998-09-02' AND T2.amount = 5100,"
+SELECT disp.disp_id
+FROM disp
+JOIN trans ON disp.account_id = trans.account_id
+WHERE trans.date = '1998-09-02' AND trans.amount = 5100;",1,financial,bird_metadata
+111,111,"SELECT COUNT(T2.account_id) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id WHERE STRFTIME('%Y', T2.date) = '1996' AND T1.A2 = 'Litomerice'","
+SELECT COUNT(*) FROM account
+JOIN district ON account.district_id = district.district_id
+WHERE district.A2 = 'Litomerice' AND account.date = '1996-01-01';",0,financial,bird_metadata
+112,112,SELECT T1.A2 FROM district AS T1 INNER JOIN client AS T2 ON T1.district_id = T2.district_id WHERE T2.birth_date = '1976-01-29' AND T2.gender = 'F',"
+SELECT district.A2
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN account ON disp.account_id = account.account_id
+JOIN district ON account.district_id = district.district_id
+WHERE client.gender = 'female' AND client.birth_date = '1976-01-29';",0,financial,bird_metadata
+113,113,SELECT T3.birth_date FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN client AS T3 ON T2.district_id = T3.district_id WHERE T1.date = '1996-01-03' AND T1.amount = 98832,"
+SELECT client.birth_date
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN account ON disp.account_id = account.account_id
+JOIN loan ON account.account_id = loan.account_id
+WHERE loan.amount = 98832 AND loan.date = '1996-01-03';",0,financial,bird_metadata
+114,114,SELECT T1.account_id FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A3 = 'Prague' ORDER BY T1.date ASC LIMIT 1,"
+SELECT account_id
+FROM account
+WHERE district_id = (SELECT district_id FROM district WHERE A2 = 'Prague')
+LIMIT 1;",0,financial,bird_metadata
+115,115,SELECT CAST(SUM(T1.gender = 'M') AS REAL) * 100 / COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A3 = 'south Bohemia' GROUP BY T2.A4 ORDER BY T2.A4 DESC LIMIT 1,"
+SELECT
+    (SELECT COUNT(*) FROM client WHERE gender = 'male' AND district_id = (SELECT district_id FROM district WHERE A3 = 'South Bohemia' ORDER BY A4 DESC LIMIT 1)) * 100.0 /
+    (SELECT COUNT(*) FROM client WHERE district_id = (SELECT district_id FROM district WHERE A3 = 'South Bohemia' ORDER BY A4 DESC LIMIT 1)) AS percentage_of_male_clients;",0,financial,bird_metadata
+116,116,"SELECT CAST((SUM(IIF(T3.date = '1998-12-27', T3.balance, 0)) - SUM(IIF(T3.date = '1993-03-22', T3.balance, 0))) AS REAL) * 100 / SUM(IIF(T3.date = '1993-03-22', T3.balance, 0)) FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN trans AS T3 ON T3.account_id = T2.account_id WHERE T1.date = '1993-07-05'","
+SELECT (balance_end - balance_start) / balance_start AS increase_rate
+FROM (
+    SELECT MAX(balance) AS balance_end
+    FROM trans
+    WHERE account_id = (
+        SELECT account_id
+        FROM loan
+        WHERE date = '1993-07-05'
+        LIMIT 1
+    )
+    AND date <= '1998-12-27'
+) AS end_balance,
+(
+    SELECT MIN(balance) AS balance_start
+    FROM trans
+    WHERE account_id = (
+        SELECT account_id
+        FROM loan
+        WHERE date = '1993-07-05'
+        LIMIT 1
+    )
+    AND date >= '1993-03-22'
+) AS start_balance;",0,financial,bird_metadata
+117,117,SELECT (CAST(SUM(CASE WHEN status = 'A' THEN amount ELSE 0 END) AS REAL) * 100) / SUM(amount) FROM loan,"
+SQL Query:
+
+SELECT
+    SUM(CASE WHEN status = 'fully paid' THEN amount ELSE 0 END) / SUM(amount) * 100 AS fully_paid_percentage
+FROM
+    loan;",0,financial,bird_metadata
+118,118,SELECT CAST(SUM(status = 'C') AS REAL) * 100 / COUNT(amount) FROM loan WHERE amount < 100000,"
+SELECT
+    (COUNT(*) FILTER (WHERE loan.status = 'running' AND loan.amount < 100000) * 100.0 / COUNT(*)) AS percentage
+FROM
+    account
+    JOIN loan ON account.account_id = loan.account_id;",0,financial,bird_metadata
+119,119,"SELECT T1.account_id, T2.A2, T2.A3 FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.frequency = 'POPLATEK PO OBRATU' AND STRFTIME('%Y', T1.date)= '1993'","
+SELECT account.account_id, district.A2 AS district_name, district.A3 AS district_region
+FROM account
+JOIN district ON account.district_id = district.district_id
+WHERE account.date = '1993' AND account.frequency = 'statement' AND EXISTS (
+    SELECT 1
+    FROM trans
+    WHERE trans.account_id = account.account_id AND trans.date < account.date
+)",0,financial,bird_metadata
+120,120,"SELECT T1.account_id, T1.frequency FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A3 = 'east Bohemia' AND STRFTIME('%Y', T1.date) BETWEEN '1995' AND '2000'","
+SELECT account.account_id, account.frequency
+FROM account
+JOIN district ON account.district_id = district.district_id
+WHERE district.A3 = 'east Bohemia' AND account.date BETWEEN '1995-01-01' AND '2000-12-31';",1,financial,bird_metadata
+121,121,"SELECT T1.account_id, T1.date FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A2 = 'Prachatice'","
+SELECT account.account_id, account.date
+FROM account
+JOIN district ON account.district_id = district.district_id
+WHERE district.A2 = 'Prachatice';",1,financial,bird_metadata
+122,122,"SELECT T2.A2, T2.A3 FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T1.account_id = T3.account_id WHERE T3.loan_id = 4990","
+SQL Query:
+sql
+SELECT district.A2, district.A3
+FROM loan
+JOIN account ON loan.account_id = account.account_id
+JOIN district ON account.district_id = district.district_id
+WHERE loan.loan_id = 4990;
+",0,financial,bird_metadata
+123,123,"SELECT T1.account_id, T2.A2, T2.A3 FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T1.account_id = T3.account_id WHERE T3.amount > 300000","
+SQL Query:
+
+SELECT account.account_id, district.A2 AS district, district.A3 AS region
+FROM account
+JOIN loan ON account.account_id = loan.account_id
+JOIN district ON account.district_id = district.district_id
+WHERE loan.amount > 300000;",0,financial,bird_metadata
+124,124,"SELECT T3.loan_id, T2.A2, T2.A11 FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T1.account_id = T3.account_id WHERE T3.duration = 60","
+SELECT loan.loan_id, district.district_name, district.A11
+FROM loan
+JOIN account ON loan.account_id = account.account_id
+JOIN district ON account.district_id = district.district_id
+WHERE loan.duration = 60;",0,financial,bird_metadata
+125,125,SELECT CAST((T3.A13 - T3.A12) AS REAL) * 100 / T3.A12 FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T2.district_id = T3.district_id WHERE T1.status = 'D',"
+SELECT district.A2, (district.A13 - district.A12) / district.A12 * 100 AS unemployment_rate_increment
+FROM loan
+JOIN account ON loan.account_id = account.account_id
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+JOIN district ON client.district_id = district.district_id
+WHERE loan.status = 'running' AND loan.amount > loan.payments
+ORDER BY unemployment_rate_increment DESC;",0,financial,bird_metadata
+126,126,"SELECT CAST(SUM(T1.A2 = 'Decin') AS REAL) * 100 / COUNT(account_id) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id WHERE STRFTIME('%Y', T2.date) = '1993'","
+SQL Query:
+
+
+SELECT
+    (COUNT(*) FILTER (WHERE district.A2 = 'Decin') * 100.0 / COUNT(*)) AS percentage
+FROM
+    account
+JOIN
+    district ON account.district_id = district.district_id
+WHERE
+    account.date >= '1993-01-01' AND account.date < '1994-01-01';
+",0,financial,bird_metadata
+127,127,SELECT account_id FROM account WHERE Frequency = 'POPLATEK MESICNE',"
+SELECT account_id FROM account WHERE frequency = 'monthly';",0,financial,bird_metadata
+128,128,"SELECT T2.A2, COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'F' GROUP BY T2.district_id, T2.A2 ORDER BY COUNT(T1.client_id) DESC LIMIT 10","
+SELECT district.district_id, district.A2, COUNT(client.client_id) as num_female_account_holders
+FROM district
+JOIN account ON district.district_id = account.district_id
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+WHERE client.gender = 'female'
+GROUP BY district.district_id, district.A2
+ORDER BY num_female_account_holders DESC
+LIMIT 10;",0,financial,bird_metadata
+129,129,SELECT T1.district_id FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN trans AS T3 ON T2.account_id = T3.account_id WHERE T3.type = 'VYDAJ' AND T2.date LIKE '1996-01%' ORDER BY A2 ASC LIMIT 10,"
+SELECT district.A2 AS district_name, SUM(trans.amount) AS total_withdrawal
+FROM trans
+JOIN account ON trans.account_id = account.account_id
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+JOIN district ON client.district_id = district.district_id
+WHERE trans.type = '-' AND trans.date >= '1996-01-01' AND trans.date <= '1996-01-31' AND trans.operation IS NULL
+GROUP BY district.A2
+ORDER BY total_withdrawal DESC
+LIMIT 10;",0,financial,bird_metadata
+130,130,SELECT COUNT(T3.account_id) FROM district AS T1 INNER JOIN client AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T3 ON T2.client_id = T3.client_id WHERE T1.A3 = 'south Bohemia' AND T3.type != 'OWNER',"
+SELECT COUNT(DISTINCT account.account_id)
+FROM account
+LEFT JOIN disp ON account.account_id = disp.account_id
+LEFT JOIN card ON disp.disp_id = card.disp_id
+WHERE account.district_id IN (SELECT district_id FROM district WHERE A2 = 'South Bohemia')
+AND card.card_id IS NULL;",0,financial,bird_metadata
+131,131,"SELECT T2.A3 FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T1.account_id = T3.account_id WHERE T3.status IN ('C', 'D') GROUP BY T2.A3 ORDER BY SUM(T3.amount) DESC LIMIT 1","
+SELECT district_id, SUM(amount) as total_loan
+FROM account
+JOIN loan ON account.account_id = loan.account_id
+GROUP BY district_id
+ORDER BY total_loan DESC
+LIMIT 1;",0,financial,bird_metadata
+132,132,SELECT AVG(T3.amount) FROM client AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T2.account_id = T3.account_id WHERE T1.gender = 'M',"
+SQL Query:
+
+
+SELECT AVG(loan.amount)
+FROM loan
+JOIN disp ON loan.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+WHERE client.gender = 'male';
+",0,financial,bird_metadata
+133,133,"SELECT district_id, A2 FROM district ORDER BY A13 DESC LIMIT 1","
+SELECT district.district_id, district.A2
+FROM district
+WHERE district.A13 = (SELECT MAX(district.A13) FROM district WHERE district.A13 IS NOT NULL AND district.A13 > 0)
+LIMIT 10;",1,financial,bird_metadata
+134,134,SELECT COUNT(T2.account_id) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id GROUP BY T1.A16 ORDER BY T1.A16 DESC LIMIT 1,"
+SELECT COUNT(*) FROM account WHERE district_id = (SELECT district_id FROM district WHERE A16 = (SELECT MAX(A16) FROM district));",1,financial,bird_metadata
+135,135,SELECT COUNT(T1.account_id) FROM trans AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE T1.balance < 0 AND T1.operation = 'VYBER KARTOU' AND T2.frequency = 'POPLATEK MESICNE',"
+SELECT COUNT(*)
+FROM trans
+WHERE type = '-' AND balance < 0 AND operation = 'credit card withdrawal'
+AND account_id IN (
+    SELECT account_id
+    FROM account
+    WHERE frequency = 'monthly'
+);",0,financial,bird_metadata
+136,136,SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id WHERE T2.date BETWEEN '1995-01-01' AND '1997-12-31' AND T1.frequency = 'POPLATEK MESICNE' AND T2.amount > 250000,"
+SQL Query:
+
+SELECT COUNT(*)
+FROM loan
+WHERE date BETWEEN '1995-01-01' AND '1997-12-31'
+AND amount >= 250000
+AND account_id IN (
+    SELECT account_id
+    FROM account
+    WHERE frequency = 'monthly'
+);",0,financial,bird_metadata
+137,137,SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T1.account_id = T3.account_id WHERE T1.district_id = 1 AND (T3.status = 'C' OR T3.status = 'D'),"
+SQL Query:
+
+SELECT COUNT(*)
+FROM account
+WHERE district_id = 1 AND frequency = 'running';",0,financial,bird_metadata
+138,138,"SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'M' AND T2.A15 = (SELECT T3.A15 FROM district AS T3 ORDER BY T3.A15 DESC LIMIT 1, 1)","
+SELECT COUNT(*) FROM client
+WHERE gender = 'male' AND district_id IN (
+    SELECT district_id FROM district
+    WHERE A15 = (
+        SELECT MAX(A15) FROM district
+        WHERE A15 < (SELECT MAX(A15) FROM district)
+    )
+);",0,financial,bird_metadata
+139,139,SELECT COUNT(T1.card_id) FROM card AS T1 INNER JOIN disp AS T2 ON T1.disp_id = T2.disp_id WHERE T1.type = 'gold' AND T2.type = 'DISPONENT',"
+SELECT COUNT(*) FROM card
+JOIN disp ON card.card_id = disp.disp_id
+WHERE card.type = 'high-level' AND disp.type = 'disponent';",1,financial,bird_metadata
+140,140,SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A2 = 'Pisek',"
+SELECT COUNT(*) FROM account WHERE district_id = (SELECT district_id FROM district WHERE A2 = 'Pisek');",1,financial,bird_metadata
+141,141,"SELECT T1.district_id FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN trans AS T3 ON T1.account_id = T3.account_id WHERE STRFTIME('%Y', T3.date) = '1997' GROUP BY T1.district_id HAVING SUM(T3.amount) > 10000","
+SQL Query:
+
+SELECT DISTINCT district_id
+FROM trans
+JOIN account ON trans.account_id = account.account_id
+WHERE trans.date >= '1997-01-01' AND trans.date <= '1997-12-31' AND trans.amount > 10000;",0,financial,bird_metadata
+142,142,SELECT DISTINCT T2.account_id FROM trans AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T2.district_id = T3.district_id WHERE T1.k_symbol = 'SIPO' AND T3.A2 = 'Pisek',"
+SQL Query:
+
+SELECT account.account_id
+FROM account
+JOIN `order` ON account.account_id = `order`.account_id
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+JOIN district ON client.district_id = district.district_id
+WHERE district.A2 = 'Pisek' AND `order`.k_symbol = 'household payment';",0,financial,bird_metadata
+143,143,"SELECT T2.account_id FROM card AS T1 INNER JOIN disp AS T2 ON T1.disp_id = T2.disp_id WHERE T1.type IN ('gold', 'junior')","
+SELECT account_id
+FROM account
+WHERE account_id IN (
+    SELECT account_id
+    FROM disp
+    JOIN card ON disp.disp_id = card.disp_id
+    WHERE card.type = 'gold'
+) AND account_id IN (
+    SELECT account_id
+    FROM disp
+    JOIN card ON disp.disp_id = card.disp_id
+    WHERE card.type = 'junior'
+);",0,financial,bird_metadata
+144,144,"SELECT AVG(T3.amount) FROM card AS T1 INNER JOIN disp AS T2 ON T1.disp_id = T2.disp_id INNER JOIN trans AS T3 ON T2.account_id = T3.account_id WHERE STRFTIME('%Y', T3.date) = '2021' AND T3.operation = 'VYBER KARTOU'","
+SELECT AVG(amount)
+FROM trans
+JOIN account ON trans.account_id = account.account_id
+JOIN card ON trans.account_id = card.disp_id
+WHERE trans.date >= '2021-01-01' AND trans.date <= '2021-12-31'
+AND trans.type = '+'
+AND account.frequency = 'monthly'
+AND card.type = 'credit';",1,financial,bird_metadata
+145,145,"SELECT T1.account_id FROM trans AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE STRFTIME('%Y', T1.date) = '1998' AND T1.operation = 'VYBER KARTOU' AND T1.amount < (SELECT AVG(amount) FROM trans WHERE STRFTIME('%Y', date) = '1998')","
+SELECT account_id
+FROM trans
+WHERE date BETWEEN '1998-01-01' AND '1998-12-31'
+GROUP BY account_id
+HAVING SUM(CASE WHEN type = '-' THEN amount ELSE 0 END) / 12 < (SELECT AVG(SUM(CASE WHEN type = '-' THEN amount ELSE 0 END) / 12)
+                                                                 FROM trans
+                                                                 WHERE date BETWEEN '1998-01-01' AND '1998-12-31'
+                                                                 GROUP BY account_id);",0,financial,bird_metadata
+146,146,SELECT T1.client_id FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id INNER JOIN loan AS T3 ON T2.account_id = T3.account_id INNER JOIN card AS T4 ON T2.disp_id = T4.disp_id WHERE T1.gender = 'F',"
+SELECT client.client_id
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN card ON disp.disp_id = card.disp_id
+JOIN loan ON disp.account_id = loan.account_id
+WHERE client.gender = 'female';",0,financial,bird_metadata
+147,147,SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'F' AND T2.A3 = 'south Bohemia',"
+SELECT COUNT(*) FROM account
+JOIN client ON account.district_id = client.district_id
+JOIN district ON account.district_id = district.district_id
+WHERE client.gender = 'female' AND district.A3 = 'South Bohemia';",0,financial,bird_metadata
+148,148,SELECT T2.account_id FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T3 ON T2.account_id = T3.account_id WHERE T3.type = 'OWNER' AND T1.A2 = 'Tabor',"
+SELECT account.account_id
+FROM account
+JOIN district ON account.district_id = district.district_id
+WHERE district.A2 = 'Tabor';",1,financial,bird_metadata
+149,149,SELECT T3.type FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T3 ON T2.account_id = T3.account_id WHERE T3.type != 'OWNER' AND T1.A11 BETWEEN 8000 AND 9000,"
+SQL Query:
+
+
+SELECT account.frequency
+FROM account
+JOIN district ON account.district_id = district.district_id
+LEFT JOIN loan ON account.account_id = loan.account_id
+WHERE loan.loan_id IS NULL
+AND district.A11 BETWEEN 8000 AND 9000;
+",0,financial,bird_metadata
+150,150,SELECT COUNT(T2.account_id) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN trans AS T3 ON T2.account_id = T3.account_id WHERE T3.bank = 'AB' AND T1.A3 = 'north Bohemia',"
+SELECT COUNT(DISTINCT account_id)
+FROM trans
+WHERE bank = 'AB' AND account_id IN (
+    SELECT account_id
+    FROM account
+    WHERE district_id IN (
+        SELECT district_id
+        FROM district
+        WHERE A3 = 'North Bohemia'
+    )
+);",0,financial,bird_metadata
+151,151,SELECT DISTINCT T1.A2 FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN trans AS T3 ON T2.account_id = T3.account_id WHERE T3.type = 'VYDAJ',"
+SELECT district.A2
+FROM district
+JOIN account ON district.district_id = account.district_id
+JOIN trans ON account.account_id = trans.account_id
+WHERE trans.type = '-';",0,financial,bird_metadata
+152,152,"SELECT AVG(T1.A15) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id WHERE STRFTIME('%Y', T2.date) >= '1997' AND T1.A15 > 4000","
+SELECT AVG(A15)
+FROM district
+WHERE A15 > 4000 AND A3 IN (
+    SELECT A3
+    FROM district
+    JOIN account ON district.district_id = account.district_id
+    WHERE date >= '1997-01-01'
+)",0,financial,bird_metadata
+153,153,SELECT COUNT(T1.card_id) FROM card AS T1 INNER JOIN disp AS T2 ON T1.disp_id = T2.disp_id WHERE T1.type = 'classic' AND T2.type = 'Owner',"
+SELECT COUNT(*)
+FROM card
+WHERE type = 'classic' AND card_id IN (
+    SELECT disp_id
+    FROM disp
+    WHERE account_id IN (
+        SELECT account_id
+        FROM loan
+        WHERE status = 'eligible'
+    )
+);",1,financial,bird_metadata
+154,154,SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'M' AND T2.A2 = 'Hl.m. Praha',"
+SQL Query:
+
+SELECT COUNT(*)
+FROM client
+JOIN district ON client.district_id = district.district_id
+WHERE district.A2 = 'Hl.m. Praha' AND client.gender = 'male';",0,financial,bird_metadata
+155,155,"SELECT CAST(SUM(type = 'gold') AS REAL) * 100 / COUNT(card_id) FROM card WHERE STRFTIME('%Y', issued) < '1998'","
+SELECT
+    (COUNT(*) FILTER (WHERE card.issued < '1998-01-01') * 100.0 / COUNT(*)) AS percentage
+FROM
+    card
+WHERE
+    card.type = 'Gold';",0,financial,bird_metadata
+156,156,SELECT T1.client_id FROM disp AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id WHERE T1.type = 'OWNER' ORDER BY T2.amount DESC LIMIT 1,"
+SELECT client.client_id
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN account ON disp.account_id = account.account_id
+JOIN loan ON account.account_id = loan.account_id
+WHERE loan.amount = (SELECT MAX(amount) FROM loan)
+LIMIT 1;",1,financial,bird_metadata
+157,157,SELECT T1.A15 FROM district AS T1 INNER JOIN `account` AS T2 ON T1.district_id = T2.district_id WHERE T2.account_id = 532,"
+SELECT district.A15
+FROM account
+JOIN district ON account.district_id = district.district_id
+WHERE account.account_id = 532;",1,financial,bird_metadata
+158,158,SELECT T3.district_id FROM `order` AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T2.district_id = T3.district_id WHERE T1.order_id = 33333,"
+SQL Query:
+
+SELECT account_id
+FROM `order`
+WHERE order_id = 33333;
+
+SELECT district_id
+FROM account
+WHERE account_id = (SELECT account_id
+                    FROM `order`
+                    WHERE order_id = 33333);",0,financial,bird_metadata
+159,159,SELECT T4.trans_id FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id INNER JOIN account AS T3 ON T2.account_id = T3.account_id INNER JOIN trans AS T4 ON T3.account_id = T4.account_id WHERE T1.client_id = 3356 AND T4.operation = 'VYBER',"
+SELECT trans.type, trans.amount, trans.date
+FROM trans
+JOIN account ON trans.account_id = account.account_id
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+WHERE client.client_id = 3356 AND trans.type = '-' AND trans.operation = 'cash';",0,financial,bird_metadata
+160,160,SELECT COUNT(T1.account_id) FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE T2.frequency = 'POPLATEK TYDNE' AND T1.amount < 200000,"
+SELECT COUNT(*) FROM account
+JOIN loan ON account.account_id = loan.account_id
+WHERE account.frequency = 'weekly' AND loan.amount < 200000;",0,financial,bird_metadata
+161,161,SELECT T3.type FROM disp AS T1 INNER JOIN client AS T2 ON T1.client_id = T2.client_id INNER JOIN card AS T3 ON T1.disp_id = T3.disp_id WHERE T2.client_id = 13539,"
+SELECT card.type
+FROM card
+JOIN disp ON card.disp_id = disp.disp_id
+JOIN client ON disp.client_id = client.client_id
+WHERE client.client_id = 13539;",1,financial,bird_metadata
+162,162,"SELECT T2.district_id, T1.A3 FROM district AS T1 INNER JOIN client AS T2 ON T1.district_id = T2.district_id WHERE T2.client_id = 3541","
+SELECT district.A3
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN account ON disp.account_id = account.account_id
+JOIN district ON account.district_id = district.district_id
+WHERE client.client_id = 3541;",0,financial,bird_metadata
+163,163,SELECT T1.district_id FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T2.account_id = T3.account_id WHERE T3.status = 'A' GROUP BY T1.district_id ORDER BY COUNT(T2.account_id) DESC LIMIT 1,"
+SQL Query:
+
+
+SELECT district_id, COUNT(*) as num_accounts
+FROM account
+JOIN loan ON account.account_id = loan.account_id
+WHERE loan.status = 'finished with no problems'
+GROUP BY district_id
+ORDER BY num_accounts DESC
+LIMIT 1;
+",0,financial,bird_metadata
+164,164,SELECT T3.client_id FROM `order` AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN client AS T3 ON T2.district_id = T3.district_id WHERE T1.order_id = 32423,"
+SELECT client_id FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN account ON disp.account_id = account.account_id
+JOIN `order` ON account.account_id = `order`.account_id
+WHERE `order`.order_id = 32423;",0,financial,bird_metadata
+165,165,SELECT T3.trans_id FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN trans AS T3 ON T2.account_id = T3.account_id WHERE T1.district_id = 5,"
+SQL Query:
+
+
+SELECT *
+FROM trans
+WHERE account_id IN (
+    SELECT account_id
+    FROM account
+    WHERE district_id = 5
+);
+",0,financial,bird_metadata
+166,166,SELECT COUNT(T2.account_id) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id WHERE T1.A2 = 'Jesenik',"
+SQL Query:
+
+SELECT COUNT(*)
+FROM account
+WHERE district_id = (SELECT district_id FROM district WHERE A2 = 'Jesenik');",0,financial,bird_metadata
+167,167,SELECT T2.client_id FROM card AS T1 INNER JOIN disp AS T2 ON T1.disp_id = T2.disp_id WHERE T1.type = 'junior' AND T1.issued >= '1997-01-01',"
+SELECT client.client_id
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN card ON disp.disp_id = card.disp_id
+WHERE card.type = 'junior' AND card.issued > '1996-12-31';",1,financial,bird_metadata
+168,168,SELECT CAST(SUM(T2.gender = 'F') AS REAL) * 100 / COUNT(T2.client_id) FROM district AS T1 INNER JOIN client AS T2 ON T1.district_id = T2.district_id WHERE T1.A11 > 10000,"
+SELECT
+    (COUNT(DISTINCT client.client_id) FILTER (WHERE client.gender = 'female') * 100.0 / COUNT(DISTINCT client.client_id)) AS percentage
+FROM
+    client
+    JOIN account ON client.client_id = account.account_id
+    JOIN district ON account.district_id = district.district_id
+WHERE
+    district.A11 > 10000;",0,financial,bird_metadata
+169,169,"SELECT CAST((SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1997' THEN T1.amount ELSE 0 END) - SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1996' THEN T1.amount ELSE 0 END)) AS REAL) * 100 / SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1996' THEN T1.amount ELSE 0 END) FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN disp AS T3 ON T3.account_id = T2.account_id INNER JOIN client AS T4 ON T4.client_id = T3.client_id WHERE T4.gender = 'M' AND T3.type = 'OWNER'","
+SELECT (SUM(loan.amount) FILTER (WHERE loan.date BETWEEN '1997-01-01' AND '1997-12-31') - SUM(loan.amount) FILTER (WHERE loan.date BETWEEN '1996-01-01' AND '1996-12-31')) / SUM(loan.amount) FILTER (WHERE loan.date BETWEEN '1996-01-01' AND '1996-12-31') * 100
+FROM loan
+JOIN disp ON loan.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+WHERE client.gender = 'male';",0,financial,bird_metadata
+170,170,"SELECT COUNT(account_id) FROM trans WHERE STRFTIME('%Y', date) > '1995' AND operation = 'VYBER KARTOU'","
+SQL Query:
+
+SELECT COUNT(*)
+FROM trans
+WHERE type = 'withdrawal' AND date > '1995-12-31' AND operation = 'credit card';",0,financial,bird_metadata
+171,171,"SELECT SUM(IIF(A3 = 'East Bohemia', A16, 0)) - SUM(IIF(A3 = 'North Bohemia', A16, 0)) FROM district","
+SQL Query:
+
+
+SELECT ABS(d1.A16 - d2.A16) AS crime_difference
+FROM district AS d1
+JOIN district AS d2 ON d1.A2 = 'East Bohemia' AND d2.A2 = 'North Bohemia'
+WHERE d1.A16 IS NOT NULL AND d2.A16 IS NOT NULL;
+",0,financial,bird_metadata
+172,172,"SELECT SUM(type = 'Owner') , SUM(type = 'Disponent') FROM disp WHERE account_id BETWEEN 1 AND 10","
+SQL Query:
+
+SELECT COUNT(*)
+FROM disp
+WHERE account_id BETWEEN 1 AND 10 AND type IN ('owner', 'disponent');",0,financial,bird_metadata
+173,173,"SELECT T1.frequency, T2.k_symbol FROM account AS T1 INNER JOIN `order` AS T2 ON T1.account_id = T2.account_id WHERE T1.account_id = 3 AND T2.amount = 3539","
+SQL Query:
+
+
+SELECT COUNT(*) as frequency, k_symbol
+FROM trans
+WHERE account_id = 3 AND amount = 3539;
+",0,financial,bird_metadata
+174,174,"SELECT STRFTIME('%Y', T1.birth_date) FROM client AS T1 INNER JOIN disp AS T3 ON T1.client_id = T3.client_id INNER JOIN account AS T2 ON T3.account_id = T2.account_id WHERE T2.account_id = 130","
+SELECT client.birth_date
+FROM client
+WHERE client.client_id = 130;",0,financial,bird_metadata
+175,175,SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN disp AS T2 ON T1.account_id = T2.account_id WHERE T2.type = 'OWNER' AND T1.frequency = 'POPLATEK PO OBRATU',"
+SELECT COUNT(DISTINCT account_id)
+FROM disp
+WHERE type = 'owner'
+AND EXISTS (
+    SELECT 1
+    FROM trans
+    WHERE trans.account_id = disp.account_id
+    AND trans.type = 'statement'
+);",0,financial,bird_metadata
+176,176,"SELECT T3.amount, T3.status FROM client AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T2.account_id = T3.account_id WHERE T1.client_id = 992","
+SELECT SUM(amount) as total_debt, status
+FROM loan
+JOIN account ON loan.account_id = account.account_id
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+WHERE client.client_id = 992;",0,financial,bird_metadata
+177,177,"SELECT T3.balance, T1.gender FROM client AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN trans AS T3 ON T2.account_id = T3.account_id WHERE T1.client_id = 4 AND T3.trans_id = 851","
+SELECT SUM(balance) as total_balance, gender
+FROM trans
+JOIN account ON trans.account_id = account.account_id
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+WHERE trans.trans_id = 851 AND client.client_id = 4;",1,financial,bird_metadata
+178,178,SELECT T3.type FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id INNER JOIN card AS T3 ON T2.disp_id = T3.disp_id WHERE T1.client_id = 9,"
+SELECT card.type
+FROM card
+JOIN disp ON card.disp_id = disp.disp_id
+JOIN client ON disp.client_id = client.client_id
+WHERE client.client_id = 9;",1,financial,bird_metadata
+179,179,"SELECT SUM(T3.amount) FROM client AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN trans AS T3 ON T2.account_id = T3.account_id WHERE STRFTIME('%Y', T3.date)= '1998' AND T1.client_id = 617","
+SELECT SUM(amount)
+FROM trans
+JOIN disp ON trans.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+WHERE client.client_id = 617 AND STRFTIME('%Y', trans.date) = '1998';",0,financial,bird_metadata
+180,180,"SELECT T1.client_id, T3.account_id FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN account AS T3 ON T2.district_id = T3.district_id WHERE T2.A3 = 'east Bohemia' AND STRFTIME('%Y', T1.birth_date) BETWEEN '1983' AND '1987'","
+SELECT client_id, birth_date
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN account ON disp.account_id = account.account_id
+JOIN district ON account.district_id = district.district_id
+WHERE birth_date BETWEEN '1983-01-01' AND '1987-12-31' AND A3 = 'East Bohemia';",0,financial,bird_metadata
+181,181,SELECT T1.client_id FROM client AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN loan AS T3 ON T2.account_id = T3.account_id WHERE T1.gender = 'F' ORDER BY T3.amount DESC LIMIT 3,"
+SELECT client_id
+FROM client
+WHERE gender = 'female'
+LIMIT 3
+ORDER BY (SELECT MAX(amount) FROM loan WHERE loan.account_id = account.account_id) DESC;",0,financial,bird_metadata
+182,182,"SELECT COUNT(T1.account_id) FROM trans AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN client AS T3 ON T2.district_id = T3.district_id WHERE STRFTIME('%Y', T3.birth_date) BETWEEN '1974' AND '1976' AND T3.gender = 'M' AND T1.amount > 4000 AND T1.k_symbol = 'SIPO'","
+SELECT COUNT(DISTINCT client_id)
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN trans ON disp.account_id = trans.account_id
+WHERE client.gender = 'male'
+AND client.birth_date BETWEEN '1974-01-01' AND '1976-12-31'
+AND trans.type = '-'
+AND trans.amount > 4000
+AND trans.k_symbol = 'home';",0,financial,bird_metadata
+183,183,"SELECT COUNT(account_id) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE STRFTIME('%Y', T1.date) > '1996' AND T2.A2 = 'Beroun'","
+SQL Query:
+
+SELECT COUNT(*)
+FROM account
+WHERE district_id IN (SELECT district_id FROM district WHERE A2 = 'Beroun') AND date > '1996-12-31';",0,financial,bird_metadata
+184,184,SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id INNER JOIN card AS T3 ON T2.disp_id = T3.disp_id WHERE T1.gender = 'F' AND T3.type = 'junior',"
+SELECT COUNT(DISTINCT client.client_id)
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN card ON disp.disp_id = card.disp_id
+WHERE client.gender = 'female' AND card.type = 'junior';",0,financial,bird_metadata
+185,185,SELECT CAST(SUM(T2.gender = 'F') AS REAL) / COUNT(T2.client_id) * 100 FROM district AS T1 INNER JOIN client AS T2 ON T1.district_id = T2.district_id WHERE T1.A3 = 'Prague',"
+SQL Query:
+
+SELECT COUNT(*) FILTER (WHERE client.gender = 'female') / COUNT(*) AS female_proportion
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN account ON disp.account_id = account.account_id
+JOIN district ON account.district_id = district.district_id
+WHERE district.A2 = 'Prague';",0,financial,bird_metadata
+186,186,SELECT CAST(SUM(T1.gender = 'M') AS REAL) * 100 / COUNT(T1.client_id) FROM client AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id WHERE T2.frequency = 'POPLATEK TYDNE',"
+SELECT
+    (COUNT(DISTINCT client.client_id) * 100.0 / (SELECT COUNT(DISTINCT client_id) FROM client WHERE gender = 'male')) AS male_percentage
+FROM
+    client
+    JOIN disp ON client.client_id = disp.client_id
+    JOIN account ON disp.account_id = account.account_id
+WHERE
+    client.gender = 'male' AND account.frequency = 'weekly';",0,financial,bird_metadata
+187,187,SELECT COUNT(T2.account_id) FROM account AS T1 INNER JOIN disp AS T2 ON T2.account_id = T1.account_id WHERE T1.frequency = 'POPLATEK TYDNE' AND T2.type = 'USER',"
+SQL Query:
+
+
+SELECT COUNT(DISTINCT client.client_id)
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN account ON disp.account_id = account.account_id
+WHERE account.frequency = 'weekly';
+",0,financial,bird_metadata
+188,188,"SELECT T1.account_id FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE T1.duration > 24 AND STRFTIME('%Y', T2.date) < '1997' ORDER BY T1.amount ASC LIMIT 1","
+SELECT account_id, MIN(amount)
+FROM account
+JOIN loan ON account.account_id = loan.account_id
+WHERE loan.duration > 24 AND account.date < '1997-01-01'
+GROUP BY account_id
+HAVING MIN(amount) = (SELECT MIN(amount) FROM loan WHERE duration > 24 AND account_id IN (SELECT account_id FROM account WHERE date < '1997-01-01'))",0,financial,bird_metadata
+189,189,"SELECT T3.account_id FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN account AS T3 ON T2.district_id = T3.district_id WHERE T1.gender = 'F' ORDER BY T1.birth_date ASC, T2.A11 ASC LIMIT 1","
+SELECT account.account_id
+FROM account
+JOIN disp ON account.account_id = disp.account_id
+JOIN client ON disp.client_id = client.client_id
+JOIN district ON account.district_id = district.district_id
+WHERE client.gender = 'female'
+GROUP BY account.account_id
+ORDER BY client.birth_date DESC, district.A11 ASC
+LIMIT 1;",0,financial,bird_metadata
+190,190,"SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE STRFTIME('%Y', T1.birth_date) = '1920' AND T2.A3 = 'east Bohemia'","
+SELECT COUNT(*) FROM client
+JOIN district ON client.district_id = district.district_id
+WHERE client.birth_date BETWEEN '1920-01-01' AND '1920-12-31' AND district.A3 = 'east Bohemia';",1,financial,bird_metadata
+191,191,SELECT COUNT(T2.account_id) FROM account AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id WHERE T2.duration = 24 AND T1.frequency = 'POPLATEK TYDNE',"
+SELECT COUNT(*) FROM account
+JOIN loan ON account.account_id = loan.account_id
+WHERE loan.duration = 24 AND account.frequency = 'weekly';",0,financial,bird_metadata
+192,192,"SELECT AVG(T2.payments) FROM account AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id WHERE T2.status IN ('C', 'D') AND T1.frequency = 'POPLATEK PO OBRATU'","
+SELECT AVG(amount)
+FROM loan
+WHERE status = 'running';",0,financial,bird_metadata
+193,193,"SELECT T3.client_id, T2.district_id, T2.A2 FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T3 ON T1.account_id = T3.account_id WHERE T3.type = 'OWNER'","
+SELECT client.client_id, district.district_id
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN account ON disp.account_id = account.account_id
+JOIN district ON account.district_id = district.district_id
+WHERE disp.type IN ('permanent order', 'loan')
+GROUP BY client.client_id, district.district_id
+HAVING COUNT(DISTINCT disp.type) = 1;",0,financial,bird_metadata
+194,194,"SELECT T1.client_id, STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T3.birth_date) FROM disp AS T1 INNER JOIN card AS T2 ON T2.disp_id = T1.disp_id INNER JOIN client AS T3 ON T1.client_id = T3.client_id WHERE T2.type = 'gold' AND T1.type = 'OWNER'","
+SELECT client.client_id, YEAR(CURRENT_DATE) - YEAR(client.birth_date) AS age
+FROM client
+JOIN disp ON client.client_id = disp.client_id
+JOIN card ON disp.disp_id = card.disp_id
+WHERE card.type = 'high level'
+AND EXISTS (
+    SELECT 1
+    FROM account
+    JOIN loan ON account.account_id = loan.account_id
+    WHERE account.client_id = client.client_id
+)",0,financial,bird_metadata
+195,195,"SELECT T.bond_type FROM ( SELECT bond_type, COUNT(bond_id) FROM bond GROUP BY bond_type ORDER BY COUNT(bond_id) DESC LIMIT 1 ) AS T","
+SELECT bond_type, COUNT(*) as count
+FROM bond
+GROUP BY bond_type
+ORDER BY count DESC
+LIMIT 1;",0,toxicology,bird_metadata
+196,196,SELECT COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.element = 'cl' AND T1.label = '-',"
+SELECT COUNT(DISTINCT a.atom_id)
+FROM atom a
+JOIN molecule m ON a.molecule_id = m.molecule_id
+WHERE m.label != 'carcinogenic' AND a.element = 'chlorine';",0,toxicology,bird_metadata
+197,197,"SELECT AVG(oxygen_count) FROM (SELECT T1.molecule_id, COUNT(T1.element) AS oxygen_count FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id  WHERE T2.bond_type = '-' AND T1.element = 'o'  GROUP BY T1.molecule_id) AS oxygen_counts","
+SELECT AVG(num_oxygen)
+FROM (
+  SELECT COUNT(a.atom_id) AS num_oxygen
+  FROM atom a
+  JOIN connected c ON a.atom_id = c.atom_id OR a.atom_id = c.atom_id2
+  JOIN bond b ON c.bond_id = b.bond_id
+  JOIN molecule m ON a.molecule_id = m.molecule_id
+  WHERE a.element = 'oxygen' AND b.bond_type = 'single'
+  GROUP BY a.molecule_id
+) subquery;",0,toxicology,bird_metadata
+198,198,"SELECT AVG(single_bond_count) FROM (SELECT T3.molecule_id, COUNT(T1.bond_type) AS single_bond_count FROM bond AS T1  INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN molecule AS T3 ON T3.molecule_id = T2.molecule_id WHERE T1.bond_type = '-' AND T3.label = '+' GROUP BY T3.molecule_id) AS subquery","
+SELECT AVG(COUNT(DISTINCT molecule_id))
+FROM molecule
+JOIN connected ON molecule.molecule_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE label = 'carcinogenic' AND bond_type = 'single'
+GROUP BY molecule_id;",0,toxicology,bird_metadata
+199,199,SELECT COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'na' AND T2.label = '-',"
+SELECT COUNT(*) FROM molecule
+JOIN atom ON molecule.molecule_id = atom.molecule_id
+WHERE atom.element = 'sodium' AND molecule.label != 'carcinogenic';",0,toxicology,bird_metadata
+200,200,SELECT DISTINCT T2.molecule_id FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '#' AND T2.label = '+',"
+SELECT molecule.molecule_id, molecule.label
+FROM molecule
+JOIN bond ON molecule.molecule_id = bond.molecule_id
+JOIN connected ON bond.bond_id = connected.bond_id
+WHERE bond.bond_type = 'triple' AND molecule.label = 'carcinogenic';",0,toxicology,bird_metadata
+201,201,SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element = 'c' THEN T1.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T1.atom_id) FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.bond_type = '=',"
+SELECT
+  COUNT(DISTINCT a.atom_id) * 100.0 / COUNT(DISTINCT m.molecule_id) AS carbon_percentage
+FROM
+  atom a
+  JOIN connected c ON a.atom_id = c.atom_id OR a.atom_id = c.atom_id2
+  JOIN bond b ON c.bond_id = b.bond_id
+  JOIN molecule m ON a.molecule_id = m.molecule_id
+WHERE
+  a.element = 'carbon' AND b.bond_type = 'double';",0,toxicology,bird_metadata
+202,202,SELECT COUNT(T.bond_id) FROM bond AS T WHERE T.bond_type = '#',"
+SELECT COUNT(*) FROM bond WHERE bond_type = 'triple';",0,toxicology,bird_metadata
+203,203,SELECT COUNT(DISTINCT T.atom_id) FROM atom AS T WHERE T.element <> 'br',"
+SELECT COUNT(*) FROM atom WHERE atom_id NOT IN (SELECT atom_id FROM atom WHERE element = 'bromine');",0,toxicology,bird_metadata
+204,204,SELECT COUNT(T.molecule_id) FROM molecule AS T WHERE molecule_id BETWEEN 'TR000' AND 'TR099' AND T.label = '+',"
+SELECT COUNT(*) FROM molecule WHERE label = 'carcinogenic' AND molecule_id IN (SELECT molecule_id FROM molecule ORDER BY molecule_id LIMIT 100);",0,toxicology,bird_metadata
+205,205,SELECT T.atom_id FROM atom AS T WHERE T.element = 'si',"
+SELECT molecule_id FROM atom WHERE element = 'silicon'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+",0,toxicology,bird_metadata
+206,206,SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id = 'TR004_8_9',"
+SELECT element
+FROM atom
+WHERE atom_id IN (
+  SELECT atom_id
+  FROM connected
+  WHERE bond_id = 'TR004_8_9'
+) OR atom_id IN (
+  SELECT atom_id2
+  FROM connected
+  WHERE bond_id = 'TR004_8_9'
+);",0,toxicology,bird_metadata
+207,207,SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN connected AS T3 ON T1.atom_id = T3.atom_id WHERE T2.bond_type = '=',"
+SELECT element
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE bond_type = 'double';",0,toxicology,bird_metadata
+208,208,"SELECT T.label FROM ( SELECT T2.label, COUNT(T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'h' GROUP BY T2.label ORDER BY COUNT(T2.molecule_id) DESC LIMIT 1 ) t","
+SELECT label, COUNT(*) as count
+FROM molecule
+JOIN atom ON molecule.molecule_id = atom.molecule_id
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE atom.element = 'hydrogen'
+GROUP BY label
+ORDER BY count DESC
+LIMIT 1;",0,toxicology,bird_metadata
+209,209,SELECT DISTINCT T1.bond_type FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id INNER JOIN atom AS T3 ON T2.atom_id = T3.atom_id WHERE T3.element = 'te',"
+SELECT bond_type
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id
+WHERE atom.element = 'Tellurium';",0,toxicology,bird_metadata
+210,210,"SELECT T2.atom_id, T2.atom_id2 FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T1.bond_type = '-'","
+SELECT atom.atom_id, atom.element
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE bond.bond_type = 'single';",0,toxicology,bird_metadata
+211,211,SELECT DISTINCT T1.atom_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN connected AS T3 ON T1.atom_id = T3.atom_id WHERE T2.label = '-',"
+SELECT a1.atom_id, a2.atom_id
+FROM atom a1
+JOIN connected c ON a1.atom_id = c.atom_id
+JOIN atom a2 ON c.atom_id2 = a2.atom_id
+JOIN molecule m ON a1.molecule_id = m.molecule_id
+WHERE m.label != 'carcinogenic';",0,toxicology,bird_metadata
+212,212,"SELECT T.element FROM ( SELECT T1.element, COUNT(DISTINCT T1.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '-' GROUP BY T1.element ORDER BY COUNT(DISTINCT T1.molecule_id) ASC LIMIT 4 ) t","
+SELECT element
+FROM atom
+WHERE molecule_id IN (
+    SELECT molecule_id
+    FROM molecule
+    WHERE label != 'carcinogenic'
+)
+GROUP BY element
+ORDER BY COUNT(*)
+LIMIT 1;",0,toxicology,bird_metadata
+213,213,SELECT T1.bond_type FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T2.atom_id = 'TR004_8' AND T2.atom_id2 = 'TR004_20' OR T2.atom_id2 = 'TR004_8' AND T2.atom_id = 'TR004_20',"
+SELECT bond_type
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+WHERE (connected.atom_id = 'TR004_8' AND connected.atom_id2 = 'TR004_20') OR (connected.atom_id = 'TR004_20' AND connected.atom_id2 = 'TR004_8');",1,toxicology,bird_metadata
+214,214,SELECT DISTINCT T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element != 'sn',"
+SELECT label
+FROM molecule
+WHERE molecule_id NOT IN (
+    SELECT molecule_id
+    FROM atom
+    WHERE element = 'tin'
+)
+GROUP BY label
+HAVING COUNT(*) > 0;",1,toxicology,bird_metadata
+215,215,"SELECT COUNT(DISTINCT CASE WHEN T1.element = 'i' THEN T1.atom_id ELSE NULL END) AS iodine_nums , COUNT(DISTINCT CASE WHEN T1.element = 's' THEN T1.atom_id ELSE NULL END) AS sulfur_nums FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id INNER JOIN bond AS T3 ON T2.bond_id = T3.bond_id WHERE T3.bond_type = '-'","
+SELECT COUNT(DISTINCT a.atom_id)
+FROM atom a
+JOIN connected c ON a.atom_id = c.atom_id OR a.atom_id = c.atom_id2
+JOIN bond b ON c.bond_id = b.bond_id
+WHERE a.element IN ('iodine', 'sulfur') AND b.bond_type = 'single';",0,toxicology,bird_metadata
+216,216,"SELECT T2.atom_id, T2.atom_id2 FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T1.bond_type = '#'","
+SELECT a1.atom_id, a2.atom_id
+FROM connected c
+JOIN atom a1 ON c.atom_id = a1.atom_id
+JOIN atom a2 ON c.atom_id2 = a2.atom_id
+JOIN bond b ON c.bond_id = b.bond_id
+WHERE b.bond_type = 'triple';",0,toxicology,bird_metadata
+217,217,"SELECT T2.atom_id, T2.atom_id2 FROM atom AS T1 INNER JOIN connected AS T2 ON T2.atom_id = T1.atom_id WHERE T1.molecule_id = 'TR181'","
+SELECT atom_id
+FROM atom
+WHERE molecule_id = (SELECT molecule_id FROM molecule WHERE molecule_id = 'TR181')
+OR atom_id IN (SELECT atom_id2 FROM connected WHERE atom_id IN (SELECT atom_id FROM atom WHERE molecule_id = 'TR181'))
+OR atom_id IN (SELECT atom_id FROM connected WHERE atom_id2 IN (SELECT atom_id FROM atom WHERE molecule_id = 'TR181'));",0,toxicology,bird_metadata
+218,218,SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element <> 'f' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+',"
+SELECT
+  (COUNT(DISTINCT m.molecule_id) - COUNT(DISTINCT a.atom_id)) * 100.0 / COUNT(DISTINCT m.molecule_id) AS percentage
+FROM
+  molecule m
+LEFT JOIN
+  atom a ON m.molecule_id = a.molecule_id
+WHERE
+  m.label = 'carcinogenic' AND a.element <> 'fluorine';",0,toxicology,bird_metadata
+219,219,SELECT CAST(COUNT(DISTINCT CASE WHEN T2.label = '+' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '#',"
+SELECT
+  (COUNT(DISTINCT molecule.molecule_id) * 100.0 /
+  (SELECT COUNT(DISTINCT molecule_id) FROM molecule)) AS carcinogenic_percentage
+FROM
+  molecule
+JOIN
+  bond ON molecule.molecule_id = bond.molecule_id
+WHERE
+  bond.bond_type = 'triple' AND molecule.label = 'carcinogenic';",0,toxicology,bird_metadata
+220,220,SELECT DISTINCT T.element FROM atom AS T WHERE T.molecule_id = 'TR000' ORDER BY T.element LIMIT 3,"
+SELECT element
+FROM atom
+WHERE molecule_id = 'TR000'
+LIMIT 3
+ORDER BY element ASC;",0,toxicology,bird_metadata
+221,221,"SELECT SUBSTR(T.bond_id, 1, 7) AS atom_id1 , T.molecule_id || SUBSTR(T.bond_id, 8, 2) AS atom_id2 FROM bond AS T WHERE T.molecule_id = 'TR001' AND T.bond_id = 'TR001_2_6'","
+SELECT atom.atom_id
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+WHERE connected.bond_id = 'TR001_2_6' AND atom.molecule_id = 'TR001';",0,toxicology,bird_metadata
+222,222,SELECT COUNT(CASE WHEN T.label = '+' THEN T.molecule_id ELSE NULL END) - COUNT(CASE WHEN T.label = '-' THEN T.molecule_id ELSE NULL END) AS diff_car_notcar FROM molecule t,"
+SELECT (
+  (SELECT COUNT(*) FROM molecule WHERE label = 'carcinogenic')
+  -
+  (SELECT COUNT(*) FROM molecule WHERE label <> 'carcinogenic')
+) AS difference;",0,toxicology,bird_metadata
+223,223,SELECT T.atom_id FROM connected AS T WHERE T.bond_id = 'TR000_2_5',"
+SELECT atom_id, atom_id2 FROM connected WHERE bond_id = 'TR_000_2_5';",0,toxicology,bird_metadata
+224,224,SELECT T.bond_id FROM connected AS T WHERE T.atom_id2 = 'TR000_2',"
+SELECT bond_id FROM connected WHERE atom_id2 = 'TR000_2';",1,toxicology,bird_metadata
+225,225,SELECT DISTINCT T.molecule_id FROM bond AS T WHERE T.bond_type = '=' ORDER BY T.molecule_id LIMIT 5,"
+SELECT molecule.label, molecule.molecule_id
+FROM molecule
+JOIN bond ON molecule.molecule_id = bond.molecule_id
+JOIN connected ON bond.bond_id = connected.bond_id
+WHERE bond.bond_type = 'double'
+GROUP BY molecule.label, molecule.molecule_id
+ORDER BY molecule.label
+LIMIT 5;",0,toxicology,bird_metadata
+226,226,SELECT CAST(COUNT(CASE WHEN T.bond_type = '=' THEN T.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T.bond_id) FROM bond AS T WHERE T.molecule_id = 'TR008',"
+SELECT
+  (COUNT(CASE WHEN bond_type = 'double' THEN 1 END) * 100.0 / COUNT(*)) AS double_bond_percentage
+FROM
+  bond
+  JOIN connected ON bond.bond_id = connected.bond_id
+  JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+WHERE
+  atom.molecule_id = 'TR008';",0,toxicology,bird_metadata
+227,227,SELECT CAST(COUNT(CASE WHEN T.label = '+' THEN T.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(T.molecule_id) FROM molecule t,"
+SELECT
+  COUNT(*) FILTER (WHERE label = 'carcinogenic') * 100.0 / COUNT(*)
+FROM
+  molecule;",0,toxicology,bird_metadata
+228,228,SELECT CAST(COUNT(CASE WHEN T.element = 'h' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id) FROM atom AS T WHERE T.molecule_id = 'TR206',"
+SELECT
+  (SUM(CASE WHEN a.element = 'hydrogen' THEN 1 ELSE 0 END) / COUNT(*)) * 100 AS hydrogen_percentage
+FROM
+  atom a
+  JOIN connected c ON a.atom_id = c.atom_id OR a.atom_id = c.atom_id2
+  JOIN molecule m ON a.molecule_id = m.molecule_id
+WHERE
+  m.molecule_id = 'TR206';",0,toxicology,bird_metadata
+229,229,SELECT DISTINCT T.bond_type FROM bond AS T WHERE T.molecule_id = 'TR000',"
+SELECT bond_type
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+WHERE atom.molecule_id = 'TR000';",0,toxicology,bird_metadata
+230,230,"SELECT DISTINCT T1.element, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR060'","
+SELECT atom.element, molecule.label
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE molecule.molecule_id = 'TR060';",0,toxicology,bird_metadata
+231,231,"SELECT T.bond_type FROM ( SELECT T1.bond_type, COUNT(T1.molecule_id) FROM bond AS T1  WHERE T1.molecule_id = 'TR018' GROUP BY T1.bond_type ORDER BY COUNT(T1.molecule_id) DESC LIMIT 1 ) AS T","
+SELECT bond_type, COUNT(*) as bond_count, molecule.label as carcinogenic
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE molecule.molecule_id = 'TR018'
+GROUP BY bond_type
+ORDER BY bond_count DESC
+LIMIT 1;",0,toxicology,bird_metadata
+232,232,SELECT DISTINCT T2.molecule_id FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '-' AND T2.label = '-' ORDER BY T2.molecule_id LIMIT 3,"
+SELECT m.label, m.molecule_id
+FROM molecule m
+JOIN bond b ON m.molecule_id = b.molecule_id
+JOIN connected c ON b.bond_id = c.bond_id
+WHERE b.bond_type = 'single'
+AND m.label != 'carcinogenic'
+GROUP BY m.label, m.molecule_id
+ORDER BY m.label
+LIMIT 3;",0,toxicology,bird_metadata
+233,233,SELECT DISTINCT T2.bond_id FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T1.molecule_id = 'TR006' ORDER BY T2.bond_id LIMIT 2,"
+SELECT bond_type
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+WHERE atom.molecule_id = 'TR006'
+GROUP BY bond_type
+ORDER BY bond_type
+LIMIT 2;",0,toxicology,bird_metadata
+234,234,SELECT COUNT(T2.bond_id) FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T1.molecule_id = 'TR009' AND T2.atom_id = T1.molecule_id || '_1' AND T2.atom_id2 = T1.molecule_id || '_2',"
+SELECT COUNT(*) FROM connected
+JOIN bond ON connected.bond_id = bond.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+WHERE atom.atom_id = '12' AND bond.molecule_id = 'TR009';",0,toxicology,bird_metadata
+235,235,SELECT COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+' AND T1.element = 'br',"
+SELECT COUNT(DISTINCT molecule.molecule_id)
+FROM molecule
+JOIN atom ON molecule.molecule_id = atom.molecule_id
+WHERE atom.element = 'bromine' AND molecule.label = 'carcinogenic';",0,toxicology,bird_metadata
+236,236,"SELECT T1.bond_type, T2.atom_id, T2.atom_id2 FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T2.bond_id = 'TR001_6_9'","
+SELECT bond.bond_type, atom.atom_id, atom2.atom_id
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id
+JOIN atom AS atom2 ON connected.atom_id2 = atom2.atom_id
+WHERE bond.bond_id = 'TR001_6_9';",1,toxicology,bird_metadata
+237,237,"SELECT T2.molecule_id , IIF(T2.label = '+', 'YES', 'NO') AS flag_carcinogenic FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.atom_id = 'TR001_10'","
+SELECT molecule.label
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE atom.atom_id = 'TR001_10';",0,toxicology,bird_metadata
+238,238,SELECT COUNT(DISTINCT T.molecule_id) FROM bond AS T WHERE T.bond_type = '#',"
+SQL Query:
+
+SELECT COUNT(DISTINCT molecule_id)
+FROM bond
+WHERE bond_type = 'triple';",0,toxicology,bird_metadata
+239,239,"SELECT COUNT(T.bond_id) FROM connected AS T WHERE SUBSTR(T.atom_id, -2) = '19'","
+SELECT COUNT(*) FROM connected WHERE atom_id = '19' OR atom_id2 = '19';",0,toxicology,bird_metadata
+240,240,SELECT DISTINCT T.element FROM atom AS T WHERE T.molecule_id = 'TR004',"
+SELECT element
+FROM atom
+WHERE molecule_id = 'TR004';",0,toxicology,bird_metadata
+241,241,SELECT COUNT(T.molecule_id) FROM molecule AS T WHERE T.label = '-',"
+SELECT COUNT(*) FROM molecule WHERE label != 'carcinogenic';",0,toxicology,bird_metadata
+242,242,"SELECT DISTINCT T2.molecule_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE SUBSTR(T1.atom_id, -2) BETWEEN '21' AND '25' AND T2.label = '+'","
+SELECT molecule.label
+FROM molecule
+JOIN atom ON molecule.molecule_id = atom.molecule_id
+WHERE atom.atom_id BETWEEN 21 AND 25 AND molecule.label = 'carcinogenic';",0,toxicology,bird_metadata
+243,243,SELECT T2.bond_id FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id IN ( SELECT T3.bond_id FROM connected AS T3 INNER JOIN atom AS T4 ON T3.atom_id = T4.atom_id WHERE T4.element = 'p' ) AND T1.element = 'n',"
+SELECT bond_id
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE atom.element = 'phosphorus'
+AND atom.atom_id IN (
+    SELECT atom_id2
+    FROM atom
+    JOIN connected ON atom.atom_id = connected.atom_id2
+    WHERE atom.element = 'nitrogen'
+)
+GROUP BY bond_id;",0,toxicology,bird_metadata
+244,244,"SELECT T1.label FROM molecule AS T1 INNER JOIN ( SELECT T.molecule_id, COUNT(T.bond_type) FROM bond AS T WHERE T.bond_type = '=' GROUP BY T.molecule_id ORDER BY COUNT(T.bond_type) DESC LIMIT 1 ) AS T2 ON T1.molecule_id = T2.molecule_id","
+SELECT label
+FROM molecule
+WHERE molecule_id = (
+  SELECT molecule_id
+  FROM (
+    SELECT molecule_id, COUNT(*) as double_bond_count
+    FROM bond
+    JOIN connected ON bond.bond_id = connected.bond_id
+    WHERE bond_type = 'double'
+    GROUP BY molecule_id
+    ORDER BY double_bond_count DESC
+    LIMIT 1
+  ) as subquery
+);",0,toxicology,bird_metadata
+245,245,SELECT CAST(COUNT(T2.bond_id) AS REAL) / COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T1.element = 'i',"
+SELECT AVG(bond_count)
+FROM (
+  SELECT a.atom_id, COUNT(c.bond_id) AS bond_count
+  FROM atom a
+  JOIN connected c ON a.atom_id = c.atom_id OR a.atom_id = c.atom_id2
+  WHERE a.element = 'iodine'
+  GROUP BY a.atom_id
+) AS subquery;",0,toxicology,bird_metadata
+246,246,"SELECT T1.bond_type, T1.bond_id FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE SUBSTR(T2.atom_id, 7, 2) = '45'","
+SELECT bond_type, bond_id
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id
+WHERE atom.atom_id = '45';",0,toxicology,bird_metadata
+247,247,SELECT DISTINCT T.element FROM atom AS T WHERE T.element NOT IN ( SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id ),"
+SELECT element
+FROM atom
+WHERE atom_id NOT IN (
+    SELECT atom_id
+    FROM connected
+    UNION
+    SELECT atom_id2
+    FROM connected
+);",0,toxicology,bird_metadata
+248,248,"SELECT T2.atom_id, T2.atom_id2 FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id INNER JOIN bond AS T3 ON T2.bond_id = T3.bond_id WHERE T3.bond_type = '#' AND T3.molecule_id = 'TR447'","
+SELECT atom.atom_id
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE bond.bond_type = 'triple' AND atom.molecule_id = 'TR447';",0,toxicology,bird_metadata
+249,249,SELECT T2.element FROM connected AS T1 INNER JOIN atom AS T2 ON T1.atom_id = T2.atom_id WHERE T1.bond_id = 'TR144_8_19',"
+SELECT element
+FROM atom
+WHERE molecule_id = 'TR144_8_19';",0,toxicology,bird_metadata
+250,250,"SELECT T.molecule_id FROM ( SELECT T3.molecule_id, COUNT(T1.bond_type) FROM bond AS T1 INNER JOIN molecule AS T3 ON T1.molecule_id = T3.molecule_id WHERE T3.label = '+' AND T1.bond_type = '=' GROUP BY T3.molecule_id ORDER BY COUNT(T1.bond_type) DESC LIMIT 1 ) AS T","
+SELECT molecule_id, COUNT(*) as double_bond_count
+FROM molecule
+JOIN bond ON molecule.molecule_id = bond.molecule_id
+JOIN connected ON bond.bond_id = connected.bond_id
+WHERE molecule.label = 'carcinogenic' AND bond.bond_type = 'double'
+GROUP BY molecule_id
+ORDER BY double_bond_count DESC
+LIMIT 1;",0,toxicology,bird_metadata
+251,251,"SELECT T.element FROM ( SELECT T2.element, COUNT(DISTINCT T2.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.label = '+' GROUP BY T2.element ORDER BY COUNT(DISTINCT T2.molecule_id) LIMIT 1 ) t","
+SELECT element
+FROM atom
+WHERE molecule_id IN (
+    SELECT molecule_id
+    FROM molecule
+    WHERE label = 'carcinogenic'
+)
+GROUP BY element
+ORDER BY COUNT(*) ASC
+LIMIT 1;",0,toxicology,bird_metadata
+252,252,"SELECT T2.atom_id, T2.atom_id2 FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T1.element = 'pb'","
+SELECT a2.atom_id
+FROM atom a1
+JOIN connected c ON a1.atom_id = c.atom_id
+JOIN atom a2 ON c.atom_id2 = a2.atom_id
+WHERE a1.element = 'lead';",0,toxicology,bird_metadata
+253,253,SELECT DISTINCT T3.element FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id INNER JOIN atom AS T3 ON T2.atom_id = T3.atom_id WHERE T1.bond_type = '#',"
+SELECT element
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE bond_type = 'triple';",0,toxicology,bird_metadata
+254,254,SELECT CAST((SELECT COUNT(T1.atom_id) FROM connected AS T1 INNER JOIN bond AS T2 ON T1.bond_id = T2.bond_id GROUP BY T2.bond_type ORDER BY COUNT(T2.bond_id) DESC LIMIT 1 ) AS REAL) * 100 / ( SELECT COUNT(atom_id) FROM connected ),"
+SELECT
+  COUNT(*) * 100.0 / (SELECT COUNT(*) FROM bond) AS percentage
+FROM
+  (SELECT
+    bond_id,
+    COUNT(*) AS count
+  FROM
+    (SELECT
+      bond_id,
+      element AS element1,
+      (SELECT
+        element
+      FROM
+        atom
+      WHERE
+        atom.atom_id = connected.atom_id2) AS element2
+    FROM
+      connected
+      JOIN atom ON connected.atom_id = atom.atom_id) AS subquery
+  GROUP BY
+    bond_id,
+    element1,
+    element2
+  ORDER BY
+    count DESC
+  LIMIT
+    1) AS subquery2;",0,toxicology,bird_metadata
+255,255,SELECT CAST(COUNT(CASE WHEN T2.label = '+' THEN T1.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T1.bond_id) FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '-',"
+SQL Query:
+
+
+WITH bond_count AS (
+  SELECT COUNT(*) AS total_single_bonds
+  FROM bond
+  WHERE bond_type = 'single'
+),
+carcinogenic_bond_count AS (
+  SELECT COUNT(*) AS carcinogenic_single_bonds
+  FROM bond
+  JOIN connected ON bond.bond_id = connected.bond_id
+  JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+  JOIN molecule ON atom.molecule_id = molecule.molecule_id
+  WHERE bond.bond_type = 'single' AND molecule.label = 'carcinogenic'
+)
+SELECT
+  CAST(carcinogenic_bond_count.carcinogenic_single_bonds AS FLOAT) / bond_count.total_single_bonds AS proportion_carcinogenic
+FROM bond_count
+CROSS JOIN carcinogenic_bond_count;
+",0,toxicology,bird_metadata
+256,256,SELECT COUNT(T.atom_id) FROM atom AS T WHERE T.element = 'c' OR T.element = 'h',"
+SELECT COUNT(*) FROM atom WHERE element IN ('carbon', 'hydrogen');",0,toxicology,bird_metadata
+257,257,SELECT DISTINCT T2.atom_id2 FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T1.element = 's',"
+SELECT atom_id2 FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+WHERE element = 'sulfur';",0,toxicology,bird_metadata
+258,258,SELECT DISTINCT T3.bond_type FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id INNER JOIN bond AS T3 ON T3.bond_id = T2.bond_id WHERE T1.element = 'sn',"
+SELECT bond_type
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id
+WHERE atom.element = 'Tin';",0,toxicology,bird_metadata
+259,259,"SELECT COUNT(DISTINCT T.element) FROM ( SELECT DISTINCT T2.molecule_id, T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '-' ) AS T","
+SELECT COUNT(DISTINCT a.element)
+FROM atom a
+JOIN connected c ON a.atom_id = c.atom_id OR a.atom_id = c.atom_id2
+JOIN bond b ON c.bond_id = b.bond_id
+WHERE b.bond_type = 'single';",0,toxicology,bird_metadata
+260,260,"SELECT COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '#' AND T1.element IN ('p', 'br')","
+SELECT COUNT(DISTINCT a.atom_id)
+FROM atom a
+JOIN connected c ON a.atom_id = c.atom_id OR a.atom_id = c.atom_id2
+JOIN bond b ON c.bond_id = b.bond_id
+WHERE b.bond_type = 'triple' AND (a.element = 'phosphorus' OR a.element = 'bromine');",0,toxicology,bird_metadata
+261,261,SELECT DISTINCT T1.bond_id FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+',"
+SELECT bond.bond_id
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE molecule.label = 'carcinogenic';",0,toxicology,bird_metadata
+262,262,SELECT DISTINCT T1.molecule_id FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '-' AND T1.bond_type = '-',"
+SELECT molecule_id
+FROM molecule
+WHERE molecule_id NOT IN (
+    SELECT molecule_id
+    FROM bond
+    WHERE bond_type = 'single'
+) OR label IS NULL OR label != 'carcinogenic';",0,toxicology,bird_metadata
+263,263,"SELECT CAST(COUNT(CASE WHEN T.element = 'cl' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id) FROM ( SELECT T1.atom_id, T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '-' ) AS T","
+SELECT
+  (COUNT(a.atom_id) * 100.0 / (SELECT COUNT(*) FROM atom WHERE molecule_id IN (SELECT molecule_id FROM bond WHERE bond_type = 'single'))) AS chlorine_percentage
+FROM
+  atom a
+  JOIN bond b ON a.molecule_id = b.molecule_id
+  JOIN connected c ON a.atom_id = c.atom_id
+WHERE
+  a.element = 'chlorine' AND b.bond_type = 'single';",0,toxicology,bird_metadata
+264,264,"SELECT molecule_id, T.label FROM molecule AS T WHERE T.molecule_id IN ('TR000', 'TR001', 'TR002')","
+SELECT label
+FROM molecule
+WHERE molecule_id IN ('TR000', 'TR001', 'TR002');",0,toxicology,bird_metadata
+265,265,SELECT T.molecule_id FROM molecule AS T WHERE T.label = '-',"
+SELECT molecule_id FROM molecule WHERE label != 'carcinogenic';",0,toxicology,bird_metadata
+266,266,SELECT COUNT(T.molecule_id) FROM molecule AS T WHERE T.molecule_id BETWEEN 'TR000' AND 'TR030' AND T.label = '+',"
+SELECT COUNT(*)
+FROM molecule
+WHERE molecule_id BETWEEN 'TR000' AND 'TR030' AND label = 'carcinogenic';",0,toxicology,bird_metadata
+267,267,"SELECT T2.molecule_id, T2.bond_type FROM molecule AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.molecule_id BETWEEN 'TR000' AND 'TR050'","
+SELECT bond_type
+FROM bond
+WHERE molecule_id BETWEEN 'TR000' AND 'TR050';",0,toxicology,bird_metadata
+268,268,SELECT T2.element FROM connected AS T1 INNER JOIN atom AS T2 ON T1.atom_id = T2.atom_id WHERE T1.bond_id = 'TR001_10_11',"
+SELECT element
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE bond.bond_id = 'TR001_10_11';",1,toxicology,bird_metadata
+269,269,SELECT COUNT(T3.bond_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T1.element = 'i',"
+SELECT COUNT(DISTINCT bond_id)
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+WHERE element = 'iodine';",0,toxicology,bird_metadata
+270,270,SELECT T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'ca' GROUP BY T2.label ORDER BY COUNT(T2.label) DESC LIMIT 1,"
+SELECT
+  CASE
+    WHEN COUNT(DISTINCT molecule.molecule_id) FILTER (WHERE molecule.label = 'carcinogenic') > COUNT(DISTINCT molecule.molecule_id) FILTER (WHERE molecule.label IS NULL OR molecule.label != 'carcinogenic') THEN 'Mostly carcinogenic'
+    ELSE 'Mostly non carcinogenic'
+  END AS carcinogenicity
+FROM
+  atom
+  JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE
+  atom.element = 'Calcium';",0,toxicology,bird_metadata
+271,271,"SELECT T2.bond_id, T2.atom_id2, T1.element AS flag_have_CaCl FROM atom AS T1 INNER JOIN connected AS T2 ON T2.atom_id = T1.atom_id WHERE T2.bond_id = 'TR001_1_8' AND (T1.element = 'c1' OR T1.element = 'c')","
+SELECT
+  a1.element AS element1,
+  a2.element AS element2
+FROM
+  atom a1
+  JOIN connected c1 ON a1.atom_id = c1.atom_id
+  JOIN bond b1 ON c1.bond_id = b1.bond_id
+  JOIN atom a2 ON c1.atom_id2 = a2.atom_id
+WHERE
+  b1.bond_id = 'TR001_1_8' AND
+  (a1.element = 'chlorine' OR a2.element = 'chlorine') AND
+  (a1.element = 'carbon' OR a2.element = 'carbon');",0,toxicology,bird_metadata
+272,272,SELECT DISTINCT T2.molecule_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '#' AND T1.element = 'c' AND T2.label = '-',"
+SELECT molecule_id
+FROM molecule
+WHERE molecule_id IN (
+    SELECT molecule_id
+    FROM atom
+    WHERE element = 'carbon'
+    AND molecule_id IN (
+        SELECT molecule_id
+        FROM bond
+        WHERE bond_type = 'triple bond'
+    )
+)
+AND label IS NULL
+LIMIT 2;",0,toxicology,bird_metadata
+273,273,SELECT CAST(COUNT( CASE WHEN T1.element = 'cl' THEN T1.element ELSE NULL END) AS REAL) * 100 / COUNT(T1.element) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+',"
+SELECT
+  COUNT(DISTINCT a.atom_id) * 100.0 / COUNT(DISTINCT m.molecule_id) AS percentage
+FROM
+  atom a
+  JOIN molecule m ON a.molecule_id = m.molecule_id
+  JOIN connected c ON a.atom_id = c.atom_id
+  JOIN bond b ON c.bond_id = b.bond_id
+WHERE
+  a.element = 'chlorine' AND
+  m.label = 'carcinogenic'",0,toxicology,bird_metadata
+274,274,SELECT DISTINCT T.element FROM atom AS T WHERE T.molecule_id = 'TR001',"
+SELECT element
+FROM atom
+WHERE molecule_id = 'TR001';",0,toxicology,bird_metadata
+275,275,SELECT DISTINCT T.molecule_id FROM bond AS T WHERE T.bond_type = '=',"
+SELECT molecule_id FROM bond WHERE bond_type = 'double';",0,toxicology,bird_metadata
+276,276,"SELECT T2.atom_id, T2.atom_id2 FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T1.bond_type = '#'","
+SELECT a1.atom_id, a2.atom_id
+FROM atom a1
+JOIN connected c ON a1.atom_id = c.atom_id
+JOIN bond b ON c.bond_id = b.bond_id
+JOIN atom a2 ON c.atom_id2 = a2.atom_id
+WHERE b.bond_type = 'triple';",0,toxicology,bird_metadata
+277,277,SELECT T1.element FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id = 'TR005_16_26',"
+SELECT element
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE bond.bond_id = 'TR005_16_26';",1,toxicology,bird_metadata
+278,278,SELECT COUNT(DISTINCT T2.molecule_id) FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '-' AND T1.bond_type = '-',"
+SELECT COUNT(DISTINCT molecule_id)
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE bond_type = 'single' AND label IS NULL;",0,toxicology,bird_metadata
+279,279,SELECT T2.label FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_id = 'TR001_10_11',"
+SELECT molecule.label
+FROM molecule
+JOIN bond ON molecule.molecule_id = bond.molecule_id
+JOIN connected ON bond.bond_id = connected.bond_id
+WHERE bond.bond_id = 'TR001_10_11';",0,toxicology,bird_metadata
+280,280,"SELECT DISTINCT T1.bond_id, T2.label FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '#'","
+SELECT bond.bond_id, molecule.label
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE bond.bond_type = 'triple';",0,toxicology,bird_metadata
+281,281,"SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+' AND SUBSTR(T1.atom_id, -1) = '4' AND LENGTH(T1.atom_id) = 7","
+SELECT atom.element
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE molecule.label = 'carcinogenic' AND atom.atom_id IN (
+  SELECT atom_id
+  FROM (
+    SELECT atom_id, ROW_NUMBER() OVER (PARTITION BY molecule_id ORDER BY atom_id) as rn
+    FROM atom
+  ) t
+  WHERE rn = 4
+)
+GROUP BY atom.element;",0,toxicology,bird_metadata
+282,282,"SELECT CAST(COUNT(CASE WHEN T.element = 'h' THEN T.atom_id ELSE NULL END) AS REAL) / COUNT(T.atom_id) FROM ( SELECT DISTINCT T1.atom_id, T1.element, T1.molecule_id, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR006' ) AS T UNION ALL SELECT DISTINCT T3.label FROM ( SELECT DISTINCT T1.atom_id, T1.element, T1.molecule_id, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR006' ) AS T3","
+SELECT COUNT(*) / (SELECT COUNT(*) FROM atom WHERE molecule_id = 'TR006') AS ratio, label
+FROM atom
+WHERE molecule_id = 'TR006' AND element = 'Hydrogen'
+JOIN molecule ON atom.molecule_id = molecule.molecule_id;",0,toxicology,bird_metadata
+283,283,SELECT T2.label AS flag_carcinogenic FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'ca',"
+SELECT molecule.label
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE atom.element = 'Calcium';",0,toxicology,bird_metadata
+284,284,SELECT DISTINCT T2.bond_type FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'te',"
+SELECT bond_type
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id
+WHERE atom.element = 'Tellurium';",0,toxicology,bird_metadata
+285,285,SELECT T1.element FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id INNER JOIN bond AS T3 ON T2.bond_id = T3.bond_id WHERE T3.bond_id = 'TR001_10_11',"
+SELECT element
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE bond.bond_id = 'TR001_10_11';",1,toxicology,bird_metadata
+286,286,SELECT CAST(COUNT(CASE WHEN T.bond_type = '#' THEN T.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T.bond_id) FROM bond AS T,"
+SELECT
+  (COUNT(DISTINCT m.molecule_id) * 100.0 / (SELECT COUNT(*) FROM molecule)) AS percentage
+FROM
+  molecule m
+  JOIN bond b ON m.molecule_id = b.molecule_id
+  JOIN connected c ON b.bond_id = c.bond_id
+WHERE
+  b.bond_type = 'triple-bond';",0,toxicology,bird_metadata
+287,287,SELECT CAST(COUNT(CASE WHEN T.bond_type = '=' THEN T.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T.bond_id) FROM bond AS T WHERE T.molecule_id = 'TR047',"
+SELECT
+  (COUNT(DISTINCT connected.bond_id) * 100.0 / (SELECT COUNT(*) FROM atom WHERE molecule_id = 'TR047')) AS double_bond_percent
+FROM
+  connected
+JOIN
+  bond ON connected.bond_id = bond.bond_id
+WHERE
+  connected.atom_id IN (SELECT atom_id FROM atom WHERE molecule_id = 'TR047')
+  AND connected.atom_id2 IN (SELECT atom_id FROM atom WHERE molecule_id = 'TR047')
+  AND bond.bond_type = 'double';",0,toxicology,bird_metadata
+288,288,SELECT T2.label AS flag_carcinogenic FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.atom_id = 'TR001_1',"
+SELECT molecule.label
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE atom.atom_id = 'TR001_1';",1,toxicology,bird_metadata
+289,289,SELECT T.label FROM molecule AS T WHERE T.molecule_id = 'TR151',"
+SELECT label FROM molecule WHERE molecule_id = 'TR151';",1,toxicology,bird_metadata
+290,290,SELECT DISTINCT T.element FROM atom AS T WHERE T.molecule_id = 'TR151',"
+SELECT element
+FROM atom
+WHERE molecule_id = 'TR151';",0,toxicology,bird_metadata
+291,291,SELECT COUNT(T.molecule_id) FROM molecule AS T WHERE T.label = '+',"
+SELECT COUNT(*) FROM molecule WHERE label = 'carcinogenic';",0,toxicology,bird_metadata
+292,292,SELECT T.atom_id FROM atom AS T WHERE T.molecule_id BETWEEN 'TR010' AND 'TR050' AND T.element = 'c',"
+SELECT atom.atom_id
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE atom.element = 'carbon' AND molecule.molecule_id BETWEEN 'TR010' AND 'TR050';",0,toxicology,bird_metadata
+293,293,SELECT COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+',"
+SELECT COUNT(*) FROM atom WHERE molecule_id IN (SELECT molecule_id FROM molecule WHERE label = 'carcinogenic');",0,toxicology,bird_metadata
+294,294,SELECT T1.bond_id FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+' AND T1.bond_type = '=',"
+SELECT bond.bond_id
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE bond.bond_type = 'double' AND molecule.label = 'carcinogenic';",0,toxicology,bird_metadata
+295,295,SELECT COUNT(T1.atom_id) AS atomnums_h FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+' AND T1.element = 'h',"
+SELECT COUNT(*) FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN connected AS connected2 ON connected.bond_id = connected2.bond_id AND connected.atom_id2 = connected2.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+JOIN molecule ON bond.molecule_id = molecule.molecule_id
+WHERE atom.element = 'hydrogen' AND molecule.label = 'carcinogenic compound'
+GROUP BY atom.molecule_id;",0,toxicology,bird_metadata
+296,296,"SELECT T2.molecule_id, T2.bond_id, T1.atom_id FROM connected AS T1 INNER JOIN bond AS T2 ON T1.bond_id = T2.bond_id WHERE T1.atom_id = 'TR000_1' AND T2.bond_id = 'TR000_1_2'","
+SELECT molecule_id
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id
+WHERE bond.bond_id = 'TR00_1_2' AND atom.atom_id = 'TR00_1';",0,toxicology,bird_metadata
+297,297,SELECT T1.atom_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'c' AND T2.label = '-',"
+SELECT atom.atom_id
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE atom.element = 'carbon' AND molecule.label != 'carcinogenic';",0,toxicology,bird_metadata
+298,298,SELECT CAST(COUNT(CASE WHEN T1.element = 'h' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+',"
+SQL Query:
+
+
+WITH carcinogenic_molecules AS (
+  SELECT molecule_id
+  FROM molecule
+  WHERE label = 'carcinogenic'
+),
+hydrogen_molecules AS (
+  SELECT molecule_id
+  FROM atom
+  WHERE element = 'hydrogen'
+  INTERSECT
+  SELECT molecule_id
+  FROM carcinogenic_molecules
+)
+SELECT (COUNT(*) * 100.0) / (SELECT COUNT(*) FROM carcinogenic_molecules) AS percentage
+FROM hydrogen_molecules;
+",0,toxicology,bird_metadata
+299,299,SELECT T.label FROM molecule AS T WHERE T.molecule_id = 'TR124',"
+SELECT label FROM molecule WHERE molecule_id = 'TR124';",1,toxicology,bird_metadata
+300,300,SELECT T.atom_id FROM atom AS T WHERE T.molecule_id = 'TR186',"
+SELECT atom.atom_id
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE molecule.label = 'TR186';",0,toxicology,bird_metadata
+301,301,SELECT T.bond_type FROM bond AS T WHERE T.bond_id = 'TR007_4_19',"
+SELECT bond_type FROM bond WHERE bond_id = 'TR007_4_19';",1,toxicology,bird_metadata
+302,302,SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id = 'TR001_2_4',"
+SELECT element
+FROM atom
+WHERE atom_id IN (
+    SELECT atom_id
+    FROM connected
+    WHERE bond_id = 'TR001_2_4'
+)
+OR atom_id IN (
+    SELECT atom_id2
+    FROM connected
+    WHERE bond_id = 'TR001_2_4'
+);",0,toxicology,bird_metadata
+303,303,"SELECT COUNT(T1.bond_id), T2.label FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '=' AND T2.molecule_id = 'TR006' GROUP BY T2.label","
+SELECT COUNT(*) FROM connected
+JOIN bond ON connected.bond_id = bond.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE molecule.molecule_id = 'TR006' AND bond.bond_type = 'double',
+
+SELECT label FROM molecule WHERE molecule_id = 'TR006';",0,toxicology,bird_metadata
+304,304,"SELECT DISTINCT T2.molecule_id, T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'","
+SELECT molecule.label, atom.element
+FROM molecule
+JOIN atom ON molecule.molecule_id = atom.molecule_id
+WHERE molecule.label = 'carcinogenic';",0,toxicology,bird_metadata
+305,305,"SELECT T1.bond_id, T2.atom_id, T2.atom_id2 FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T1.bond_type = '-'","
+SELECT bond.bond_id, atom.atom_id, atom.atom_id2
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+WHERE bond.bond_type = 'single';",0,toxicology,bird_metadata
+306,306,"SELECT DISTINCT T1.molecule_id, T2.element FROM bond AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '#'","
+SELECT molecule.molecule_id, molecule.label, atom.element
+FROM molecule
+JOIN bond ON molecule.molecule_id = bond.molecule_id
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id
+WHERE bond.bond_type = 'triple'
+GROUP BY molecule.molecule_id, atom.element;",0,toxicology,bird_metadata
+307,307,SELECT T2.element FROM connected AS T1 INNER JOIN atom AS T2 ON T1.atom_id = T2.atom_id WHERE T1.bond_id = 'TR000_2_3',"
+SELECT element
+FROM atom
+WHERE atom_id IN (
+    SELECT atom_id
+    FROM connected
+    WHERE bond_id = 'TR000_2_3'
+)
+OR atom_id IN (
+    SELECT atom_id2
+    FROM connected
+    WHERE bond_id = 'TR000_2_3'
+);",1,toxicology,bird_metadata
+308,308,SELECT COUNT(T1.bond_id) FROM connected AS T1 INNER JOIN atom AS T2 ON T1.atom_id = T2.atom_id WHERE T2.element = 'cl',"
+SELECT COUNT(*) FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+JOIN atom ON connected.atom_id = atom.atom_id OR connected.atom_id2 = atom.atom_id
+WHERE atom.element = 'chlorine';",0,toxicology,bird_metadata
+309,309,"SELECT T1.atom_id, COUNT(DISTINCT T2.bond_type) FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.molecule_id = 'TR346' GROUP BY T1.atom_id, T2.bond_type","
+SELECT atom.atom_id, COUNT(bond.bond_type) as bond_count
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE molecule.molecule_id = 'TR346'
+GROUP BY atom.atom_id;",0,toxicology,bird_metadata
+310,311,SELECT COUNT(DISTINCT T1.molecule_id) FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element <> 's' AND T2.bond_type <> '=',"
+SELECT COUNT(DISTINCT molecule_id)
+FROM molecule
+WHERE molecule_id NOT IN (
+    SELECT molecule_id
+    FROM atom
+    WHERE element = 'sulphur'
+)
+AND molecule_id NOT IN (
+    SELECT molecule_id
+    FROM bond
+    WHERE bond_type = 'double'
+);",0,toxicology,bird_metadata
+311,312,SELECT DISTINCT T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_id = 'TR001_2_4',"
+SELECT molecule.label
+FROM molecule
+JOIN bond ON molecule.molecule_id = bond.molecule_id
+JOIN connected ON bond.bond_id = connected.bond_id
+WHERE bond.bond_id = 'TR001_2_4';",0,toxicology,bird_metadata
+312,313,SELECT COUNT(T.atom_id) FROM atom AS T WHERE T.molecule_id = 'TR005',"
+SELECT COUNT(*) FROM atom WHERE molecule_id = 'TR005';",1,toxicology,bird_metadata
+313,314,SELECT COUNT(T.bond_id) FROM bond AS T WHERE T.bond_type = '-',"
+SELECT COUNT(*) FROM bond WHERE bond_type = 'single';",0,toxicology,bird_metadata
+314,315,SELECT DISTINCT T1.molecule_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'cl' AND T2.label = '+',"
+SELECT molecule.molecule_id, molecule.label
+FROM molecule
+JOIN atom ON molecule.molecule_id = atom.molecule_id
+WHERE atom.element = 'cl' AND molecule.label = 'carcinogenic';",0,toxicology,bird_metadata
+315,316,SELECT DISTINCT T1.molecule_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'c' AND T2.label = '-',"
+SELECT molecule_id
+FROM molecule
+WHERE molecule_id NOT IN (
+    SELECT molecule_id
+    FROM atom
+    WHERE element = 'c'
+) AND label != 'carcinogenic';",0,toxicology,bird_metadata
+316,317,SELECT COUNT(CASE WHEN T2.label = '+' AND T1.element = 'cl' THEN T2.molecule_id ELSE NULL END) * 100 / COUNT(T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id,"
+SELECT
+  (COUNT(DISTINCT molecule.molecule_id) * 100.0 /
+  (SELECT COUNT(DISTINCT molecule_id) FROM molecule WHERE label = 'carcinogenic')) AS carcinogenic_percentage
+FROM
+  molecule
+JOIN
+  atom ON molecule.molecule_id = atom.molecule_id
+WHERE
+  molecule.label = 'carcinogenic' AND atom.element = 'Chlorine';",0,toxicology,bird_metadata
+317,318,SELECT DISTINCT T1.molecule_id FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id = 'TR001_1_7',"
+SELECT molecule_id FROM bond WHERE bond_id = 'TR001_1_7';",1,toxicology,bird_metadata
+318,319,SELECT COUNT(DISTINCT T1.element) FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id = 'TR001_3_4',"
+SELECT COUNT(DISTINCT element)
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+WHERE connected.bond_id = 'TR001_3_4';",1,toxicology,bird_metadata
+319,320,SELECT T1.bond_type FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T2.atom_id = 'TR000_1' AND T2.atom_id2 = 'TR000_2',"
+SELECT bond_type
+FROM bond
+JOIN connected ON bond.bond_id = connected.bond_id
+WHERE (connected.atom_id = 'TR000_1' AND connected.atom_id2 = 'TR000_2') OR (connected.atom_id = 'TR000_2' AND connected.atom_id2 = 'TR000_1');",0,toxicology,bird_metadata
+320,321,SELECT T1.molecule_id FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T2.atom_id = 'TR000_2' AND T2.atom_id2 = 'TR000_4',"
+SELECT molecule_id
+FROM atom
+WHERE atom_id IN (""TR000_2"", ""TR000_4"")
+GROUP BY molecule_id
+HAVING COUNT(DISTINCT atom_id) = 2;",1,toxicology,bird_metadata
+321,322,SELECT T.element FROM atom AS T WHERE T.atom_id = 'TR000_1',"
+SELECT element FROM atom WHERE atom_id = 'TR000_1';",1,toxicology,bird_metadata
+322,323,SELECT label FROM molecule AS T WHERE T.molecule_id = 'TR000',"
+SELECT label FROM molecule WHERE molecule_id = 'TR000';",1,toxicology,bird_metadata
+323,324,SELECT CAST(COUNT(CASE WHEN T.bond_type = '-' THEN T.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T.bond_id) FROM bond t,"
+SELECT
+  (
+    (
+      SELECT
+        COUNT(*)
+      FROM
+        atom
+        JOIN connected ON atom.atom_id = connected.atom_id
+        JOIN bond ON connected.bond_id = bond.bond_id
+      WHERE
+        bond.bond_type = 'single'
+    )
+    /
+    (
+      SELECT
+        COUNT(*)
+      FROM
+        atom
+    )
+  )
+  * 100
+  AS percentage_of_atoms_with_single_bond;",0,toxicology,bird_metadata
+324,325,SELECT COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.element = 'n' AND T1.label = '+',"
+SELECT COUNT(DISTINCT molecule.molecule_id)
+FROM molecule
+JOIN atom ON molecule.molecule_id = atom.molecule_id
+WHERE atom.element = 'Nitrogen' AND molecule.label = 'carcinogenic';",0,toxicology,bird_metadata
+325,326,SELECT DISTINCT T1.molecule_id FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 's' AND T2.bond_type = '=',"
+SELECT molecule.molecule_id
+FROM molecule
+JOIN atom ON molecule.molecule_id = atom.molecule_id
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE atom.element = 'Sulphur' AND bond.bond_type = 'double';",0,toxicology,bird_metadata
+326,327,"SELECT T.molecule_id FROM ( SELECT T1.molecule_id, COUNT(T2.atom_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.label = '-' GROUP BY T1.molecule_id HAVING COUNT(T2.atom_id) > 5 ) t","
+SELECT molecule.molecule_id, molecule.label
+FROM molecule
+WHERE molecule.label != 'carcinogenic'
+AND (
+  SELECT COUNT(*)
+  FROM atom
+  WHERE atom.molecule_id = molecule.molecule_id
+) > 5;",0,toxicology,bird_metadata
+327,328,SELECT T1.element FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.molecule_id = 'TR024' AND T2.bond_type = '=',"
+SELECT element
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE molecule_id = 'TR024' AND bond_type = 'double';",0,toxicology,bird_metadata
+328,329,"SELECT T.molecule_id FROM ( SELECT T2.molecule_id, COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+' GROUP BY T2.molecule_id ORDER BY COUNT(T1.atom_id) DESC LIMIT 1 ) t","
+SELECT molecule_id, COUNT(atom_id) as atom_count
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE label = 'carcinogenic'
+GROUP BY molecule_id
+ORDER BY atom_count DESC
+LIMIT 1;",0,toxicology,bird_metadata
+329,330,SELECT CAST(SUM(CASE WHEN T1.label = '+' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T1.molecule_id = T3.molecule_id WHERE T3.bond_type = '#' AND T2.element = 'h',"
+SELECT
+  (COUNT(DISTINCT m.molecule_id) * 100.0) / (SELECT COUNT(*) FROM molecule WHERE label = 'carcinogenic') AS percentage
+FROM
+  molecule m
+  JOIN atom a ON m.molecule_id = a.molecule_id
+  JOIN connected c ON a.atom_id = c.atom_id
+  JOIN bond b ON c.bond_id = b.bond_id
+WHERE
+  m.label = 'carcinogenic' AND
+  a.element = 'Hidrogen' AND
+  b.bond_type = 'triple';",0,toxicology,bird_metadata
+330,331,SELECT COUNT(T.molecule_id) FROM molecule AS T WHERE T.label = '+',"
+SELECT COUNT(*) FROM molecule WHERE label = 'carcinogenic';",0,toxicology,bird_metadata
+331,332,SELECT COUNT(DISTINCT T.molecule_id) FROM bond AS T WHERE T.molecule_id BETWEEN 'TR004' AND 'TR010' AND T.bond_type = '-',"
+SELECT COUNT(DISTINCT molecule_id)
+FROM bond
+WHERE bond_type = 'single' AND molecule_id BETWEEN 'TR004' AND 'TR010';",0,toxicology,bird_metadata
+332,333,SELECT COUNT(T.atom_id) FROM atom AS T WHERE T.molecule_id = 'TR008' AND T.element = 'c',"
+SELECT COUNT(*) FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE molecule.label = 'TR008' AND atom.element = 'C';",0,toxicology,bird_metadata
+333,334,SELECT T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.atom_id = 'TR004_7' AND T2.label = '-',"
+SELECT element
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE atom.atom_id = 'TR004_7' AND molecule.label != 'carcinogenic';",1,toxicology,bird_metadata
+334,335,SELECT COUNT(DISTINCT T1.molecule_id) FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.bond_type = '=' AND T1.element = 'o',"
+SELECT COUNT(DISTINCT molecule_id)
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE element = 'oxygen' AND bond_type = 'double';",0,toxicology,bird_metadata
+335,336,SELECT COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.bond_type = '#' AND T1.label = '-',"
+SELECT COUNT(DISTINCT molecule_id)
+FROM molecule
+WHERE molecule_id NOT IN (
+    SELECT molecule_id
+    FROM bond
+    WHERE bond_type = 'triple'
+)
+AND label IS NULL;",0,toxicology,bird_metadata
+336,337,"SELECT DISTINCT T1.element, T2.bond_type FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.molecule_id = 'TR016'","
+SELECT atom.element, bond.bond_type
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE molecule.molecule_id = 'TR016';",0,toxicology,bird_metadata
+337,338,SELECT T1.atom_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T2.molecule_id = 'TR012' AND T3.bond_type = '=' AND T1.element = 'c',"
+SELECT atom.atom_id
+FROM atom
+JOIN connected ON atom.atom_id = connected.atom_id
+JOIN bond ON connected.bond_id = bond.bond_id
+WHERE atom.element = 'C' AND bond.bond_type = 'double' AND atom.molecule_id = 'TR012';",0,toxicology,bird_metadata
+338,339,SELECT T1.atom_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'o' AND T2.label = '+',"
+SELECT atom.atom_id
+FROM atom
+JOIN molecule ON atom.molecule_id = molecule.molecule_id
+WHERE molecule.label = 'carcinogenic' AND atom.element = 'oxygen';",0,toxicology,bird_metadata
+339,340,SELECT id FROM cards WHERE cardKingdomFoilId IS NOT NULL AND cardKingdomId IS NOT NULL,"
+SELECT * FROM cards WHERE hasFoil = 1;",0,card_games,bird_metadata
+340,341,SELECT id FROM cards WHERE borderColor = 'borderless' AND (cardKingdomId IS NULL OR cardKingdomId IS NULL),"
+SELECT name FROM cards WHERE hasFoil = 0 AND isFullArt = 1;",0,card_games,bird_metadata
+341,342,SELECT name FROM cards ORDER BY faceConvertedManaCost LIMIT 1,"
+SELECT name, faceConvertedManaCost FROM cards WHERE faceConvertedManaCost > convertedManaCost;",0,card_games,bird_metadata
+342,343,SELECT id FROM cards WHERE edhrecRank < 100 AND frameVersion = 2015,"
+SELECT name FROM cards WHERE frameVersion = '2015' AND edhrecRank < 100;",0,card_games,bird_metadata
+343,344,SELECT DISTINCT T1.id FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T2.format = 'gladiator' AND T2.status = 'Banned' AND T1.rarity = 'mythic',"
+SELECT cards.name, sets.name
+FROM cards
+JOIN legalities ON cards.uuid = legalities.uuid
+JOIN sets ON cards.setCode = sets.code
+WHERE cards.rarity = 'mythic' AND legalities.format = 'gladiator' AND legalities.status = 'banned';",0,card_games,bird_metadata
+344,345,SELECT DISTINCT T2.status FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.type = 'Artifact' AND T2.format = 'vintage' AND T1.side IS NULL,"
+SELECT legalities.status
+FROM cards
+JOIN legalities ON cards.uuid = legalities.uuid
+WHERE cards.type LIKE '%Artifact%'
+AND cards.otherFaceIds IS NULL
+AND legalities.format = 'vintage';",0,card_games,bird_metadata
+345,346,"SELECT T1.id, T1.artist FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T2.status = 'Legal' AND T2.format = 'commander' AND (T1.power IS NULL OR T1.power = '*')","
+SQL Query:
+
+SELECT cards.id, cards.artist
+FROM cards
+JOIN legalities ON cards.uuid = legalities.uuid
+WHERE cards.power IS NULL AND legalities.format = 'commander' AND legalities.status = 'legal';",0,card_games,bird_metadata
+346,347,"SELECT T1.id, T2.text, T1.hasContentWarning FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE T1.artist = 'Stephen Daniele'","
+SELECT rulings.text, cards.hasContentWarning, cards.hasFoil, cards.hasNonFoil, cards.isAlternative, cards.isFullArt, cards.isOnlineOnly, cards.isOversized, cards.isPromo, cards.isReprint, cards.isReserved, cards.isStarter, cards.isStorySpotlight, cards.isTextless, cards.isTimeshifted, cards.isAlternativeDeckLimit, cards.isFullArt, cards.isOnlineOnly, cards.isOversized, cards.isPromo, cards.isReprint, cards.isReserved, cards.isStarter, cards.isStorySpotlight, cards.isTextless, cards.isTimeshifted, cards.isAlternativeDeckLimit
+FROM cards
+JOIN rulings ON cards.uuid = rulings.uuid
+WHERE cards.artist = 'Stephen Daniel';",0,card_games,bird_metadata

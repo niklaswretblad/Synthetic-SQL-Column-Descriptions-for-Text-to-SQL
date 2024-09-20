@@ -1,4 +1,4 @@
-,database_name,table_name,original_column_name,column_description,data_format
+,database_name,table_name,original_column_name,llm_column_description,data_format
 0,debit_card_specializing,yearmonth,CustomerID,The unique identifier for a customer.,integer
 1,debit_card_specializing,yearmonth,Date,The year and month of the transaction.,text
 2,debit_card_specializing,yearmonth,Consumption,The consumption value for a customer in a specific year and month.,real
