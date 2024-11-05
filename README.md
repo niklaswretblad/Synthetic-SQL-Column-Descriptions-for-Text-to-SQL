@@ -1,4 +1,5 @@
-![Alt text](figures/bar_plot_scores.png)
+![LLM Description Generation Scores](figures/bar_plot_scores.png)
+![Text-to-SQL Evaluations](figures/table.png)
 
 # Synthetic SQL Column Descriptions and Their Impact on Text-to-SQL Performance
 
