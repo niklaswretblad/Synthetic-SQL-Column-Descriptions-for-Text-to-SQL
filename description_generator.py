@@ -1,16 +1,16 @@
-import os
-from databases import BIRDDatabase
-from langchain_core.prompts import PromptTemplate
-from langchain_community.callbacks import get_openai_callback
-from langchain_openai import ChatOpenAI
 from config import logger
-from sql_query_generator import SQLQueryGenerator
+from src.timer import Timer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from openai import OpenAI
+import os
+import torch
+from databases import BIRDDatabase
 from src.timer import Timer
 import logging
 import pandas as pd
-from dotenv import load_dotenv
 import tiktoken
 from tqdm import tqdm
+
 
 GEN_COLUMN_DESCRIPTION_PROMPT_2 = """
 ### Context - Generate Column Description for Database, to give users an easier time understanding what data is present in the column.
@@ -93,10 +93,7 @@ DO NOT return anything else except the generated column description. This is ver
 """
 
 
-# If the details in the schema do not suffice to ascertain what the data is, return: "Not enough information to make a valid prediction."
-
-
-class desc_gen_llm:
+class LLMInterface:
     total_tokens = 0
     prompt_tokens = 0
     total_cost = 0
@@ -104,64 +101,109 @@ class desc_gen_llm:
     last_call_execution_time = 0
     total_call_execution_time = 0
 
-    def __init__(self, llm):
-        self.llm = llm
+    def __init__(self, model_name, use_openai=True):
+        self.use_openai = use_openai
+        self.model_name = model_name
 
-        prompt = PromptTemplate(
-            # TODO: Add other input variables
-            # Are we getting all of the information that we send in?
-            input_variables=["database_schema", "column", "table"],
-            template=GEN_COLUMN_DESCRIPTION_PROMPT_2,
-        )
+        if self.use_openai:
+            self.client = OpenAI(
+                api_key=os.environ.get("OPENAI_API_KEY"),
+            )
 
-        self.gen_column_desc_chain = prompt | llm
+        else:
+            access_token = os.environ.get("HUGGINGFACE_API_TOKEN")
+            max_memory = f"{int(torch.cuda.mem_get_info()[0]/1024**3)-2}GB"            
 
-    def gen_column_desc(self, database_schema, column, table_name, example_data, example_data_associated, column_name="", column_description="", unique_data=""):
-        with get_openai_callback() as cb:
-            with Timer() as t:
-                response = self.gen_column_desc_chain.invoke({
-                    'database_schema': database_schema,
-                    "column": column,
-                    "table": table_name,
-                    "example_data": example_data,
-                    "example_data_associated": example_data_associated,
-                    "column_name": column_name,
-                    "column_description": column_description,
-                    "unique_data": unique_data
+            n_gpus = torch.cuda.device_count()
+            max_memory = {i: max_memory for i in range(n_gpus)}
+            print("n_gpus:", n_gpus)
+            print("max_memory:", max_memory)
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name, token=access_token)      
+            
+            bnb_config = BitsAndBytesConfig(
+                load_in_8bit=True,
+                bnb_8bit_compute_dtype=torch.bfloat16,
+            )
+                  
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_name, 
+                device_map="auto", 
+                quantization_config=bnb_config,
+                max_memory=max_memory, 
+                token=access_token
+            )
 
-                })
+    def call_model(self, prompt, **kwargs):
+        messages = [
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    }
+        ],
+        if self.use_openai:
+            response = self.client.chat.completions.create(
+                messages,
+                model = self.model_name
+            )
+            return response.choices[0].text.strip()
+        else:
+            #inputs = self.tokenizer(prompt, return_tensors='pt')
+            inputs = self.tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True, return_tensors="pt", return_dict=True)
+            input_ids = inputs.input_ids.to('cuda')
+                        
+            attention_mask = inputs.attention_mask.to('cuda')
+  
+            output = self.model.generate(
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+                max_new_tokens=kwargs.get('max_new_tokens', 500),
+                output_logits=False,
+                return_dict_in_generate=True  # Return a dictionary with generation results
+            )
+            
+            # -------- Decode Output --------  
+            generated_token_indices = output.sequences[:, input_ids.shape[1]:] # Exclude input tokens
+            
+            #generated_token_indices = output.sequences[:, input_ids.shape[1]:-1] # Exclude input and EOS tokens
+            generated_text = self.tokenizer.decode(generated_token_indices[0], skip_special_tokens=True).strip()
+            generated_text = generated_text.replace("```", "")
 
-            logger.info(
-                f"API Call - Cost: {round(cb.total_cost)} | Tokens: {cb.total_tokens} | Exec time: {t.elapsed_time:.2f}")
-
-            self.last_call_execution_time = t.elapsed_time
-            self.total_call_execution_time += t.elapsed_time
-            self.total_tokens += cb.total_tokens
-            self.prompt_tokens += cb.prompt_tokens
-            self.total_cost += cb.total_cost
-            self.completion_tokens += cb.completion_tokens
-
-            return response.content
+            return generated_text
+        
 
 
 if __name__ == "__main__":
     # Initiate llm
-    LLM_NAME = "gpt-4o"
+    # "gpt-4o"  # this is now for every model used
+    # MODEL_NAME = "mistralai/Codestral-22B-v0.1"
+    # MODEL_NAME_2 = "mistralai"
+
+    #MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct" #CHECK
+    #MODEL_NAME_2 = "llama-3-8B"
+    #MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3" #CHECK
+    #MODEL_NAME_2 = "mistral-7b"
+    # MODEL_NAME = "mistralai/Codestral-22B-v0.1" #CHECK
+    # MODEL_NAME_2 = "codestral"
+    #MODEL_NAME = "meta-llama/Meta-Llama-3-70B-Instruct" #CHECK
+    #MODEL_NAME_2 = "llama-3-70B"
+    #MODEL_NAME = "Qwen/Qwen2-72B-Instruct" #CHECK
+    #MODEL_NAME_2 = "qwen2-72B"
+    #MODEL_NAME = "CohereForAI/c4ai-command-r-plus"
+    #MODEL_NAME_2 = "command-r-plus"
+    MODEL_NAME = "mistralai/Mixtral-8x22B-Instruct-v0.1" #CHECK
+    MODEL_NAME_2 = "mixtral-8x22"
+    
+    
+    print(f"Using model {MODEL_NAME}.")
+
     NUM_EXAMPLES_ALL = 0
     NUM_EXAMPLES_CURRENT = 10
     NUM_EXAMPLES_ASSOCIATED = 0
     UNIQUE_EXAMPLES = False
     GOLD = False
-    OUTPUT_FILENAME = "Pred_DEV_desc_" + LLM_NAME
+    OUTPUT_FILENAME = "Pred_DEV_desc_" + MODEL_NAME_2
     # OUTPUT_FILENAME = "10ex_tokens_count_" + LLM_NAME
     COUNT_TOKENS_ONLY = False
-    print(OUTPUT_FILENAME)
-
-    # Load OpenAI API Key
-    load_dotenv()
-    api_key = os.getenv('OPENAI_API_KEY')
-    if api_key is None:
-        raise ValueError("OPENAI_API_KEY environment variable is not set.")
 
     # Enable logging
     log_format = '%(asctime)s - %(levelname)s - %(message)s'
@@ -173,15 +215,7 @@ if __name__ == "__main__":
     logging.getLogger("requests").setLevel(logging.WARNING)
     logging.getLogger("urllib3").setLevel(logging.WARNING)
 
-    llm = ChatOpenAI(
-        openai_api_key=api_key,
-        model_name=LLM_NAME,
-        temperature=0,
-        request_timeout=60
-    )
-
-    # Initiate desc_gen_llm class
-    model = desc_gen_llm(llm=llm)
+    model = LLMInterface(MODEL_NAME, use_openai=False)
     sql_database = BIRDDatabase()
 
     # Load database.csv
@@ -199,7 +233,7 @@ if __name__ == "__main__":
 
     # Create a new column 'llm_column_description' if it doesn't exist
     if COUNT_TOKENS_ONLY:
-        encoding = tiktoken.encoding_for_model(LLM_NAME)
+        encoding = tiktoken.encoding_for_model(MODEL_NAME)
         if 'gold_prompt_char' not in database_df.columns:
             database_df['gold_prompt_chars'] = ""
         if 'gold_prompt_words' not in database_df.columns:
@@ -288,16 +322,20 @@ if __name__ == "__main__":
             print(
                 f'Generating description for database {col["database_name"]}, table {col["table_name"]}, and column {col["original_column_name"]}')
             if GOLD:
-                column_desc = model.gen_column_desc(
-                    database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated, col["column_name"], col["column_description"], unique_data)
+                prompt = GEN_COLUMN_DESCRIPTION_PROMPT_GOLD.format(database_schema=database_schema, column=col["original_column_name"], table=col["table_name"],
+                                                                   example_data=example_data, example_data_associated=example_data_associated, column_name=col[
+                                                                       "column_name"],
+                                                                   column_description=col["column_description"], unique_data=unique_data)
+                column_desc = model.call_model(prompt)
             else:
-                column_desc = model.gen_column_desc(
-                    database_schema, col["original_column_name"], col["table_name"], example_data, example_data_associated, unique_data=unique_data)
+                prompt = GEN_COLUMN_DESCRIPTION_PROMPT_2.format(database_schema=database_schema, column=col["original_column_name"], table=col["table_name"],
+                                                                example_data=example_data, example_data_associated=example_data_associated, unique_data=unique_data)
+                column_desc = model.call_model(prompt)
             database_df.loc[col_idx, 'llm_column_description'] = column_desc
         # Save every ten columns
         if col_idx % 10 == 0 and col_idx != 0:
             database_df.to_csv(OUTPUT_FILENAME+'.csv', index=True)
-            print(f"Progress saved at {col["database_name"]}, table {col["table_name"]}, and column {col["original_column_name"]}")
+            print(f"Progress saved at {col['database_name']}, table {col['table_name']}, and column {col['original_column_name']}")
 
     # Save column descriptions to database.csv
     database_df.to_csv(OUTPUT_FILENAME+'.csv', index=True)
