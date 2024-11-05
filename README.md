@@ -12,7 +12,7 @@ Relational databases often have ambiguous columns and hard-to-interpret values, 
 
 ## Datasets
 
-As part of the study, we curate a dataset of column descriptions and their difficulty ratings based on the development set of [BIRD-Bench](https://bird-bench.github.io/). The dataset can be found in the /data folder. 
+As part of the study, we curate a dataset of column descriptions and their difficulty ratings based on the development set of [BIRD-Bench](https://bird-bench.github.io/). The dataset can be found in the `column_descriptions.csv` file in the top level directory. 
 
 
 ## Annotations
