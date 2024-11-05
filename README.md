@@ -1,4 +1,4 @@
-![Alt text](src/bar_plot_scores.png)
+![Alt text](figures/bar_plot_scores.png)
 
 # Synthetic SQL Column Descriptions and Their Impact on Text-to-SQL Performance
 
