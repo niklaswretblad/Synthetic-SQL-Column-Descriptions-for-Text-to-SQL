@@ -16,13 +16,24 @@ As part of the study, we curate a dataset of column descriptions and their diffi
 
 Columns were categorized into four difficulty levels: "Self-Evident," "Context-Aided," "Ambiguity-Prone," and "Domain-Dependent," based on the amount of information available in the database to generate accurate descriptions. We also included an alternative naming convention to make it more intuitive to interpret the difficulties of columns in the file: "Easy", "Medium", "Hard" and "Very Hard".
 
+## LLM Outputs
+
+To enable future research on what makes good column descriptions, we have uploaded all the generated column descriptions from the different evaluated LLMs to the `llm_outputs` folder. 
+
 ## Annotations
 
 All annotations made for the paper can be found in the /annotations folder. 
 
-## Running the code
+## Code
 
-To do. 
+Inference for the open-source models was performed on a cluster of several A100 GPUs, using BitsandBytes to load the models in 8-bit format. We set the model temperature to 0.7. 
+
+Prompts and code for the different experiments can be found in the following files: 
+
+1. Description generation: `src/description_generator.py`
+2. Text-to-SQL evaluations: `src/text-to-sql.py`
+3. LLM-as-a-judge: `src/judge.py`
+ 
 
 ## Citation
 
