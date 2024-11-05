@@ -1,43 +1,39 @@
-# SQLDescriptionGeneration
+# Synthetic SQL Column Descriptions and Their Impact on Text-to-SQL Performance
 
-### TODO:
+## Updates
 
-[x] Build a pandas dataframe with each row representing one column in one database table. Store database_name, table_name, column_name (original sqlite column name), everything from BIRD CSV file, true/false whether the column is a foreign or primary key,
+- **2024-11-15:** The paper got accepted and will be presented at the 3rd Table Representation Learning Workshop @ NeurIps 2024! See you at NeurIps! 🎉 
 
-[x] Copy function from Niklas code that queries a given database and retreives the database schema in the form of CREATE_TABLE SQL statements
+## Introduction
 
-[x] Build function that obtains X amount of rows from a given table. (Later we might experiment with only retreiving data from a specific column at a time)
+This is the official repository for the paper [Synthetic SQL Column Descriptions and Their Impact on Text-to-SQL Performance](https://arxiv.org/abs/2408.04691)
 
-[x] Build prompt template that takes the database schema, some rows from the database, and an instruction to give a description for a given column.  
+Relational databases often have ambiguous columns and hard-to-interpret values, hindering both human users and text-to-SQL models. This work leverages large language models (LLMs) to automatically generate natural language descriptions for SQL database columns, enhancing text-to-SQL performance and automating metadata creation. We refined the column descriptions from the development set of the BIRD-Bench benchmark, developed a column difficulty taxonomy, and evaluated various LLMs. While models struggled with generating descriptions for inherently ambiguous columns, the generated descriptions consistently improved text-to-SQL performance, especially for larger models like GPT-4o and Qwen2 72B. Surprisingly, descriptions containing by annotators rated superflous information outperformed curated ones, indicating benefits from more comprehensive metadata. Future work will explore optimizing these descriptions and expanding metadata types.
 
-[x] Build class for doing calls to the OpenAI API (start with GPT 3.5, later we do GPT-4) (copy from Niklas)
+## Datasets
 
-[x] Experiment to find a suitable prompt template.
+As part of the study, we curate a dataset of column descriptions and their difficulty ratings based on the development set of [BIRD-Bench](https://bird-bench.github.io/). The dataset can be found in the /data folder. 
 
-[ ] Generate gold descriptions in a determined format with GPT-4.
 
-[ ] Start trying to generate descriptions for columns and start filling the dataframe constructed earlier with generated column descriptions
+## Annotations
 
-[x] Upload cleaned dataset to oneDrive
+All annotations made for the paper can be found in the /annotations folder. 
 
-[x] Put all environment variables (absolute paths & keys) in an .env file.
- 
+## Running the code
 
-### Setup
-1. Receive access to and download the cleaned [data](https://liuonline-my.sharepoint.com/:f:/r/personal/erila018_student_liu_se/Documents/SQL_DESCRIPTION_GENERATION?csf=1&web=1&e=aarwSi). Put the data in the root directory of the repository.
-2. Create the .env file with all of the required variables.
-3. Run `conda env create -f environment.yaml` and `conda activate sqldesc` to create and start the conda environment. 
-4. Run `pip install -r requirements.txt`
+To do. 
 
-### Data cleaning 
+## Citation
 
-1. Firstly we remove the non "utf-8" tokens 
-2. Corrected spelling in european_football_2 in Country the description header from "desription" to "description"
-3. Removed all columns with zero data and the name "Unnamed", this is due to (too many/missing) commas in the csv files. 
-4. Changed "ruling.csv" to "rulings.csv" to match original table name 
-5. Changed "set_transactions.csv" to "set_translations.csv" to match the database 
-6. Removed all .DS_STORE files from the data directory 
-7. Changed the names of the csv files in student_club to match the original table name, fixed upper case to lower case on first letter on all, and code in Zip_Code. 
-8. Removed column "wins" from constructors.csv as the column does not exist in the formula_1 database.
-
- 
+Bibtex:
+```
+@misc{wretblad2024syntheticsqlcolumndescriptions,
+      title={Synthetic SQL Column Descriptions and Their Impact on Text-to-SQL Performance}, 
+      author={Niklas Wretblad and Oskar Holmström and Erik Larsson and Axel Wiksäter and Oscar Söderlund and Hjalmar Öhman and Ture Pontén and Martin Forsberg and Martin Sörme and Fredrik Heintz},
+      year={2024},
+      eprint={2408.04691},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2408.04691}, 
+}
+```
